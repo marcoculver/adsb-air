@@ -688,8 +688,16 @@
         }
 
         .fdp-result-local {
+            font-size: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #00ff88;
+            margin-top: 3px;
+        }
+
+        .fdp-result-utc {
             font-size: 0.8rem;
-            color: #7ec8e3;
+            color: #888;
             margin-top: 3px;
         }
 
@@ -792,12 +800,20 @@
         }
 
         .local-offset-selector select {
-            padding: 5px 10px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 130, 0, 0.3);
+            padding: 8px 12px;
+            background: #002540;
+            border: 2px solid #FF8200;
             border-radius: 5px;
             color: #FF8200;
             font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .local-offset-selector select option {
+            background: #002540;
+            color: #FF8200;
         }
 
         /* Actual tracking section */
@@ -1273,19 +1289,19 @@
                     <div class="fdp-results" style="margin-top:0">
                         <div class="fdp-result-grid">
                             <div class="fdp-result-item">
-                                <div class="fdp-result-label">STD</div>
-                                <div class="fdp-result-value" id="layover-std-utc">--:-- UTC</div>
-                                <div class="fdp-result-local" id="layover-std-local">Local: --:--</div>
+                                <div class="fdp-result-label">STD (Local)</div>
+                                <div class="fdp-result-local" id="layover-std-local">--:--</div>
+                                <div class="fdp-result-utc" id="layover-std-utc">UTC: --:--</div>
                             </div>
                             <div class="fdp-result-item">
                                 <div class="fdp-result-label">Hotel Departure</div>
-                                <div class="fdp-result-value yellow" id="layover-hotel-utc">--:-- UTC</div>
-                                <div class="fdp-result-local" id="layover-hotel-local">Local: --:--</div>
+                                <div class="fdp-result-local" id="layover-hotel-local" style="color:#ffd700">--:--</div>
+                                <div class="fdp-result-utc" id="layover-hotel-utc">UTC: --:--</div>
                             </div>
                             <div class="fdp-result-item">
                                 <div class="fdp-result-label">Wake Up Time</div>
-                                <div class="fdp-result-value green" id="layover-wake-utc">--:-- UTC</div>
-                                <div class="fdp-result-local" id="layover-wake-local">Local: --:--</div>
+                                <div class="fdp-result-local" id="layover-wake-local">--:--</div>
+                                <div class="fdp-result-utc" id="layover-wake-utc">UTC: --:--</div>
                             </div>
                         </div>
                     </div>
@@ -1390,12 +1406,12 @@
                         </div>
                         <div class="duty-estimate" id="duty-estimate">
                             <div class="duty-estimate-row">
-                                <span class="duty-estimate-label">Estimated Duty End (UTC):</span>
-                                <span class="duty-estimate-value" id="est-duty-end">--:--</span>
+                                <span class="duty-estimate-label">Estimated Duty End (Local):</span>
+                                <span class="duty-estimate-value" id="est-duty-end-local" style="color:#00ff88; font-size:1.3rem">--:--</span>
                             </div>
                             <div class="duty-estimate-row">
-                                <span class="duty-estimate-label">Estimated Duty End (Local):</span>
-                                <span class="duty-estimate-value" id="est-duty-end-local">--:--</span>
+                                <span class="duty-estimate-label" style="color:#666">UTC:</span>
+                                <span class="duty-estimate-value" id="est-duty-end" style="color:#888; font-size:0.95rem">--:--</span>
                             </div>
                             <div class="duty-estimate-row">
                                 <span class="duty-estimate-label">Status:</span>
@@ -1414,23 +1430,23 @@
                                 <div class="fdp-result-value green" id="fdp-max">--:--</div>
                             </div>
                             <div class="fdp-result-item">
-                                <div class="fdp-result-label">Latest On-Chocks (UTC)</div>
-                                <div class="fdp-result-value green" id="fdp-chocks">--:--</div>
-                                <div class="fdp-result-local" id="fdp-chocks-local">Local: --:--</div>
+                                <div class="fdp-result-label">Latest On-Chocks</div>
+                                <div class="fdp-result-local" id="fdp-chocks-local">--:--</div>
+                                <div class="fdp-result-utc" id="fdp-chocks">UTC: --:--</div>
                             </div>
                             <div class="fdp-result-item">
-                                <div class="fdp-result-label">Latest Off-Duty (UTC)</div>
-                                <div class="fdp-result-value green" id="fdp-offduty">--:--</div>
-                                <div class="fdp-result-local" id="fdp-offduty-local">Local: --:--</div>
+                                <div class="fdp-result-label">Latest Off-Duty</div>
+                                <div class="fdp-result-local" id="fdp-offduty-local">--:--</div>
+                                <div class="fdp-result-utc" id="fdp-offduty">UTC: --:--</div>
                             </div>
                             <div class="fdp-result-item">
                                 <div class="fdp-result-label">Max Discretion</div>
                                 <div class="fdp-result-value yellow" id="fdp-discretion">+3:00</div>
                             </div>
                             <div class="fdp-result-item">
-                                <div class="fdp-result-label">Absolute Limit (UTC)</div>
-                                <div class="fdp-result-value orange" id="fdp-absolute">--:--</div>
-                                <div class="fdp-result-local" id="fdp-absolute-local">Local: --:--</div>
+                                <div class="fdp-result-label">Absolute Limit</div>
+                                <div class="fdp-result-local" id="fdp-absolute-local" style="color:#FF8200">--:--</div>
+                                <div class="fdp-result-utc" id="fdp-absolute">UTC: --:--</div>
                             </div>
                             <div class="fdp-result-item">
                                 <div class="fdp-result-label">Min Rest After</div>
@@ -1991,33 +2007,36 @@
             const pickup = parseTime(pickupStr);
 
             if (!std) {
-                document.getElementById('layover-std-utc').textContent = '--:-- UTC';
-                document.getElementById('layover-std-local').textContent = 'Local: --:--';
-                document.getElementById('layover-hotel-utc').textContent = '--:-- UTC';
-                document.getElementById('layover-hotel-local').textContent = 'Local: --:--';
-                document.getElementById('layover-wake-utc').textContent = '--:-- UTC';
-                document.getElementById('layover-wake-local').textContent = 'Local: --:--';
+                document.getElementById('layover-std-local').textContent = '--:--';
+                document.getElementById('layover-std-utc').textContent = 'UTC: --:--';
+                document.getElementById('layover-hotel-local').textContent = '--:--';
+                document.getElementById('layover-hotel-utc').textContent = 'UTC: --:--';
+                document.getElementById('layover-wake-local').textContent = '--:--';
+                document.getElementById('layover-wake-utc').textContent = 'UTC: --:--';
                 return;
             }
 
-            // STD display
+            // STD display (Local prominent, UTC secondary)
             const stdFormatted = stdStr.padStart(4, '0');
-            document.getElementById('layover-std-utc').textContent = stdFormatted.substring(0, 2) + ':' + stdFormatted.substring(2) + ' UTC';
-            document.getElementById('layover-std-local').textContent = 'Local: ' + layoverUtcToLocal(stdStr);
+            const stdUtcDisplay = stdFormatted.substring(0, 2) + ':' + stdFormatted.substring(2);
+            document.getElementById('layover-std-local').textContent = layoverUtcToLocal(stdStr);
+            document.getElementById('layover-std-utc').textContent = 'UTC: ' + stdUtcDisplay;
 
             // Hotel departure = STD - pickup time
             const pickupHours = pickup ? pickup.hours : 1;
             const pickupMins = pickup ? pickup.minutes : 30;
             const hotelUTC = subtractTime(stdStr, pickupHours, pickupMins);
             if (hotelUTC) {
-                document.getElementById('layover-hotel-utc').textContent = hotelUTC.substring(0, 2) + ':' + hotelUTC.substring(2) + ' UTC';
-                document.getElementById('layover-hotel-local').textContent = 'Local: ' + layoverUtcToLocal(hotelUTC);
+                const hotelUtcDisplay = hotelUTC.substring(0, 2) + ':' + hotelUTC.substring(2);
+                document.getElementById('layover-hotel-local').textContent = layoverUtcToLocal(hotelUTC);
+                document.getElementById('layover-hotel-utc').textContent = 'UTC: ' + hotelUtcDisplay;
 
                 // Wake up = Hotel departure - 1 hour
                 const wakeUTC = subtractTime(hotelUTC, 1, 0);
                 if (wakeUTC) {
-                    document.getElementById('layover-wake-utc').textContent = wakeUTC.substring(0, 2) + ':' + wakeUTC.substring(2) + ' UTC';
-                    document.getElementById('layover-wake-local').textContent = 'Local: ' + layoverUtcToLocal(wakeUTC);
+                    const wakeUtcDisplay = wakeUTC.substring(0, 2) + ':' + wakeUTC.substring(2);
+                    document.getElementById('layover-wake-local').textContent = layoverUtcToLocal(wakeUTC);
+                    document.getElementById('layover-wake-utc').textContent = 'UTC: ' + wakeUtcDisplay;
                 }
             }
 
@@ -2694,13 +2713,14 @@
             const absoluteChocksUTC = addTime(reportUTC, absoluteLimit);
 
             document.getElementById('fdp-max').textContent = formatHoursToHHMM(maxFDP);
-            document.getElementById('fdp-chocks').textContent = formatTimeDisplay(latestChocksUTC);
-            document.getElementById('fdp-chocks-local').textContent = 'Local: ' + utcToLocal(latestChocksUTC);
-            document.getElementById('fdp-offduty').textContent = formatTimeDisplay(latestOffDutyUTC);
-            document.getElementById('fdp-offduty-local').textContent = 'Local: ' + utcToLocal(latestOffDutyUTC);
+            // Local time prominent, UTC secondary
+            document.getElementById('fdp-chocks-local').textContent = utcToLocal(latestChocksUTC);
+            document.getElementById('fdp-chocks').textContent = 'UTC: ' + formatTimeDisplay(latestChocksUTC);
+            document.getElementById('fdp-offduty-local').textContent = utcToLocal(latestOffDutyUTC);
+            document.getElementById('fdp-offduty').textContent = 'UTC: ' + formatTimeDisplay(latestOffDutyUTC);
             document.getElementById('fdp-discretion').textContent = '+' + maxDiscretion + ':00';
-            document.getElementById('fdp-absolute').textContent = formatTimeDisplay(absoluteChocksUTC);
-            document.getElementById('fdp-absolute-local').textContent = 'Local: ' + utcToLocal(absoluteChocksUTC);
+            document.getElementById('fdp-absolute-local').textContent = utcToLocal(absoluteChocksUTC);
+            document.getElementById('fdp-absolute').textContent = 'UTC: ' + formatTimeDisplay(absoluteChocksUTC);
             document.getElementById('fdp-rest-after').textContent = minRest + ':00';
 
             // Warnings
