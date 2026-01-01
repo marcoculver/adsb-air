@@ -889,6 +889,7 @@
         <!-- Tab Navigation -->
         <div class="tab-nav">
             <button class="tab-btn active" onclick="switchTab('tools')">Tools</button>
+            <button class="tab-btn" onclick="switchTab('fuel')">Fuel</button>
             <button class="tab-btn" onclick="switchTab('fdp')">FDP Calculator</button>
         </div>
 
@@ -1036,6 +1037,136 @@
 
             <!-- Timers -->
             <div class="timers-grid" id="timers-container"></div>
+        </div>
+
+        <!-- Fuel Tab -->
+        <div class="tab-content" id="tab-fuel">
+            <div class="fdp-container">
+                <!-- Input Block -->
+                <div class="fdp-section">
+                    <div class="section-title">Fuel Inputs</div>
+                    <div class="fdp-row">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Fuel Required (kg)</label>
+                            <button class="input-btn" id="fuel-req-btn" onclick="openFuelPicker('fuel-req', 'Fuel Required', 'kg')" style="max-width:100%">0</button>
+                            <input type="hidden" id="fuel-req" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Pre Uplift (kg)</label>
+                            <button class="input-btn" id="fuel-pre-btn" onclick="openFuelPicker('fuel-pre', 'Pre Uplift', 'kg')" style="max-width:100%">0</button>
+                            <input type="hidden" id="fuel-pre" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">SG (Density)</label>
+                            <button class="input-btn" id="fuel-sg-btn" onclick="openSGPicker()" style="max-width:100%">0.800</button>
+                            <input type="hidden" id="fuel-sg" value="800">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Actual Uplift (L)</label>
+                            <button class="input-btn" id="fuel-actual-btn" onclick="openFuelPicker('fuel-actual', 'Actual Uplift', 'L')" style="max-width:100%">0</button>
+                            <input type="hidden" id="fuel-actual" value="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tank Split Block -->
+                <div class="fdp-section">
+                    <div class="section-title">Tank Split</div>
+                    <div class="fdp-row">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Left Wing (kg)</label>
+                            <button class="input-btn" id="tank-left-btn" onclick="openFuelPicker('tank-left', 'Left Wing', 'kg')" style="max-width:100%">3,700</button>
+                            <input type="hidden" id="tank-left" value="3700">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Center (kg)</label>
+                            <div class="fdp-result-value green" id="tank-center" style="padding-top:8px">---</div>
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Right Wing (kg)</label>
+                            <button class="input-btn" id="tank-right-btn" onclick="openFuelPicker('tank-right', 'Right Wing', 'kg')" style="max-width:100%">3,700</button>
+                            <input type="hidden" id="tank-right" value="3700">
+                        </div>
+                    </div>
+                    <div style="text-align:center; font-size:0.75rem; color:#888; margin-top:5px;">
+                        Center tank is auto-calculated: Total Required - Left - Right
+                    </div>
+                </div>
+
+                <!-- Fuel Summary Block -->
+                <div class="fdp-section">
+                    <div class="section-title">Fuel Summary</div>
+                    <div class="fdp-results" style="margin-top:0">
+                        <div class="fdp-result-grid">
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Fuel Required</div>
+                                <div class="fdp-result-value" id="summary-req">--- kg</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Pre Uplift</div>
+                                <div class="fdp-result-value" id="summary-pre">--- kg</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Uplift Required</div>
+                                <div class="fdp-result-value yellow" id="summary-uplift-req">--- kg</div>
+                            </div>
+                        </div>
+                        <div class="fdp-result-grid" style="margin-top:15px">
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Departure Fuel</div>
+                                <div class="fdp-result-value" id="summary-dep">--- kg</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Adjustment (+/-)</div>
+                                <button class="input-btn" id="fuel-adj-btn" onclick="openAdjustmentPicker()" style="max-width:100%">0</button>
+                                <input type="hidden" id="fuel-adj" value="">
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Final Departure Fuel</div>
+                                <div class="fdp-result-value green" id="summary-final-dep">--- kg</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Uplift Verification Block -->
+                <div class="fdp-section">
+                    <div class="section-title">Uplift Verification</div>
+                    <div class="fdp-results" style="margin-top:0">
+                        <div class="fdp-result-grid">
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Calculated Uplift</div>
+                                <div class="fdp-result-value" id="calc-uplift">--- L</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Actual Uplift</div>
+                                <div class="fdp-result-value" id="verify-actual">--- L</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Difference</div>
+                                <div class="fdp-result-value" id="uplift-diff">--- %</div>
+                            </div>
+                        </div>
+                        <div class="fdp-result-grid" style="margin-top:15px">
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">-3% Limit</div>
+                                <div class="fdp-result-value" id="limit-low">--- L</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Calculated</div>
+                                <div class="fdp-result-value yellow" id="limit-calc">--- L</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">+3% Limit</div>
+                                <div class="fdp-result-value" id="limit-high">--- L</div>
+                            </div>
+                        </div>
+                        <div id="uplift-status" style="margin-top:15px; text-align:center;"></div>
+                    </div>
+                </div>
+
+                <button class="clear-btn" id="fuel-clear" style="margin-top:15px">Clear All Fuel Data</button>
+            </div>
         </div>
 
         <!-- FDP Calculator Tab -->
@@ -1384,6 +1515,212 @@
                 const maxFuel = mlw - zfw;
                 document.getElementById('mlf-result').textContent = maxFuel.toLocaleString() + ' kg';
             }
+        }
+
+        // ============ FUEL CALCULATOR ============
+        function openFuelPicker(fieldId, title, unit) {
+            const currentVal = document.getElementById(fieldId).value || '';
+            openPicker(title || 'Enter Value', unit || '', currentVal, 6, true, (val) => {
+                document.getElementById(fieldId).value = val;
+                const btn = document.getElementById(fieldId + '-btn');
+                if (btn) {
+                    btn.textContent = val ? parseInt(val, 10).toLocaleString() : '0';
+                    btn.classList.toggle('placeholder', !val);
+                }
+                calculateFuel();
+            });
+        }
+
+        function openSGPicker() {
+            const currentVal = document.getElementById('fuel-sg').value || '800';
+            openPicker('SG (e.g. 800 = 0.800)', '', currentVal, 3, false, (val) => {
+                document.getElementById('fuel-sg').value = val;
+                const btn = document.getElementById('fuel-sg-btn');
+                if (btn) {
+                    const sg = parseInt(val, 10) || 800;
+                    btn.textContent = '0.' + sg.toString().padStart(3, '0');
+                }
+                calculateFuel();
+            });
+        }
+
+        function openAdjustmentPicker() {
+            const currentVal = document.getElementById('fuel-adj').value || '';
+            openPicker('Adjustment (+/-)', 'kg', currentVal.replace('-', ''), 5, true, (val) => {
+                // Show option to make negative after entering
+                const adj = parseInt(val, 10) || 0;
+                if (adj !== 0) {
+                    // Check if user wants positive or negative
+                    const existing = document.getElementById('fuel-adj').value;
+                    const wasNegative = existing && existing.startsWith('-');
+                    document.getElementById('fuel-adj').value = wasNegative ? '-' + val : val;
+                    const btn = document.getElementById('fuel-adj-btn');
+                    if (btn) {
+                        btn.textContent = wasNegative ? '-' + adj.toLocaleString() : '+' + adj.toLocaleString();
+                        btn.onclick = function() { toggleAdjustmentSign(); };
+                    }
+                } else {
+                    document.getElementById('fuel-adj').value = '';
+                    document.getElementById('fuel-adj-btn').textContent = '0';
+                    document.getElementById('fuel-adj-btn').onclick = function() { openAdjustmentPicker(); };
+                }
+                calculateFuel();
+            });
+        }
+
+        function toggleAdjustmentSign() {
+            const val = document.getElementById('fuel-adj').value;
+            if (!val) {
+                openAdjustmentPicker();
+                return;
+            }
+            if (val.startsWith('-')) {
+                document.getElementById('fuel-adj').value = val.substring(1);
+                document.getElementById('fuel-adj-btn').textContent = '+' + parseInt(val.substring(1), 10).toLocaleString();
+            } else {
+                document.getElementById('fuel-adj').value = '-' + val;
+                document.getElementById('fuel-adj-btn').textContent = '-' + parseInt(val, 10).toLocaleString();
+            }
+            calculateFuel();
+        }
+
+        function loadFuel() {
+            const saved = localStorage.getItem('flightFuel');
+            if (saved) {
+                try {
+                    const fuel = JSON.parse(saved);
+                    // Restore values
+                    if (fuel.req) {
+                        document.getElementById('fuel-req').value = fuel.req;
+                        document.getElementById('fuel-req-btn').textContent = parseInt(fuel.req, 10).toLocaleString();
+                        document.getElementById('fuel-req-btn').classList.remove('placeholder');
+                    }
+                    if (fuel.pre) {
+                        document.getElementById('fuel-pre').value = fuel.pre;
+                        document.getElementById('fuel-pre-btn').textContent = parseInt(fuel.pre, 10).toLocaleString();
+                        document.getElementById('fuel-pre-btn').classList.remove('placeholder');
+                    }
+                    if (fuel.sg) {
+                        document.getElementById('fuel-sg').value = fuel.sg;
+                        document.getElementById('fuel-sg-btn').textContent = '0.' + fuel.sg.toString().padStart(3, '0');
+                    }
+                    if (fuel.actual) {
+                        document.getElementById('fuel-actual').value = fuel.actual;
+                        document.getElementById('fuel-actual-btn').textContent = parseInt(fuel.actual, 10).toLocaleString();
+                        document.getElementById('fuel-actual-btn').classList.remove('placeholder');
+                    }
+                    if (fuel.left) {
+                        document.getElementById('tank-left').value = fuel.left;
+                        document.getElementById('tank-left-btn').textContent = parseInt(fuel.left, 10).toLocaleString();
+                    }
+                    if (fuel.right) {
+                        document.getElementById('tank-right').value = fuel.right;
+                        document.getElementById('tank-right-btn').textContent = parseInt(fuel.right, 10).toLocaleString();
+                    }
+                    if (fuel.adj) {
+                        document.getElementById('fuel-adj').value = fuel.adj;
+                        const adj = parseInt(fuel.adj, 10);
+                        document.getElementById('fuel-adj-btn').textContent = (adj >= 0 ? '+' : '') + adj.toLocaleString();
+                        document.getElementById('fuel-adj-btn').onclick = function() { toggleAdjustmentSign(); };
+                    }
+                    calculateFuel();
+                } catch (e) {}
+            }
+        }
+
+        function saveFuel() {
+            const fuel = {
+                req: document.getElementById('fuel-req').value,
+                pre: document.getElementById('fuel-pre').value,
+                sg: document.getElementById('fuel-sg').value,
+                actual: document.getElementById('fuel-actual').value,
+                left: document.getElementById('tank-left').value,
+                right: document.getElementById('tank-right').value,
+                adj: document.getElementById('fuel-adj').value
+            };
+            localStorage.setItem('flightFuel', JSON.stringify(fuel));
+        }
+
+        function calculateFuel() {
+            const fuelReq = parseInt(document.getElementById('fuel-req').value, 10) || 0;
+            const preUplift = parseInt(document.getElementById('fuel-pre').value, 10) || 0;
+            const sgVal = parseInt(document.getElementById('fuel-sg').value, 10) || 800;
+            const sg = sgVal / 1000; // Convert 800 to 0.800
+            const actualUplift = parseInt(document.getElementById('fuel-actual').value, 10) || 0;
+            const tankLeft = parseInt(document.getElementById('tank-left').value, 10) || 3700;
+            const tankRight = parseInt(document.getElementById('tank-right').value, 10) || 3700;
+            const adjustment = parseInt(document.getElementById('fuel-adj').value, 10) || 0;
+
+            // Tank split - center tank calculation
+            const centerTank = fuelReq - tankLeft - tankRight;
+            document.getElementById('tank-center').textContent = fuelReq > 0 ?
+                (centerTank >= 0 ? centerTank.toLocaleString() + ' kg' : 'Wings exceed total!') : '---';
+            if (centerTank < 0 && fuelReq > 0) {
+                document.getElementById('tank-center').className = 'fdp-result-value red';
+            } else {
+                document.getElementById('tank-center').className = 'fdp-result-value green';
+            }
+
+            // Fuel Summary
+            document.getElementById('summary-req').textContent = fuelReq > 0 ? fuelReq.toLocaleString() + ' kg' : '--- kg';
+            document.getElementById('summary-pre').textContent = preUplift > 0 ? preUplift.toLocaleString() + ' kg' : '--- kg';
+
+            const upliftReq = fuelReq - preUplift;
+            document.getElementById('summary-uplift-req').textContent = fuelReq > 0 ? upliftReq.toLocaleString() + ' kg' : '--- kg';
+
+            // Departure fuel
+            document.getElementById('summary-dep').textContent = fuelReq > 0 ? fuelReq.toLocaleString() + ' kg' : '--- kg';
+
+            const finalDep = fuelReq + adjustment;
+            if (fuelReq > 0) {
+                document.getElementById('summary-final-dep').textContent = finalDep.toLocaleString() + ' kg';
+            } else {
+                document.getElementById('summary-final-dep').textContent = '--- kg';
+            }
+
+            // Uplift verification
+            // Calculate uplift in litres: uplift kg / SG = litres
+            const calcUpliftLitres = upliftReq > 0 && sg > 0 ? Math.round(upliftReq / sg) : 0;
+
+            document.getElementById('calc-uplift').textContent = calcUpliftLitres > 0 ? calcUpliftLitres.toLocaleString() + ' L' : '--- L';
+            document.getElementById('verify-actual').textContent = actualUplift > 0 ? actualUplift.toLocaleString() + ' L' : '--- L';
+            document.getElementById('limit-calc').textContent = calcUpliftLitres > 0 ? calcUpliftLitres.toLocaleString() + ' L' : '--- L';
+
+            // 3% limits
+            const lowLimit = Math.round(calcUpliftLitres * 0.97);
+            const highLimit = Math.round(calcUpliftLitres * 1.03);
+            document.getElementById('limit-low').textContent = calcUpliftLitres > 0 ? lowLimit.toLocaleString() + ' L' : '--- L';
+            document.getElementById('limit-high').textContent = calcUpliftLitres > 0 ? highLimit.toLocaleString() + ' L' : '--- L';
+
+            // Percentage difference
+            if (calcUpliftLitres > 0 && actualUplift > 0) {
+                const diff = ((actualUplift - calcUpliftLitres) / calcUpliftLitres) * 100;
+                const diffEl = document.getElementById('uplift-diff');
+                diffEl.textContent = (diff >= 0 ? '+' : '') + diff.toFixed(1) + '%';
+
+                // Color based on range
+                if (Math.abs(diff) <= 3) {
+                    diffEl.className = 'fdp-result-value green';
+                } else if (Math.abs(diff) <= 5) {
+                    diffEl.className = 'fdp-result-value yellow';
+                } else {
+                    diffEl.className = 'fdp-result-value red';
+                }
+
+                // Status message
+                const statusEl = document.getElementById('uplift-status');
+                if (actualUplift >= lowLimit && actualUplift <= highLimit) {
+                    statusEl.innerHTML = '<div class="fdp-warning" style="background:rgba(0,200,80,0.2);border-color:rgba(0,200,80,0.5);color:#00ff88">Actual uplift within 3% tolerance</div>';
+                } else {
+                    statusEl.innerHTML = '<div class="fdp-danger">Actual uplift outside 3% tolerance - verify figures</div>';
+                }
+            } else {
+                document.getElementById('uplift-diff').textContent = '--- %';
+                document.getElementById('uplift-diff').className = 'fdp-result-value';
+                document.getElementById('uplift-status').innerHTML = '';
+            }
+
+            saveFuel();
         }
 
         // ============ DEFAULT TIMERS ============
@@ -2332,16 +2669,39 @@
             calculateACC();
         });
 
+        // ============ FUEL CLEAR HANDLER ============
+        document.getElementById('fuel-clear').addEventListener('click', () => {
+            ['fuel-req', 'fuel-pre', 'fuel-actual'].forEach(field => {
+                document.getElementById(field).value = '';
+                const btn = document.getElementById(field + '-btn');
+                btn.textContent = '0';
+                btn.classList.add('placeholder');
+            });
+            document.getElementById('fuel-sg').value = '800';
+            document.getElementById('fuel-sg-btn').textContent = '0.800';
+            document.getElementById('tank-left').value = '3700';
+            document.getElementById('tank-left-btn').textContent = '3,700';
+            document.getElementById('tank-right').value = '3700';
+            document.getElementById('tank-right-btn').textContent = '3,700';
+            document.getElementById('fuel-adj').value = '';
+            document.getElementById('fuel-adj-btn').textContent = '0';
+            document.getElementById('fuel-adj-btn').onclick = function() { openAdjustmentPicker(); };
+            calculateFuel();
+            localStorage.removeItem('flightFuel');
+        });
+
         // ============ INITIALIZE ============
         loadState();
         loadOOOI();
         loadETA();
         loadTOW();
         loadACC();
+        loadFuel();
         renderTimers();
         updateSectorInputs();
         calculateFDP();
         calculateMLF();
+        calculateFuel();
         startAnimationLoop();
 
         setInterval(() => {
