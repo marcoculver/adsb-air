@@ -15,7 +15,7 @@
 
         body {
             font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: linear-gradient(135deg, #002540 0%, #003d66 50%, #006496 100%);
             min-height: 100vh;
             color: #e8e8e8;
             padding: 20px;
@@ -42,13 +42,13 @@
             border-radius: 10px;
             cursor: pointer;
             background: rgba(255, 255, 255, 0.1);
-            color: #888;
+            color: #aaa;
             font-weight: 600;
             transition: all 0.2s;
         }
 
         .tab-btn.active {
-            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            background: linear-gradient(135deg, #FF8200, #e67300);
             color: #fff;
         }
 
@@ -82,16 +82,16 @@
 
         /* Section styling */
         .section {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 37, 64, 0.7);
             border-radius: 16px;
             padding: 15px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 130, 0, 0.2);
         }
 
         .section-title {
             font-size: 1rem;
-            color: #00d4ff;
+            color: #FF8200;
             margin-bottom: 12px;
             text-align: center;
             font-weight: 600;
@@ -140,7 +140,7 @@
             font-size: 1.1rem;
             text-align: center;
             background: rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(0, 212, 255, 0.3);
+            border: 2px solid rgba(255, 130, 0, 0.3);
             border-radius: 8px;
             color: #00ff88;
             font-family: 'Courier New', monospace;
@@ -151,8 +151,8 @@
         }
 
         .input-btn:hover {
-            border-color: #00d4ff;
-            background: rgba(0, 212, 255, 0.1);
+            border-color: #FF8200;
+            background: rgba(255, 130, 0, 0.1);
         }
 
         .input-btn.placeholder {
@@ -178,7 +178,7 @@
             justify-content: center;
             gap: 20px;
             padding-top: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 130, 0, 0.2);
         }
 
         .result-item {
@@ -199,9 +199,10 @@
 
         .block-time { color: #ffd700; }
         .flight-time { color: #00ff88; }
-        .tow-value { color: #ff9f43; }
+        .tow-value { color: #FF8200; }
         .eta-value { color: #00d4ff; }
         .acc-value { color: #a29bfe; }
+        .mlf-value { color: #00ff88; }
 
         .clear-btn {
             display: block;
@@ -224,17 +225,17 @@
             display: block;
             margin: 8px auto 0;
             padding: 6px 12px;
-            background: rgba(0, 212, 255, 0.2);
-            border: 1px solid rgba(0, 212, 255, 0.5);
+            background: rgba(255, 130, 0, 0.2);
+            border: 1px solid rgba(255, 130, 0, 0.5);
             border-radius: 6px;
-            color: #00d4ff;
+            color: #FF8200;
             font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .preset-btn:hover {
-            background: rgba(0, 212, 255, 0.3);
+            background: rgba(255, 130, 0, 0.3);
         }
 
         /* ETA Section */
@@ -265,6 +266,38 @@
             margin-bottom: 8px;
         }
 
+        /* Aircraft selector */
+        .aircraft-selector {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+            justify-content: center;
+        }
+
+        .aircraft-btn {
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(255, 130, 0, 0.3);
+            border-radius: 6px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.2);
+            color: #888;
+            transition: all 0.2s;
+        }
+
+        .aircraft-btn.active {
+            background: rgba(255, 130, 0, 0.3);
+            border-color: #FF8200;
+            color: #FF8200;
+        }
+
+        .mlw-info {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #7ec8e3;
+            margin-bottom: 8px;
+        }
+
         /* Timers Grid */
         .timers-grid {
             display: grid;
@@ -273,11 +306,11 @@
         }
 
         .timer-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 37, 64, 0.7);
             border-radius: 16px;
             padding: 15px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 130, 0, 0.2);
             display: flex;
             gap: 15px;
             align-items: center;
@@ -289,7 +322,7 @@
         }
 
         @keyframes flashRed {
-            0%, 100% { background: rgba(255, 255, 255, 0.05); box-shadow: none; }
+            0%, 100% { background: rgba(0, 37, 64, 0.7); box-shadow: none; }
             50% { background: rgba(255, 0, 0, 0.4); box-shadow: 0 0 30px rgba(255, 0, 0, 0.6); }
         }
 
@@ -313,7 +346,7 @@
             left: 8px;
             right: 8px;
             bottom: 8px;
-            background: linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%);
+            background: linear-gradient(135deg, #002540 0%, #001a2e 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -339,7 +372,7 @@
             padding: 6px 10px;
             font-size: 0.95rem;
             background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 130, 0, 0.2);
             border-radius: 6px;
             color: #fff;
             margin-bottom: 8px;
@@ -347,7 +380,7 @@
 
         .timer-name-input:focus {
             outline: none;
-            border-color: #00d4ff;
+            border-color: #FF8200;
         }
 
         .timer-type-toggle {
@@ -369,7 +402,7 @@
         }
 
         .type-btn.active {
-            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            background: linear-gradient(135deg, #FF8200, #e67300);
             color: #fff;
         }
 
@@ -386,7 +419,7 @@
             font-size: 1.1rem;
             text-align: center;
             background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 130, 0, 0.3);
             border-radius: 6px;
             color: #00ff88;
             font-family: 'Courier New', monospace;
@@ -396,8 +429,8 @@
         }
 
         .time-input-btn:hover {
-            border-color: #00d4ff;
-            background: rgba(0, 212, 255, 0.1);
+            border-color: #FF8200;
+            background: rgba(255, 130, 0, 0.1);
         }
 
         .time-separator {
@@ -440,7 +473,7 @@
         }
 
         .btn-pause {
-            background: linear-gradient(135deg, #ff9800, #f57c00);
+            background: linear-gradient(135deg, #FF8200, #e67300);
             color: #fff;
         }
 
@@ -468,10 +501,10 @@
         }
 
         .number-picker {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #002540 0%, #003d66 100%);
             border-radius: 20px;
             padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 130, 0, 0.3);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             min-width: 280px;
         }
@@ -479,7 +512,7 @@
         .picker-title {
             text-align: center;
             font-size: 1.1rem;
-            color: #00d4ff;
+            color: #FF8200;
             margin-bottom: 20px;
         }
 
@@ -525,7 +558,7 @@
         }
 
         .picker-btn:hover {
-            background: rgba(0, 212, 255, 0.3);
+            background: rgba(255, 130, 0, 0.3);
         }
 
         .picker-btn:active {
@@ -564,10 +597,10 @@
         /* Color states for countdown */
         .color-green { --clock-color: #00c853; --timer-color: #00ff88; }
         .color-yellow { --clock-color: #ffc107; --timer-color: #ffd54f; }
-        .color-orange { --clock-color: #ff9800; --timer-color: #ffab40; }
+        .color-orange { --clock-color: #FF8200; --timer-color: #FF8200; }
         .color-red { --clock-color: #f44336; --timer-color: #ff5252; }
         .color-expired { --clock-color: #b71c1c; --timer-color: #ff1744; }
-        .color-neutral { --clock-color: #00d4ff; --timer-color: #00d4ff; }
+        .color-neutral { --clock-color: #006496; --timer-color: #00d4ff; }
 
         /* FDP Calculator Styles */
         .fdp-container {
@@ -576,12 +609,12 @@
         }
 
         .fdp-section {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 37, 64, 0.7);
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 20px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 130, 0, 0.2);
         }
 
         .fdp-row {
@@ -606,7 +639,7 @@
             padding: 10px;
             font-size: 1rem;
             background: rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(0, 212, 255, 0.3);
+            border: 2px solid rgba(255, 130, 0, 0.3);
             border-radius: 8px;
             color: #00ff88;
             font-family: 'Courier New', monospace;
@@ -617,7 +650,7 @@
         }
 
         .fdp-select option {
-            background: #1a1a2e;
+            background: #002540;
             color: #fff;
         }
 
@@ -654,18 +687,24 @@
             font-weight: bold;
         }
 
+        .fdp-result-local {
+            font-size: 0.8rem;
+            color: #7ec8e3;
+            margin-top: 3px;
+        }
+
         .fdp-result-value.green { color: #00ff88; }
         .fdp-result-value.yellow { color: #ffd700; }
-        .fdp-result-value.orange { color: #ff9f43; }
+        .fdp-result-value.orange { color: #FF8200; }
         .fdp-result-value.red { color: #ff5252; }
 
         .fdp-warning {
-            background: rgba(255, 152, 0, 0.2);
-            border: 1px solid rgba(255, 152, 0, 0.5);
+            background: rgba(255, 130, 0, 0.2);
+            border: 1px solid rgba(255, 130, 0, 0.5);
             border-radius: 8px;
             padding: 10px 15px;
             margin-top: 15px;
-            color: #ffab40;
+            color: #FF8200;
             font-size: 0.9rem;
         }
 
@@ -700,7 +739,7 @@
 
         .sector-title {
             font-size: 0.85rem;
-            color: #00d4ff;
+            color: #FF8200;
             margin-bottom: 10px;
             text-align: center;
         }
@@ -714,6 +753,104 @@
             color: #888;
             display: block;
             margin-bottom: 3px;
+        }
+
+        .turnaround-display {
+            text-align: center;
+            padding: 5px;
+            background: rgba(255, 130, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        .turnaround-label {
+            font-size: 0.65rem;
+            color: #888;
+        }
+
+        .turnaround-value {
+            font-size: 0.9rem;
+            color: #FF8200;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Local time offset selector */
+        .local-offset-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .local-offset-selector label {
+            font-size: 0.85rem;
+            color: #7ec8e3;
+        }
+
+        .local-offset-selector select {
+            padding: 5px 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 130, 0, 0.3);
+            border-radius: 5px;
+            color: #FF8200;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Actual tracking section */
+        .actual-tracking {
+            background: rgba(0, 100, 150, 0.1);
+            border: 1px solid rgba(0, 100, 150, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .actual-tracking-title {
+            font-size: 0.9rem;
+            color: #006496;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .actual-sector-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        @media (max-width: 800px) {
+            .actual-sector-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .duty-estimate {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .duty-estimate-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+        }
+
+        .duty-estimate-label {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .duty-estimate-value {
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
         }
 
         /* iPad specific */
@@ -877,6 +1014,26 @@
                 </div>
             </div>
 
+            <!-- Max Landing Fuel Calculator -->
+            <div class="section" style="max-width: 400px; margin: 0 auto 25px;">
+                <div class="section-title">Max Landing Fuel</div>
+                <div class="aircraft-selector">
+                    <button class="aircraft-btn active" id="ac-b738" onclick="selectAircraft('B738')">B738</button>
+                    <button class="aircraft-btn" id="ac-b38m" onclick="selectAircraft('B38M')">B38M</button>
+                    <button class="aircraft-btn" id="ac-b39m" onclick="selectAircraft('B39M')">B39M</button>
+                </div>
+                <div class="mlw-info">MLW: <span id="mlw-display">66,360</span> kg</div>
+                <div class="results-row" style="border:none; padding-top:5px;">
+                    <div class="result-item">
+                        <div class="result-label">MAX FUEL ON LANDING</div>
+                        <div class="result-value mlf-value" id="mlf-result">---</div>
+                    </div>
+                </div>
+                <div style="text-align:center; font-size:0.7rem; color:#888; margin-top:5px;">
+                    Uses ZFW from TOW Calculator
+                </div>
+            </div>
+
             <!-- Timers -->
             <div class="timers-grid" id="timers-container"></div>
         </div>
@@ -884,6 +1041,39 @@
         <!-- FDP Calculator Tab -->
         <div class="tab-content" id="tab-fdp">
             <div class="fdp-container">
+                <!-- Local Time Offset -->
+                <div class="local-offset-selector">
+                    <label>Local Time Offset:</label>
+                    <select id="local-offset" onchange="calculateFDP()">
+                        <option value="-12">UTC-12</option>
+                        <option value="-11">UTC-11</option>
+                        <option value="-10">UTC-10</option>
+                        <option value="-9">UTC-9</option>
+                        <option value="-8">UTC-8</option>
+                        <option value="-7">UTC-7</option>
+                        <option value="-6">UTC-6</option>
+                        <option value="-5">UTC-5</option>
+                        <option value="-4">UTC-4</option>
+                        <option value="-3">UTC-3</option>
+                        <option value="-2">UTC-2</option>
+                        <option value="-1">UTC-1</option>
+                        <option value="0">UTC+0</option>
+                        <option value="1">UTC+1</option>
+                        <option value="2">UTC+2</option>
+                        <option value="3">UTC+3</option>
+                        <option value="4" selected>UTC+4 (DXB)</option>
+                        <option value="5">UTC+5</option>
+                        <option value="5.5">UTC+5:30</option>
+                        <option value="6">UTC+6</option>
+                        <option value="7">UTC+7</option>
+                        <option value="8">UTC+8</option>
+                        <option value="9">UTC+9</option>
+                        <option value="10">UTC+10</option>
+                        <option value="11">UTC+11</option>
+                        <option value="12">UTC+12</option>
+                    </select>
+                </div>
+
                 <div class="fdp-section">
                     <div class="section-title">Duty Setup</div>
                     <div class="fdp-row">
@@ -928,9 +1118,30 @@
                 </div>
 
                 <div class="fdp-section">
-                    <div class="section-title">Sector Details (Optional)</div>
+                    <div class="section-title">Scheduled Sector Times</div>
                     <div class="sector-inputs" id="sector-inputs">
                         <!-- Dynamically filled -->
+                    </div>
+
+                    <div class="actual-tracking">
+                        <div class="actual-tracking-title">Actual Times Tracking</div>
+                        <div class="actual-sector-grid" id="actual-sector-inputs">
+                            <!-- Dynamically filled -->
+                        </div>
+                        <div class="duty-estimate" id="duty-estimate">
+                            <div class="duty-estimate-row">
+                                <span class="duty-estimate-label">Estimated Duty End (UTC):</span>
+                                <span class="duty-estimate-value" id="est-duty-end">--:--</span>
+                            </div>
+                            <div class="duty-estimate-row">
+                                <span class="duty-estimate-label">Estimated Duty End (Local):</span>
+                                <span class="duty-estimate-value" id="est-duty-end-local">--:--</span>
+                            </div>
+                            <div class="duty-estimate-row">
+                                <span class="duty-estimate-label">Status:</span>
+                                <span class="duty-estimate-value green" id="duty-status">---</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -943,20 +1154,23 @@
                                 <div class="fdp-result-value green" id="fdp-max">--:--</div>
                             </div>
                             <div class="fdp-result-item">
-                                <div class="fdp-result-label">Latest On-Chocks</div>
+                                <div class="fdp-result-label">Latest On-Chocks (UTC)</div>
                                 <div class="fdp-result-value green" id="fdp-chocks">--:--</div>
+                                <div class="fdp-result-local" id="fdp-chocks-local">Local: --:--</div>
                             </div>
                             <div class="fdp-result-item">
-                                <div class="fdp-result-label">Latest Off-Duty</div>
+                                <div class="fdp-result-label">Latest Off-Duty (UTC)</div>
                                 <div class="fdp-result-value green" id="fdp-offduty">--:--</div>
+                                <div class="fdp-result-local" id="fdp-offduty-local">Local: --:--</div>
                             </div>
                             <div class="fdp-result-item">
                                 <div class="fdp-result-label">Max Discretion</div>
                                 <div class="fdp-result-value yellow" id="fdp-discretion">+3:00</div>
                             </div>
                             <div class="fdp-result-item">
-                                <div class="fdp-result-label">Absolute Limit</div>
+                                <div class="fdp-result-label">Absolute Limit (UTC)</div>
                                 <div class="fdp-result-value orange" id="fdp-absolute">--:--</div>
+                                <div class="fdp-result-local" id="fdp-absolute-local">Local: --:--</div>
                             </div>
                             <div class="fdp-result-item">
                                 <div class="fdp-result-label">Min Rest After</div>
@@ -976,7 +1190,11 @@
                             <input type="hidden" id="fdp-actual-report" value="">
                         </div>
                         <div class="fdp-field">
-                            <label class="fdp-label">Current Local Time</label>
+                            <label class="fdp-label">Current UTC</label>
+                            <div class="fdp-result-value" id="fdp-utc-time" style="padding-top:10px">--:--:--</div>
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Current Local</label>
                             <div class="fdp-result-value" id="fdp-local-time" style="padding-top:10px">--:--:--</div>
                         </div>
                     </div>
@@ -1042,12 +1260,14 @@
         let pickerValue = '';
         let pickerMaxLength = 6;
         let pickerFormatCommas = false;
+        let pickerFirstInput = true; // Track if this is first input since opening
 
         function openPicker(title, unit, currentValue, maxLength, formatCommas, callback) {
             pickerCallback = callback;
             pickerValue = currentValue.toString().replace(/,/g, '');
             pickerMaxLength = maxLength;
             pickerFormatCommas = formatCommas;
+            pickerFirstInput = true; // Reset on open
             document.getElementById('picker-title').textContent = title;
             document.getElementById('picker-unit').textContent = unit || '';
             updatePickerDisplay();
@@ -1068,6 +1288,12 @@
         }
 
         function pickerAppend(digit) {
+            // If this is first input and there's existing value, clear it first
+            if (pickerFirstInput && pickerValue.length > 0) {
+                pickerValue = '';
+            }
+            pickerFirstInput = false;
+
             if (pickerValue.length < pickerMaxLength) {
                 pickerValue += digit;
                 updatePickerDisplay();
@@ -1076,10 +1302,12 @@
 
         function pickerClear() {
             pickerValue = '';
+            pickerFirstInput = false;
             updatePickerDisplay();
         }
 
         function pickerBackspace() {
+            pickerFirstInput = false;
             pickerValue = pickerValue.slice(0, -1);
             updatePickerDisplay();
         }
@@ -1105,6 +1333,10 @@
                 else if (fieldId === 'eta-time') { etaManualStartTime = null; calculateETA(); }
                 else if (fieldId === 'utc-manual') { etaManualStartTime = val ? Date.now() : null; saveETA(); calculateETA(); }
                 else if (fieldId === 'fdp-report' || fieldId === 'fdp-actual-report') calculateFDP();
+                else if (fieldId.startsWith('sector-') || fieldId.startsWith('actual-')) {
+                    calculateSectorTurnarounds();
+                    estimateDutyEnd();
+                }
             });
         }
 
@@ -1118,9 +1350,40 @@
                     btn.textContent = val ? parseInt(val, 10).toLocaleString() : '0';
                     btn.classList.toggle('placeholder', !val);
                 }
-                if (fieldId.startsWith('calc-')) calculateTOW();
+                if (fieldId.startsWith('calc-')) {
+                    calculateTOW();
+                    calculateMLF();
+                }
                 else if (fieldId === 'opt-acc' || fieldId === 'airfield-elev') calculateACC();
             });
+        }
+
+        // ============ AIRCRAFT & MLF ============
+        const aircraftMLW = {
+            'B738': 66360,
+            'B38M': 69308,
+            'B39M': 74343
+        };
+        let selectedAircraft = 'B738';
+
+        function selectAircraft(type) {
+            selectedAircraft = type;
+            document.querySelectorAll('.aircraft-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('ac-' + type.toLowerCase()).classList.add('active');
+            document.getElementById('mlw-display').textContent = aircraftMLW[type].toLocaleString();
+            calculateMLF();
+        }
+
+        function calculateMLF() {
+            const zfw = parseInt(document.getElementById('calc-zfw').value, 10) || 0;
+            const mlw = aircraftMLW[selectedAircraft];
+
+            if (zfw === 0) {
+                document.getElementById('mlf-result').textContent = '---';
+            } else {
+                const maxFuel = mlw - zfw;
+                document.getElementById('mlf-result').textContent = maxFuel.toLocaleString() + ' kg';
+            }
         }
 
         // ============ DEFAULT TIMERS ============
@@ -1362,6 +1625,7 @@
                         btn.classList.toggle('placeholder', !val);
                     });
                     calculateTOW();
+                    calculateMLF();
                 } catch (e) {}
             }
         }
@@ -1498,26 +1762,189 @@
             return `${h.toString().padStart(2, '0')}${m.toString().padStart(2, '0')}`;
         }
 
+        function formatTimeDisplay(timeStr) {
+            if (!timeStr || timeStr === '--:--') return '--:--';
+            return timeStr.substring(0, 2) + ':' + timeStr.substring(2);
+        }
+
+        function getLocalOffset() {
+            return parseFloat(document.getElementById('local-offset').value) || 4;
+        }
+
+        function localToUTC(localTimeStr) {
+            const time = parseTime(localTimeStr);
+            if (!time) return null;
+            const offset = getLocalOffset();
+            let utcMins = time.hours * 60 + time.minutes - (offset * 60);
+            if (utcMins < 0) utcMins += 24 * 60;
+            if (utcMins >= 24 * 60) utcMins -= 24 * 60;
+            const h = Math.floor(utcMins / 60);
+            const m = utcMins % 60;
+            return `${h.toString().padStart(2, '0')}${m.toString().padStart(2, '0')}`;
+        }
+
+        function utcToLocal(utcTimeStr) {
+            const time = parseTime(utcTimeStr);
+            if (!time) return '--:--';
+            const offset = getLocalOffset();
+            let localMins = time.hours * 60 + time.minutes + (offset * 60);
+            if (localMins < 0) localMins += 24 * 60;
+            if (localMins >= 24 * 60) localMins -= 24 * 60;
+            const h = Math.floor(localMins / 60);
+            const m = localMins % 60;
+            return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+        }
+
         function updateSectorInputs() {
             const sectors = parseInt(document.getElementById('fdp-sectors').value, 10);
             const container = document.getElementById('sector-inputs');
+            const actualContainer = document.getElementById('actual-sector-inputs');
             let html = '';
+            let actualHtml = '';
 
             for (let i = 1; i <= sectors; i++) {
                 html += `
                     <div class="sector-card">
                         <div class="sector-title">Sector ${i}</div>
                         <div class="sector-field">
-                            <label>Block Time</label>
+                            <label>STD (Local)</label>
                             <button class="input-btn" style="width:100%;max-width:100%"
-                                    id="sector-${i}-block-btn"
-                                    onclick="openTimePicker('sector-${i}-block')">--:--</button>
-                            <input type="hidden" id="sector-${i}-block" value="">
+                                    id="sector-${i}-std-btn"
+                                    onclick="openTimePicker('sector-${i}-std')">----</button>
+                            <input type="hidden" id="sector-${i}-std" value="">
+                        </div>
+                        <div class="sector-field">
+                            <label>STA (Local)</label>
+                            <button class="input-btn" style="width:100%;max-width:100%"
+                                    id="sector-${i}-sta-btn"
+                                    onclick="openTimePicker('sector-${i}-sta')">----</button>
+                            <input type="hidden" id="sector-${i}-sta" value="">
+                        </div>
+                        ${i < sectors ? `
+                        <div class="turnaround-display">
+                            <div class="turnaround-label">Turnaround</div>
+                            <div class="turnaround-value" id="turnaround-${i}">--:--</div>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+
+                actualHtml += `
+                    <div class="sector-card">
+                        <div class="sector-title">Sector ${i}</div>
+                        <div class="sector-field">
+                            <label>Actual OFF</label>
+                            <button class="input-btn" style="width:100%;max-width:100%"
+                                    id="actual-${i}-off-btn"
+                                    onclick="openTimePicker('actual-${i}-off')">----</button>
+                            <input type="hidden" id="actual-${i}-off" value="">
+                        </div>
+                        <div class="sector-field">
+                            <label>Actual ON</label>
+                            <button class="input-btn" style="width:100%;max-width:100%"
+                                    id="actual-${i}-on-btn"
+                                    onclick="openTimePicker('actual-${i}-on')">----</button>
+                            <input type="hidden" id="actual-${i}-on" value="">
                         </div>
                     </div>
                 `;
             }
             container.innerHTML = html;
+            actualContainer.innerHTML = actualHtml;
+        }
+
+        function calculateSectorTurnarounds() {
+            const sectors = parseInt(document.getElementById('fdp-sectors').value, 10);
+
+            for (let i = 1; i < sectors; i++) {
+                const staEl = document.getElementById(`sector-${i}-sta`);
+                const stdEl = document.getElementById(`sector-${i + 1}-std`);
+                const turnaroundEl = document.getElementById(`turnaround-${i}`);
+
+                if (staEl && stdEl && turnaroundEl) {
+                    const sta = parseTime(staEl.value);
+                    const std = parseTime(stdEl.value);
+
+                    if (sta && std) {
+                        const diff = timeDiff(sta, std);
+                        turnaroundEl.textContent = formatMinutes(diff);
+                    } else {
+                        turnaroundEl.textContent = '--:--';
+                    }
+                }
+            }
+        }
+
+        function estimateDutyEnd() {
+            const sectors = parseInt(document.getElementById('fdp-sectors').value, 10);
+            const reportTime = document.getElementById('fdp-report').value || '0600';
+            const crewType = document.getElementById('fdp-crew-type').value;
+            const acclimatized = document.getElementById('fdp-acclimatized').value;
+            const restType = document.getElementById('fdp-rest').value;
+            const maxFDP = getMaxFDP(crewType, acclimatized, restType, reportTime, sectors);
+            const maxDiscretion = sectors === 1 ? 3 : 2;
+
+            // Check if we have actual times to estimate from
+            let lastActualOn = null;
+            for (let i = sectors; i >= 1; i--) {
+                const onEl = document.getElementById(`actual-${i}-on`);
+                if (onEl && onEl.value) {
+                    lastActualOn = onEl.value;
+                    break;
+                }
+            }
+
+            // If we have actual ON time, estimate duty end as ON + 30 min post-flight
+            let estDutyEndUTC = null;
+            if (lastActualOn) {
+                estDutyEndUTC = addTime(lastActualOn, 0.5); // Add 30 min post-flight
+            } else {
+                // Use last scheduled STA
+                const lastStaEl = document.getElementById(`sector-${sectors}-sta`);
+                if (lastStaEl && lastStaEl.value) {
+                    const staUTC = localToUTC(lastStaEl.value);
+                    estDutyEndUTC = addTime(staUTC, 0.5);
+                }
+            }
+
+            const estEndEl = document.getElementById('est-duty-end');
+            const estEndLocalEl = document.getElementById('est-duty-end-local');
+            const statusEl = document.getElementById('duty-status');
+
+            if (estDutyEndUTC) {
+                estEndEl.textContent = formatTimeDisplay(estDutyEndUTC);
+                estEndLocalEl.textContent = utcToLocal(estDutyEndUTC);
+
+                // Calculate if within limits
+                const reportUTC = localToUTC(reportTime);
+                const reportParsed = parseTime(reportUTC);
+                const estEndParsed = parseTime(estDutyEndUTC);
+
+                if (reportParsed && estEndParsed) {
+                    let dutyMins = (estEndParsed.hours * 60 + estEndParsed.minutes) - (reportParsed.hours * 60 + reportParsed.minutes);
+                    if (dutyMins < 0) dutyMins += 24 * 60;
+
+                    const maxFDPMins = maxFDP * 60;
+                    const absoluteLimitMins = (maxFDP + maxDiscretion) * 60;
+
+                    if (dutyMins <= maxFDPMins) {
+                        statusEl.textContent = 'Within FDP';
+                        statusEl.className = 'duty-estimate-value green';
+                    } else if (dutyMins <= absoluteLimitMins) {
+                        const intoDiscretion = Math.floor(dutyMins - maxFDPMins);
+                        statusEl.textContent = `In Discretion (+${formatMinutes(intoDiscretion)})`;
+                        statusEl.className = 'duty-estimate-value orange';
+                    } else {
+                        statusEl.textContent = 'EXCEEDS LIMIT';
+                        statusEl.className = 'duty-estimate-value red';
+                    }
+                }
+            } else {
+                estEndEl.textContent = '--:--';
+                estEndLocalEl.textContent = '--:--';
+                statusEl.textContent = '---';
+                statusEl.className = 'duty-estimate-value';
+            }
         }
 
         function calculateFDP() {
@@ -1536,15 +1963,20 @@
             const absoluteLimit = maxFDP + maxDiscretion;
             const minRest = crewType === 'flight' ? 12 : 11;
 
-            const latestChocks = addTime(reportTime, maxFDP);
-            const latestOffDuty = addTime(reportTime, maxFDP + 0.5);
-            const absoluteChocks = addTime(reportTime, absoluteLimit);
+            // Convert report time to UTC for calculations
+            const reportUTC = localToUTC(reportTime);
+            const latestChocksUTC = addTime(reportUTC, maxFDP);
+            const latestOffDutyUTC = addTime(reportUTC, maxFDP + 0.5);
+            const absoluteChocksUTC = addTime(reportUTC, absoluteLimit);
 
             document.getElementById('fdp-max').textContent = formatHoursToHHMM(maxFDP);
-            document.getElementById('fdp-chocks').textContent = latestChocks.substring(0, 2) + ':' + latestChocks.substring(2);
-            document.getElementById('fdp-offduty').textContent = latestOffDuty.substring(0, 2) + ':' + latestOffDuty.substring(2);
+            document.getElementById('fdp-chocks').textContent = formatTimeDisplay(latestChocksUTC);
+            document.getElementById('fdp-chocks-local').textContent = 'Local: ' + utcToLocal(latestChocksUTC);
+            document.getElementById('fdp-offduty').textContent = formatTimeDisplay(latestOffDutyUTC);
+            document.getElementById('fdp-offduty-local').textContent = 'Local: ' + utcToLocal(latestOffDutyUTC);
             document.getElementById('fdp-discretion').textContent = '+' + maxDiscretion + ':00';
-            document.getElementById('fdp-absolute').textContent = absoluteChocks.substring(0, 2) + ':' + absoluteChocks.substring(2);
+            document.getElementById('fdp-absolute').textContent = formatTimeDisplay(absoluteChocksUTC);
+            document.getElementById('fdp-absolute-local').textContent = 'Local: ' + utcToLocal(absoluteChocksUTC);
             document.getElementById('fdp-rest-after').textContent = minRest + ':00';
 
             // Warnings
@@ -1562,11 +1994,18 @@
 
             // Live tracker
             updateLiveTracker(maxFDP);
+            calculateSectorTurnarounds();
+            estimateDutyEnd();
         }
 
         function updateLiveTracker(maxFDP) {
             const now = new Date();
-            const localTime = now.toLocaleTimeString('en-GB', { hour12: false });
+            const utcTime = now.toISOString().substring(11, 19);
+            document.getElementById('fdp-utc-time').textContent = utcTime;
+
+            const offset = getLocalOffset();
+            const localDate = new Date(now.getTime() + offset * 60 * 60 * 1000);
+            const localTime = localDate.toISOString().substring(11, 19);
             document.getElementById('fdp-local-time').textContent = localTime;
 
             const actualReport = document.getElementById('fdp-actual-report').value;
@@ -1580,11 +2019,13 @@
                 return;
             }
 
-            const report = parseTime(actualReport);
+            // Convert actual report from local to UTC for calculations
+            const reportUTC = localToUTC(actualReport);
+            const report = parseTime(reportUTC);
             if (!report) return;
 
             const reportMins = report.hours * 60 + report.minutes;
-            const nowMins = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+            const nowMins = now.getUTCHours() * 60 + now.getUTCMinutes() + now.getUTCSeconds() / 60;
             let elapsedMins = nowMins - reportMins;
             if (elapsedMins < -60) elapsedMins += 24 * 60;
 
@@ -1869,6 +2310,7 @@
                 btn.classList.add('placeholder');
             });
             document.getElementById('tow-result').textContent = '---';
+            document.getElementById('mlf-result').textContent = '---';
             localStorage.removeItem('flightTOW');
         });
 
@@ -1899,6 +2341,7 @@
         renderTimers();
         updateSectorInputs();
         calculateFDP();
+        calculateMLF();
         startAnimationLoop();
 
         setInterval(() => {
