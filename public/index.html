@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Flight Timers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #e8e8e8;
+            padding: 20px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Top sections grid */
+        .top-sections {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 1200px) {
+            .top-sections {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .top-sections {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Section styling */
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 1rem;
+            color: #00d4ff;
+            margin-bottom: 12px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Input grids */
+        .input-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .input-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .input-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .input-label {
+            font-size: 0.75rem;
+            color: #7ec8e3;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .num-input {
+            width: 100%;
+            max-width: 80px;
+            padding: 10px 6px;
+            font-size: 1.2rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .num-input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .num-input::placeholder {
+            color: rgba(0, 255, 136, 0.3);
+        }
+
+        .input-with-unit {
+            position: relative;
+            width: 100%;
+            max-width: 80px;
+        }
+
+        .input-with-unit input {
+            width: 100%;
+            padding-right: 25px;
+        }
+
+        .input-unit {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7rem;
+            color: #888;
+            pointer-events: none;
+        }
+
+        .results-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-item {
+            text-align: center;
+        }
+
+        .result-label {
+            font-size: 0.7rem;
+            color: #888;
+            margin-bottom: 2px;
+        }
+
+        .result-value {
+            font-size: 1.2rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .block-time { color: #ffd700; }
+        .flight-time { color: #00ff88; }
+        .tow-value { color: #ff9f43; }
+        .eta-value { color: #00d4ff; }
+        .acc-value { color: #a29bfe; }
+
+        .clear-btn {
+            display: block;
+            margin: 10px auto 0;
+            padding: 5px 14px;
+            background: rgba(255, 100, 100, 0.2);
+            border: 1px solid rgba(255, 100, 100, 0.5);
+            border-radius: 6px;
+            color: #ff6b6b;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .clear-btn:hover {
+            background: rgba(255, 100, 100, 0.3);
+        }
+
+        .preset-btn {
+            display: block;
+            margin: 8px auto 0;
+            padding: 6px 12px;
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid rgba(0, 212, 255, 0.5);
+            border-radius: 6px;
+            color: #00d4ff;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preset-btn:hover {
+            background: rgba(0, 212, 255, 0.3);
+        }
+
+        /* ETA Section */
+        .eta-countdown {
+            font-size: 1.8rem;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #00d4ff;
+            text-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+            margin: 10px 0;
+        }
+
+        .eta-countdown.warning {
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .eta-countdown.critical {
+            color: #ff5252;
+            text-shadow: 0 0 15px rgba(255, 82, 82, 0.5);
+        }
+
+        .utc-display {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        /* Timers Grid */
+        .timers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 15px;
+        }
+
+        .timer-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            transition: background-color 0.15s, box-shadow 0.15s;
+        }
+
+        .timer-card.flashing {
+            animation: flashRed 0.3s ease-in-out;
+        }
+
+        @keyframes flashRed {
+            0%, 100% { background: rgba(255, 255, 255, 0.05); box-shadow: none; }
+            50% { background: rgba(255, 0, 0, 0.4); box-shadow: 0 0 30px rgba(255, 0, 0, 0.6); }
+        }
+
+        /* Clock Face */
+        .clock-container {
+            flex-shrink: 0;
+        }
+
+        .clock-face {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            position: relative;
+            background: conic-gradient(from 0deg, var(--clock-color, #333) var(--progress, 0%), #222 var(--progress, 0%));
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .clock-inner {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            background: linear-gradient(135deg, #2a2a3e 0%, #1a1a2e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .clock-time {
+            font-size: 0.85rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        /* Timer Controls */
+        .timer-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .timer-name-input {
+            width: 100%;
+            padding: 6px 10px;
+            font-size: 0.95rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .timer-name-input:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+
+        .timer-type-toggle {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 8px;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 6px;
+            font-size: 0.8rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.1);
+            color: #888;
+        }
+
+        .type-btn.active {
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            color: #fff;
+        }
+
+        .timer-time-setup {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 8px;
+            justify-content: center;
+        }
+
+        .time-input-btn {
+            width: 55px;
+            height: 40px;
+            font-size: 1.1rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .time-input-btn:hover {
+            border-color: #00d4ff;
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .time-separator {
+            display: flex;
+            align-items: center;
+            color: #666;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .timer-display {
+            font-size: 1.8rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px currentColor;
+            color: var(--timer-color, #00ff88);
+        }
+
+        .timer-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .timer-btn {
+            flex: 1;
+            padding: 8px;
+            font-size: 0.85rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, #00c853, #009624);
+            color: #fff;
+        }
+
+        .btn-pause {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: #fff;
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #f44336, #c62828);
+            color: #fff;
+        }
+
+        /* Number Picker Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .number-picker {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            min-width: 280px;
+        }
+
+        .picker-title {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #00d4ff;
+            margin-bottom: 20px;
+        }
+
+        .picker-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .picker-value {
+            font-size: 3rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #00ff88;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .picker-unit {
+            font-size: 1.2rem;
+            color: #888;
+        }
+
+        .picker-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .picker-btn {
+            padding: 15px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .picker-btn:hover {
+            background: rgba(0, 212, 255, 0.3);
+        }
+
+        .picker-btn:active {
+            transform: scale(0.95);
+        }
+
+        .picker-btn.clear {
+            background: rgba(255, 100, 100, 0.3);
+        }
+
+        .picker-btn.done {
+            background: linear-gradient(135deg, #00c853, #009624);
+        }
+
+        .picker-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .picker-actions button {
+            flex: 1;
+            padding: 12px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .picker-cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: #888;
+        }
+
+        .picker-confirm {
+            background: linear-gradient(135deg, #00c853, #009624);
+            color: #fff;
+        }
+
+        /* Color states for countdown */
+        .color-green { --clock-color: #00c853; --timer-color: #00ff88; }
+        .color-yellow { --clock-color: #ffc107; --timer-color: #ffd54f; }
+        .color-orange { --clock-color: #ff9800; --timer-color: #ffab40; }
+        .color-red { --clock-color: #f44336; --timer-color: #ff5252; }
+        .color-expired { --clock-color: #b71c1c; --timer-color: #ff1744; }
+        .color-neutral { --clock-color: #00d4ff; --timer-color: #00d4ff; }
+
+        /* iPad specific */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .timer-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .timer-display {
+                font-size: 1.6rem;
+            }
+        }
+
+        button {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .timer-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Flight Timers</h1>
+
+        <div class="top-sections">
+            <!-- OOOI Section -->
+            <div class="section">
+                <div class="section-title">OOOI</div>
+                <div class="input-grid-4">
+                    <div class="input-group">
+                        <label class="input-label">OUT</label>
+                        <input type="text" class="num-input clear-on-focus" id="oooi-out" maxlength="4" placeholder="0000" inputmode="numeric">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">OFF</label>
+                        <input type="text" class="num-input clear-on-focus" id="oooi-off" maxlength="4" placeholder="0000" inputmode="numeric">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">ON</label>
+                        <input type="text" class="num-input clear-on-focus" id="oooi-on" maxlength="4" placeholder="0000" inputmode="numeric">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">IN</label>
+                        <input type="text" class="num-input clear-on-focus" id="oooi-in" maxlength="4" placeholder="0000" inputmode="numeric">
+                    </div>
+                </div>
+                <div class="results-row">
+                    <div class="result-item">
+                        <div class="result-label">BLOCK</div>
+                        <div class="result-value block-time" id="block-time">--:--</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">FLIGHT</div>
+                        <div class="result-value flight-time" id="flight-time">--:--</div>
+                    </div>
+                </div>
+                <button class="clear-btn" id="oooi-clear">Clear</button>
+            </div>
+
+            <!-- ETA Section -->
+            <div class="section">
+                <div class="section-title">ETA Countdown</div>
+                <div class="utc-display">UTC: <span id="utc-clock">--:--:--</span></div>
+                <div class="input-grid-2">
+                    <div class="input-group">
+                        <label class="input-label">ETA (UTC)</label>
+                        <input type="text" class="num-input clear-on-focus" id="eta-time" maxlength="4" placeholder="0000" inputmode="numeric">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">UTC NOW</label>
+                        <input type="text" class="num-input clear-on-focus" id="utc-manual" maxlength="4" placeholder="AUTO" inputmode="numeric">
+                    </div>
+                </div>
+                <div class="eta-countdown" id="eta-countdown">--:--:--</div>
+                <button class="clear-btn" id="eta-clear">Clear</button>
+            </div>
+
+            <!-- TOW Calculator -->
+            <div class="section">
+                <div class="section-title">TOW Calculator</div>
+                <div class="input-grid-3">
+                    <div class="input-group">
+                        <label class="input-label">ZFW</label>
+                        <input type="text" class="num-input clear-on-focus" id="calc-zfw" maxlength="6" placeholder="0" inputmode="numeric">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">FOB</label>
+                        <input type="text" class="num-input clear-on-focus" id="calc-fob" maxlength="6" placeholder="0" inputmode="numeric">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">TAXI</label>
+                        <input type="text" class="num-input clear-on-focus" id="calc-taxi" maxlength="5" placeholder="0" inputmode="numeric">
+                    </div>
+                </div>
+                <div class="results-row">
+                    <div class="result-item">
+                        <div class="result-label">TAKE OFF WEIGHT</div>
+                        <div class="result-value tow-value" id="tow-result">---</div>
+                    </div>
+                </div>
+                <button class="clear-btn" id="calc-clear">Clear</button>
+            </div>
+
+            <!-- OPT ACC Calculator -->
+            <div class="section">
+                <div class="section-title">Acceleration Height</div>
+                <div class="input-grid-2">
+                    <div class="input-group">
+                        <label class="input-label">OPT ACC</label>
+                        <div class="input-with-unit">
+                            <input type="text" class="num-input clear-on-focus" id="opt-acc" maxlength="5" placeholder="0" inputmode="numeric">
+                            <span class="input-unit">ft</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">ELEV</label>
+                        <div class="input-with-unit">
+                            <input type="text" class="num-input clear-on-focus" id="airfield-elev" maxlength="5" placeholder="0" inputmode="numeric">
+                            <span class="input-unit">ft</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="results-row">
+                    <div class="result-item">
+                        <div class="result-label">ACC HEIGHT AGL</div>
+                        <div class="result-value acc-value" id="acc-result">--- ft</div>
+                    </div>
+                </div>
+                <button class="preset-btn" id="rw12r-btn">RW12R (62 ft)</button>
+                <button class="clear-btn" id="acc-clear">Clear</button>
+            </div>
+        </div>
+
+        <!-- Timers -->
+        <div class="timers-grid" id="timers-container"></div>
+    </div>
+
+    <!-- Number Picker Modal -->
+    <div class="modal-overlay" id="number-picker-modal">
+        <div class="number-picker">
+            <div class="picker-title" id="picker-title">Set Hours</div>
+            <div class="picker-display">
+                <span class="picker-value" id="picker-value">0</span>
+                <span class="picker-unit" id="picker-unit">h</span>
+            </div>
+            <div class="picker-buttons">
+                <button class="picker-btn" onclick="pickerAppend('1')">1</button>
+                <button class="picker-btn" onclick="pickerAppend('2')">2</button>
+                <button class="picker-btn" onclick="pickerAppend('3')">3</button>
+                <button class="picker-btn" onclick="pickerAppend('4')">4</button>
+                <button class="picker-btn" onclick="pickerAppend('5')">5</button>
+                <button class="picker-btn" onclick="pickerAppend('6')">6</button>
+                <button class="picker-btn" onclick="pickerAppend('7')">7</button>
+                <button class="picker-btn" onclick="pickerAppend('8')">8</button>
+                <button class="picker-btn" onclick="pickerAppend('9')">9</button>
+                <button class="picker-btn clear" onclick="pickerClear()">C</button>
+                <button class="picker-btn" onclick="pickerAppend('0')">0</button>
+                <button class="picker-btn" onclick="pickerBackspace()">&larr;</button>
+            </div>
+            <div class="picker-actions">
+                <button class="picker-cancel" onclick="closePicker()">Cancel</button>
+                <button class="picker-confirm" onclick="confirmPicker()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Default timer configurations
+        const defaultTimers = [
+            { name: 'APU', type: 'countdown', hours: 0, minutes: 11 },
+            { name: 'APU Start', type: 'countdown', hours: 3, minutes: 0 },
+            { name: 'Timer 3', type: 'stopwatch', hours: 0, minutes: 0 },
+            { name: 'Timer 4', type: 'stopwatch', hours: 0, minutes: 0 },
+            { name: 'Timer 5', type: 'stopwatch', hours: 0, minutes: 0 }
+        ];
+
+        let timers = [];
+        let animationFrameId = null;
+        let pickerCallback = null;
+        let pickerValue = '';
+        let pickerMax = 99;
+
+        // ============ NUMBER PICKER ============
+        function openPicker(title, unit, currentValue, max, callback) {
+            pickerCallback = callback;
+            pickerValue = currentValue.toString();
+            pickerMax = max;
+            document.getElementById('picker-title').textContent = title;
+            document.getElementById('picker-unit').textContent = unit;
+            document.getElementById('picker-value').textContent = pickerValue || '0';
+            document.getElementById('number-picker-modal').classList.add('active');
+        }
+
+        function closePicker() {
+            document.getElementById('number-picker-modal').classList.remove('active');
+            pickerCallback = null;
+        }
+
+        function pickerAppend(digit) {
+            if (pickerValue.length < 3) {
+                pickerValue += digit;
+                const val = parseInt(pickerValue, 10);
+                if (val > pickerMax) {
+                    pickerValue = pickerMax.toString();
+                }
+                document.getElementById('picker-value').textContent = pickerValue || '0';
+            }
+        }
+
+        function pickerClear() {
+            pickerValue = '';
+            document.getElementById('picker-value').textContent = '0';
+        }
+
+        function pickerBackspace() {
+            pickerValue = pickerValue.slice(0, -1);
+            document.getElementById('picker-value').textContent = pickerValue || '0';
+        }
+
+        function confirmPicker() {
+            if (pickerCallback) {
+                pickerCallback(parseInt(pickerValue, 10) || 0);
+            }
+            closePicker();
+        }
+
+        // ============ TIMER STATE ============
+        function loadState() {
+            const saved = localStorage.getItem('flightTimers');
+            if (saved) {
+                try {
+                    timers = JSON.parse(saved);
+                    const now = Date.now();
+                    timers.forEach((timer) => {
+                        if (timer.running && timer.lastUpdate) {
+                            const elapsed = now - timer.lastUpdate;
+                            if (timer.type === 'countdown') {
+                                timer.remaining = Math.max(0, timer.remaining - elapsed);
+                            } else {
+                                timer.elapsed = (timer.elapsed || 0) + elapsed;
+                            }
+                        }
+                        if (timer.running) {
+                            timer.lastUpdate = now;
+                        }
+                    });
+                } catch (e) {
+                    timers = JSON.parse(JSON.stringify(defaultTimers));
+                }
+            } else {
+                timers = JSON.parse(JSON.stringify(defaultTimers));
+            }
+
+            timers.forEach((timer) => {
+                if (timer.remaining === undefined) {
+                    timer.remaining = (timer.hours * 3600 + timer.minutes * 60) * 1000;
+                }
+                if (timer.elapsed === undefined) {
+                    timer.elapsed = 0;
+                }
+                if (timer.initialTime === undefined) {
+                    timer.initialTime = (timer.hours * 3600 + timer.minutes * 60) * 1000;
+                }
+            });
+        }
+
+        function saveState() {
+            const now = Date.now();
+            timers.forEach(timer => {
+                if (timer.running) {
+                    timer.lastUpdate = now;
+                }
+            });
+            localStorage.setItem('flightTimers', JSON.stringify(timers));
+        }
+
+        // ============ OOOI ============
+        function loadOOOI() {
+            const saved = localStorage.getItem('flightOOOI');
+            if (saved) {
+                try {
+                    const oooi = JSON.parse(saved);
+                    document.getElementById('oooi-out').value = oooi.out || '';
+                    document.getElementById('oooi-off').value = oooi.off || '';
+                    document.getElementById('oooi-on').value = oooi.on || '';
+                    document.getElementById('oooi-in').value = oooi.in || '';
+                    calculateOOOI();
+                } catch (e) {}
+            }
+        }
+
+        function saveOOOI() {
+            const oooi = {
+                out: document.getElementById('oooi-out').value,
+                off: document.getElementById('oooi-off').value,
+                on: document.getElementById('oooi-on').value,
+                in: document.getElementById('oooi-in').value
+            };
+            localStorage.setItem('flightOOOI', JSON.stringify(oooi));
+        }
+
+        function parseTime(str) {
+            if (!str || str.length < 3) return null;
+            str = str.padStart(4, '0');
+            const hours = parseInt(str.substring(0, 2), 10);
+            const minutes = parseInt(str.substring(2, 4), 10);
+            if (isNaN(hours) || isNaN(minutes) || hours > 23 || minutes > 59) return null;
+            return { hours, minutes };
+        }
+
+        function timeDiff(start, end) {
+            if (!start || !end) return null;
+            let startMins = start.hours * 60 + start.minutes;
+            let endMins = end.hours * 60 + end.minutes;
+            if (endMins < startMins) {
+                endMins += 24 * 60;
+            }
+            return endMins - startMins;
+        }
+
+        function formatMinutes(mins) {
+            if (mins === null) return '--:--';
+            const h = Math.floor(mins / 60);
+            const m = mins % 60;
+            return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+        }
+
+        function calculateOOOI() {
+            const out = parseTime(document.getElementById('oooi-out').value);
+            const off = parseTime(document.getElementById('oooi-off').value);
+            const on = parseTime(document.getElementById('oooi-on').value);
+            const inn = parseTime(document.getElementById('oooi-in').value);
+
+            const blockTime = timeDiff(out, inn);
+            document.getElementById('block-time').textContent = formatMinutes(blockTime);
+
+            const flightTime = timeDiff(off, on);
+            document.getElementById('flight-time').textContent = formatMinutes(flightTime);
+
+            saveOOOI();
+        }
+
+        // ============ ETA ============
+        function loadETA() {
+            const saved = localStorage.getItem('flightETA');
+            if (saved) {
+                try {
+                    const eta = JSON.parse(saved);
+                    document.getElementById('eta-time').value = eta.time || '';
+                    document.getElementById('utc-manual').value = eta.manual || '';
+                } catch (e) {}
+            }
+        }
+
+        function saveETA() {
+            const eta = {
+                time: document.getElementById('eta-time').value,
+                manual: document.getElementById('utc-manual').value
+            };
+            localStorage.setItem('flightETA', JSON.stringify(eta));
+        }
+
+        function updateUTCClock() {
+            const now = new Date();
+            const utc = now.toISOString().substring(11, 19);
+            document.getElementById('utc-clock').textContent = utc;
+        }
+
+        function calculateETA() {
+            const etaStr = document.getElementById('eta-time').value;
+            const manualStr = document.getElementById('utc-manual').value;
+            const etaDisplay = document.getElementById('eta-countdown');
+
+            const eta = parseTime(etaStr);
+            if (!eta) {
+                etaDisplay.textContent = '--:--:--';
+                etaDisplay.className = 'eta-countdown';
+                return;
+            }
+
+            let nowMins;
+            if (manualStr && manualStr.length >= 3) {
+                const manual = parseTime(manualStr);
+                if (manual) {
+                    nowMins = manual.hours * 60 + manual.minutes;
+                } else {
+                    const now = new Date();
+                    nowMins = now.getUTCHours() * 60 + now.getUTCMinutes();
+                }
+            } else {
+                const now = new Date();
+                nowMins = now.getUTCHours() * 60 + now.getUTCMinutes() + now.getUTCSeconds() / 60;
+            }
+
+            let etaMins = eta.hours * 60 + eta.minutes;
+            if (etaMins < nowMins - 60) {
+                etaMins += 24 * 60;
+            }
+
+            const diffMins = etaMins - nowMins;
+            const diffSecs = Math.floor(diffMins * 60);
+
+            if (diffSecs <= 0) {
+                etaDisplay.textContent = '00:00:00';
+                etaDisplay.className = 'eta-countdown critical';
+            } else {
+                const h = Math.floor(diffSecs / 3600);
+                const m = Math.floor((diffSecs % 3600) / 60);
+                const s = diffSecs % 60;
+                etaDisplay.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+
+                if (diffMins <= 10) {
+                    etaDisplay.className = 'eta-countdown critical';
+                } else if (diffMins <= 30) {
+                    etaDisplay.className = 'eta-countdown warning';
+                } else {
+                    etaDisplay.className = 'eta-countdown';
+                }
+            }
+
+            saveETA();
+        }
+
+        // ============ TOW ============
+        function loadTOW() {
+            const saved = localStorage.getItem('flightTOW');
+            if (saved) {
+                try {
+                    const tow = JSON.parse(saved);
+                    document.getElementById('calc-zfw').value = tow.zfw || '';
+                    document.getElementById('calc-fob').value = tow.fob || '';
+                    document.getElementById('calc-taxi').value = tow.taxi || '';
+                    calculateTOW();
+                } catch (e) {}
+            }
+        }
+
+        function saveTOW() {
+            const tow = {
+                zfw: document.getElementById('calc-zfw').value,
+                fob: document.getElementById('calc-fob').value,
+                taxi: document.getElementById('calc-taxi').value
+            };
+            localStorage.setItem('flightTOW', JSON.stringify(tow));
+        }
+
+        function formatWithCommas(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        function calculateTOW() {
+            const zfw = parseInt(document.getElementById('calc-zfw').value.replace(/,/g, ''), 10) || 0;
+            const fob = parseInt(document.getElementById('calc-fob').value.replace(/,/g, ''), 10) || 0;
+            const taxi = parseInt(document.getElementById('calc-taxi').value.replace(/,/g, ''), 10) || 0;
+
+            if (zfw === 0 && fob === 0) {
+                document.getElementById('tow-result').textContent = '---';
+            } else {
+                const tow = zfw + fob - taxi;
+                document.getElementById('tow-result').textContent = formatWithCommas(tow);
+            }
+            saveTOW();
+        }
+
+        // ============ ACC HEIGHT ============
+        function loadACC() {
+            const saved = localStorage.getItem('flightACC');
+            if (saved) {
+                try {
+                    const acc = JSON.parse(saved);
+                    document.getElementById('opt-acc').value = acc.optAcc || '';
+                    document.getElementById('airfield-elev').value = acc.elev || '';
+                    calculateACC();
+                } catch (e) {}
+            }
+        }
+
+        function saveACC() {
+            const acc = {
+                optAcc: document.getElementById('opt-acc').value,
+                elev: document.getElementById('airfield-elev').value
+            };
+            localStorage.setItem('flightACC', JSON.stringify(acc));
+        }
+
+        function calculateACC() {
+            const optAcc = parseInt(document.getElementById('opt-acc').value.replace(/,/g, ''), 10) || 0;
+            const elev = parseInt(document.getElementById('airfield-elev').value.replace(/,/g, ''), 10) || 0;
+
+            if (optAcc === 0) {
+                document.getElementById('acc-result').textContent = '--- ft';
+            } else {
+                const result = optAcc - elev;
+                document.getElementById('acc-result').textContent = formatWithCommas(result) + ' ft';
+            }
+            saveACC();
+        }
+
+        // ============ TIMER DISPLAY ============
+        function formatTime(ms) {
+            const totalSeconds = Math.floor(Math.abs(ms) / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            const prefix = ms < 0 ? '-' : '';
+            return `${prefix}${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function getColorClass(timer) {
+            if (timer.type === 'stopwatch') {
+                return 'color-neutral';
+            }
+            if (timer.remaining <= 0) {
+                return 'color-expired';
+            }
+            const percent = (timer.remaining / timer.initialTime) * 100;
+            if (percent > 50) return 'color-green';
+            if (percent > 25) return 'color-yellow';
+            if (percent > 10) return 'color-orange';
+            return 'color-red';
+        }
+
+        function getProgress(timer) {
+            if (timer.type === 'stopwatch') {
+                return ((timer.elapsed % 60000) / 60000) * 100;
+            }
+            if (timer.initialTime === 0) return 0;
+            return Math.max(0, (timer.remaining / timer.initialTime) * 100);
+        }
+
+        function flashTimer(index, count = 5) {
+            const card = document.getElementById(`timer-${index}`);
+            if (!card || count <= 0) return;
+            card.classList.add('flashing');
+            setTimeout(() => {
+                card.classList.remove('flashing');
+                setTimeout(() => flashTimer(index, count - 1), 150);
+            }, 300);
+        }
+
+        function createTimerHTML(timer, index) {
+            const colorClass = getColorClass(timer);
+            const progress = getProgress(timer);
+            const displayTime = timer.type === 'countdown' ? timer.remaining : timer.elapsed;
+            const isRunning = timer.running;
+            const hours = Math.floor(timer.initialTime / 3600000);
+            const minutes = Math.floor((timer.initialTime % 3600000) / 60000);
+
+            return `
+                <div class="timer-card ${colorClass}" id="timer-${index}">
+                    <div class="clock-container">
+                        <div class="clock-face" style="--progress: ${progress}%">
+                            <div class="clock-inner">
+                                <span class="clock-time">${formatTime(displayTime)}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timer-content">
+                        <input type="text" class="timer-name-input" value="${timer.name}"
+                               onchange="updateTimerName(${index}, this.value)">
+                        <div class="timer-type-toggle">
+                            <button class="type-btn ${timer.type === 'countdown' ? 'active' : ''}"
+                                    onclick="setTimerType(${index}, 'countdown')">Countdown</button>
+                            <button class="type-btn ${timer.type === 'stopwatch' ? 'active' : ''}"
+                                    onclick="setTimerType(${index}, 'stopwatch')">Stopwatch</button>
+                        </div>
+                        ${timer.type === 'countdown' ? `
+                        <div class="timer-time-setup">
+                            <button class="time-input-btn" onclick="openTimerPicker(${index}, 'hours')" ${isRunning ? 'disabled' : ''}>${hours}</button>
+                            <span class="time-separator">h</span>
+                            <button class="time-input-btn" onclick="openTimerPicker(${index}, 'minutes')" ${isRunning ? 'disabled' : ''}>${minutes}</button>
+                            <span class="time-separator">m</span>
+                        </div>
+                        ` : ''}
+                        <div class="timer-display">${formatTime(displayTime)}</div>
+                        <div class="timer-buttons">
+                            <button class="timer-btn ${isRunning ? 'btn-pause' : 'btn-start'}"
+                                    onclick="toggleTimer(${index})">
+                                ${isRunning ? 'Pause' : 'Start'}
+                            </button>
+                            <button class="timer-btn btn-reset" onclick="resetTimer(${index})">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTimers() {
+            const container = document.getElementById('timers-container');
+            container.innerHTML = timers.map((timer, index) => createTimerHTML(timer, index)).join('');
+            attachClearOnFocus();
+        }
+
+        function updateTimerDisplay(index) {
+            const timer = timers[index];
+            const card = document.getElementById(`timer-${index}`);
+            if (!card) return;
+
+            const colorClass = getColorClass(timer);
+            const progress = getProgress(timer);
+            const displayTime = timer.type === 'countdown' ? timer.remaining : timer.elapsed;
+
+            const isFlashing = card.classList.contains('flashing');
+            card.className = `timer-card ${colorClass}${isFlashing ? ' flashing' : ''}`;
+
+            const clockFace = card.querySelector('.clock-face');
+            clockFace.style.setProperty('--progress', `${progress}%`);
+
+            const clockTime = card.querySelector('.clock-time');
+            clockTime.textContent = formatTime(displayTime);
+
+            const timerDisplay = card.querySelector('.timer-display');
+            timerDisplay.textContent = formatTime(displayTime);
+        }
+
+        // ============ ANIMATION LOOP ============
+        let lastFrameTime = 0;
+        function tick(currentTime) {
+            if (lastFrameTime === 0) lastFrameTime = currentTime;
+            const delta = currentTime - lastFrameTime;
+            lastFrameTime = currentTime;
+
+            let anyRunning = false;
+            timers.forEach((timer, index) => {
+                if (timer.running) {
+                    anyRunning = true;
+                    const now = Date.now();
+                    const elapsed = now - timer.lastUpdate;
+                    timer.lastUpdate = now;
+
+                    if (timer.type === 'countdown') {
+                        const wasPositive = timer.remaining > 0;
+                        timer.remaining = Math.max(0, timer.remaining - elapsed);
+
+                        if (wasPositive && timer.remaining === 0) {
+                            timer.running = false;
+                            flashTimer(index, 5);
+                            renderTimers();
+                            return;
+                        }
+                    } else {
+                        timer.elapsed += elapsed;
+                    }
+
+                    updateTimerDisplay(index);
+                }
+            });
+
+            if (Math.floor(currentTime / 5000) !== Math.floor((currentTime - delta) / 5000)) {
+                saveState();
+            }
+
+            if (anyRunning) {
+                animationFrameId = requestAnimationFrame(tick);
+            } else {
+                animationFrameId = null;
+                lastFrameTime = 0;
+            }
+        }
+
+        function startAnimationLoop() {
+            if (animationFrameId === null) {
+                const anyRunning = timers.some(t => t.running);
+                if (anyRunning) {
+                    lastFrameTime = 0;
+                    animationFrameId = requestAnimationFrame(tick);
+                }
+            }
+        }
+
+        // ============ TIMER CONTROLS ============
+        function openTimerPicker(index, unit) {
+            const timer = timers[index];
+            const hours = Math.floor(timer.initialTime / 3600000);
+            const minutes = Math.floor((timer.initialTime % 3600000) / 60000);
+
+            if (unit === 'hours') {
+                openPicker('Set Hours', 'h', hours, 99, (val) => {
+                    updateTimerTime(index, 'hours', val);
+                });
+            } else {
+                openPicker('Set Minutes', 'm', minutes, 59, (val) => {
+                    updateTimerTime(index, 'minutes', val);
+                });
+            }
+        }
+
+        function toggleTimer(index) {
+            const timer = timers[index];
+            if (timer.running) {
+                timer.running = false;
+            } else {
+                timer.running = true;
+                timer.lastUpdate = Date.now();
+                startAnimationLoop();
+            }
+            saveState();
+            renderTimers();
+            startAnimationLoop();
+        }
+
+        function resetTimer(index) {
+            const timer = timers[index];
+            timer.running = false;
+            if (timer.type === 'countdown') {
+                timer.remaining = timer.initialTime;
+            } else {
+                timer.elapsed = 0;
+            }
+            saveState();
+            renderTimers();
+        }
+
+        function setTimerType(index, type) {
+            const timer = timers[index];
+            timer.type = type;
+            timer.running = false;
+            if (type === 'countdown') {
+                timer.remaining = timer.initialTime;
+            } else {
+                timer.elapsed = 0;
+            }
+            saveState();
+            renderTimers();
+        }
+
+        function updateTimerName(index, name) {
+            timers[index].name = name;
+            saveState();
+        }
+
+        function updateTimerTime(index, unit, value) {
+            const timer = timers[index];
+            let hours = Math.floor(timer.initialTime / 3600000);
+            let minutes = Math.floor((timer.initialTime % 3600000) / 60000);
+
+            if (unit === 'hours') hours = value;
+            if (unit === 'minutes') minutes = Math.min(59, value);
+
+            timer.initialTime = (hours * 3600 + minutes * 60) * 1000;
+            timer.remaining = timer.initialTime;
+            timer.hours = hours;
+            timer.minutes = minutes;
+
+            saveState();
+            renderTimers();
+        }
+
+        // ============ CLEAR ON FOCUS ============
+        function attachClearOnFocus() {
+            document.querySelectorAll('.clear-on-focus').forEach(input => {
+                input.removeEventListener('focus', clearOnFocusHandler);
+                input.addEventListener('focus', clearOnFocusHandler);
+            });
+        }
+
+        function clearOnFocusHandler(e) {
+            e.target.select();
+        }
+
+        // ============ INPUT HANDLERS ============
+        document.querySelectorAll('.num-input').forEach(input => {
+            input.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+
+                if (e.target.id.startsWith('oooi-')) calculateOOOI();
+                else if (e.target.id.startsWith('calc-')) calculateTOW();
+                else if (e.target.id === 'opt-acc' || e.target.id === 'airfield-elev') calculateACC();
+                else if (e.target.id === 'eta-time' || e.target.id === 'utc-manual') calculateETA();
+            });
+        });
+
+        document.getElementById('oooi-clear').addEventListener('click', () => {
+            document.querySelectorAll('#oooi-out, #oooi-off, #oooi-on, #oooi-in').forEach(input => input.value = '');
+            document.getElementById('block-time').textContent = '--:--';
+            document.getElementById('flight-time').textContent = '--:--';
+            localStorage.removeItem('flightOOOI');
+        });
+
+        document.getElementById('eta-clear').addEventListener('click', () => {
+            document.getElementById('eta-time').value = '';
+            document.getElementById('utc-manual').value = '';
+            document.getElementById('eta-countdown').textContent = '--:--:--';
+            document.getElementById('eta-countdown').className = 'eta-countdown';
+            localStorage.removeItem('flightETA');
+        });
+
+        document.getElementById('calc-clear').addEventListener('click', () => {
+            document.querySelectorAll('#calc-zfw, #calc-fob, #calc-taxi').forEach(input => input.value = '');
+            document.getElementById('tow-result').textContent = '---';
+            localStorage.removeItem('flightTOW');
+        });
+
+        document.getElementById('acc-clear').addEventListener('click', () => {
+            document.getElementById('opt-acc').value = '';
+            document.getElementById('airfield-elev').value = '';
+            document.getElementById('acc-result').textContent = '--- ft';
+            localStorage.removeItem('flightACC');
+        });
+
+        document.getElementById('rw12r-btn').addEventListener('click', () => {
+            document.getElementById('airfield-elev').value = '62';
+            calculateACC();
+        });
+
+        // ============ INITIALIZE ============
+        loadState();
+        loadOOOI();
+        loadETA();
+        loadTOW();
+        loadACC();
+        renderTimers();
+        attachClearOnFocus();
+        startAnimationLoop();
+
+        // Update UTC clock and ETA every second
+        setInterval(() => {
+            updateUTCClock();
+            calculateETA();
+        }, 1000);
+
+        updateUTCClock();
+
+        window.addEventListener('beforeunload', saveState);
+
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                const now = Date.now();
+                timers.forEach((timer, index) => {
+                    if (timer.running && timer.lastUpdate) {
+                        const elapsed = now - timer.lastUpdate;
+                        if (timer.type === 'countdown') {
+                            const wasPositive = timer.remaining > 0;
+                            timer.remaining = Math.max(0, timer.remaining - elapsed);
+                            if (wasPositive && timer.remaining === 0) {
+                                timer.running = false;
+                                flashTimer(index, 5);
+                            }
+                        } else {
+                            timer.elapsed += elapsed;
+                        }
+                        timer.lastUpdate = now;
+                        updateTimerDisplay(index);
+                    }
+                });
+                renderTimers();
+                startAnimationLoop();
+            }
+        });
+    </script>
+</body>
+</html>

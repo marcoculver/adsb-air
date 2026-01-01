@@ -1,0 +1,13 @@
+{
+  "name": "flight-timers",
+  "version": "1.0.0",
+  "description": "Flight timers and OOOI calculator for aviation use",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["aviation", "timer", "737", "FMC", "OOOI"],
+  "author": "",
+  "license": "MIT"
+}
