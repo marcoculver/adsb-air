@@ -890,6 +890,7 @@
         <div class="tab-nav">
             <button class="tab-btn active" onclick="switchTab('tools')">Tools</button>
             <button class="tab-btn" onclick="switchTab('fuel')">Fuel</button>
+            <button class="tab-btn" onclick="switchTab('layover')">Layover</button>
             <button class="tab-btn" onclick="switchTab('fdp')">FDP Calculator</button>
         </div>
 
@@ -984,22 +985,22 @@
                 </div>
 
                 <!-- OPT ACC Calculator -->
-                <div class="section">
+                <div class="section" style="min-width:200px">
                     <div class="section-title">Acceleration Height</div>
-                    <div class="input-grid-2">
+                    <div class="input-grid-2" style="gap:12px">
                         <div class="input-group">
                             <label class="input-label">OPT ACC</label>
-                            <div class="input-btn-with-unit">
-                                <button class="input-btn placeholder" id="opt-acc-btn" onclick="openWeightPicker('opt-acc', 'OPT ACC', 'ft')">0</button>
-                                <span class="input-btn-unit">ft</span>
+                            <div class="input-btn-with-unit" style="width:100%">
+                                <button class="input-btn placeholder" id="opt-acc-btn" onclick="openWeightPicker('opt-acc', 'OPT ACC', 'ft')" style="max-width:110px; padding-right:25px">0</button>
+                                <span class="input-btn-unit" style="right:10px">ft</span>
                             </div>
                             <input type="hidden" id="opt-acc" value="">
                         </div>
                         <div class="input-group">
                             <label class="input-label">ELEV</label>
-                            <div class="input-btn-with-unit">
-                                <button class="input-btn placeholder" id="airfield-elev-btn" onclick="openWeightPicker('airfield-elev', 'Elevation', 'ft')">0</button>
-                                <span class="input-btn-unit">ft</span>
+                            <div class="input-btn-with-unit" style="width:100%">
+                                <button class="input-btn placeholder" id="airfield-elev-btn" onclick="openWeightPicker('airfield-elev', 'Elevation', 'ft')" style="max-width:110px; padding-right:25px">0</button>
+                                <span class="input-btn-unit" style="right:10px">ft</span>
                             </div>
                             <input type="hidden" id="airfield-elev" value="">
                         </div>
@@ -1072,19 +1073,19 @@
                 <!-- Tank Split Block -->
                 <div class="fdp-section">
                     <div class="section-title">Tank Split</div>
-                    <div class="fdp-row">
-                        <div class="fdp-field">
+                    <div class="fdp-row" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
+                        <div class="fdp-field" style="text-align:center">
                             <label class="fdp-label">Left Wing (kg)</label>
-                            <button class="input-btn" id="tank-left-btn" onclick="openFuelPicker('tank-left', 'Left Wing', 'kg')" style="max-width:100%">3,700</button>
+                            <button class="input-btn" id="tank-left-btn" onclick="openFuelPicker('tank-left', 'Left Wing', 'kg')" style="max-width:100%; margin:0 auto">3,700</button>
                             <input type="hidden" id="tank-left" value="3700">
                         </div>
-                        <div class="fdp-field">
+                        <div class="fdp-field" style="text-align:center">
                             <label class="fdp-label">Center (kg)</label>
-                            <div class="fdp-result-value green" id="tank-center" style="padding-top:8px">---</div>
+                            <div class="fdp-result-value green" id="tank-center" style="padding-top:8px; text-align:center">---</div>
                         </div>
-                        <div class="fdp-field">
+                        <div class="fdp-field" style="text-align:center">
                             <label class="fdp-label">Right Wing (kg)</label>
-                            <button class="input-btn" id="tank-right-btn" onclick="openFuelPicker('tank-right', 'Right Wing', 'kg')" style="max-width:100%">3,700</button>
+                            <button class="input-btn" id="tank-right-btn" onclick="openFuelPicker('tank-right', 'Right Wing', 'kg')" style="max-width:100%; margin:0 auto">3,700</button>
                             <input type="hidden" id="tank-right" value="3700">
                         </div>
                     </div>
@@ -1118,7 +1119,10 @@
                             </div>
                             <div class="fdp-result-item">
                                 <div class="fdp-result-label">Adjustment (+/-)</div>
-                                <button class="input-btn" id="fuel-adj-btn" onclick="openAdjustmentPicker()" style="max-width:100%">0</button>
+                                <div style="display:flex; gap:5px; justify-content:center">
+                                    <button class="input-btn" id="fuel-adj-btn" onclick="openAdjustmentPicker()" style="max-width:80px; flex:1">0</button>
+                                    <button class="input-btn" id="fuel-adj-sign-btn" onclick="toggleAdjustmentSign()" style="max-width:40px; padding:5px; font-size:1.2rem">+/-</button>
+                                </div>
                                 <input type="hidden" id="fuel-adj" value="">
                             </div>
                             <div class="fdp-result-item">
@@ -1165,7 +1169,115 @@
                     </div>
                 </div>
 
+                <!-- Fuel Unit Converter -->
+                <div class="fdp-section">
+                    <div class="section-title">Fuel Unit Converter</div>
+                    <div style="text-align:center; font-size:0.75rem; color:#888; margin-bottom:10px;">
+                        Enter one value and press OK - others will auto-calculate (SG: 0.800)
+                    </div>
+                    <div class="fdp-row" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
+                        <div class="fdp-field" style="text-align:center">
+                            <label class="fdp-label">Litres (L)</label>
+                            <button class="input-btn" id="conv-litres-btn" onclick="openConverterPicker('litres')" style="max-width:100%; margin:0 auto">0</button>
+                            <input type="hidden" id="conv-litres" value="">
+                        </div>
+                        <div class="fdp-field" style="text-align:center">
+                            <label class="fdp-label">US Gallons</label>
+                            <button class="input-btn" id="conv-gallons-btn" onclick="openConverterPicker('gallons')" style="max-width:100%; margin:0 auto">0</button>
+                            <input type="hidden" id="conv-gallons" value="">
+                        </div>
+                        <div class="fdp-field" style="text-align:center">
+                            <label class="fdp-label">Pounds (lbs)</label>
+                            <button class="input-btn" id="conv-lbs-btn" onclick="openConverterPicker('lbs')" style="max-width:100%; margin:0 auto">0</button>
+                            <input type="hidden" id="conv-lbs" value="">
+                        </div>
+                    </div>
+                    <button class="clear-btn" id="conv-clear" style="margin-top:10px">Clear Converter</button>
+                </div>
+
                 <button class="clear-btn" id="fuel-clear" style="margin-top:15px">Clear All Fuel Data</button>
+            </div>
+        </div>
+
+        <!-- Layover Tab -->
+        <div class="tab-content" id="tab-layover">
+            <div class="fdp-container">
+                <!-- UTC Offset Selector -->
+                <div class="local-offset-selector">
+                    <label>Local Time Offset:</label>
+                    <select id="layover-offset" onchange="calculateLayover()">
+                        <option value="-12">UTC-12</option>
+                        <option value="-11">UTC-11</option>
+                        <option value="-10">UTC-10</option>
+                        <option value="-9">UTC-9</option>
+                        <option value="-8">UTC-8</option>
+                        <option value="-7">UTC-7</option>
+                        <option value="-6">UTC-6</option>
+                        <option value="-5">UTC-5</option>
+                        <option value="-4">UTC-4</option>
+                        <option value="-3">UTC-3</option>
+                        <option value="-2">UTC-2</option>
+                        <option value="-1">UTC-1</option>
+                        <option value="0" selected>UTC+0</option>
+                        <option value="1">UTC+1</option>
+                        <option value="2">UTC+2</option>
+                        <option value="3">UTC+3</option>
+                        <option value="4">UTC+4 (DXB)</option>
+                        <option value="5">UTC+5</option>
+                        <option value="5.5">UTC+5:30</option>
+                        <option value="6">UTC+6</option>
+                        <option value="7">UTC+7</option>
+                        <option value="8">UTC+8</option>
+                        <option value="9">UTC+9</option>
+                        <option value="10">UTC+10</option>
+                        <option value="11">UTC+11</option>
+                        <option value="12">UTC+12</option>
+                    </select>
+                </div>
+
+                <div class="fdp-section">
+                    <div class="section-title">Wake Up Calculator</div>
+                    <div class="fdp-row">
+                        <div class="fdp-field">
+                            <label class="fdp-label">STD (UTC)</label>
+                            <button class="input-btn" id="layover-std-btn" onclick="openTimePicker('layover-std')" style="max-width:100%">----</button>
+                            <input type="hidden" id="layover-std" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Pickup Before STD</label>
+                            <button class="input-btn" id="layover-pickup-btn" onclick="openTimePicker('layover-pickup')" style="max-width:100%">0130</button>
+                            <input type="hidden" id="layover-pickup" value="0130">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fdp-section">
+                    <div class="section-title">Calculated Times</div>
+                    <div class="fdp-results" style="margin-top:0">
+                        <div class="fdp-result-grid">
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">STD</div>
+                                <div class="fdp-result-value" id="layover-std-utc">--:-- UTC</div>
+                                <div class="fdp-result-local" id="layover-std-local">Local: --:--</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Hotel Departure</div>
+                                <div class="fdp-result-value yellow" id="layover-hotel-utc">--:-- UTC</div>
+                                <div class="fdp-result-local" id="layover-hotel-local">Local: --:--</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Wake Up Time</div>
+                                <div class="fdp-result-value green" id="layover-wake-utc">--:-- UTC</div>
+                                <div class="fdp-result-local" id="layover-wake-local">Local: --:--</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align:center; font-size:0.75rem; color:#888; margin-top:10px;">
+                        Hotel Departure = STD - Pickup Time | Wake Up = Hotel Departure - 1 hour
+                    </div>
+                </div>
+
+                <button class="clear-btn" id="layover-clear" style="margin-top:15px">Clear</button>
             </div>
         </div>
 
@@ -1369,6 +1481,9 @@
                 <button class="picker-btn clear" onclick="pickerClear()">C</button>
                 <button class="picker-btn" onclick="pickerAppend('0')">0</button>
                 <button class="picker-btn" onclick="pickerBackspace()">&larr;</button>
+                <button class="picker-btn" onclick="pickerAppend('00')" style="font-size:1rem">00</button>
+                <button class="picker-btn" onclick="pickerAppend('000')" style="font-size:0.9rem">000</button>
+                <button class="picker-btn" onclick="pickerAppend('0000')" style="font-size:0.8rem">0000</button>
             </div>
             <div class="picker-actions">
                 <button class="picker-cancel" onclick="closePicker()">Cancel</button>
@@ -1425,8 +1540,15 @@
             }
             pickerFirstInput = false;
 
-            if (pickerValue.length < pickerMaxLength) {
+            // Handle multi-digit append (00, 000, 0000)
+            const newLength = pickerValue.length + digit.length;
+            if (newLength <= pickerMaxLength) {
                 pickerValue += digit;
+                updatePickerDisplay();
+            } else if (pickerValue.length < pickerMaxLength) {
+                // Append as many digits as possible
+                const remaining = pickerMaxLength - pickerValue.length;
+                pickerValue += digit.substring(0, remaining);
                 updatePickerDisplay();
             }
         }
@@ -1457,7 +1579,7 @@
                 document.getElementById(fieldId).value = val;
                 const btn = document.getElementById(fieldId + '-btn');
                 if (btn) {
-                    btn.textContent = val ? val.padStart(4, '0') : (fieldId === 'utc-manual' ? 'AUTO' : '0000');
+                    btn.textContent = val ? val.padStart(4, '0') : (fieldId === 'utc-manual' ? 'AUTO' : (fieldId.startsWith('layover-') ? '----' : '0000'));
                     btn.classList.toggle('placeholder', !val);
                 }
                 if (fieldId.startsWith('oooi-')) calculateOOOI();
@@ -1468,6 +1590,7 @@
                     calculateSectorTurnarounds();
                     estimateDutyEnd();
                 }
+                else if (fieldId.startsWith('layover-')) calculateLayover();
             });
         }
 
@@ -1546,23 +1669,19 @@
 
         function openAdjustmentPicker() {
             const currentVal = document.getElementById('fuel-adj').value || '';
-            openPicker('Adjustment (+/-)', 'kg', currentVal.replace('-', ''), 5, true, (val) => {
-                // Show option to make negative after entering
+            const absVal = currentVal.replace('-', '');
+            openPicker('Adjustment (+/-)', 'kg', absVal, 5, true, (val) => {
                 const adj = parseInt(val, 10) || 0;
                 if (adj !== 0) {
-                    // Check if user wants positive or negative
-                    const existing = document.getElementById('fuel-adj').value;
-                    const wasNegative = existing && existing.startsWith('-');
-                    document.getElementById('fuel-adj').value = wasNegative ? '-' + val : val;
+                    // Default to positive, can toggle with +/- button
+                    document.getElementById('fuel-adj').value = val;
                     const btn = document.getElementById('fuel-adj-btn');
                     if (btn) {
-                        btn.textContent = wasNegative ? '-' + adj.toLocaleString() : '+' + adj.toLocaleString();
-                        btn.onclick = function() { toggleAdjustmentSign(); };
+                        btn.textContent = '+' + adj.toLocaleString();
                     }
                 } else {
                     document.getElementById('fuel-adj').value = '';
                     document.getElementById('fuel-adj-btn').textContent = '0';
-                    document.getElementById('fuel-adj-btn').onclick = function() { openAdjustmentPicker(); };
                 }
                 calculateFuel();
             });
@@ -1570,10 +1689,7 @@
 
         function toggleAdjustmentSign() {
             const val = document.getElementById('fuel-adj').value;
-            if (!val) {
-                openAdjustmentPicker();
-                return;
-            }
+            if (!val) return;
             if (val.startsWith('-')) {
                 document.getElementById('fuel-adj').value = val.substring(1);
                 document.getElementById('fuel-adj-btn').textContent = '+' + parseInt(val.substring(1), 10).toLocaleString();
@@ -1721,6 +1837,166 @@
             }
 
             saveFuel();
+        }
+
+        // ============ FUEL UNIT CONVERTER ============
+        // Constants: 1 US gallon = 3.78541 litres, Jet-A density ~0.800 kg/L = 1.764 lbs/L
+        const LITRES_PER_GALLON = 3.78541;
+        const LBS_PER_LITRE = 1.764; // at SG 0.800
+
+        function openConverterPicker(unit) {
+            const fieldId = 'conv-' + unit;
+            const currentVal = document.getElementById(fieldId).value || '';
+            const titles = {
+                'litres': 'Enter Litres',
+                'gallons': 'Enter US Gallons',
+                'lbs': 'Enter Pounds'
+            };
+            const units = {
+                'litres': 'L',
+                'gallons': 'gal',
+                'lbs': 'lbs'
+            };
+            openPicker(titles[unit], units[unit], currentVal, 7, true, (val) => {
+                document.getElementById(fieldId).value = val;
+                const btn = document.getElementById(fieldId + '-btn');
+                if (btn) {
+                    btn.textContent = val ? parseInt(val, 10).toLocaleString() : '0';
+                }
+                calculateConverter(unit, parseInt(val, 10) || 0);
+            });
+        }
+
+        function calculateConverter(sourceUnit, value) {
+            let litres, gallons, lbs;
+
+            if (sourceUnit === 'litres') {
+                litres = value;
+                gallons = Math.round(litres / LITRES_PER_GALLON);
+                lbs = Math.round(litres * LBS_PER_LITRE);
+            } else if (sourceUnit === 'gallons') {
+                gallons = value;
+                litres = Math.round(gallons * LITRES_PER_GALLON);
+                lbs = Math.round(litres * LBS_PER_LITRE);
+            } else if (sourceUnit === 'lbs') {
+                lbs = value;
+                litres = Math.round(lbs / LBS_PER_LITRE);
+                gallons = Math.round(litres / LITRES_PER_GALLON);
+            }
+
+            // Update all fields
+            document.getElementById('conv-litres').value = litres || '';
+            document.getElementById('conv-gallons').value = gallons || '';
+            document.getElementById('conv-lbs').value = lbs || '';
+
+            document.getElementById('conv-litres-btn').textContent = litres ? litres.toLocaleString() : '0';
+            document.getElementById('conv-gallons-btn').textContent = gallons ? gallons.toLocaleString() : '0';
+            document.getElementById('conv-lbs-btn').textContent = lbs ? lbs.toLocaleString() : '0';
+        }
+
+        // ============ LAYOVER CALCULATOR ============
+        function getLayoverOffset() {
+            return parseFloat(document.getElementById('layover-offset').value) || 0;
+        }
+
+        function layoverUtcToLocal(utcTimeStr) {
+            const time = parseTime(utcTimeStr);
+            if (!time) return '--:--';
+            const offset = getLayoverOffset();
+            let localMins = time.hours * 60 + time.minutes + (offset * 60);
+            if (localMins < 0) localMins += 24 * 60;
+            if (localMins >= 24 * 60) localMins -= 24 * 60;
+            const h = Math.floor(localMins / 60);
+            const m = localMins % 60;
+            return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+        }
+
+        function subtractTime(timeStr, hoursToSubtract, minsToSubtract) {
+            const time = parseTime(timeStr);
+            if (!time) return null;
+            let totalMins = time.hours * 60 + time.minutes - (hoursToSubtract * 60) - minsToSubtract;
+            if (totalMins < 0) totalMins += 24 * 60;
+            const h = Math.floor(totalMins / 60);
+            const m = totalMins % 60;
+            return `${h.toString().padStart(2, '0')}${m.toString().padStart(2, '0')}`;
+        }
+
+        function calculateLayover() {
+            const stdStr = document.getElementById('layover-std').value;
+            const pickupStr = document.getElementById('layover-pickup').value || '0130';
+
+            // Update button displays
+            const stdBtn = document.getElementById('layover-std-btn');
+            stdBtn.textContent = stdStr ? stdStr.padStart(4, '0') : '----';
+
+            const pickupBtn = document.getElementById('layover-pickup-btn');
+            pickupBtn.textContent = pickupStr.padStart(4, '0');
+
+            const std = parseTime(stdStr);
+            const pickup = parseTime(pickupStr);
+
+            if (!std) {
+                document.getElementById('layover-std-utc').textContent = '--:-- UTC';
+                document.getElementById('layover-std-local').textContent = 'Local: --:--';
+                document.getElementById('layover-hotel-utc').textContent = '--:-- UTC';
+                document.getElementById('layover-hotel-local').textContent = 'Local: --:--';
+                document.getElementById('layover-wake-utc').textContent = '--:-- UTC';
+                document.getElementById('layover-wake-local').textContent = 'Local: --:--';
+                return;
+            }
+
+            // STD display
+            const stdFormatted = stdStr.padStart(4, '0');
+            document.getElementById('layover-std-utc').textContent = stdFormatted.substring(0, 2) + ':' + stdFormatted.substring(2) + ' UTC';
+            document.getElementById('layover-std-local').textContent = 'Local: ' + layoverUtcToLocal(stdStr);
+
+            // Hotel departure = STD - pickup time
+            const pickupHours = pickup ? pickup.hours : 1;
+            const pickupMins = pickup ? pickup.minutes : 30;
+            const hotelUTC = subtractTime(stdStr, pickupHours, pickupMins);
+            if (hotelUTC) {
+                document.getElementById('layover-hotel-utc').textContent = hotelUTC.substring(0, 2) + ':' + hotelUTC.substring(2) + ' UTC';
+                document.getElementById('layover-hotel-local').textContent = 'Local: ' + layoverUtcToLocal(hotelUTC);
+
+                // Wake up = Hotel departure - 1 hour
+                const wakeUTC = subtractTime(hotelUTC, 1, 0);
+                if (wakeUTC) {
+                    document.getElementById('layover-wake-utc').textContent = wakeUTC.substring(0, 2) + ':' + wakeUTC.substring(2) + ' UTC';
+                    document.getElementById('layover-wake-local').textContent = 'Local: ' + layoverUtcToLocal(wakeUTC);
+                }
+            }
+
+            saveLayover();
+        }
+
+        function loadLayover() {
+            const saved = localStorage.getItem('flightLayover');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    if (data.std) {
+                        document.getElementById('layover-std').value = data.std;
+                        document.getElementById('layover-std-btn').textContent = data.std.padStart(4, '0');
+                    }
+                    if (data.pickup) {
+                        document.getElementById('layover-pickup').value = data.pickup;
+                        document.getElementById('layover-pickup-btn').textContent = data.pickup.padStart(4, '0');
+                    }
+                    if (data.offset !== undefined) {
+                        document.getElementById('layover-offset').value = data.offset;
+                    }
+                    calculateLayover();
+                } catch (e) {}
+            }
+        }
+
+        function saveLayover() {
+            const data = {
+                std: document.getElementById('layover-std').value,
+                pickup: document.getElementById('layover-pickup').value,
+                offset: document.getElementById('layover-offset').value
+            };
+            localStorage.setItem('flightLayover', JSON.stringify(data));
         }
 
         // ============ DEFAULT TIMERS ============
@@ -2685,9 +2961,27 @@
             document.getElementById('tank-right-btn').textContent = '3,700';
             document.getElementById('fuel-adj').value = '';
             document.getElementById('fuel-adj-btn').textContent = '0';
-            document.getElementById('fuel-adj-btn').onclick = function() { openAdjustmentPicker(); };
             calculateFuel();
             localStorage.removeItem('flightFuel');
+        });
+
+        // ============ CONVERTER CLEAR HANDLER ============
+        document.getElementById('conv-clear').addEventListener('click', () => {
+            ['conv-litres', 'conv-gallons', 'conv-lbs'].forEach(field => {
+                document.getElementById(field).value = '';
+                document.getElementById(field + '-btn').textContent = '0';
+            });
+        });
+
+        // ============ LAYOVER CLEAR HANDLER ============
+        document.getElementById('layover-clear').addEventListener('click', () => {
+            document.getElementById('layover-std').value = '';
+            document.getElementById('layover-std-btn').textContent = '----';
+            document.getElementById('layover-pickup').value = '0130';
+            document.getElementById('layover-pickup-btn').textContent = '0130';
+            document.getElementById('layover-offset').value = '0';
+            calculateLayover();
+            localStorage.removeItem('flightLayover');
         });
 
         // ============ INITIALIZE ============
@@ -2697,11 +2991,13 @@
         loadTOW();
         loadACC();
         loadFuel();
+        loadLayover();
         renderTimers();
         updateSectorInputs();
         calculateFDP();
         calculateMLF();
         calculateFuel();
+        calculateLayover();
         startAnimationLoop();
 
         setInterval(() => {
