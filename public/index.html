@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Flight Timers</title>
+    <title>Flight Ops</title>
     <style>
         * {
             margin: 0;
@@ -27,14 +27,37 @@
             margin: 0 auto;
         }
 
-        h1 {
-            text-align: center;
-            font-size: 2rem;
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 10px;
             margin-bottom: 20px;
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 10px 25px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            color: #888;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         /* Top sections grid */
@@ -109,11 +132,12 @@
             font-weight: 500;
         }
 
-        .num-input {
+        /* Clickable input buttons */
+        .input-btn {
             width: 100%;
-            max-width: 80px;
+            max-width: 90px;
             padding: 10px 6px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             text-align: center;
             background: rgba(0, 0, 0, 0.3);
             border: 2px solid rgba(0, 212, 255, 0.3);
@@ -121,30 +145,25 @@
             color: #00ff88;
             font-family: 'Courier New', monospace;
             font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 44px;
         }
 
-        .num-input:focus {
-            outline: none;
+        .input-btn:hover {
             border-color: #00d4ff;
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+            background: rgba(0, 212, 255, 0.1);
         }
 
-        .num-input::placeholder {
+        .input-btn.placeholder {
             color: rgba(0, 255, 136, 0.3);
         }
 
-        .input-with-unit {
+        .input-btn-with-unit {
             position: relative;
-            width: 100%;
-            max-width: 80px;
         }
 
-        .input-with-unit input {
-            width: 100%;
-            padding-right: 25px;
-        }
-
-        .input-unit {
+        .input-btn-unit {
             position: absolute;
             right: 6px;
             top: 50%;
@@ -477,7 +496,7 @@
             font-family: 'Courier New', monospace;
             font-weight: bold;
             color: #00ff88;
-            min-width: 80px;
+            min-width: 120px;
             text-align: center;
         }
 
@@ -517,10 +536,6 @@
             background: rgba(255, 100, 100, 0.3);
         }
 
-        .picker-btn.done {
-            background: linear-gradient(135deg, #00c853, #009624);
-        }
-
         .picker-actions {
             display: flex;
             gap: 10px;
@@ -554,14 +569,157 @@
         .color-expired { --clock-color: #b71c1c; --timer-color: #ff1744; }
         .color-neutral { --clock-color: #00d4ff; --timer-color: #00d4ff; }
 
+        /* FDP Calculator Styles */
+        .fdp-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .fdp-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .fdp-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .fdp-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .fdp-label {
+            font-size: 0.8rem;
+            color: #7ec8e3;
+            margin-bottom: 5px;
+        }
+
+        .fdp-select, .fdp-input {
+            padding: 10px;
+            font-size: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+        }
+
+        .fdp-select {
+            cursor: pointer;
+        }
+
+        .fdp-select option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
+        .fdp-results {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .fdp-result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .fdp-result-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .fdp-result-label {
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .fdp-result-value {
+            font-size: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .fdp-result-value.green { color: #00ff88; }
+        .fdp-result-value.yellow { color: #ffd700; }
+        .fdp-result-value.orange { color: #ff9f43; }
+        .fdp-result-value.red { color: #ff5252; }
+
+        .fdp-warning {
+            background: rgba(255, 152, 0, 0.2);
+            border: 1px solid rgba(255, 152, 0, 0.5);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-top: 15px;
+            color: #ffab40;
+            font-size: 0.9rem;
+        }
+
+        .fdp-danger {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid rgba(244, 67, 54, 0.5);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-top: 15px;
+            color: #ff5252;
+            font-size: 0.9rem;
+        }
+
+        .sector-inputs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 800px) {
+            .sector-inputs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .sector-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .sector-title {
+            font-size: 0.85rem;
+            color: #00d4ff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .sector-field {
+            margin-bottom: 8px;
+        }
+
+        .sector-field label {
+            font-size: 0.7rem;
+            color: #888;
+            display: block;
+            margin-bottom: 3px;
+        }
+
         /* iPad specific */
         @media (max-width: 768px) {
             body {
                 padding: 15px;
-            }
-
-            h1 {
-                font-size: 1.5rem;
             }
 
             .timer-card {
@@ -571,6 +729,11 @@
 
             .timer-display {
                 font-size: 1.6rem;
+            }
+
+            .tab-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
             }
         }
 
@@ -586,128 +749,263 @@
 </head>
 <body>
     <div class="container">
-        <h1>Flight Timers</h1>
-
-        <div class="top-sections">
-            <!-- OOOI Section -->
-            <div class="section">
-                <div class="section-title">OOOI</div>
-                <div class="input-grid-4">
-                    <div class="input-group">
-                        <label class="input-label">OUT</label>
-                        <input type="text" class="num-input clear-on-focus" id="oooi-out" maxlength="4" placeholder="0000" inputmode="numeric">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">OFF</label>
-                        <input type="text" class="num-input clear-on-focus" id="oooi-off" maxlength="4" placeholder="0000" inputmode="numeric">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">ON</label>
-                        <input type="text" class="num-input clear-on-focus" id="oooi-on" maxlength="4" placeholder="0000" inputmode="numeric">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">IN</label>
-                        <input type="text" class="num-input clear-on-focus" id="oooi-in" maxlength="4" placeholder="0000" inputmode="numeric">
-                    </div>
-                </div>
-                <div class="results-row">
-                    <div class="result-item">
-                        <div class="result-label">BLOCK</div>
-                        <div class="result-value block-time" id="block-time">--:--</div>
-                    </div>
-                    <div class="result-item">
-                        <div class="result-label">FLIGHT</div>
-                        <div class="result-value flight-time" id="flight-time">--:--</div>
-                    </div>
-                </div>
-                <button class="clear-btn" id="oooi-clear">Clear</button>
-            </div>
-
-            <!-- ETA Section -->
-            <div class="section">
-                <div class="section-title">ETA Countdown</div>
-                <div class="utc-display">UTC: <span id="utc-clock">--:--:--</span></div>
-                <div class="input-grid-2">
-                    <div class="input-group">
-                        <label class="input-label">ETA (UTC)</label>
-                        <input type="text" class="num-input clear-on-focus" id="eta-time" maxlength="4" placeholder="0000" inputmode="numeric">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">UTC NOW</label>
-                        <input type="text" class="num-input clear-on-focus" id="utc-manual" maxlength="4" placeholder="AUTO" inputmode="numeric">
-                    </div>
-                </div>
-                <div class="eta-countdown" id="eta-countdown">--:--:--</div>
-                <button class="clear-btn" id="eta-clear">Clear</button>
-            </div>
-
-            <!-- TOW Calculator -->
-            <div class="section">
-                <div class="section-title">TOW Calculator</div>
-                <div class="input-grid-3">
-                    <div class="input-group">
-                        <label class="input-label">ZFW</label>
-                        <input type="text" class="num-input clear-on-focus" id="calc-zfw" maxlength="6" placeholder="0" inputmode="numeric">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">FOB</label>
-                        <input type="text" class="num-input clear-on-focus" id="calc-fob" maxlength="6" placeholder="0" inputmode="numeric">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">TAXI</label>
-                        <input type="text" class="num-input clear-on-focus" id="calc-taxi" maxlength="5" placeholder="0" inputmode="numeric">
-                    </div>
-                </div>
-                <div class="results-row">
-                    <div class="result-item">
-                        <div class="result-label">TAKE OFF WEIGHT</div>
-                        <div class="result-value tow-value" id="tow-result">---</div>
-                    </div>
-                </div>
-                <button class="clear-btn" id="calc-clear">Clear</button>
-            </div>
-
-            <!-- OPT ACC Calculator -->
-            <div class="section">
-                <div class="section-title">Acceleration Height</div>
-                <div class="input-grid-2">
-                    <div class="input-group">
-                        <label class="input-label">OPT ACC</label>
-                        <div class="input-with-unit">
-                            <input type="text" class="num-input clear-on-focus" id="opt-acc" maxlength="5" placeholder="0" inputmode="numeric">
-                            <span class="input-unit">ft</span>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">ELEV</label>
-                        <div class="input-with-unit">
-                            <input type="text" class="num-input clear-on-focus" id="airfield-elev" maxlength="5" placeholder="0" inputmode="numeric">
-                            <span class="input-unit">ft</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="results-row">
-                    <div class="result-item">
-                        <div class="result-label">ACC HEIGHT AGL</div>
-                        <div class="result-value acc-value" id="acc-result">--- ft</div>
-                    </div>
-                </div>
-                <button class="preset-btn" id="rw12r-btn">RW12R (62 ft)</button>
-                <button class="clear-btn" id="acc-clear">Clear</button>
-            </div>
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('tools')">Tools</button>
+            <button class="tab-btn" onclick="switchTab('fdp')">FDP Calculator</button>
         </div>
 
-        <!-- Timers -->
-        <div class="timers-grid" id="timers-container"></div>
+        <!-- Tools Tab -->
+        <div class="tab-content active" id="tab-tools">
+            <div class="top-sections">
+                <!-- OOOI Section -->
+                <div class="section">
+                    <div class="section-title">OOOI</div>
+                    <div class="input-grid-4">
+                        <div class="input-group">
+                            <label class="input-label">OUT</label>
+                            <button class="input-btn placeholder" id="oooi-out-btn" onclick="openTimePicker('oooi-out')">0000</button>
+                            <input type="hidden" id="oooi-out" value="">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">OFF</label>
+                            <button class="input-btn placeholder" id="oooi-off-btn" onclick="openTimePicker('oooi-off')">0000</button>
+                            <input type="hidden" id="oooi-off" value="">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">ON</label>
+                            <button class="input-btn placeholder" id="oooi-on-btn" onclick="openTimePicker('oooi-on')">0000</button>
+                            <input type="hidden" id="oooi-on" value="">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">IN</label>
+                            <button class="input-btn placeholder" id="oooi-in-btn" onclick="openTimePicker('oooi-in')">0000</button>
+                            <input type="hidden" id="oooi-in" value="">
+                        </div>
+                    </div>
+                    <div class="results-row">
+                        <div class="result-item">
+                            <div class="result-label">BLOCK</div>
+                            <div class="result-value block-time" id="block-time">--:--</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">FLIGHT</div>
+                            <div class="result-value flight-time" id="flight-time">--:--</div>
+                        </div>
+                    </div>
+                    <button class="clear-btn" id="oooi-clear">Clear</button>
+                </div>
+
+                <!-- ETA Section -->
+                <div class="section">
+                    <div class="section-title">ETA Countdown</div>
+                    <div class="utc-display">UTC: <span id="utc-clock">--:--:--</span></div>
+                    <div class="input-grid-2">
+                        <div class="input-group">
+                            <label class="input-label">ETA (UTC)</label>
+                            <button class="input-btn placeholder" id="eta-time-btn" onclick="openTimePicker('eta-time')">0000</button>
+                            <input type="hidden" id="eta-time" value="">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">UTC NOW</label>
+                            <button class="input-btn placeholder" id="utc-manual-btn" onclick="openTimePicker('utc-manual')">AUTO</button>
+                            <input type="hidden" id="utc-manual" value="">
+                        </div>
+                    </div>
+                    <div class="eta-countdown" id="eta-countdown">--:--:--</div>
+                    <button class="clear-btn" id="eta-clear">Clear</button>
+                </div>
+
+                <!-- TOW Calculator -->
+                <div class="section">
+                    <div class="section-title">TOW Calculator</div>
+                    <div class="input-grid-3">
+                        <div class="input-group">
+                            <label class="input-label">ZFW</label>
+                            <button class="input-btn placeholder" id="calc-zfw-btn" onclick="openWeightPicker('calc-zfw', 'ZFW')">0</button>
+                            <input type="hidden" id="calc-zfw" value="">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">FOB</label>
+                            <button class="input-btn placeholder" id="calc-fob-btn" onclick="openWeightPicker('calc-fob', 'FOB')">0</button>
+                            <input type="hidden" id="calc-fob" value="">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">TAXI</label>
+                            <button class="input-btn placeholder" id="calc-taxi-btn" onclick="openWeightPicker('calc-taxi', 'Taxi Fuel')">0</button>
+                            <input type="hidden" id="calc-taxi" value="">
+                        </div>
+                    </div>
+                    <div class="results-row">
+                        <div class="result-item">
+                            <div class="result-label">TAKE OFF WEIGHT</div>
+                            <div class="result-value tow-value" id="tow-result">---</div>
+                        </div>
+                    </div>
+                    <button class="clear-btn" id="calc-clear">Clear</button>
+                </div>
+
+                <!-- OPT ACC Calculator -->
+                <div class="section">
+                    <div class="section-title">Acceleration Height</div>
+                    <div class="input-grid-2">
+                        <div class="input-group">
+                            <label class="input-label">OPT ACC</label>
+                            <div class="input-btn-with-unit">
+                                <button class="input-btn placeholder" id="opt-acc-btn" onclick="openWeightPicker('opt-acc', 'OPT ACC', 'ft')">0</button>
+                                <span class="input-btn-unit">ft</span>
+                            </div>
+                            <input type="hidden" id="opt-acc" value="">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">ELEV</label>
+                            <div class="input-btn-with-unit">
+                                <button class="input-btn placeholder" id="airfield-elev-btn" onclick="openWeightPicker('airfield-elev', 'Elevation', 'ft')">0</button>
+                                <span class="input-btn-unit">ft</span>
+                            </div>
+                            <input type="hidden" id="airfield-elev" value="">
+                        </div>
+                    </div>
+                    <div class="results-row">
+                        <div class="result-item">
+                            <div class="result-label">ACC HEIGHT AGL</div>
+                            <div class="result-value acc-value" id="acc-result">--- ft</div>
+                        </div>
+                    </div>
+                    <button class="preset-btn" id="rw12r-btn">RW12R (62 ft)</button>
+                    <button class="clear-btn" id="acc-clear">Clear</button>
+                </div>
+            </div>
+
+            <!-- Timers -->
+            <div class="timers-grid" id="timers-container"></div>
+        </div>
+
+        <!-- FDP Calculator Tab -->
+        <div class="tab-content" id="tab-fdp">
+            <div class="fdp-container">
+                <div class="fdp-section">
+                    <div class="section-title">Duty Setup</div>
+                    <div class="fdp-row">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Crew Type</label>
+                            <select class="fdp-select" id="fdp-crew-type" onchange="calculateFDP()">
+                                <option value="flight">Flight Crew</option>
+                                <option value="cabin">Cabin Crew</option>
+                            </select>
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Acclimatization</label>
+                            <select class="fdp-select" id="fdp-acclimatized" onchange="calculateFDP()">
+                                <option value="yes">Acclimatized</option>
+                                <option value="no">Not Acclimatized</option>
+                            </select>
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Preceding Rest</label>
+                            <select class="fdp-select" id="fdp-rest" onchange="calculateFDP()">
+                                <option value="normal">Up to 18h or over 30h</option>
+                                <option value="reduced">Between 18-30h</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="fdp-row">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Report Time (Local)</label>
+                            <button class="input-btn" id="fdp-report-btn" onclick="openTimePicker('fdp-report')" style="max-width:100%">0600</button>
+                            <input type="hidden" id="fdp-report" value="0600">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Number of Sectors</label>
+                            <select class="fdp-select" id="fdp-sectors" onchange="updateSectorInputs(); calculateFDP()">
+                                <option value="1">1 Sector</option>
+                                <option value="2">2 Sectors</option>
+                                <option value="3">3 Sectors</option>
+                                <option value="4">4 Sectors</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fdp-section">
+                    <div class="section-title">Sector Details (Optional)</div>
+                    <div class="sector-inputs" id="sector-inputs">
+                        <!-- Dynamically filled -->
+                    </div>
+                </div>
+
+                <div class="fdp-section">
+                    <div class="section-title">FDP Results</div>
+                    <div class="fdp-results">
+                        <div class="fdp-result-grid">
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Max FDP</div>
+                                <div class="fdp-result-value green" id="fdp-max">--:--</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Latest On-Chocks</div>
+                                <div class="fdp-result-value green" id="fdp-chocks">--:--</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Latest Off-Duty</div>
+                                <div class="fdp-result-value green" id="fdp-offduty">--:--</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Max Discretion</div>
+                                <div class="fdp-result-value yellow" id="fdp-discretion">+3:00</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Absolute Limit</div>
+                                <div class="fdp-result-value orange" id="fdp-absolute">--:--</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Min Rest After</div>
+                                <div class="fdp-result-value" id="fdp-rest-after">12:00</div>
+                            </div>
+                        </div>
+                        <div id="fdp-warnings"></div>
+                    </div>
+                </div>
+
+                <div class="fdp-section">
+                    <div class="section-title">Live Duty Tracker</div>
+                    <div class="fdp-row">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Actual Report (Local)</label>
+                            <button class="input-btn" id="fdp-actual-report-btn" onclick="openTimePicker('fdp-actual-report')" style="max-width:100%">----</button>
+                            <input type="hidden" id="fdp-actual-report" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Current Local Time</label>
+                            <div class="fdp-result-value" id="fdp-local-time" style="padding-top:10px">--:--:--</div>
+                        </div>
+                    </div>
+                    <div class="fdp-result-grid" style="margin-top:15px">
+                        <div class="fdp-result-item">
+                            <div class="fdp-result-label">FDP Elapsed</div>
+                            <div class="fdp-result-value" id="fdp-elapsed">--:--</div>
+                        </div>
+                        <div class="fdp-result-item">
+                            <div class="fdp-result-label">FDP Remaining</div>
+                            <div class="fdp-result-value green" id="fdp-remaining">--:--</div>
+                        </div>
+                        <div class="fdp-result-item">
+                            <div class="fdp-result-label">Into Discretion</div>
+                            <div class="fdp-result-value" id="fdp-into-discretion">--:--</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Number Picker Modal -->
     <div class="modal-overlay" id="number-picker-modal">
         <div class="number-picker">
-            <div class="picker-title" id="picker-title">Set Hours</div>
+            <div class="picker-title" id="picker-title">Set Value</div>
             <div class="picker-display">
                 <span class="picker-value" id="picker-value">0</span>
-                <span class="picker-unit" id="picker-unit">h</span>
+                <span class="picker-unit" id="picker-unit"></span>
             </div>
             <div class="picker-buttons">
                 <button class="picker-btn" onclick="pickerAppend('1')">1</button>
@@ -731,7 +1029,101 @@
     </div>
 
     <script>
-        // Default timer configurations
+        // ============ TAB SWITCHING ============
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
+        }
+
+        // ============ NUMBER PICKER ============
+        let pickerCallback = null;
+        let pickerValue = '';
+        let pickerMaxLength = 6;
+        let pickerFormatCommas = false;
+
+        function openPicker(title, unit, currentValue, maxLength, formatCommas, callback) {
+            pickerCallback = callback;
+            pickerValue = currentValue.toString().replace(/,/g, '');
+            pickerMaxLength = maxLength;
+            pickerFormatCommas = formatCommas;
+            document.getElementById('picker-title').textContent = title;
+            document.getElementById('picker-unit').textContent = unit || '';
+            updatePickerDisplay();
+            document.getElementById('number-picker-modal').classList.add('active');
+        }
+
+        function updatePickerDisplay() {
+            let display = pickerValue || '0';
+            if (pickerFormatCommas && display !== '0') {
+                display = parseInt(display, 10).toLocaleString();
+            }
+            document.getElementById('picker-value').textContent = display;
+        }
+
+        function closePicker() {
+            document.getElementById('number-picker-modal').classList.remove('active');
+            pickerCallback = null;
+        }
+
+        function pickerAppend(digit) {
+            if (pickerValue.length < pickerMaxLength) {
+                pickerValue += digit;
+                updatePickerDisplay();
+            }
+        }
+
+        function pickerClear() {
+            pickerValue = '';
+            updatePickerDisplay();
+        }
+
+        function pickerBackspace() {
+            pickerValue = pickerValue.slice(0, -1);
+            updatePickerDisplay();
+        }
+
+        function confirmPicker() {
+            if (pickerCallback) {
+                pickerCallback(pickerValue);
+            }
+            closePicker();
+        }
+
+        // Time picker (HHMM format)
+        function openTimePicker(fieldId) {
+            const currentVal = document.getElementById(fieldId).value || '';
+            openPicker('Enter Time (HHMM)', '', currentVal, 4, false, (val) => {
+                document.getElementById(fieldId).value = val;
+                const btn = document.getElementById(fieldId + '-btn');
+                if (btn) {
+                    btn.textContent = val ? val.padStart(4, '0') : (fieldId === 'utc-manual' ? 'AUTO' : '0000');
+                    btn.classList.toggle('placeholder', !val);
+                }
+                if (fieldId.startsWith('oooi-')) calculateOOOI();
+                else if (fieldId === 'eta-time') { etaManualStartTime = null; calculateETA(); }
+                else if (fieldId === 'utc-manual') { etaManualStartTime = val ? Date.now() : null; saveETA(); calculateETA(); }
+                else if (fieldId === 'fdp-report' || fieldId === 'fdp-actual-report') calculateFDP();
+            });
+        }
+
+        // Weight picker (with commas)
+        function openWeightPicker(fieldId, title, unit) {
+            const currentVal = document.getElementById(fieldId).value || '';
+            openPicker(title || 'Enter Value', unit || '', currentVal, 6, true, (val) => {
+                document.getElementById(fieldId).value = val;
+                const btn = document.getElementById(fieldId + '-btn');
+                if (btn) {
+                    btn.textContent = val ? parseInt(val, 10).toLocaleString() : '0';
+                    btn.classList.toggle('placeholder', !val);
+                }
+                if (fieldId.startsWith('calc-')) calculateTOW();
+                else if (fieldId === 'opt-acc' || fieldId === 'airfield-elev') calculateACC();
+            });
+        }
+
+        // ============ DEFAULT TIMERS ============
         const defaultTimers = [
             { name: 'APU', type: 'countdown', hours: 0, minutes: 11 },
             { name: 'APU Start', type: 'countdown', hours: 3, minutes: 0 },
@@ -742,53 +1134,7 @@
 
         let timers = [];
         let animationFrameId = null;
-        let pickerCallback = null;
-        let pickerValue = '';
-        let pickerMax = 99;
-
-        // ============ NUMBER PICKER ============
-        function openPicker(title, unit, currentValue, max, callback) {
-            pickerCallback = callback;
-            pickerValue = currentValue.toString();
-            pickerMax = max;
-            document.getElementById('picker-title').textContent = title;
-            document.getElementById('picker-unit').textContent = unit;
-            document.getElementById('picker-value').textContent = pickerValue || '0';
-            document.getElementById('number-picker-modal').classList.add('active');
-        }
-
-        function closePicker() {
-            document.getElementById('number-picker-modal').classList.remove('active');
-            pickerCallback = null;
-        }
-
-        function pickerAppend(digit) {
-            if (pickerValue.length < 3) {
-                pickerValue += digit;
-                const val = parseInt(pickerValue, 10);
-                if (val > pickerMax) {
-                    pickerValue = pickerMax.toString();
-                }
-                document.getElementById('picker-value').textContent = pickerValue || '0';
-            }
-        }
-
-        function pickerClear() {
-            pickerValue = '';
-            document.getElementById('picker-value').textContent = '0';
-        }
-
-        function pickerBackspace() {
-            pickerValue = pickerValue.slice(0, -1);
-            document.getElementById('picker-value').textContent = pickerValue || '0';
-        }
-
-        function confirmPicker() {
-            if (pickerCallback) {
-                pickerCallback(parseInt(pickerValue, 10) || 0);
-            }
-            closePicker();
-        }
+        let etaManualStartTime = null;
 
         // ============ TIMER STATE ============
         function loadState() {
@@ -846,10 +1192,13 @@
             if (saved) {
                 try {
                     const oooi = JSON.parse(saved);
-                    document.getElementById('oooi-out').value = oooi.out || '';
-                    document.getElementById('oooi-off').value = oooi.off || '';
-                    document.getElementById('oooi-on').value = oooi.on || '';
-                    document.getElementById('oooi-in').value = oooi.in || '';
+                    ['out', 'off', 'on', 'in'].forEach(field => {
+                        const val = oooi[field] || '';
+                        document.getElementById('oooi-' + field).value = val;
+                        const btn = document.getElementById('oooi-' + field + '-btn');
+                        btn.textContent = val ? val.padStart(4, '0') : '0000';
+                        btn.classList.toggle('placeholder', !val);
+                    });
                     calculateOOOI();
                 } catch (e) {}
             }
@@ -897,12 +1246,8 @@
             const on = parseTime(document.getElementById('oooi-on').value);
             const inn = parseTime(document.getElementById('oooi-in').value);
 
-            const blockTime = timeDiff(out, inn);
-            document.getElementById('block-time').textContent = formatMinutes(blockTime);
-
-            const flightTime = timeDiff(off, on);
-            document.getElementById('flight-time').textContent = formatMinutes(flightTime);
-
+            document.getElementById('block-time').textContent = formatMinutes(timeDiff(out, inn));
+            document.getElementById('flight-time').textContent = formatMinutes(timeDiff(off, on));
             saveOOOI();
         }
 
@@ -914,6 +1259,18 @@
                     const eta = JSON.parse(saved);
                     document.getElementById('eta-time').value = eta.time || '';
                     document.getElementById('utc-manual').value = eta.manual || '';
+
+                    const etaBtn = document.getElementById('eta-time-btn');
+                    etaBtn.textContent = eta.time ? eta.time.padStart(4, '0') : '0000';
+                    etaBtn.classList.toggle('placeholder', !eta.time);
+
+                    const manualBtn = document.getElementById('utc-manual-btn');
+                    manualBtn.textContent = eta.manual ? eta.manual.padStart(4, '0') : 'AUTO';
+                    manualBtn.classList.toggle('placeholder', !eta.manual);
+
+                    if (eta.manual && eta.manualStartTime) {
+                        etaManualStartTime = eta.manualStartTime;
+                    }
                 } catch (e) {}
             }
         }
@@ -921,15 +1278,15 @@
         function saveETA() {
             const eta = {
                 time: document.getElementById('eta-time').value,
-                manual: document.getElementById('utc-manual').value
+                manual: document.getElementById('utc-manual').value,
+                manualStartTime: etaManualStartTime
             };
             localStorage.setItem('flightETA', JSON.stringify(eta));
         }
 
         function updateUTCClock() {
             const now = new Date();
-            const utc = now.toISOString().substring(11, 19);
-            document.getElementById('utc-clock').textContent = utc;
+            document.getElementById('utc-clock').textContent = now.toISOString().substring(11, 19);
         }
 
         function calculateETA() {
@@ -944,14 +1301,20 @@
                 return;
             }
 
-            let nowMins;
-            if (manualStr && manualStr.length >= 3) {
+            let nowMins, nowSecs = 0;
+
+            if (manualStr && manualStr.length >= 3 && etaManualStartTime) {
+                // Manual mode: countdown from when manual time was entered
                 const manual = parseTime(manualStr);
                 if (manual) {
-                    nowMins = manual.hours * 60 + manual.minutes;
+                    const elapsedSinceEntry = (Date.now() - etaManualStartTime) / 1000;
+                    const manualTotalSecs = manual.hours * 3600 + manual.minutes * 60;
+                    const currentSimSecs = manualTotalSecs + elapsedSinceEntry;
+                    nowMins = currentSimSecs / 60;
+                    nowSecs = currentSimSecs % 60;
                 } else {
                     const now = new Date();
-                    nowMins = now.getUTCHours() * 60 + now.getUTCMinutes();
+                    nowMins = now.getUTCHours() * 60 + now.getUTCMinutes() + now.getUTCSeconds() / 60;
                 }
             } else {
                 const now = new Date();
@@ -964,7 +1327,7 @@
             }
 
             const diffMins = etaMins - nowMins;
-            const diffSecs = Math.floor(diffMins * 60);
+            const diffSecs = Math.max(0, Math.floor(diffMins * 60));
 
             if (diffSecs <= 0) {
                 etaDisplay.textContent = '00:00:00';
@@ -983,8 +1346,6 @@
                     etaDisplay.className = 'eta-countdown';
                 }
             }
-
-            saveETA();
         }
 
         // ============ TOW ============
@@ -993,9 +1354,13 @@
             if (saved) {
                 try {
                     const tow = JSON.parse(saved);
-                    document.getElementById('calc-zfw').value = tow.zfw || '';
-                    document.getElementById('calc-fob').value = tow.fob || '';
-                    document.getElementById('calc-taxi').value = tow.taxi || '';
+                    ['zfw', 'fob', 'taxi'].forEach(field => {
+                        const val = tow[field] || '';
+                        document.getElementById('calc-' + field).value = val;
+                        const btn = document.getElementById('calc-' + field + '-btn');
+                        btn.textContent = val ? parseInt(val, 10).toLocaleString() : '0';
+                        btn.classList.toggle('placeholder', !val);
+                    });
                     calculateTOW();
                 } catch (e) {}
             }
@@ -1010,20 +1375,16 @@
             localStorage.setItem('flightTOW', JSON.stringify(tow));
         }
 
-        function formatWithCommas(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        }
-
         function calculateTOW() {
-            const zfw = parseInt(document.getElementById('calc-zfw').value.replace(/,/g, ''), 10) || 0;
-            const fob = parseInt(document.getElementById('calc-fob').value.replace(/,/g, ''), 10) || 0;
-            const taxi = parseInt(document.getElementById('calc-taxi').value.replace(/,/g, ''), 10) || 0;
+            const zfw = parseInt(document.getElementById('calc-zfw').value, 10) || 0;
+            const fob = parseInt(document.getElementById('calc-fob').value, 10) || 0;
+            const taxi = parseInt(document.getElementById('calc-taxi').value, 10) || 0;
 
             if (zfw === 0 && fob === 0) {
                 document.getElementById('tow-result').textContent = '---';
             } else {
                 const tow = zfw + fob - taxi;
-                document.getElementById('tow-result').textContent = formatWithCommas(tow);
+                document.getElementById('tow-result').textContent = tow.toLocaleString();
             }
             saveTOW();
         }
@@ -1034,8 +1395,14 @@
             if (saved) {
                 try {
                     const acc = JSON.parse(saved);
-                    document.getElementById('opt-acc').value = acc.optAcc || '';
-                    document.getElementById('airfield-elev').value = acc.elev || '';
+                    ['opt-acc', 'airfield-elev'].forEach(field => {
+                        const key = field === 'opt-acc' ? 'optAcc' : 'elev';
+                        const val = acc[key] || '';
+                        document.getElementById(field).value = val;
+                        const btn = document.getElementById(field + '-btn');
+                        btn.textContent = val ? parseInt(val, 10).toLocaleString() : '0';
+                        btn.classList.toggle('placeholder', !val);
+                    });
                     calculateACC();
                 } catch (e) {}
             }
@@ -1050,19 +1417,203 @@
         }
 
         function calculateACC() {
-            const optAcc = parseInt(document.getElementById('opt-acc').value.replace(/,/g, ''), 10) || 0;
-            const elev = parseInt(document.getElementById('airfield-elev').value.replace(/,/g, ''), 10) || 0;
+            const optAcc = parseInt(document.getElementById('opt-acc').value, 10) || 0;
+            const elev = parseInt(document.getElementById('airfield-elev').value, 10) || 0;
 
             if (optAcc === 0) {
                 document.getElementById('acc-result').textContent = '--- ft';
             } else {
                 const result = optAcc - elev;
-                document.getElementById('acc-result').textContent = formatWithCommas(result) + ' ft';
+                document.getElementById('acc-result').textContent = result.toLocaleString() + ' ft';
             }
             saveACC();
         }
 
-        // ============ TIMER DISPLAY ============
+        // ============ FDP CALCULATOR ============
+        const fdpTableFlightAcclimatized = {
+            '0600': [13, 12.25, 11.5, 10.75, 10, 9.5, 9, 9],
+            '0800': [14, 13.25, 12.5, 11.75, 11, 10.5, 10, 9.5],
+            '1300': [13, 12.25, 11.5, 10.75, 10, 9.5, 9, 9],
+            '1800': [12, 11.25, 10.5, 9.75, 9, 9, 9, 9],
+            '2200': [11, 10.25, 9.5, 9, 9, 9, 9, 9]
+        };
+
+        const fdpTableCabinAcclimatized = {
+            '0600': [14, 13.25, 12.5, 11.75, 11, 10.5, 10, 10],
+            '0800': [15, 14.25, 13.5, 12.75, 12, 11.5, 11, 10.5],
+            '1300': [14, 13.25, 12.5, 11.75, 11, 10.5, 10, 10],
+            '1800': [13, 12.25, 11.5, 10.75, 10, 10, 10, 10],
+            '2200': [12, 11.25, 10.5, 10, 10, 10, 10, 10]
+        };
+
+        const fdpTableFlightUnacclimatized = {
+            'normal': [13, 12.25, 11.5, 10.75, 10, 9.25, 9],
+            'reduced': [11.5, 11, 10.5, 9.75, 9, 9, 9]
+        };
+
+        const fdpTableCabinUnacclimatized = {
+            'normal': [14, 13.25, 12.5, 11.75, 11, 10.25, 10],
+            'reduced': [12.5, 12, 11.5, 10.75, 10, 10, 10]
+        };
+
+        function getTimeBand(reportTime) {
+            const time = parseTime(reportTime);
+            if (!time) return '0800';
+            const mins = time.hours * 60 + time.minutes;
+
+            if (mins >= 360 && mins < 480) return '0600';      // 0600-0759
+            if (mins >= 480 && mins < 780) return '0800';      // 0800-1259
+            if (mins >= 780 && mins < 1080) return '1300';     // 1300-1759
+            if (mins >= 1080 && mins < 1320) return '1800';    // 1800-2159
+            return '2200';                                      // 2200-0559
+        }
+
+        function getMaxFDP(crewType, acclimatized, restType, reportTime, sectors) {
+            const sectorIdx = Math.min(sectors - 1, 7);
+
+            if (acclimatized === 'yes') {
+                const timeBand = getTimeBand(reportTime);
+                const table = crewType === 'flight' ? fdpTableFlightAcclimatized : fdpTableCabinAcclimatized;
+                return table[timeBand][sectorIdx];
+            } else {
+                const table = crewType === 'flight' ? fdpTableFlightUnacclimatized : fdpTableCabinUnacclimatized;
+                return table[restType][Math.min(sectorIdx, 6)];
+            }
+        }
+
+        function formatHoursToHHMM(hours) {
+            const h = Math.floor(hours);
+            const m = Math.round((hours - h) * 60);
+            return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+        }
+
+        function addTime(timeStr, hoursToAdd) {
+            const time = parseTime(timeStr);
+            if (!time) return '--:--';
+            let totalMins = time.hours * 60 + time.minutes + Math.round(hoursToAdd * 60);
+            totalMins = totalMins % (24 * 60);
+            if (totalMins < 0) totalMins += 24 * 60;
+            const h = Math.floor(totalMins / 60);
+            const m = totalMins % 60;
+            return `${h.toString().padStart(2, '0')}${m.toString().padStart(2, '0')}`;
+        }
+
+        function updateSectorInputs() {
+            const sectors = parseInt(document.getElementById('fdp-sectors').value, 10);
+            const container = document.getElementById('sector-inputs');
+            let html = '';
+
+            for (let i = 1; i <= sectors; i++) {
+                html += `
+                    <div class="sector-card">
+                        <div class="sector-title">Sector ${i}</div>
+                        <div class="sector-field">
+                            <label>Block Time</label>
+                            <button class="input-btn" style="width:100%;max-width:100%"
+                                    id="sector-${i}-block-btn"
+                                    onclick="openTimePicker('sector-${i}-block')">--:--</button>
+                            <input type="hidden" id="sector-${i}-block" value="">
+                        </div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        function calculateFDP() {
+            const crewType = document.getElementById('fdp-crew-type').value;
+            const acclimatized = document.getElementById('fdp-acclimatized').value;
+            const restType = document.getElementById('fdp-rest').value;
+            const reportTime = document.getElementById('fdp-report').value || '0600';
+            const sectors = parseInt(document.getElementById('fdp-sectors').value, 10);
+
+            // Update report button display
+            const reportBtn = document.getElementById('fdp-report-btn');
+            reportBtn.textContent = reportTime.padStart(4, '0');
+
+            const maxFDP = getMaxFDP(crewType, acclimatized, restType, reportTime, sectors);
+            const maxDiscretion = sectors === 1 ? 3 : 2;
+            const absoluteLimit = maxFDP + maxDiscretion;
+            const minRest = crewType === 'flight' ? 12 : 11;
+
+            const latestChocks = addTime(reportTime, maxFDP);
+            const latestOffDuty = addTime(reportTime, maxFDP + 0.5);
+            const absoluteChocks = addTime(reportTime, absoluteLimit);
+
+            document.getElementById('fdp-max').textContent = formatHoursToHHMM(maxFDP);
+            document.getElementById('fdp-chocks').textContent = latestChocks.substring(0, 2) + ':' + latestChocks.substring(2);
+            document.getElementById('fdp-offduty').textContent = latestOffDuty.substring(0, 2) + ':' + latestOffDuty.substring(2);
+            document.getElementById('fdp-discretion').textContent = '+' + maxDiscretion + ':00';
+            document.getElementById('fdp-absolute').textContent = absoluteChocks.substring(0, 2) + ':' + absoluteChocks.substring(2);
+            document.getElementById('fdp-rest-after').textContent = minRest + ':00';
+
+            // Warnings
+            let warnings = '';
+            if (acclimatized === 'no' && restType === 'reduced') {
+                warnings += '<div class="fdp-warning">Reduced rest (18-30h) - Lower FDP limits apply</div>';
+            }
+
+            const timeBand = getTimeBand(reportTime);
+            if (timeBand === '2200' || timeBand === '0600') {
+                warnings += '<div class="fdp-warning">Early/Night duty - Check consecutive duty limits (max 3)</div>';
+            }
+
+            document.getElementById('fdp-warnings').innerHTML = warnings;
+
+            // Live tracker
+            updateLiveTracker(maxFDP);
+        }
+
+        function updateLiveTracker(maxFDP) {
+            const now = new Date();
+            const localTime = now.toLocaleTimeString('en-GB', { hour12: false });
+            document.getElementById('fdp-local-time').textContent = localTime;
+
+            const actualReport = document.getElementById('fdp-actual-report').value;
+            const actualBtn = document.getElementById('fdp-actual-report-btn');
+            actualBtn.textContent = actualReport ? actualReport.padStart(4, '0') : '----';
+
+            if (!actualReport) {
+                document.getElementById('fdp-elapsed').textContent = '--:--';
+                document.getElementById('fdp-remaining').textContent = '--:--';
+                document.getElementById('fdp-into-discretion').textContent = '--:--';
+                return;
+            }
+
+            const report = parseTime(actualReport);
+            if (!report) return;
+
+            const reportMins = report.hours * 60 + report.minutes;
+            const nowMins = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+            let elapsedMins = nowMins - reportMins;
+            if (elapsedMins < -60) elapsedMins += 24 * 60;
+
+            const maxFDPMins = maxFDP * 60;
+            const remainingMins = maxFDPMins - elapsedMins;
+            const intoDiscretionMins = elapsedMins - maxFDPMins;
+
+            document.getElementById('fdp-elapsed').textContent = formatMinutes(Math.max(0, Math.floor(elapsedMins)));
+
+            const remainingEl = document.getElementById('fdp-remaining');
+            if (remainingMins > 0) {
+                remainingEl.textContent = formatMinutes(Math.floor(remainingMins));
+                remainingEl.className = 'fdp-result-value ' + (remainingMins > 60 ? 'green' : remainingMins > 30 ? 'yellow' : 'red');
+            } else {
+                remainingEl.textContent = '00:00';
+                remainingEl.className = 'fdp-result-value red';
+            }
+
+            const discretionEl = document.getElementById('fdp-into-discretion');
+            if (intoDiscretionMins > 0) {
+                discretionEl.textContent = '+' + formatMinutes(Math.floor(intoDiscretionMins));
+                discretionEl.className = 'fdp-result-value ' + (intoDiscretionMins > 120 ? 'red' : 'orange');
+            } else {
+                discretionEl.textContent = '--:--';
+                discretionEl.className = 'fdp-result-value';
+            }
+        }
+
+        // ============ TIMER FUNCTIONS ============
         function formatTime(ms) {
             const totalSeconds = Math.floor(Math.abs(ms) / 1000);
             const hours = Math.floor(totalSeconds / 3600);
@@ -1073,12 +1624,8 @@
         }
 
         function getColorClass(timer) {
-            if (timer.type === 'stopwatch') {
-                return 'color-neutral';
-            }
-            if (timer.remaining <= 0) {
-                return 'color-expired';
-            }
+            if (timer.type === 'stopwatch') return 'color-neutral';
+            if (timer.remaining <= 0) return 'color-expired';
             const percent = (timer.remaining / timer.initialTime) * 100;
             if (percent > 50) return 'color-green';
             if (percent > 25) return 'color-yellow';
@@ -1087,9 +1634,7 @@
         }
 
         function getProgress(timer) {
-            if (timer.type === 'stopwatch') {
-                return ((timer.elapsed % 60000) / 60000) * 100;
-            }
+            if (timer.type === 'stopwatch') return ((timer.elapsed % 60000) / 60000) * 100;
             if (timer.initialTime === 0) return 0;
             return Math.max(0, (timer.remaining / timer.initialTime) * 100);
         }
@@ -1152,9 +1697,7 @@
         }
 
         function renderTimers() {
-            const container = document.getElementById('timers-container');
-            container.innerHTML = timers.map((timer, index) => createTimerHTML(timer, index)).join('');
-            attachClearOnFocus();
+            document.getElementById('timers-container').innerHTML = timers.map((timer, index) => createTimerHTML(timer, index)).join('');
         }
 
         function updateTimerDisplay(index) {
@@ -1168,18 +1711,11 @@
 
             const isFlashing = card.classList.contains('flashing');
             card.className = `timer-card ${colorClass}${isFlashing ? ' flashing' : ''}`;
-
-            const clockFace = card.querySelector('.clock-face');
-            clockFace.style.setProperty('--progress', `${progress}%`);
-
-            const clockTime = card.querySelector('.clock-time');
-            clockTime.textContent = formatTime(displayTime);
-
-            const timerDisplay = card.querySelector('.timer-display');
-            timerDisplay.textContent = formatTime(displayTime);
+            card.querySelector('.clock-face').style.setProperty('--progress', `${progress}%`);
+            card.querySelector('.clock-time').textContent = formatTime(displayTime);
+            card.querySelector('.timer-display').textContent = formatTime(displayTime);
         }
 
-        // ============ ANIMATION LOOP ============
         let lastFrameTime = 0;
         function tick(currentTime) {
             if (lastFrameTime === 0) lastFrameTime = currentTime;
@@ -1197,7 +1733,6 @@
                     if (timer.type === 'countdown') {
                         const wasPositive = timer.remaining > 0;
                         timer.remaining = Math.max(0, timer.remaining - elapsed);
-
                         if (wasPositive && timer.remaining === 0) {
                             timer.running = false;
                             flashTimer(index, 5);
@@ -1207,7 +1742,6 @@
                     } else {
                         timer.elapsed += elapsed;
                     }
-
                     updateTimerDisplay(index);
                 }
             });
@@ -1225,29 +1759,21 @@
         }
 
         function startAnimationLoop() {
-            if (animationFrameId === null) {
-                const anyRunning = timers.some(t => t.running);
-                if (anyRunning) {
-                    lastFrameTime = 0;
-                    animationFrameId = requestAnimationFrame(tick);
-                }
+            if (animationFrameId === null && timers.some(t => t.running)) {
+                lastFrameTime = 0;
+                animationFrameId = requestAnimationFrame(tick);
             }
         }
 
-        // ============ TIMER CONTROLS ============
         function openTimerPicker(index, unit) {
             const timer = timers[index];
             const hours = Math.floor(timer.initialTime / 3600000);
             const minutes = Math.floor((timer.initialTime % 3600000) / 60000);
 
             if (unit === 'hours') {
-                openPicker('Set Hours', 'h', hours, 99, (val) => {
-                    updateTimerTime(index, 'hours', val);
-                });
+                openPicker('Set Hours', 'h', hours, 2, false, (val) => updateTimerTime(index, 'hours', parseInt(val, 10) || 0));
             } else {
-                openPicker('Set Minutes', 'm', minutes, 59, (val) => {
-                    updateTimerTime(index, 'minutes', val);
-                });
+                openPicker('Set Minutes', 'm', minutes, 2, false, (val) => updateTimerTime(index, 'minutes', Math.min(59, parseInt(val, 10) || 0)));
             }
         }
 
@@ -1256,6 +1782,9 @@
             if (timer.running) {
                 timer.running = false;
             } else {
+                if (timer.type === 'countdown' && timer.remaining === 0) {
+                    timer.remaining = timer.initialTime;
+                }
                 timer.running = true;
                 timer.lastUpdate = Date.now();
                 startAnimationLoop();
@@ -1268,11 +1797,8 @@
         function resetTimer(index) {
             const timer = timers[index];
             timer.running = false;
-            if (timer.type === 'countdown') {
-                timer.remaining = timer.initialTime;
-            } else {
-                timer.elapsed = 0;
-            }
+            timer.remaining = timer.type === 'countdown' ? timer.initialTime : 0;
+            timer.elapsed = 0;
             saveState();
             renderTimers();
         }
@@ -1281,11 +1807,8 @@
             const timer = timers[index];
             timer.type = type;
             timer.running = false;
-            if (type === 'countdown') {
-                timer.remaining = timer.initialTime;
-            } else {
-                timer.elapsed = 0;
-            }
+            timer.remaining = type === 'countdown' ? timer.initialTime : 0;
+            timer.elapsed = 0;
             saveState();
             renderTimers();
         }
@@ -1312,32 +1835,14 @@
             renderTimers();
         }
 
-        // ============ CLEAR ON FOCUS ============
-        function attachClearOnFocus() {
-            document.querySelectorAll('.clear-on-focus').forEach(input => {
-                input.removeEventListener('focus', clearOnFocusHandler);
-                input.addEventListener('focus', clearOnFocusHandler);
-            });
-        }
-
-        function clearOnFocusHandler(e) {
-            e.target.select();
-        }
-
-        // ============ INPUT HANDLERS ============
-        document.querySelectorAll('.num-input').forEach(input => {
-            input.addEventListener('input', (e) => {
-                e.target.value = e.target.value.replace(/[^0-9]/g, '');
-
-                if (e.target.id.startsWith('oooi-')) calculateOOOI();
-                else if (e.target.id.startsWith('calc-')) calculateTOW();
-                else if (e.target.id === 'opt-acc' || e.target.id === 'airfield-elev') calculateACC();
-                else if (e.target.id === 'eta-time' || e.target.id === 'utc-manual') calculateETA();
-            });
-        });
-
+        // ============ CLEAR HANDLERS ============
         document.getElementById('oooi-clear').addEventListener('click', () => {
-            document.querySelectorAll('#oooi-out, #oooi-off, #oooi-on, #oooi-in').forEach(input => input.value = '');
+            ['out', 'off', 'on', 'in'].forEach(field => {
+                document.getElementById('oooi-' + field).value = '';
+                const btn = document.getElementById('oooi-' + field + '-btn');
+                btn.textContent = '0000';
+                btn.classList.add('placeholder');
+            });
             document.getElementById('block-time').textContent = '--:--';
             document.getElementById('flight-time').textContent = '--:--';
             localStorage.removeItem('flightOOOI');
@@ -1346,26 +1851,42 @@
         document.getElementById('eta-clear').addEventListener('click', () => {
             document.getElementById('eta-time').value = '';
             document.getElementById('utc-manual').value = '';
+            document.getElementById('eta-time-btn').textContent = '0000';
+            document.getElementById('eta-time-btn').classList.add('placeholder');
+            document.getElementById('utc-manual-btn').textContent = 'AUTO';
+            document.getElementById('utc-manual-btn').classList.add('placeholder');
             document.getElementById('eta-countdown').textContent = '--:--:--';
             document.getElementById('eta-countdown').className = 'eta-countdown';
+            etaManualStartTime = null;
             localStorage.removeItem('flightETA');
         });
 
         document.getElementById('calc-clear').addEventListener('click', () => {
-            document.querySelectorAll('#calc-zfw, #calc-fob, #calc-taxi').forEach(input => input.value = '');
+            ['zfw', 'fob', 'taxi'].forEach(field => {
+                document.getElementById('calc-' + field).value = '';
+                const btn = document.getElementById('calc-' + field + '-btn');
+                btn.textContent = '0';
+                btn.classList.add('placeholder');
+            });
             document.getElementById('tow-result').textContent = '---';
             localStorage.removeItem('flightTOW');
         });
 
         document.getElementById('acc-clear').addEventListener('click', () => {
-            document.getElementById('opt-acc').value = '';
-            document.getElementById('airfield-elev').value = '';
+            ['opt-acc', 'airfield-elev'].forEach(field => {
+                document.getElementById(field).value = '';
+                const btn = document.getElementById(field + '-btn');
+                btn.textContent = '0';
+                btn.classList.add('placeholder');
+            });
             document.getElementById('acc-result').textContent = '--- ft';
             localStorage.removeItem('flightACC');
         });
 
         document.getElementById('rw12r-btn').addEventListener('click', () => {
             document.getElementById('airfield-elev').value = '62';
+            document.getElementById('airfield-elev-btn').textContent = '62';
+            document.getElementById('airfield-elev-btn').classList.remove('placeholder');
             calculateACC();
         });
 
@@ -1376,13 +1897,23 @@
         loadTOW();
         loadACC();
         renderTimers();
-        attachClearOnFocus();
+        updateSectorInputs();
+        calculateFDP();
         startAnimationLoop();
 
-        // Update UTC clock and ETA every second
         setInterval(() => {
             updateUTCClock();
             calculateETA();
+            if (document.getElementById('tab-fdp').classList.contains('active')) {
+                const maxFDP = getMaxFDP(
+                    document.getElementById('fdp-crew-type').value,
+                    document.getElementById('fdp-acclimatized').value,
+                    document.getElementById('fdp-rest').value,
+                    document.getElementById('fdp-report').value || '0600',
+                    parseInt(document.getElementById('fdp-sectors').value, 10)
+                );
+                updateLiveTracker(maxFDP);
+            }
         }, 1000);
 
         updateUTCClock();
