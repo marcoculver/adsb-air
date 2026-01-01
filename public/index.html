@@ -958,6 +958,11 @@
                 <!-- TOW Calculator -->
                 <div class="section">
                     <div class="section-title">TOW Calculator</div>
+                    <div class="aircraft-selector" style="margin-bottom:10px">
+                        <button class="aircraft-btn active" id="tow-ac-b738" onclick="selectAircraft('B738')">B738</button>
+                        <button class="aircraft-btn" id="tow-ac-b38m" onclick="selectAircraft('B38M')">B38M</button>
+                        <button class="aircraft-btn" id="tow-ac-b39m" onclick="selectAircraft('B39M')">B39M</button>
+                    </div>
                     <div class="input-grid-3">
                         <div class="input-group">
                             <label class="input-label">ZFW</label>
@@ -975,12 +980,24 @@
                             <input type="hidden" id="calc-taxi" value="">
                         </div>
                     </div>
-                    <div class="results-row">
+                    <div class="results-row" style="flex-wrap:wrap; gap:10px;">
                         <div class="result-item">
-                            <div class="result-label">TAKE OFF WEIGHT</div>
+                            <div class="result-label">TAXI WT</div>
+                            <div class="result-value" id="taxi-wt-result" style="font-size:1rem">---</div>
+                            <div class="result-label" id="mtw-limit" style="color:#666; font-size:0.65rem">MTW: ---</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">TAKE OFF WT</div>
                             <div class="result-value tow-value" id="tow-result">---</div>
+                            <div class="result-label" id="mtow-limit" style="color:#666; font-size:0.65rem">MTOW: ---</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">ZFW</div>
+                            <div class="result-value" id="zfw-display" style="font-size:1rem; color:#7ec8e3">---</div>
+                            <div class="result-label" id="mzfw-limit" style="color:#666; font-size:0.65rem">MZFW: ---</div>
                         </div>
                     </div>
+                    <div id="tow-warnings" style="margin-top:10px"></div>
                     <button class="clear-btn" id="calc-clear">Clear</button>
                 </div>
 
@@ -1612,25 +1629,63 @@
             });
         }
 
-        // ============ AIRCRAFT & MLF ============
-        const aircraftMLW = {
-            'B738': 66360,
-            'B38M': 69308,
-            'B39M': 74343
+        // ============ AIRCRAFT & WEIGHT LIMITS ============
+        const aircraftLimits = {
+            'B738': {
+                name: 'B737-800',
+                mtw: 79242,
+                mtow: 79015,
+                mlw: 66360,
+                mzfw: 62731,
+                sfp: 'SFP1'
+            },
+            'B38M': {
+                name: 'B737-8',
+                mtw: 82417,
+                mtow: 82190,
+                mlw: 69308,
+                mzfw: 65952,
+                sfp: 'SFP1'
+            },
+            'B39M': {
+                name: 'B737-9',
+                mtw: 88541,
+                mtow: 88314,
+                mlw: 74343,
+                mzfw: 70987,
+                sfp: 'SFP2'
+            }
         };
         let selectedAircraft = 'B738';
 
         function selectAircraft(type) {
             selectedAircraft = type;
+            // Update all aircraft selector buttons (TOW and MLF sections)
             document.querySelectorAll('.aircraft-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById('ac-' + type.toLowerCase()).classList.add('active');
-            document.getElementById('mlw-display').textContent = aircraftMLW[type].toLocaleString();
+            document.getElementById('tow-ac-' + type.toLowerCase()).classList.add('active');
+
+            // Update MLW display
+            document.getElementById('mlw-display').textContent = aircraftLimits[type].mlw.toLocaleString();
+
+            // Update limit displays
+            updateLimitDisplays();
+
+            // Recalculate
+            calculateTOW();
             calculateMLF();
+        }
+
+        function updateLimitDisplays() {
+            const limits = aircraftLimits[selectedAircraft];
+            document.getElementById('mtw-limit').textContent = 'MTW: ' + limits.mtw.toLocaleString();
+            document.getElementById('mtow-limit').textContent = 'MTOW: ' + limits.mtow.toLocaleString();
+            document.getElementById('mzfw-limit').textContent = 'MZFW: ' + limits.mzfw.toLocaleString();
         }
 
         function calculateMLF() {
             const zfw = parseInt(document.getElementById('calc-zfw').value, 10) || 0;
-            const mlw = aircraftMLW[selectedAircraft];
+            const mlw = aircraftLimits[selectedAircraft].mlw;
 
             if (zfw === 0) {
                 document.getElementById('mlf-result').textContent = '---';
@@ -2257,12 +2312,68 @@
             const fob = parseInt(document.getElementById('calc-fob').value, 10) || 0;
             const taxi = parseInt(document.getElementById('calc-taxi').value, 10) || 0;
 
-            if (zfw === 0 && fob === 0) {
-                document.getElementById('tow-result').textContent = '---';
+            const limits = aircraftLimits[selectedAircraft];
+            let warnings = [];
+
+            // Calculate weights
+            const taxiWt = zfw + fob;  // Taxi weight = ZFW + total fuel
+            const tow = zfw + fob - taxi;  // TOW = ZFW + FOB - Taxi fuel
+
+            // Update ZFW display
+            const zfwEl = document.getElementById('zfw-display');
+            if (zfw > 0) {
+                zfwEl.textContent = zfw.toLocaleString();
+                if (zfw > limits.mzfw) {
+                    zfwEl.style.color = '#ff5252';
+                    warnings.push(`ZFW exceeds MZFW by ${(zfw - limits.mzfw).toLocaleString()} kg`);
+                } else {
+                    zfwEl.style.color = '#7ec8e3';
+                }
             } else {
-                const tow = zfw + fob - taxi;
-                document.getElementById('tow-result').textContent = tow.toLocaleString();
+                zfwEl.textContent = '---';
+                zfwEl.style.color = '#7ec8e3';
             }
+
+            // Update Taxi Weight display
+            const taxiWtEl = document.getElementById('taxi-wt-result');
+            if (zfw > 0 && fob > 0) {
+                taxiWtEl.textContent = taxiWt.toLocaleString();
+                if (taxiWt > limits.mtw) {
+                    taxiWtEl.style.color = '#ff5252';
+                    warnings.push(`Taxi Weight exceeds MTW by ${(taxiWt - limits.mtw).toLocaleString()} kg`);
+                } else {
+                    taxiWtEl.style.color = '#00ff88';
+                }
+            } else {
+                taxiWtEl.textContent = '---';
+                taxiWtEl.style.color = '#00ff88';
+            }
+
+            // Update TOW display
+            const towEl = document.getElementById('tow-result');
+            if (zfw === 0 && fob === 0) {
+                towEl.textContent = '---';
+                towEl.style.color = '#FF8200';
+            } else {
+                towEl.textContent = tow.toLocaleString();
+                if (tow > limits.mtow) {
+                    towEl.style.color = '#ff5252';
+                    warnings.push(`TOW exceeds MTOW by ${(tow - limits.mtow).toLocaleString()} kg`);
+                } else {
+                    towEl.style.color = '#FF8200';
+                }
+            }
+
+            // Display warnings
+            const warningsEl = document.getElementById('tow-warnings');
+            if (warnings.length > 0) {
+                warningsEl.innerHTML = warnings.map(w =>
+                    `<div class="fdp-danger" style="margin-bottom:5px; padding:8px; font-size:0.8rem">${w}</div>`
+                ).join('');
+            } else {
+                warningsEl.innerHTML = '';
+            }
+
             saveTOW();
         }
 
@@ -2923,6 +3034,12 @@
                 btn.classList.add('placeholder');
             });
             document.getElementById('tow-result').textContent = '---';
+            document.getElementById('tow-result').style.color = '#FF8200';
+            document.getElementById('taxi-wt-result').textContent = '---';
+            document.getElementById('taxi-wt-result').style.color = '#00ff88';
+            document.getElementById('zfw-display').textContent = '---';
+            document.getElementById('zfw-display').style.color = '#7ec8e3';
+            document.getElementById('tow-warnings').innerHTML = '';
             document.getElementById('mlf-result').textContent = '---';
             localStorage.removeItem('flightTOW');
         });
@@ -2994,7 +3111,9 @@
         loadLayover();
         renderTimers();
         updateSectorInputs();
+        updateLimitDisplays();
         calculateFDP();
+        calculateTOW();
         calculateMLF();
         calculateFuel();
         calculateLayover();
