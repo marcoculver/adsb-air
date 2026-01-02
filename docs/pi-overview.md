@@ -22,6 +22,42 @@ Connect your phone/tablet to the `adsbpi-air` WiFi network and open a browser to
 
 ---
 
+## Flight Ops Dashboard
+
+The custom dashboard provides flight crew tools accessible offline via the Pi's AP.
+
+### Layout
+```
+┌─────────────────────────────────────────────┐
+│  UTC Clock  │  Active Timer 1  │  Timer 2  │  <- Persistent strip
+├─────────────────────────────────────────────┤
+│  [Timers] [Tools] [Fuel] [Layover] [FDP]   │  <- Tab navigation
+├─────────────────────────────────────────────┤
+│              Tab Content                    │
+└─────────────────────────────────────────────┘
+```
+
+### Active Timers Strip
+Always visible at top of all pages:
+- **UTC Clock** - Current Zulu time
+- **Running Timers** - Mini progress rings with countdown values
+- Click any timer to jump to Timers tab
+
+### Tabs
+
+| Tab | Features |
+|-----|----------|
+| **Timers** | 5 configurable countdown/stopwatch timers (APU, etc.) |
+| **Tools** | OOOI calculator, ETA countdown, TOW calculator, Acceleration height, Max landing fuel |
+| **Fuel** | Fuel uplift verification, unit converter, tank split |
+| **Layover** | Rest period calculator |
+| **FDP** | Flight duty period calculator with live tracking |
+
+### Aircraft Presets
+TOW and MLF calculators support: B738, B38M, B39M
+
+---
+
 ## System Information
 
 | Property | Value |
