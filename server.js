@@ -2,9 +2,10 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-// Use PORT env var, or 80 for production (requires sudo), or 8080 for dev
-const PORT = process.env.PORT || (process.getuid && process.getuid() === 0 ? 80 : 8080);
-const HOST = '0.0.0.0'; // Listen on all interfaces
+// Use PORT env var, default to 3000 for service mode
+const PORT = process.env.PORT || 3000;
+const HOST = '127.0.0.1'; // Localhost only - proxied through lighttpd
+const BASE_PATH = process.env.BASE_PATH || '/dashboard';
 
 const MIME_TYPES = {
     '.html': 'text/html',
@@ -19,15 +20,13 @@ const MIME_TYPES = {
 const server = http.createServer((req, res) => {
     let urlPath = req.url;
 
-    // Handle /clock route
-    if (urlPath === '/clock' || urlPath === '/clock/') {
+    // Handle base path (e.g., /dashboard)
+    if (urlPath === BASE_PATH || urlPath === BASE_PATH + '/') {
         urlPath = '/index.html';
-    } else if (urlPath.startsWith('/clock/')) {
-        urlPath = urlPath.replace('/clock', '');
-    }
-
-    // Default to index.html
-    if (urlPath === '/') {
+    } else if (urlPath.startsWith(BASE_PATH + '/')) {
+        urlPath = urlPath.replace(BASE_PATH, '');
+    } else if (urlPath === '/' || urlPath === '') {
+        // Also handle root for direct access
         urlPath = '/index.html';
     }
 
@@ -60,8 +59,6 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, HOST, () => {
-    console.log(`Flight Timers server running at:`);
-    console.log(`  - Local:   http://localhost:${PORT}/clock`);
-    console.log(`  - Network: http://<your-ip>:${PORT}/clock`);
-    console.log(`\nPress Ctrl+C to stop`);
+    console.log(`ADS-B Dashboard server running at:`);
+    console.log(`  - http://${HOST}:${PORT}${BASE_PATH}`);
 });
