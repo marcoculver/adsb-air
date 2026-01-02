@@ -596,6 +596,399 @@
             color: #fff;
         }
 
+        /* Crosswind Calculator */
+        .wind-display {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 15px auto;
+        }
+
+        .runway-graphic {
+            position: absolute;
+            width: 30px;
+            height: 180px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(90deg, #444 0%, #666 50%, #444 100%);
+            border-radius: 4px;
+            border: 2px solid #888;
+        }
+
+        .runway-centerline {
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: repeating-linear-gradient(to bottom, #fff 0px, #fff 10px, transparent 10px, transparent 20px);
+        }
+
+        .wind-arrow {
+            position: absolute;
+            width: 4px;
+            height: 80px;
+            left: 50%;
+            bottom: 50%;
+            transform-origin: bottom center;
+            background: #00d4ff;
+            border-radius: 2px;
+        }
+
+        .wind-arrow::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -8px;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 15px solid #00d4ff;
+        }
+
+        .component-display {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        .component-item {
+            text-align: center;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            min-width: 100px;
+        }
+
+        .component-label {
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .component-value {
+            font-size: 1.4rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .component-value.headwind { color: #00ff88; }
+        .component-value.tailwind { color: #ff5252; }
+        .component-value.crosswind { color: #ffd700; }
+
+        /* Hold Entry Calculator */
+        .hold-display {
+            position: relative;
+            width: 280px;
+            height: 200px;
+            margin: 15px auto;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .hold-pattern {
+            position: absolute;
+            width: 120px;
+            height: 160px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .hold-fix {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #FF8200;
+            border-radius: 50%;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .hold-inbound {
+            position: absolute;
+            width: 2px;
+            height: 70px;
+            background: #00ff88;
+            left: 50%;
+            bottom: 12px;
+            transform: translateX(-50%);
+        }
+
+        .hold-outbound {
+            position: absolute;
+            width: 2px;
+            height: 70px;
+            background: #888;
+            left: 50%;
+            top: 20px;
+            transform: translateX(-50%);
+        }
+
+        .hold-turn {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 2px solid #888;
+            border-radius: 50%;
+            top: -10px;
+        }
+
+        .hold-turn.right { left: 50%; border-left-color: transparent; }
+        .hold-turn.left { right: 50%; border-right-color: transparent; }
+
+        .aircraft-track {
+            position: absolute;
+            width: 3px;
+            height: 60px;
+            background: #00d4ff;
+            left: 20px;
+            bottom: 20px;
+            transform-origin: bottom center;
+        }
+
+        .aircraft-track::after {
+            content: '✈';
+            position: absolute;
+            top: -15px;
+            left: -8px;
+            font-size: 18px;
+            color: #00d4ff;
+        }
+
+        .entry-type-display {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 130, 0, 0.2);
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .entry-type-label {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .entry-type-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #FF8200;
+            margin-top: 5px;
+        }
+
+        .entry-type-desc {
+            font-size: 0.75rem;
+            color: #7ec8e3;
+            margin-top: 5px;
+        }
+
+        /* ISA Calculator */
+        .isa-result {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        .isa-temp {
+            font-size: 2rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+
+        .isa-deviation {
+            font-size: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .isa-deviation.positive { color: #ff5252; }
+        .isa-deviation.negative { color: #00d4ff; }
+        .isa-deviation.neutral { color: #00ff88; }
+
+        /* Scratchpad */
+        .scratchpad-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .scratchpad-textarea {
+            width: 100%;
+            height: 200px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 130, 0, 0.3);
+            border-radius: 10px;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            padding: 15px;
+            resize: vertical;
+        }
+
+        .scratchpad-textarea:focus {
+            outline: none;
+            border-color: #FF8200;
+        }
+
+        .scratchpad-history {
+            margin-top: 20px;
+        }
+
+        .history-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-left: 3px solid #FF8200;
+        }
+
+        .history-timestamp {
+            font-size: 0.7rem;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .history-content {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #e8e8e8;
+            white-space: pre-wrap;
+        }
+
+        /* SNOWTAM Decoder */
+        .snowtam-input {
+            width: 100%;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 130, 0, 0.3);
+            border-radius: 10px;
+            color: #ffd700;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            padding: 15px;
+            resize: vertical;
+        }
+
+        .snowtam-input:focus {
+            outline: none;
+            border-color: #FF8200;
+        }
+
+        .snowtam-decoded {
+            margin-top: 15px;
+        }
+
+        .snowtam-runway {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 130, 0, 0.2);
+        }
+
+        .snowtam-runway-header {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #FF8200;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 130, 0, 0.2);
+        }
+
+        .snowtam-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .snowtam-item {
+            text-align: center;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+        }
+
+        .snowtam-label {
+            font-size: 0.7rem;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .snowtam-value {
+            font-size: 1rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .grf-good { color: #00ff88; }
+        .grf-medium { color: #ffd700; }
+        .grf-poor { color: #FF8200; }
+        .grf-bad { color: #ff5252; }
+
+        .friction-table {
+            margin-top: 15px;
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        .friction-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .friction-table th, .friction-table td {
+            padding: 6px 8px;
+            border: 1px solid rgba(255, 130, 0, 0.2);
+            text-align: center;
+        }
+
+        .friction-table th {
+            background: rgba(255, 130, 0, 0.2);
+            color: #FF8200;
+        }
+
+        /* Timezone Converter */
+        .tz-converter {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .tz-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .tz-label {
+            width: 120px;
+            font-size: 0.85rem;
+            color: #7ec8e3;
+        }
+
+        .tz-time {
+            flex: 1;
+            font-size: 1.4rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .tz-offset {
+            font-size: 0.75rem;
+            color: #888;
+        }
+
         /* Number Picker Modal */
         .modal-overlay {
             display: none;
@@ -1031,9 +1424,11 @@
         <div class="tab-nav">
             <button class="tab-btn" onclick="switchTab('timers')">Timers</button>
             <button class="tab-btn active" onclick="switchTab('tools')">Tools</button>
+            <button class="tab-btn" onclick="switchTab('nav')">Nav</button>
             <button class="tab-btn" onclick="switchTab('fuel')">Fuel</button>
             <button class="tab-btn" onclick="switchTab('layover')">Layover</button>
             <button class="tab-btn" onclick="switchTab('fdp')">FDP</button>
+            <button class="tab-btn" onclick="switchTab('ref')">Ref</button>
         </div>
 
         <!-- Tools Tab -->
@@ -1377,18 +1772,20 @@
                         <option value="-6">UTC-6</option>
                         <option value="-5">UTC-5</option>
                         <option value="-4">UTC-4</option>
-                        <option value="-3">UTC-3</option>
+                        <option value="-3">UTC-3 (MSK)</option>
                         <option value="-2">UTC-2</option>
                         <option value="-1">UTC-1</option>
-                        <option value="0" selected>UTC+0</option>
-                        <option value="1">UTC+1</option>
-                        <option value="2">UTC+2</option>
-                        <option value="3">UTC+3</option>
-                        <option value="4">UTC+4 (DXB)</option>
-                        <option value="5">UTC+5</option>
-                        <option value="5.5">UTC+5:30</option>
-                        <option value="6">UTC+6</option>
-                        <option value="7">UTC+7</option>
+                        <option value="0">UTC+0 (LGW)</option>
+                        <option value="1">UTC+1 (BEG/PRG/ZAG)</option>
+                        <option value="2">UTC+2 (CAI/AMM/TLV/ATH)</option>
+                        <option value="3">UTC+3 (RUH/JED/KWI/BAH/DOH)</option>
+                        <option value="3.5">UTC+3:30 (IKA/THR)</option>
+                        <option value="4" selected>UTC+4 (DXB/MCT/TBS)</option>
+                        <option value="4.5">UTC+4:30 (KBL)</option>
+                        <option value="5">UTC+5 (KHI/LHE/ISB/TAS)</option>
+                        <option value="5.5">UTC+5:30 (DEL/BOM/COK/CMB)</option>
+                        <option value="6">UTC+6 (DAC/ALA)</option>
+                        <option value="7">UTC+7 (BKK)</option>
                         <option value="8">UTC+8</option>
                         <option value="9">UTC+9</option>
                         <option value="10">UTC+10</option>
@@ -1459,18 +1856,20 @@
                         <option value="-6">UTC-6</option>
                         <option value="-5">UTC-5</option>
                         <option value="-4">UTC-4</option>
-                        <option value="-3">UTC-3</option>
+                        <option value="-3">UTC-3 (MSK)</option>
                         <option value="-2">UTC-2</option>
                         <option value="-1">UTC-1</option>
-                        <option value="0">UTC+0</option>
-                        <option value="1">UTC+1</option>
-                        <option value="2">UTC+2</option>
-                        <option value="3">UTC+3</option>
-                        <option value="4" selected>UTC+4 (DXB)</option>
-                        <option value="5">UTC+5</option>
-                        <option value="5.5">UTC+5:30</option>
-                        <option value="6">UTC+6</option>
-                        <option value="7">UTC+7</option>
+                        <option value="0">UTC+0 (LGW)</option>
+                        <option value="1">UTC+1 (BEG/PRG/ZAG)</option>
+                        <option value="2">UTC+2 (CAI/AMM/TLV/ATH)</option>
+                        <option value="3">UTC+3 (RUH/JED/KWI/BAH/DOH)</option>
+                        <option value="3.5">UTC+3:30 (IKA/THR)</option>
+                        <option value="4" selected>UTC+4 (DXB/MCT/TBS)</option>
+                        <option value="4.5">UTC+4:30 (KBL)</option>
+                        <option value="5">UTC+5 (KHI/LHE/ISB/TAS)</option>
+                        <option value="5.5">UTC+5:30 (DEL/BOM/COK/CMB)</option>
+                        <option value="6">UTC+6 (DAC/ALA)</option>
+                        <option value="7">UTC+7 (BKK)</option>
                         <option value="8">UTC+8</option>
                         <option value="9">UTC+9</option>
                         <option value="10">UTC+10</option>
@@ -1616,6 +2015,232 @@
                             <div class="fdp-result-label">Into Discretion</div>
                             <div class="fdp-result-value" id="fdp-into-discretion">--:--</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nav Tab (Crosswind, Hold Entry, ISA) -->
+        <div class="tab-content" id="tab-nav">
+            <div class="fdp-container">
+                <div class="top-sections" style="grid-template-columns: repeat(3, 1fr);">
+                    <!-- Crosswind Calculator -->
+                    <div class="section">
+                        <div class="section-title">Crosswind Calculator</div>
+                        <div class="input-grid-2">
+                            <div class="input-group">
+                                <label class="input-label">Runway HDG</label>
+                                <button class="input-btn" id="xwind-rwy-btn" onclick="openWeightPicker('xwind-rwy', 'Runway', '°')" style="max-width:100%">---</button>
+                                <input type="hidden" id="xwind-rwy" value="">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Wind DIR</label>
+                                <button class="input-btn" id="xwind-dir-btn" onclick="openWeightPicker('xwind-dir', 'Wind From', '°')" style="max-width:100%">---</button>
+                                <input type="hidden" id="xwind-dir" value="">
+                            </div>
+                        </div>
+                        <div class="input-grid-2" style="margin-top:8px">
+                            <div class="input-group">
+                                <label class="input-label">Wind SPD</label>
+                                <button class="input-btn" id="xwind-spd-btn" onclick="openWeightPicker('xwind-spd', 'Wind Speed', 'kt')" style="max-width:100%">---</button>
+                                <input type="hidden" id="xwind-spd" value="">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Gust</label>
+                                <button class="input-btn placeholder" id="xwind-gust-btn" onclick="openWeightPicker('xwind-gust', 'Gust', 'kt')" style="max-width:100%">---</button>
+                                <input type="hidden" id="xwind-gust" value="">
+                            </div>
+                        </div>
+                        <div class="wind-display" id="wind-display">
+                            <div class="runway-graphic" id="runway-graphic">
+                                <div class="runway-centerline"></div>
+                            </div>
+                            <div class="wind-arrow" id="wind-arrow" style="transform: rotate(0deg)"></div>
+                        </div>
+                        <div class="component-display">
+                            <div class="component-item">
+                                <div class="component-label">HEAD/TAIL</div>
+                                <div class="component-value headwind" id="headwind-val">--</div>
+                            </div>
+                            <div class="component-item">
+                                <div class="component-label">CROSSWIND</div>
+                                <div class="component-value crosswind" id="crosswind-val">--</div>
+                            </div>
+                        </div>
+                        <button class="clear-btn" onclick="clearCrosswind()">Clear</button>
+                    </div>
+
+                    <!-- Hold Entry Calculator -->
+                    <div class="section">
+                        <div class="section-title">Hold Entry</div>
+                        <div class="input-grid-2">
+                            <div class="input-group">
+                                <label class="input-label">Inbound CRS</label>
+                                <button class="input-btn" id="hold-inbound-btn" onclick="openWeightPicker('hold-inbound', 'Inbound Course', '°')" style="max-width:100%">---</button>
+                                <input type="hidden" id="hold-inbound" value="">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Your HDG</label>
+                                <button class="input-btn" id="hold-hdg-btn" onclick="openWeightPicker('hold-hdg', 'Your Heading', '°')" style="max-width:100%">---</button>
+                                <input type="hidden" id="hold-hdg" value="">
+                            </div>
+                        </div>
+                        <div class="input-grid-2" style="margin-top:8px">
+                            <div class="input-group">
+                                <label class="input-label">Turn Direction</label>
+                                <select class="fdp-select" id="hold-turn-dir" onchange="calculateHoldEntry()" style="max-width:100%">
+                                    <option value="right">Right Turns</option>
+                                    <option value="left">Left Turns</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hold-display" id="hold-display">
+                            <svg viewBox="0 0 280 200" style="width:100%;height:100%">
+                                <!-- Hold pattern -->
+                                <ellipse cx="170" cy="100" rx="50" ry="70" fill="none" stroke="#444" stroke-width="2" id="hold-oval"/>
+                                <!-- Inbound leg -->
+                                <line x1="120" y1="100" x2="50" y2="100" stroke="#00ff88" stroke-width="3" id="hold-inbound-line"/>
+                                <!-- Fix point -->
+                                <circle cx="120" cy="100" r="6" fill="#FF8200" id="hold-fix-point"/>
+                                <!-- Aircraft -->
+                                <g id="aircraft-symbol" transform="translate(30, 100)">
+                                    <line x1="0" y1="-30" x2="0" y2="0" stroke="#00d4ff" stroke-width="3"/>
+                                    <polygon points="0,-35 -8,-25 8,-25" fill="#00d4ff"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="entry-type-display">
+                            <div class="entry-type-label">ENTRY TYPE</div>
+                            <div class="entry-type-value" id="hold-entry-type">---</div>
+                            <div class="entry-type-desc" id="hold-entry-desc"></div>
+                        </div>
+                        <button class="clear-btn" onclick="clearHoldEntry()">Clear</button>
+                    </div>
+
+                    <!-- ISA Calculator -->
+                    <div class="section">
+                        <div class="section-title">ISA Deviation</div>
+                        <div class="input-grid-2">
+                            <div class="input-group">
+                                <label class="input-label">Altitude (ft)</label>
+                                <button class="input-btn" id="isa-alt-btn" onclick="openWeightPicker('isa-alt', 'Altitude', 'ft')" style="max-width:100%">0</button>
+                                <input type="hidden" id="isa-alt" value="">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">OAT (°C)</label>
+                                <button class="input-btn" id="isa-oat-btn" onclick="openISAPicker()" style="max-width:100%">+15</button>
+                                <input type="hidden" id="isa-oat" value="15">
+                            </div>
+                        </div>
+                        <div class="isa-result">
+                            <div style="font-size:0.8rem;color:#888;margin-bottom:5px">ISA Temperature at Altitude</div>
+                            <div class="isa-temp" id="isa-temp">+15°C</div>
+                            <div style="margin-top:15px;font-size:0.8rem;color:#888">ISA Deviation</div>
+                            <div class="isa-deviation neutral" id="isa-dev">ISA ±0°C</div>
+                        </div>
+                        <div style="text-align:center;font-size:0.7rem;color:#666;margin-top:10px">
+                            ISA = 15°C - (altitude × 1.98°C per 1000ft)
+                        </div>
+                        <button class="clear-btn" onclick="clearISA()">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ref Tab (Timezone, Scratchpad, SNOWTAM) -->
+        <div class="tab-content" id="tab-ref">
+            <div class="fdp-container">
+                <div class="top-sections" style="grid-template-columns: 1fr 1fr;">
+                    <!-- Timezone Converter -->
+                    <div class="section">
+                        <div class="section-title">Timezone Converter</div>
+                        <div class="input-grid-2" style="margin-bottom:15px">
+                            <div class="input-group">
+                                <label class="input-label">Input Time</label>
+                                <button class="input-btn" id="tz-input-btn" onclick="openTimePicker('tz-input')" style="max-width:100%">----</button>
+                                <input type="hidden" id="tz-input" value="">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Input Zone</label>
+                                <select class="fdp-select" id="tz-input-zone" onchange="calculateTimezones()" style="max-width:100%">
+                                    <option value="0">UTC</option>
+                                    <option value="4" selected>DXB (+4)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="tz-converter" id="tz-results">
+                            <div class="tz-row">
+                                <span class="tz-label">UTC</span>
+                                <span class="tz-time" id="tz-utc">--:--</span>
+                                <span class="tz-offset">+0</span>
+                            </div>
+                            <div class="tz-row">
+                                <span class="tz-label">DXB/MCT</span>
+                                <span class="tz-time" id="tz-dxb">--:--</span>
+                                <span class="tz-offset">+4</span>
+                            </div>
+                            <div class="tz-row">
+                                <span class="tz-label">RUH/JED</span>
+                                <span class="tz-time" id="tz-ruh">--:--</span>
+                                <span class="tz-offset">+3</span>
+                            </div>
+                            <div class="tz-row">
+                                <span class="tz-label">DEL/BOM</span>
+                                <span class="tz-time" id="tz-del">--:--</span>
+                                <span class="tz-offset">+5:30</span>
+                            </div>
+                            <div class="tz-row">
+                                <span class="tz-label">IKA/THR</span>
+                                <span class="tz-time" id="tz-ika">--:--</span>
+                                <span class="tz-offset">+3:30</span>
+                            </div>
+                            <div class="tz-row">
+                                <span class="tz-label">LGW</span>
+                                <span class="tz-time" id="tz-lgw">--:--</span>
+                                <span class="tz-offset">+0</span>
+                            </div>
+                        </div>
+                        <button class="clear-btn" onclick="clearTimezones()">Clear</button>
+                    </div>
+
+                    <!-- Scratchpad -->
+                    <div class="section">
+                        <div class="section-title">Scratchpad</div>
+                        <div class="scratchpad-container">
+                            <textarea class="scratchpad-textarea" id="scratchpad" placeholder="ATIS, Clearances, Notes..."></textarea>
+                            <div style="display:flex;gap:10px;margin-top:10px">
+                                <button class="preset-btn" style="flex:1" onclick="saveScratchpad()">Save to History</button>
+                                <button class="clear-btn" style="flex:1;margin:0" onclick="clearScratchpad()">Clear</button>
+                            </div>
+                            <div class="scratchpad-history" id="scratchpad-history"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SNOWTAM Decoder -->
+                <div class="section" style="max-width:800px;margin:20px auto 0">
+                    <div class="section-title">SNOWTAM / GRF Decoder</div>
+                    <textarea class="snowtam-input" id="snowtam-input" placeholder="Paste SNOWTAM or GRF data here...
+Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea>
+                    <button class="preset-btn" style="margin-top:10px" onclick="decodeSnowtam()">Decode</button>
+                    <div class="snowtam-decoded" id="snowtam-decoded"></div>
+                    <div class="friction-table">
+                        <div style="margin-bottom:8px;color:#FF8200">GRF / RCAM Reference (Russian Normative μ)</div>
+                        <table>
+                            <tr>
+                                <th>Code</th>
+                                <th>Condition</th>
+                                <th>Braking</th>
+                                <th>μ (Normative)</th>
+                            </tr>
+                            <tr><td>6</td><td>Dry</td><td class="grf-good">Good</td><td>0.40+</td></tr>
+                            <tr><td>5</td><td>Wet/Frost</td><td class="grf-good">Good-Medium</td><td>0.36-0.39</td></tr>
+                            <tr><td>4</td><td>Slush/Dry Snow</td><td class="grf-medium">Medium</td><td>0.30-0.35</td></tr>
+                            <tr><td>3</td><td>Wet Snow/Compact</td><td class="grf-medium">Medium-Poor</td><td>0.26-0.29</td></tr>
+                            <tr><td>2</td><td>Standing Water</td><td class="grf-poor">Poor</td><td>0.20-0.25</td></tr>
+                            <tr><td>1</td><td>Ice</td><td class="grf-bad">Poor-Nil</td><td>&lt;0.20</td></tr>
+                            <tr><td>0</td><td>Ice/Water on Ice</td><td class="grf-bad">Nil</td><td>Unreliable</td></tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -3363,6 +3988,427 @@
                 startAnimationLoop();
             }
         });
+
+        // ============ CROSSWIND CALCULATOR ============
+        function calculateCrosswind() {
+            const rwyInput = document.getElementById('xwind-rwy').value;
+            const dirInput = document.getElementById('xwind-dir').value;
+            const spdInput = document.getElementById('xwind-spd').value;
+            const gustInput = document.getElementById('xwind-gust').value;
+
+            if (!rwyInput || !dirInput || !spdInput) {
+                document.getElementById('headwind-val').textContent = '--';
+                document.getElementById('crosswind-val').textContent = '--';
+                return;
+            }
+
+            const rwyHdg = parseInt(rwyInput) * 10; // Convert runway number to heading
+            const windDir = parseInt(dirInput);
+            const windSpd = parseInt(spdInput);
+            const gust = gustInput ? parseInt(gustInput) : windSpd;
+
+            // Calculate angle difference
+            let angleDiff = windDir - rwyHdg;
+            while (angleDiff > 180) angleDiff -= 360;
+            while (angleDiff < -180) angleDiff += 360;
+
+            const angleRad = angleDiff * Math.PI / 180;
+
+            // Calculate components using max of steady wind and gust
+            const maxWind = Math.max(windSpd, gust);
+            const headwind = Math.round(Math.cos(angleRad) * maxWind);
+            const crosswind = Math.round(Math.abs(Math.sin(angleRad) * maxWind));
+
+            // Update display
+            const headwindEl = document.getElementById('headwind-val');
+            if (headwind >= 0) {
+                headwindEl.textContent = `H${headwind}`;
+                headwindEl.className = 'component-value headwind';
+            } else {
+                headwindEl.textContent = `T${Math.abs(headwind)}`;
+                headwindEl.className = 'component-value tailwind';
+            }
+
+            const crosswindEl = document.getElementById('crosswind-val');
+            const side = angleDiff > 0 ? 'R' : 'L';
+            crosswindEl.textContent = `${crosswind}${side}`;
+
+            // Update wind arrow rotation
+            const arrowRotation = windDir - rwyHdg;
+            document.getElementById('wind-arrow').style.transform = `translateX(-50%) rotate(${arrowRotation}deg)`;
+        }
+
+        function clearCrosswind() {
+            ['xwind-rwy', 'xwind-dir', 'xwind-spd', 'xwind-gust'].forEach(id => {
+                document.getElementById(id).value = '';
+                document.getElementById(id + '-btn').textContent = '---';
+                document.getElementById(id + '-btn').classList.add('placeholder');
+            });
+            document.getElementById('headwind-val').textContent = '--';
+            document.getElementById('crosswind-val').textContent = '--';
+            document.getElementById('wind-arrow').style.transform = 'translateX(-50%) rotate(0deg)';
+        }
+
+        // ============ HOLD ENTRY CALCULATOR ============
+        function calculateHoldEntry() {
+            const inboundInput = document.getElementById('hold-inbound').value;
+            const hdgInput = document.getElementById('hold-hdg').value;
+            const turnDir = document.getElementById('hold-turn-dir').value;
+
+            if (!inboundInput || !hdgInput) {
+                document.getElementById('hold-entry-type').textContent = '---';
+                document.getElementById('hold-entry-desc').textContent = '';
+                return;
+            }
+
+            const inboundCourse = parseInt(inboundInput);
+            const yourHdg = parseInt(hdgInput);
+
+            // Calculate relative bearing to the fix
+            let relativeBearing = inboundCourse - yourHdg;
+            while (relativeBearing < 0) relativeBearing += 360;
+            while (relativeBearing >= 360) relativeBearing -= 360;
+
+            // For right turns, the sectors are:
+            // Direct: 0-110° relative to inbound
+            // Teardrop: 110-180° relative to inbound (plus 70° offset)
+            // Parallel: 180-360° relative to inbound
+
+            let entryType, entryDesc;
+
+            if (turnDir === 'right') {
+                if (relativeBearing >= 0 && relativeBearing <= 70) {
+                    entryType = 'DIRECT';
+                    entryDesc = 'Turn right to join hold';
+                } else if (relativeBearing > 70 && relativeBearing <= 180) {
+                    entryType = 'TEARDROP';
+                    entryDesc = 'Fly 30° offset, then turn to intercept inbound';
+                } else {
+                    entryType = 'PARALLEL';
+                    entryDesc = 'Fly parallel to outbound, then turn back';
+                }
+            } else {
+                // Left turns - mirror the sectors
+                if (relativeBearing >= 290 || relativeBearing <= 0) {
+                    entryType = 'DIRECT';
+                    entryDesc = 'Turn left to join hold';
+                } else if (relativeBearing >= 180 && relativeBearing < 290) {
+                    entryType = 'TEARDROP';
+                    entryDesc = 'Fly 30° offset, then turn to intercept inbound';
+                } else {
+                    entryType = 'PARALLEL';
+                    entryDesc = 'Fly parallel to outbound, then turn back';
+                }
+            }
+
+            document.getElementById('hold-entry-type').textContent = entryType;
+            document.getElementById('hold-entry-desc').textContent = entryDesc;
+
+            // Update SVG visualization
+            updateHoldGraphic(inboundCourse, yourHdg, turnDir, entryType);
+        }
+
+        function updateHoldGraphic(inbound, yourHdg, turnDir, entryType) {
+            const svg = document.querySelector('#hold-display svg');
+            const aircraft = document.getElementById('aircraft-symbol');
+            const holdOval = document.getElementById('hold-oval');
+
+            // Rotate aircraft to show heading relative to hold
+            const relAngle = yourHdg - inbound;
+            aircraft.setAttribute('transform', `translate(30, 100) rotate(${relAngle})`);
+
+            // Mirror hold pattern for left turns
+            if (turnDir === 'left') {
+                holdOval.setAttribute('cx', '110');
+            } else {
+                holdOval.setAttribute('cx', '170');
+            }
+        }
+
+        function clearHoldEntry() {
+            ['hold-inbound', 'hold-hdg'].forEach(id => {
+                document.getElementById(id).value = '';
+                document.getElementById(id + '-btn').textContent = '---';
+                document.getElementById(id + '-btn').classList.add('placeholder');
+            });
+            document.getElementById('hold-entry-type').textContent = '---';
+            document.getElementById('hold-entry-desc').textContent = '';
+        }
+
+        // ============ ISA CALCULATOR ============
+        function calculateISA() {
+            const altInput = document.getElementById('isa-alt').value;
+            const oatInput = document.getElementById('isa-oat').value;
+
+            const altitude = altInput ? parseInt(altInput) : 0;
+            const oat = oatInput ? parseInt(oatInput) : 15;
+
+            // ISA temperature at altitude: 15°C - (1.98°C per 1000ft)
+            const isaTemp = 15 - (altitude / 1000 * 1.98);
+            const isaDev = oat - isaTemp;
+
+            document.getElementById('isa-temp').textContent = `${isaTemp >= 0 ? '+' : ''}${isaTemp.toFixed(1)}°C`;
+
+            const devEl = document.getElementById('isa-dev');
+            if (Math.abs(isaDev) < 0.5) {
+                devEl.textContent = 'ISA ±0°C';
+                devEl.className = 'isa-deviation neutral';
+            } else if (isaDev > 0) {
+                devEl.textContent = `ISA +${isaDev.toFixed(0)}°C`;
+                devEl.className = 'isa-deviation positive';
+            } else {
+                devEl.textContent = `ISA ${isaDev.toFixed(0)}°C`;
+                devEl.className = 'isa-deviation negative';
+            }
+        }
+
+        function openISAPicker() {
+            const currentVal = document.getElementById('isa-oat').value || '15';
+            openPicker('OAT Temperature', '°C', parseInt(currentVal), 3, true, (val) => {
+                document.getElementById('isa-oat').value = val;
+                document.getElementById('isa-oat-btn').textContent = `${val >= 0 ? '+' : ''}${val}`;
+                document.getElementById('isa-oat-btn').classList.remove('placeholder');
+                calculateISA();
+            });
+        }
+
+        function clearISA() {
+            document.getElementById('isa-alt').value = '';
+            document.getElementById('isa-alt-btn').textContent = '0';
+            document.getElementById('isa-oat').value = '15';
+            document.getElementById('isa-oat-btn').textContent = '+15';
+            document.getElementById('isa-temp').textContent = '+15°C';
+            document.getElementById('isa-dev').textContent = 'ISA ±0°C';
+            document.getElementById('isa-dev').className = 'isa-deviation neutral';
+        }
+
+        // ============ TIMEZONE CONVERTER ============
+        function calculateTimezones() {
+            const inputTime = document.getElementById('tz-input').value;
+            const inputZone = parseFloat(document.getElementById('tz-input-zone').value);
+
+            if (!inputTime || inputTime.length < 3) {
+                ['tz-utc', 'tz-dxb', 'tz-ruh', 'tz-del', 'tz-ika', 'tz-lgw'].forEach(id => {
+                    document.getElementById(id).textContent = '--:--';
+                });
+                return;
+            }
+
+            const parsed = parseTime(inputTime);
+            if (!parsed) return;
+
+            // Convert to UTC minutes
+            let utcMins = parsed.hours * 60 + parsed.minutes - (inputZone * 60);
+
+            // Normalize to 0-1440
+            while (utcMins < 0) utcMins += 1440;
+            while (utcMins >= 1440) utcMins -= 1440;
+
+            const zones = [
+                { id: 'tz-utc', offset: 0 },
+                { id: 'tz-dxb', offset: 4 },
+                { id: 'tz-ruh', offset: 3 },
+                { id: 'tz-del', offset: 5.5 },
+                { id: 'tz-ika', offset: 3.5 },
+                { id: 'tz-lgw', offset: 0 }
+            ];
+
+            zones.forEach(zone => {
+                let localMins = utcMins + (zone.offset * 60);
+                while (localMins < 0) localMins += 1440;
+                while (localMins >= 1440) localMins -= 1440;
+
+                const hours = Math.floor(localMins / 60);
+                const mins = Math.floor(localMins % 60);
+                document.getElementById(zone.id).textContent =
+                    `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+            });
+        }
+
+        function clearTimezones() {
+            document.getElementById('tz-input').value = '';
+            document.getElementById('tz-input-btn').textContent = '----';
+            document.getElementById('tz-input-btn').classList.add('placeholder');
+            ['tz-utc', 'tz-dxb', 'tz-ruh', 'tz-del', 'tz-ika', 'tz-lgw'].forEach(id => {
+                document.getElementById(id).textContent = '--:--';
+            });
+        }
+
+        // ============ SCRATCHPAD ============
+        let scratchpadHistory = [];
+
+        function loadScratchpadHistory() {
+            const saved = localStorage.getItem('scratchpadHistory');
+            if (saved) {
+                try {
+                    scratchpadHistory = JSON.parse(saved);
+                    renderScratchpadHistory();
+                } catch(e) {}
+            }
+            // Load current scratchpad
+            const current = localStorage.getItem('scratchpadCurrent');
+            if (current) {
+                document.getElementById('scratchpad').value = current;
+            }
+        }
+
+        function saveScratchpadHistory() {
+            localStorage.setItem('scratchpadHistory', JSON.stringify(scratchpadHistory));
+        }
+
+        function saveScratchpad() {
+            const content = document.getElementById('scratchpad').value.trim();
+            if (!content) return;
+
+            scratchpadHistory.unshift({
+                timestamp: Date.now(),
+                content: content
+            });
+
+            // Keep only last 10 entries
+            if (scratchpadHistory.length > 10) {
+                scratchpadHistory = scratchpadHistory.slice(0, 10);
+            }
+
+            saveScratchpadHistory();
+            renderScratchpadHistory();
+            document.getElementById('scratchpad').value = '';
+            localStorage.setItem('scratchpadCurrent', '');
+        }
+
+        function renderScratchpadHistory() {
+            const container = document.getElementById('scratchpad-history');
+            if (scratchpadHistory.length === 0) {
+                container.innerHTML = '<div style="color:#666;font-size:0.8rem;text-align:center;padding:10px">No saved notes</div>';
+                return;
+            }
+
+            container.innerHTML = scratchpadHistory.map((item, index) => {
+                const date = new Date(item.timestamp);
+                const timeStr = date.toLocaleString();
+                return `
+                    <div class="history-item">
+                        <div class="history-timestamp">${timeStr}</div>
+                        <div class="history-content">${item.content}</div>
+                        <button class="clear-btn" style="margin-top:8px;padding:3px 8px;font-size:0.7rem" onclick="deleteScratchpadItem(${index})">Delete</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function deleteScratchpadItem(index) {
+            scratchpadHistory.splice(index, 1);
+            saveScratchpadHistory();
+            renderScratchpadHistory();
+        }
+
+        function clearScratchpad() {
+            document.getElementById('scratchpad').value = '';
+            localStorage.setItem('scratchpadCurrent', '');
+        }
+
+        // Auto-save scratchpad as user types
+        document.getElementById('scratchpad').addEventListener('input', (e) => {
+            localStorage.setItem('scratchpadCurrent', e.target.value);
+        });
+
+        // ============ SNOWTAM DECODER ============
+        const grfDescriptions = {
+            '6': { text: 'DRY', braking: 'GOOD', class: 'grf-good' },
+            '5': { text: 'FROST/WET', braking: 'GOOD-MEDIUM', class: 'grf-good' },
+            '4': { text: 'SLUSH/DRY SNOW', braking: 'MEDIUM', class: 'grf-medium' },
+            '3': { text: 'WET SNOW/COMPACT', braking: 'MEDIUM-POOR', class: 'grf-medium' },
+            '2': { text: 'STANDING WATER', braking: 'POOR', class: 'grf-poor' },
+            '1': { text: 'ICE', braking: 'POOR-NIL', class: 'grf-bad' },
+            '0': { text: 'WET ICE', braking: 'NIL', class: 'grf-bad' },
+            '9': { text: 'UNRELIABLE', braking: 'UNRELIABLE', class: 'grf-bad' },
+            '/': { text: 'NOT REPORTED', braking: 'N/R', class: '' }
+        };
+
+        function decodeSnowtam() {
+            const input = document.getElementById('snowtam-input').value.toUpperCase();
+            const container = document.getElementById('snowtam-decoded');
+
+            if (!input.trim()) {
+                container.innerHTML = '';
+                return;
+            }
+
+            // Try to parse runway conditions
+            // Format: A) ICAO B) RWY C) COND/COND/COND
+            const runways = [];
+
+            // Match patterns like "B) 06L C) 5/5/5" or "RWY 06L 5/5/5"
+            const rwyPattern = /(?:B\)\s*)?(\d{2}[LRC]?)\s*(?:C\)\s*)?(\d|\/)\/?(\d|\/)\/?(\d|\/)?/g;
+            let match;
+
+            while ((match = rwyPattern.exec(input)) !== null) {
+                const rwy = match[1];
+                const thirds = [match[2] || '/', match[3] || '/', match[4] || '/'];
+                runways.push({ rwy, thirds });
+            }
+
+            // Also try to match GRF format with friction values
+            // Format: RWY 06L GRF 5/5/5 or F) 5/5/5
+            const frictionPattern = /(?:F\)\s*)?(\d|\/)\/?(\d|\/)\/?(\d|\/)?/g;
+            const depthPattern = /(?:D\)\s*)?(\d+)\/?(\d+)?\/?(\d+)?/g;
+
+            if (runways.length === 0) {
+                // Try simpler format
+                const simpleMatch = input.match(/(\d{2}[LRC]?)[:\s]+(\d)\/(\d)\/(\d)/);
+                if (simpleMatch) {
+                    runways.push({
+                        rwy: simpleMatch[1],
+                        thirds: [simpleMatch[2], simpleMatch[3], simpleMatch[4]]
+                    });
+                }
+            }
+
+            if (runways.length === 0) {
+                container.innerHTML = '<div style="color:#ff5252;padding:10px">Could not parse SNOWTAM data. Check format.</div>';
+                return;
+            }
+
+            container.innerHTML = runways.map(rwy => {
+                return `
+                    <div class="snowtam-runway">
+                        <div class="snowtam-runway-header">RWY ${rwy.rwy}</div>
+                        <div class="snowtam-grid">
+                            ${rwy.thirds.map((code, i) => {
+                                const desc = grfDescriptions[code] || grfDescriptions['/'];
+                                const section = ['A (TDZ)', 'B (MID)', 'C (END)'][i];
+                                return `
+                                    <div class="snowtam-item">
+                                        <div class="snowtam-label">${section}</div>
+                                        <div class="snowtam-value ${desc.class}">${code}</div>
+                                        <div style="font-size:0.65rem;color:#888;margin-top:2px">${desc.text}</div>
+                                        <div style="font-size:0.6rem;color:#666">${desc.braking}</div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ============ EVENT LISTENERS FOR NEW CALCULATORS ============
+        ['xwind-rwy', 'xwind-dir', 'xwind-spd', 'xwind-gust'].forEach(id => {
+            document.getElementById(id).addEventListener('change', calculateCrosswind);
+        });
+
+        ['hold-inbound', 'hold-hdg'].forEach(id => {
+            document.getElementById(id).addEventListener('change', calculateHoldEntry);
+        });
+
+        ['isa-alt'].forEach(id => {
+            document.getElementById(id).addEventListener('change', calculateISA);
+        });
+
+        document.getElementById('tz-input').addEventListener('change', calculateTimezones);
+
+        // Load scratchpad history on startup
+        loadScratchpadHistory();
     </script>
 </body>
 </html>
