@@ -27,6 +27,120 @@
             margin: 0 auto;
         }
 
+        /* Active Timers Strip */
+        .active-timers-strip {
+            background: rgba(0, 20, 40, 0.9);
+            border-radius: 12px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 130, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .strip-clock {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-right: 15px;
+            border-right: 1px solid rgba(255, 130, 0, 0.3);
+        }
+
+        .strip-clock-time {
+            font-size: 1.4rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #00d4ff;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .strip-clock-label {
+            font-size: 0.65rem;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .strip-timers {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .strip-timer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 130, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .strip-timer:hover {
+            border-color: #FF8200;
+            background: rgba(255, 130, 0, 0.1);
+        }
+
+        .strip-timer-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            position: relative;
+            background: conic-gradient(from 0deg, var(--strip-color, #333) var(--strip-progress, 0%), #222 var(--strip-progress, 0%));
+        }
+
+        .strip-timer-icon-inner {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            right: 3px;
+            bottom: 3px;
+            background: #001a2e;
+            border-radius: 50%;
+        }
+
+        .strip-timer-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .strip-timer-name {
+            font-size: 0.7rem;
+            color: #888;
+        }
+
+        .strip-timer-value {
+            font-size: 1rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            text-shadow: 0 0 8px currentColor;
+        }
+
+        .strip-timer.color-green .strip-timer-value { color: #00ff88; }
+        .strip-timer.color-yellow .strip-timer-value { color: #ffd700; }
+        .strip-timer.color-orange .strip-timer-value { color: #FF8200; }
+        .strip-timer.color-red .strip-timer-value { color: #ff5252; }
+        .strip-timer.color-expired .strip-timer-value { color: #ff5252; }
+        .strip-timer.color-neutral .strip-timer-value { color: #00d4ff; }
+
+        .strip-timer.color-green .strip-timer-icon { --strip-color: #00ff88; }
+        .strip-timer.color-yellow .strip-timer-icon { --strip-color: #ffd700; }
+        .strip-timer.color-orange .strip-timer-icon { --strip-color: #FF8200; }
+        .strip-timer.color-red .strip-timer-icon { --strip-color: #ff5252; }
+        .strip-timer.color-expired .strip-timer-icon { --strip-color: #ff5252; }
+        .strip-timer.color-neutral .strip-timer-icon { --strip-color: #00d4ff; }
+
+        .strip-no-active {
+            color: #666;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
         /* Tab Navigation */
         .tab-nav {
             display: flex;
@@ -902,12 +1016,24 @@
 </head>
 <body>
     <div class="container">
+        <!-- Active Timers Strip -->
+        <div class="active-timers-strip" id="active-timers-strip">
+            <div class="strip-clock">
+                <div class="strip-clock-time" id="strip-utc-clock">--:--:--</div>
+                <div class="strip-clock-label">UTC</div>
+            </div>
+            <div class="strip-timers" id="strip-timers">
+                <span class="strip-no-active">No active timers</span>
+            </div>
+        </div>
+
         <!-- Tab Navigation -->
         <div class="tab-nav">
+            <button class="tab-btn" onclick="switchTab('timers')">Timers</button>
             <button class="tab-btn active" onclick="switchTab('tools')">Tools</button>
             <button class="tab-btn" onclick="switchTab('fuel')">Fuel</button>
             <button class="tab-btn" onclick="switchTab('layover')">Layover</button>
-            <button class="tab-btn" onclick="switchTab('fdp')">FDP Calculator</button>
+            <button class="tab-btn" onclick="switchTab('fdp')">FDP</button>
         </div>
 
         <!-- Tools Tab -->
@@ -1069,7 +1195,10 @@
                 </div>
             </div>
 
-            <!-- Timers -->
+        </div>
+
+        <!-- Timers Tab -->
+        <div class="tab-content" id="tab-timers">
             <div class="timers-grid" id="timers-container"></div>
         </div>
 
@@ -2236,7 +2365,54 @@
 
         function updateUTCClock() {
             const now = new Date();
-            document.getElementById('utc-clock').textContent = now.toISOString().substring(11, 19);
+            const utcTime = now.toISOString().substring(11, 19);
+            document.getElementById('utc-clock').textContent = utcTime;
+            document.getElementById('strip-utc-clock').textContent = utcTime;
+        }
+
+        function updateActiveTimersStrip() {
+            const stripContainer = document.getElementById('strip-timers');
+            const activeTimers = timers.filter(t => t.running || (t.type === 'countdown' && t.remaining > 0 && t.remaining < t.initialTime));
+
+            if (activeTimers.length === 0) {
+                stripContainer.innerHTML = '<span class="strip-no-active">No active timers</span>';
+                return;
+            }
+
+            stripContainer.innerHTML = timers.map((timer, index) => {
+                if (!timer.running && !(timer.type === 'countdown' && timer.remaining > 0 && timer.remaining < timer.initialTime)) {
+                    return '';
+                }
+                const colorClass = getColorClass(timer);
+                const progress = getProgress(timer);
+                const displayTime = timer.type === 'countdown' ? timer.remaining : timer.elapsed;
+
+                return `
+                    <div class="strip-timer ${colorClass}" onclick="switchTab('timers')" data-timer-index="${index}">
+                        <div class="strip-timer-icon" style="--strip-progress: ${progress}%">
+                            <div class="strip-timer-icon-inner"></div>
+                        </div>
+                        <div class="strip-timer-info">
+                            <span class="strip-timer-name">${timer.name}</span>
+                            <span class="strip-timer-value">${formatTime(displayTime)}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateStripTimerDisplay(index) {
+            const timer = timers[index];
+            const stripTimer = document.querySelector(`.strip-timer[data-timer-index="${index}"]`);
+            if (!stripTimer) return;
+
+            const colorClass = getColorClass(timer);
+            const progress = getProgress(timer);
+            const displayTime = timer.type === 'countdown' ? timer.remaining : timer.elapsed;
+
+            stripTimer.className = `strip-timer ${colorClass}`;
+            stripTimer.querySelector('.strip-timer-icon').style.setProperty('--strip-progress', `${progress}%`);
+            stripTimer.querySelector('.strip-timer-value').textContent = formatTime(displayTime);
         }
 
         function calculateETA() {
@@ -2883,22 +3059,26 @@
 
         function renderTimers() {
             document.getElementById('timers-container').innerHTML = timers.map((timer, index) => createTimerHTML(timer, index)).join('');
+            updateActiveTimersStrip();
         }
 
         function updateTimerDisplay(index) {
             const timer = timers[index];
             const card = document.getElementById(`timer-${index}`);
-            if (!card) return;
+            if (card) {
+                const colorClass = getColorClass(timer);
+                const progress = getProgress(timer);
+                const displayTime = timer.type === 'countdown' ? timer.remaining : timer.elapsed;
 
-            const colorClass = getColorClass(timer);
-            const progress = getProgress(timer);
-            const displayTime = timer.type === 'countdown' ? timer.remaining : timer.elapsed;
+                const isFlashing = card.classList.contains('flashing');
+                card.className = `timer-card ${colorClass}${isFlashing ? ' flashing' : ''}`;
+                card.querySelector('.clock-face').style.setProperty('--progress', `${progress}%`);
+                card.querySelector('.clock-time').textContent = formatTime(displayTime);
+                card.querySelector('.timer-display').textContent = formatTime(displayTime);
+            }
 
-            const isFlashing = card.classList.contains('flashing');
-            card.className = `timer-card ${colorClass}${isFlashing ? ' flashing' : ''}`;
-            card.querySelector('.clock-face').style.setProperty('--progress', `${progress}%`);
-            card.querySelector('.clock-time').textContent = formatTime(displayTime);
-            card.querySelector('.timer-display').textContent = formatTime(displayTime);
+            // Also update strip display
+            updateStripTimerDisplay(index);
         }
 
         let lastFrameTime = 0;
@@ -3155,6 +3335,7 @@
         }, 1000);
 
         updateUTCClock();
+        updateActiveTimersStrip();
 
         window.addEventListener('beforeunload', saveState);
 
