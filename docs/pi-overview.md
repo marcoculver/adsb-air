@@ -49,12 +49,28 @@ Always visible at top of all pages:
 |-----|----------|
 | **Timers** | 5 configurable countdown/stopwatch timers (APU, etc.) |
 | **Tools** | OOOI calculator, ETA countdown, TOW calculator, Acceleration height, Max landing fuel |
+| **Nav** | Crosswind calculator (graphical), Hold entry calculator (SVG), ISA deviation |
 | **Fuel** | Fuel uplift verification, unit converter, tank split |
 | **Layover** | Rest period calculator |
 | **FDP** | Flight duty period calculator with live tracking |
+| **Ref** | Timezone converter, Scratchpad (persistent), SNOWTAM/GRF decoder |
 
 ### Aircraft Presets
 TOW and MLF calculators support: B738, B38M, B39M
+
+### FZ Destination Timezones
+UTC offset dropdowns include common flydubai destinations:
+- UTC+0: LGW
+- UTC+1: BEG/PRG/ZAG
+- UTC+2: CAI/AMM/TLV/ATH
+- UTC+3: RUH/JED/KWI/BAH/DOH
+- UTC+3:30: IKA/THR
+- UTC+4: DXB/MCT/TBS
+- UTC+4:30: KBL
+- UTC+5: KHI/LHE/ISB/TAS
+- UTC+5:30: DEL/BOM/COK/CMB
+- UTC+6: DAC/ALA
+- UTC+7: BKK
 
 ---
 
