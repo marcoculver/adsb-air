@@ -3157,6 +3157,10 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 else if (fieldId.startsWith('xwind-')) calculateCrosswind();
                 else if (fieldId.startsWith('hold-')) calculateHoldEntry();
                 else if (fieldId === 'isa-alt') calculateISA();
+                else if (fieldId.startsWith('sdt-')) autoCalculateSDT();
+                else if (fieldId.startsWith('catchup-')) {
+                    // Auto-update catch-up display when values change
+                }
             });
         }
 
@@ -5069,6 +5073,40 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             document.getElementById('time-tz-dxb').textContent = '--:--';
         }
 
+        function autoCalculateSDT() {
+            // Auto-calculate the missing field based on which 2 are filled
+            const speed = parseFloat(document.getElementById('sdt-speed').value) || 0;
+            const dist = parseFloat(document.getElementById('sdt-dist').value) || 0;
+            const time = parseFloat(document.getElementById('sdt-time').value) || 0;
+
+            let result = '---';
+
+            if (speed > 0 && dist > 0 && time === 0) {
+                // Calculate time
+                const t = (dist / speed) * 60;
+                result = Math.round(t) + ' min';
+                document.getElementById('sdt-time').value = Math.round(t);
+                document.getElementById('sdt-time-btn').textContent = Math.round(t);
+                document.getElementById('sdt-time-btn').classList.remove('placeholder');
+            } else if (speed > 0 && time > 0 && dist === 0) {
+                // Calculate distance
+                const d = (speed * time) / 60;
+                result = Math.round(d) + ' nm';
+                document.getElementById('sdt-dist').value = Math.round(d);
+                document.getElementById('sdt-dist-btn').textContent = Math.round(d);
+                document.getElementById('sdt-dist-btn').classList.remove('placeholder');
+            } else if (dist > 0 && time > 0 && speed === 0) {
+                // Calculate speed
+                const s = (dist / time) * 60;
+                result = Math.round(s) + ' kts';
+                document.getElementById('sdt-speed').value = Math.round(s);
+                document.getElementById('sdt-speed-btn').textContent = Math.round(s);
+                document.getElementById('sdt-speed-btn').classList.remove('placeholder');
+            }
+
+            document.getElementById('sdt-result').textContent = result;
+        }
+
         function calculateSDT(solve) {
             const speed = parseFloat(document.getElementById('sdt-speed').value) || 0;
             const dist = parseFloat(document.getElementById('sdt-dist').value) || 0;
@@ -5084,6 +5122,10 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             } else if (solve === 'time' && speed > 0 && dist > 0) {
                 const t = (dist / speed) * 60;
                 result = Math.round(t) + ' min';
+            } else {
+                // Auto-calculate if no solve specified
+                autoCalculateSDT();
+                return;
             }
 
             document.getElementById('sdt-result').textContent = result;
