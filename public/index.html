@@ -29,7 +29,7 @@
 
         /* Active Timers Strip */
         .active-timers-strip {
-            background: rgba(0, 20, 40, 0.9);
+            background: rgba(0, 20, 40, 0.95);
             border-radius: 12px;
             padding: 10px 15px;
             margin-bottom: 15px;
@@ -38,6 +38,10 @@
             align-items: center;
             gap: 15px;
             flex-wrap: wrap;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
         }
 
         .strip-clock {
@@ -46,6 +50,43 @@
             align-items: center;
             padding-right: 15px;
             border-right: 1px solid rgba(255, 130, 0, 0.3);
+        }
+
+        .strip-eta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-right: 15px;
+            border-right: 1px solid rgba(255, 130, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .strip-eta:hover {
+            opacity: 0.8;
+        }
+
+        .strip-eta-time {
+            font-size: 1.4rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .strip-eta-time.warning {
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .strip-eta-time.critical {
+            color: #ff5252;
+            text-shadow: 0 0 10px rgba(255, 82, 82, 0.5);
+        }
+
+        .strip-eta-label {
+            font-size: 0.65rem;
+            color: #888;
+            text-transform: uppercase;
         }
 
         .strip-clock-time {
@@ -209,6 +250,32 @@
             margin-bottom: 12px;
             text-align: center;
             font-weight: 600;
+        }
+
+        /* Turnaround Badge */
+        .turnaround-badge {
+            background: rgba(255, 130, 0, 0.2);
+            color: #FF8200;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .turnaround-badge.ahead {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+        }
+
+        .turnaround-badge.behind {
+            background: rgba(255, 82, 82, 0.2);
+            color: #ff5252;
+        }
+
+        /* Sector Block */
+        .sector-block {
+            transition: all 0.3s ease;
         }
 
         /* Input grids */
@@ -432,12 +499,12 @@
         }
 
         .timer-card.flashing {
-            animation: flashRed 0.3s ease-in-out;
+            animation: flashRed 0.6s ease-in-out infinite;
         }
 
         @keyframes flashRed {
             0%, 100% { background: rgba(0, 37, 64, 0.7); box-shadow: none; }
-            50% { background: rgba(255, 0, 0, 0.4); box-shadow: 0 0 30px rgba(255, 0, 0, 0.6); }
+            50% { background: rgba(255, 50, 0, 0.5); box-shadow: 0 0 40px rgba(255, 50, 0, 0.7); }
         }
 
         /* Clock Face */
@@ -596,6 +663,13 @@
             color: #fff;
         }
 
+        .btn-repeat {
+            background: linear-gradient(135deg, #2196F3, #1565C0);
+            color: #fff;
+            flex: 0 0 40px;
+            font-size: 1.1rem;
+        }
+
         /* Crosswind Calculator */
         .wind-display {
             position: relative;
@@ -604,46 +678,9 @@
             margin: 15px auto;
         }
 
-        .runway-graphic {
-            position: absolute;
-            width: 30px;
-            height: 180px;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(90deg, #444 0%, #666 50%, #444 100%);
-            border-radius: 4px;
-            border: 2px solid #888;
-        }
-
-        .runway-centerline {
-            position: absolute;
-            width: 2px;
+        .wind-svg {
+            width: 100%;
             height: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: repeating-linear-gradient(to bottom, #fff 0px, #fff 10px, transparent 10px, transparent 20px);
-        }
-
-        .wind-arrow {
-            position: absolute;
-            width: 4px;
-            height: 80px;
-            left: 50%;
-            bottom: 50%;
-            transform-origin: bottom center;
-            background: #00d4ff;
-            border-radius: 2px;
-        }
-
-        .wind-arrow::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -8px;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-bottom: 15px solid #00d4ff;
         }
 
         .component-display {
@@ -970,10 +1007,11 @@
             margin-bottom: 10px;
         }
 
-        .tz-label {
-            width: 120px;
+        .tz-offset {
+            width: 50px;
             font-size: 0.85rem;
-            color: #7ec8e3;
+            color: #FF8200;
+            font-weight: 600;
         }
 
         .tz-time {
@@ -982,11 +1020,50 @@
             font-family: 'Courier New', monospace;
             font-weight: bold;
             color: #00ff88;
+            text-align: center;
         }
 
-        .tz-offset {
-            font-size: 0.75rem;
+        .tz-label {
+            width: 140px;
+            font-size: 0.8rem;
+            color: #7ec8e3;
+            text-align: right;
+        }
+
+        /* Toggle Buttons */
+        .toggle-btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .toggle-btn {
+            width: 50px;
+            height: 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: 2px solid rgba(255, 130, 0, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.3);
             color: #888;
+            transition: all 0.2s;
+        }
+
+        .toggle-btn:hover {
+            border-color: #FF8200;
+        }
+
+        .toggle-btn.active {
+            background: rgba(255, 130, 0, 0.3);
+            border-color: #FF8200;
+            color: #FF8200;
+        }
+
+        /* Wind SVG */
+        .wind-svg {
+            width: 100%;
+            height: 100%;
         }
 
         /* Number Picker Modal */
@@ -1415,6 +1492,14 @@
                 <div class="strip-clock-time" id="strip-utc-clock">--:--:--</div>
                 <div class="strip-clock-label">UTC</div>
             </div>
+            <div class="strip-clock" style="border-right: 1px solid rgba(255, 130, 0, 0.3); padding-right: 15px;">
+                <div class="strip-clock-time" id="strip-dxb-clock" style="color: #FF8200;">--:--:--</div>
+                <div class="strip-clock-label">DXB</div>
+            </div>
+            <div class="strip-eta" id="strip-eta" style="display:none" onclick="switchTab('sched')">
+                <div class="strip-eta-time" id="strip-eta-time">--:--</div>
+                <div class="strip-eta-label">ETA</div>
+            </div>
             <div class="strip-timers" id="strip-timers">
                 <span class="strip-no-active">No active timers</span>
             </div>
@@ -1422,76 +1507,402 @@
 
         <!-- Tab Navigation -->
         <div class="tab-nav">
-            <button class="tab-btn" onclick="switchTab('timers')">Timers</button>
-            <button class="tab-btn active" onclick="switchTab('tools')">Tools</button>
-            <button class="tab-btn" onclick="switchTab('nav')">Nav</button>
-            <button class="tab-btn" onclick="switchTab('fuel')">Fuel</button>
-            <button class="tab-btn" onclick="switchTab('layover')">Layover</button>
+            <button class="tab-btn active" onclick="switchTab('sched')">SCHED</button>
             <button class="tab-btn" onclick="switchTab('fdp')">FDP</button>
-            <button class="tab-btn" onclick="switchTab('ref')">Ref</button>
+            <button class="tab-btn" onclick="switchTab('fuel')">FUEL</button>
+            <button class="tab-btn" onclick="switchTab('perf')">PERF</button>
+            <button class="tab-btn" onclick="switchTab('time')">TIME</button>
+            <button class="tab-btn" onclick="switchTab('nav')">NAV</button>
+            <button class="tab-btn" onclick="switchTab('tmr')">TMR</button>
+            <button class="tab-btn" onclick="switchTab('lay')">LAY</button>
+            <button class="tab-btn" onclick="switchTab('ref')">REF</button>
+            <button class="tab-btn" onclick="switchTab('notes')">NOTES</button>
+            <button class="tab-btn" onclick="switchTab('set')">SET</button>
         </div>
 
-        <!-- Tools Tab -->
-        <div class="tab-content active" id="tab-tools">
-            <div class="top-sections">
-                <!-- OOOI Section -->
-                <div class="section">
-                    <div class="section-title">OOOI</div>
-                    <div class="input-grid-4">
-                        <div class="input-group">
-                            <label class="input-label">OUT</label>
-                            <button class="input-btn placeholder" id="oooi-out-btn" onclick="openTimePicker('oooi-out')">0000</button>
-                            <input type="hidden" id="oooi-out" value="">
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">OFF</label>
-                            <button class="input-btn placeholder" id="oooi-off-btn" onclick="openTimePicker('oooi-off')">0000</button>
-                            <input type="hidden" id="oooi-off" value="">
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">ON</label>
-                            <button class="input-btn placeholder" id="oooi-on-btn" onclick="openTimePicker('oooi-on')">0000</button>
-                            <input type="hidden" id="oooi-on" value="">
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">IN</label>
-                            <button class="input-btn placeholder" id="oooi-in-btn" onclick="openTimePicker('oooi-in')">0000</button>
-                            <input type="hidden" id="oooi-in" value="">
-                        </div>
-                    </div>
-                    <div class="results-row">
-                        <div class="result-item">
-                            <div class="result-label">BLOCK</div>
-                            <div class="result-value block-time" id="block-time">--:--</div>
-                        </div>
-                        <div class="result-item">
-                            <div class="result-label">FLIGHT</div>
-                            <div class="result-value flight-time" id="flight-time">--:--</div>
-                        </div>
-                    </div>
-                    <button class="clear-btn" id="oooi-clear">Clear</button>
+        <!-- SCHED Tab (Schedule Entry - Primary Tab) -->
+        <div class="tab-content active" id="tab-sched">
+            <div class="fdp-container">
+                <!-- Schedule Header -->
+                <div class="fdp-section" style="text-align: center; padding: 15px;">
+                    <h2 style="color: #FF8200; margin-bottom: 10px;">Flight Schedule</h2>
+                    <p style="color: #888; font-size: 0.85rem;">Enter your flight roster below. Data will auto-populate to FDP, OOOI, and other tabs.</p>
                 </div>
 
-                <!-- ETA Section -->
-                <div class="section">
-                    <div class="section-title">ETA Countdown</div>
-                    <div class="utc-display">UTC: <span id="utc-clock">--:--:--</span></div>
-                    <div class="input-grid-2">
-                        <div class="input-group">
-                            <label class="input-label">ETA (UTC)</label>
-                            <button class="input-btn placeholder" id="eta-time-btn" onclick="openTimePicker('eta-time')">0000</button>
-                            <input type="hidden" id="eta-time" value="">
+                <!-- Report Time -->
+                <div class="fdp-section">
+                    <div class="section-title">Duty Information</div>
+                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Report Time (Local)</label>
+                            <button class="input-btn" id="sched-report-btn" onclick="openTimePicker('sched-report')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="sched-report" value="">
                         </div>
-                        <div class="input-group">
-                            <label class="input-label">UTC NOW</label>
-                            <button class="input-btn placeholder" id="utc-manual-btn" onclick="openTimePicker('utc-manual')">AUTO</button>
-                            <input type="hidden" id="utc-manual" value="">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Aircraft</label>
+                            <select class="fdp-select" id="sched-aircraft" onchange="onScheduleChange()" style="max-width: 100%">
+                                <option value="B738">B738</option>
+                                <option value="B38M">B38M</option>
+                                <option value="B39M">B39M</option>
+                            </select>
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Tail Number</label>
+                            <button class="input-btn" id="sched-tail-btn" onclick="openTextPicker('sched-tail', 'Tail Number')" style="max-width: 100%; font-size: 0.9rem;">A6-___</button>
+                            <input type="hidden" id="sched-tail" value="">
                         </div>
                     </div>
-                    <div class="eta-countdown" id="eta-countdown">--:--:--</div>
-                    <button class="clear-btn" id="eta-clear">Clear</button>
                 </div>
 
+                <!-- Sector 1 -->
+                <div class="fdp-section sector-block" id="sector-1-block">
+                    <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Sector 1</span>
+                        <span id="sector-1-turnaround" class="turnaround-badge" style="display: none;">T/A: --:--</span>
+                    </div>
+                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr repeat(4, 1fr); gap: 10px; margin-bottom: 10px;">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Flight #</label>
+                            <button class="input-btn" id="s1-flt-btn" onclick="openTextPicker('s1-flt', 'Flight Number')" style="max-width: 100%; font-size: 0.85rem;">FZ___</button>
+                            <input type="hidden" id="s1-flt" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Route</label>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="input-btn" id="s1-dep-btn" onclick="openTextPicker('s1-dep', 'Departure')" style="flex: 1; font-size: 0.85rem;">DEP</button>
+                                <span style="color: #888; align-self: center;">→</span>
+                                <button class="input-btn" id="s1-arr-btn" onclick="openTextPicker('s1-arr', 'Arrival')" style="flex: 1; font-size: 0.85rem;">ARR</button>
+                            </div>
+                            <input type="hidden" id="s1-dep" value="">
+                            <input type="hidden" id="s1-arr" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">STD</label>
+                            <button class="input-btn" id="s1-std-btn" onclick="openTimePicker('s1-std')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s1-std" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">STA</label>
+                            <button class="input-btn" id="s1-sta-btn" onclick="openTimePicker('s1-sta')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s1-sta" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">PAX</label>
+                            <button class="input-btn" id="s1-pax-btn" onclick="openWeightPicker('s1-pax', 'PAX')" style="max-width: 100%">---</button>
+                            <input type="hidden" id="s1-pax" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Stand</label>
+                            <button class="input-btn" id="s1-stand-btn" onclick="openTextPicker('s1-stand', 'Stand')" style="max-width: 100%; font-size: 0.85rem;">---</button>
+                            <input type="hidden" id="s1-stand" value="">
+                        </div>
+                    </div>
+                    <!-- OOOI for Sector 1 -->
+                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(4, 1fr) 2fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">OUT</label>
+                            <button class="input-btn" id="s1-out-btn" onclick="openTimePicker('s1-out')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s1-out" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">OFF</label>
+                            <button class="input-btn" id="s1-off-btn" onclick="openTimePicker('s1-off')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s1-off" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">ON</label>
+                            <button class="input-btn" id="s1-on-btn" onclick="openTimePicker('s1-on')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s1-on" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">IN</label>
+                            <button class="input-btn" id="s1-in-btn" onclick="openTimePicker('s1-in')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s1-in" value="">
+                        </div>
+                        <div class="fdp-field" style="display: flex; gap: 15px; align-items: center; justify-content: center;">
+                            <div style="text-align: center;">
+                                <div class="fdp-label">BLOCK</div>
+                                <div class="fdp-result-value" id="s1-block" style="color: #ffd700;">--:--</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div class="fdp-label">FLIGHT</div>
+                                <div class="fdp-result-value" id="s1-flight" style="color: #00ff88;">--:--</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sector 2 -->
+                <div class="fdp-section sector-block" id="sector-2-block" style="display: none;">
+                    <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Sector 2</span>
+                        <span id="sector-2-turnaround" class="turnaround-badge">T/A: --:--</span>
+                    </div>
+                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr repeat(4, 1fr); gap: 10px; margin-bottom: 10px;">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Flight #</label>
+                            <button class="input-btn" id="s2-flt-btn" onclick="openTextPicker('s2-flt', 'Flight Number')" style="max-width: 100%; font-size: 0.85rem;">FZ___</button>
+                            <input type="hidden" id="s2-flt" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Route</label>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="input-btn" id="s2-dep-btn" onclick="openTextPicker('s2-dep', 'Departure')" style="flex: 1; font-size: 0.85rem;">DEP</button>
+                                <span style="color: #888; align-self: center;">→</span>
+                                <button class="input-btn" id="s2-arr-btn" onclick="openTextPicker('s2-arr', 'Arrival')" style="flex: 1; font-size: 0.85rem;">ARR</button>
+                            </div>
+                            <input type="hidden" id="s2-dep" value="">
+                            <input type="hidden" id="s2-arr" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">STD</label>
+                            <button class="input-btn" id="s2-std-btn" onclick="openTimePicker('s2-std')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s2-std" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">STA</label>
+                            <button class="input-btn" id="s2-sta-btn" onclick="openTimePicker('s2-sta')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s2-sta" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">PAX</label>
+                            <button class="input-btn" id="s2-pax-btn" onclick="openWeightPicker('s2-pax', 'PAX')" style="max-width: 100%">---</button>
+                            <input type="hidden" id="s2-pax" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Stand</label>
+                            <button class="input-btn" id="s2-stand-btn" onclick="openTextPicker('s2-stand', 'Stand')" style="max-width: 100%; font-size: 0.85rem;">---</button>
+                            <input type="hidden" id="s2-stand" value="">
+                        </div>
+                    </div>
+                    <!-- OOOI for Sector 2 -->
+                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(4, 1fr) 2fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">OUT</label>
+                            <button class="input-btn" id="s2-out-btn" onclick="openTimePicker('s2-out')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s2-out" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">OFF</label>
+                            <button class="input-btn" id="s2-off-btn" onclick="openTimePicker('s2-off')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s2-off" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">ON</label>
+                            <button class="input-btn" id="s2-on-btn" onclick="openTimePicker('s2-on')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s2-on" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">IN</label>
+                            <button class="input-btn" id="s2-in-btn" onclick="openTimePicker('s2-in')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s2-in" value="">
+                        </div>
+                        <div class="fdp-field" style="display: flex; gap: 15px; align-items: center; justify-content: center;">
+                            <div style="text-align: center;">
+                                <div class="fdp-label">BLOCK</div>
+                                <div class="fdp-result-value" id="s2-block" style="color: #ffd700;">--:--</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div class="fdp-label">FLIGHT</div>
+                                <div class="fdp-result-value" id="s2-flight" style="color: #00ff88;">--:--</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sector 3 -->
+                <div class="fdp-section sector-block" id="sector-3-block" style="display: none;">
+                    <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Sector 3</span>
+                        <span id="sector-3-turnaround" class="turnaround-badge">T/A: --:--</span>
+                    </div>
+                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr repeat(4, 1fr); gap: 10px; margin-bottom: 10px;">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Flight #</label>
+                            <button class="input-btn" id="s3-flt-btn" onclick="openTextPicker('s3-flt', 'Flight Number')" style="max-width: 100%; font-size: 0.85rem;">FZ___</button>
+                            <input type="hidden" id="s3-flt" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Route</label>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="input-btn" id="s3-dep-btn" onclick="openTextPicker('s3-dep', 'Departure')" style="flex: 1; font-size: 0.85rem;">DEP</button>
+                                <span style="color: #888; align-self: center;">→</span>
+                                <button class="input-btn" id="s3-arr-btn" onclick="openTextPicker('s3-arr', 'Arrival')" style="flex: 1; font-size: 0.85rem;">ARR</button>
+                            </div>
+                            <input type="hidden" id="s3-dep" value="">
+                            <input type="hidden" id="s3-arr" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">STD</label>
+                            <button class="input-btn" id="s3-std-btn" onclick="openTimePicker('s3-std')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s3-std" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">STA</label>
+                            <button class="input-btn" id="s3-sta-btn" onclick="openTimePicker('s3-sta')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s3-sta" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">PAX</label>
+                            <button class="input-btn" id="s3-pax-btn" onclick="openWeightPicker('s3-pax', 'PAX')" style="max-width: 100%">---</button>
+                            <input type="hidden" id="s3-pax" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Stand</label>
+                            <button class="input-btn" id="s3-stand-btn" onclick="openTextPicker('s3-stand', 'Stand')" style="max-width: 100%; font-size: 0.85rem;">---</button>
+                            <input type="hidden" id="s3-stand" value="">
+                        </div>
+                    </div>
+                    <!-- OOOI for Sector 3 -->
+                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(4, 1fr) 2fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">OUT</label>
+                            <button class="input-btn" id="s3-out-btn" onclick="openTimePicker('s3-out')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s3-out" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">OFF</label>
+                            <button class="input-btn" id="s3-off-btn" onclick="openTimePicker('s3-off')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s3-off" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">ON</label>
+                            <button class="input-btn" id="s3-on-btn" onclick="openTimePicker('s3-on')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s3-on" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">IN</label>
+                            <button class="input-btn" id="s3-in-btn" onclick="openTimePicker('s3-in')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s3-in" value="">
+                        </div>
+                        <div class="fdp-field" style="display: flex; gap: 15px; align-items: center; justify-content: center;">
+                            <div style="text-align: center;">
+                                <div class="fdp-label">BLOCK</div>
+                                <div class="fdp-result-value" id="s3-block" style="color: #ffd700;">--:--</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div class="fdp-label">FLIGHT</div>
+                                <div class="fdp-result-value" id="s3-flight" style="color: #00ff88;">--:--</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sector 4 -->
+                <div class="fdp-section sector-block" id="sector-4-block" style="display: none;">
+                    <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Sector 4</span>
+                        <span id="sector-4-turnaround" class="turnaround-badge">T/A: --:--</span>
+                    </div>
+                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr repeat(4, 1fr); gap: 10px; margin-bottom: 10px;">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Flight #</label>
+                            <button class="input-btn" id="s4-flt-btn" onclick="openTextPicker('s4-flt', 'Flight Number')" style="max-width: 100%; font-size: 0.85rem;">FZ___</button>
+                            <input type="hidden" id="s4-flt" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Route</label>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="input-btn" id="s4-dep-btn" onclick="openTextPicker('s4-dep', 'Departure')" style="flex: 1; font-size: 0.85rem;">DEP</button>
+                                <span style="color: #888; align-self: center;">→</span>
+                                <button class="input-btn" id="s4-arr-btn" onclick="openTextPicker('s4-arr', 'Arrival')" style="flex: 1; font-size: 0.85rem;">ARR</button>
+                            </div>
+                            <input type="hidden" id="s4-dep" value="">
+                            <input type="hidden" id="s4-arr" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">STD</label>
+                            <button class="input-btn" id="s4-std-btn" onclick="openTimePicker('s4-std')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s4-std" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">STA</label>
+                            <button class="input-btn" id="s4-sta-btn" onclick="openTimePicker('s4-sta')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s4-sta" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">PAX</label>
+                            <button class="input-btn" id="s4-pax-btn" onclick="openWeightPicker('s4-pax', 'PAX')" style="max-width: 100%">---</button>
+                            <input type="hidden" id="s4-pax" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Stand</label>
+                            <button class="input-btn" id="s4-stand-btn" onclick="openTextPicker('s4-stand', 'Stand')" style="max-width: 100%; font-size: 0.85rem;">---</button>
+                            <input type="hidden" id="s4-stand" value="">
+                        </div>
+                    </div>
+                    <!-- OOOI for Sector 4 -->
+                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(4, 1fr) 2fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">OUT</label>
+                            <button class="input-btn" id="s4-out-btn" onclick="openTimePicker('s4-out')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s4-out" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">OFF</label>
+                            <button class="input-btn" id="s4-off-btn" onclick="openTimePicker('s4-off')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s4-off" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">ON</label>
+                            <button class="input-btn" id="s4-on-btn" onclick="openTimePicker('s4-on')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s4-on" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label" style="color: #00d4ff;">IN</label>
+                            <button class="input-btn" id="s4-in-btn" onclick="openTimePicker('s4-in')" style="max-width: 100%">----</button>
+                            <input type="hidden" id="s4-in" value="">
+                        </div>
+                        <div class="fdp-field" style="display: flex; gap: 15px; align-items: center; justify-content: center;">
+                            <div style="text-align: center;">
+                                <div class="fdp-label">BLOCK</div>
+                                <div class="fdp-result-value" id="s4-block" style="color: #ffd700;">--:--</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div class="fdp-label">FLIGHT</div>
+                                <div class="fdp-result-value" id="s4-flight" style="color: #00ff88;">--:--</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add/Remove Sector Buttons -->
+                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
+                    <button class="preset-btn" id="add-sector-btn" onclick="addSector()">+ Add Sector</button>
+                    <button class="clear-btn" id="remove-sector-btn" onclick="removeSector()" style="margin: 0;">- Remove Sector</button>
+                    <button class="clear-btn" onclick="clearSchedule()" style="margin: 0; margin-left: 20px;">Clear All</button>
+                </div>
+
+                <!-- Duty Summary -->
+                <div class="fdp-section" style="margin-top: 20px;">
+                    <div class="section-title">Duty Summary</div>
+                    <div class="fdp-results" style="margin-top: 0;">
+                        <div class="fdp-result-grid" style="grid-template-columns: repeat(4, 1fr);">
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Total Sectors</div>
+                                <div class="fdp-result-value" id="sched-total-sectors" style="color: #FF8200;">1</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Total Block</div>
+                                <div class="fdp-result-value" id="sched-total-block" style="color: #ffd700;">--:--</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Total Flight</div>
+                                <div class="fdp-result-value" id="sched-total-flight" style="color: #00ff88;">--:--</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Duty Time</div>
+                                <div class="fdp-result-value" id="sched-duty-time" style="color: #00d4ff;">--:--</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PERF Tab (Performance: TOW, ACC Height, Max Landing Fuel) -->
+        <div class="tab-content" id="tab-perf">
+            <div class="top-sections" style="grid-template-columns: repeat(3, 1fr);">
                 <!-- TOW Calculator -->
                 <div class="section">
                     <div class="section-title">TOW Calculator</div>
@@ -1517,6 +1928,17 @@
                             <input type="hidden" id="calc-taxi" value="">
                         </div>
                     </div>
+                    <div class="input-grid-2" style="margin-top:8px;">
+                        <div class="input-group">
+                            <label class="input-label">TRIP FUEL</label>
+                            <button class="input-btn placeholder" id="calc-trip-btn" onclick="openWeightPicker('calc-trip', 'Trip Fuel')">0</button>
+                            <input type="hidden" id="calc-trip" value="">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">EST LDG FUEL</label>
+                            <div class="result-value" id="est-ldg-fuel" style="font-size:0.9rem; padding:8px 0; color:#7ec8e3;">---</div>
+                        </div>
+                    </div>
                     <div class="results-row" style="flex-wrap:wrap; gap:10px;">
                         <div class="result-item">
                             <div class="result-label">TAXI WT</div>
@@ -1527,6 +1949,11 @@
                             <div class="result-label">TAKE OFF WT</div>
                             <div class="result-value tow-value" id="tow-result">---</div>
                             <div class="result-label" id="mtow-limit" style="color:#666; font-size:0.65rem">MTOW: ---</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">EST LDG WT</div>
+                            <div class="result-value" id="ldw-result" style="font-size:1rem; color:#00ff88">---</div>
+                            <div class="result-label" id="mlw-limit" style="color:#666; font-size:0.65rem">MLW: ---</div>
                         </div>
                         <div class="result-item">
                             <div class="result-label">ZFW</div>
@@ -1565,7 +1992,7 @@
                             <div class="result-value acc-value" id="acc-result">--- ft</div>
                         </div>
                     </div>
-                    <button class="preset-btn" id="rw12r-btn">RW12R (62 ft)</button>
+                    <button class="preset-btn" id="dxb-elev-btn">DXB (62 ft)</button>
                     <button class="clear-btn" id="acc-clear">Clear</button>
                 </div>
             </div>
@@ -1593,7 +2020,7 @@
         </div>
 
         <!-- Timers Tab -->
-        <div class="tab-content" id="tab-timers">
+        <div class="tab-content" id="tab-tmr">
             <div class="timers-grid" id="timers-container"></div>
         </div>
 
@@ -1648,6 +2075,10 @@
                     </div>
                     <div style="text-align:center; font-size:0.75rem; color:#888; margin-top:5px;">
                         Center tank is auto-calculated: Total Required - Left - Right
+                    </div>
+                    <div style="display:flex; gap:10px; margin-top:10px;">
+                        <button class="preset-btn" onclick="setFullTanks()" style="flex:1;">Full Tanks (20,200 kg)</button>
+                        <button class="preset-btn" onclick="resetTankSplit()" style="flex:1;">Reset Wings</button>
                     </div>
                 </div>
 
@@ -1757,7 +2188,7 @@
         </div>
 
         <!-- Layover Tab -->
-        <div class="tab-content" id="tab-layover">
+        <div class="tab-content" id="tab-lay">
             <div class="fdp-container">
                 <!-- UTC Offset Selector -->
                 <div class="local-offset-selector">
@@ -1878,8 +2309,12 @@
                     </select>
                 </div>
 
-                <div class="fdp-section">
-                    <div class="section-title">Duty Setup</div>
+                <div class="fdp-section collapsible" id="fdp-duty-setup">
+                    <div class="section-title" onclick="toggleFDPSetup()" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Duty Setup</span>
+                        <span id="fdp-setup-toggle" style="font-size: 0.8rem; color: #888;">▼</span>
+                    </div>
+                    <div class="fdp-setup-content" id="fdp-setup-content">
                     <div class="fdp-row">
                         <div class="fdp-field">
                             <label class="fdp-label">Crew Type</label>
@@ -1919,6 +2354,10 @@
                             </select>
                         </div>
                     </div>
+                    </div><!-- End fdp-setup-content -->
+                    <button class="preset-btn" onclick="syncFromSchedule()" style="margin-top: 10px; width: 100%;">
+                        Sync from Schedule
+                    </button>
                 </div>
 
                 <div class="fdp-section">
@@ -2029,33 +2468,58 @@
                         <div class="section-title">Crosswind Calculator</div>
                         <div class="input-grid-2">
                             <div class="input-group">
-                                <label class="input-label">Runway HDG</label>
-                                <button class="input-btn" id="xwind-rwy-btn" onclick="openWeightPicker('xwind-rwy', 'Runway', '°')" style="max-width:100%">---</button>
+                                <label class="input-label">Runway HDG (°)</label>
+                                <button class="input-btn" id="xwind-rwy-btn" onclick="openRunwayHdgPicker()" style="max-width:100%">---°</button>
                                 <input type="hidden" id="xwind-rwy" value="">
                             </div>
                             <div class="input-group">
-                                <label class="input-label">Wind DIR</label>
-                                <button class="input-btn" id="xwind-dir-btn" onclick="openWeightPicker('xwind-dir', 'Wind From', '°')" style="max-width:100%">---</button>
+                                <label class="input-label">Wind (OPT: 220/13 or 220/3m)</label>
+                                <button class="input-btn" id="xwind-opt-btn" onclick="openOPTWindPicker()" style="max-width:100%; font-size: 0.85rem;">---/--</button>
                                 <input type="hidden" id="xwind-dir" value="">
+                                <input type="hidden" id="xwind-spd" value="">
                             </div>
                         </div>
                         <div class="input-grid-2" style="margin-top:8px">
                             <div class="input-group">
-                                <label class="input-label">Wind SPD</label>
-                                <button class="input-btn" id="xwind-spd-btn" onclick="openWeightPicker('xwind-spd', 'Wind Speed', 'kt')" style="max-width:100%">---</button>
-                                <input type="hidden" id="xwind-spd" value="">
+                                <label class="input-label" style="font-size: 0.65rem; color: #666;">Or enter separately:</label>
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="input-btn" id="xwind-dir-btn" onclick="openWindDirPicker()" style="flex: 1; font-size: 0.8rem;">---°</button>
+                                    <button class="input-btn" id="xwind-spd-btn" onclick="openWindSpdPicker('xwind-spd', 'Wind Speed')" style="flex: 1; font-size: 0.8rem;">-- kt</button>
+                                </div>
                             </div>
                             <div class="input-group">
-                                <label class="input-label">Gust</label>
-                                <button class="input-btn placeholder" id="xwind-gust-btn" onclick="openWeightPicker('xwind-gust', 'Gust', 'kt')" style="max-width:100%">---</button>
+                                <label class="input-label">Gust (kt)</label>
+                                <button class="input-btn placeholder" id="xwind-gust-btn" onclick="openWindSpdPicker('xwind-gust', 'Gust')" style="max-width:100%">-- kt</button>
                                 <input type="hidden" id="xwind-gust" value="">
                             </div>
                         </div>
                         <div class="wind-display" id="wind-display">
-                            <div class="runway-graphic" id="runway-graphic">
-                                <div class="runway-centerline"></div>
-                            </div>
-                            <div class="wind-arrow" id="wind-arrow" style="transform: rotate(0deg)"></div>
+                            <svg viewBox="0 0 200 200" class="wind-svg">
+                                <!-- Compass circle -->
+                                <circle cx="100" cy="100" r="90" fill="none" stroke="#444" stroke-width="2"/>
+                                <!-- Cardinal directions -->
+                                <text x="100" y="18" text-anchor="middle" fill="#666" font-size="12">N</text>
+                                <text x="185" y="104" text-anchor="middle" fill="#666" font-size="12">E</text>
+                                <text x="100" y="196" text-anchor="middle" fill="#666" font-size="12">S</text>
+                                <text x="15" y="104" text-anchor="middle" fill="#666" font-size="12">W</text>
+                                <!-- Runway rectangle (rotates) -->
+                                <g id="runway-svg" transform="rotate(0, 100, 100)">
+                                    <rect x="95" y="30" width="10" height="140" fill="#555" stroke="#888" stroke-width="1" rx="2"/>
+                                    <line x1="100" y1="35" x2="100" y2="165" stroke="#fff" stroke-width="1" stroke-dasharray="8,8"/>
+                                </g>
+                                <!-- Runway numbers (positioned separately, don't rotate with runway) -->
+                                <text id="rwy-num-approach" x="100" y="100" text-anchor="middle" fill="#FF8200" font-size="12" font-weight="bold"></text>
+                                <text id="rwy-num-depart" x="100" y="100" text-anchor="middle" fill="#888" font-size="10"></text>
+                                <!-- Wind arrow (shows where wind is coming FROM - arrow points toward runway) -->
+                                <g id="wind-arrow-svg" transform="rotate(0, 100, 100)">
+                                    <line x1="100" y1="15" x2="100" y2="60" stroke="#00d4ff" stroke-width="3"/>
+                                    <polygon points="100,65 94,50 106,50" fill="#00d4ff"/>
+                                </g>
+                                <!-- Wind direction label (doesn't rotate) -->
+                                <text id="wind-dir-label" x="100" y="100" text-anchor="middle" fill="#00d4ff" font-size="10" font-weight="bold"></text>
+                                <!-- Center dot -->
+                                <circle cx="100" cy="100" r="4" fill="#FF8200"/>
+                            </svg>
                         </div>
                         <div class="component-display">
                             <div class="component-item">
@@ -2076,37 +2540,71 @@
                         <div class="input-grid-2">
                             <div class="input-group">
                                 <label class="input-label">Inbound CRS</label>
-                                <button class="input-btn" id="hold-inbound-btn" onclick="openWeightPicker('hold-inbound', 'Inbound Course', '°')" style="max-width:100%">---</button>
+                                <button class="input-btn" id="hold-inbound-btn" onclick="openHeadingPicker('hold-inbound', 'Inbound Course')" style="max-width:100%">---</button>
                                 <input type="hidden" id="hold-inbound" value="">
                             </div>
                             <div class="input-group">
                                 <label class="input-label">Your HDG</label>
-                                <button class="input-btn" id="hold-hdg-btn" onclick="openWeightPicker('hold-hdg', 'Your Heading', '°')" style="max-width:100%">---</button>
+                                <button class="input-btn" id="hold-hdg-btn" onclick="openHeadingPicker('hold-hdg', 'Your Heading')" style="max-width:100%">---</button>
                                 <input type="hidden" id="hold-hdg" value="">
                             </div>
                         </div>
-                        <div class="input-grid-2" style="margin-top:8px">
-                            <div class="input-group">
-                                <label class="input-label">Turn Direction</label>
-                                <select class="fdp-select" id="hold-turn-dir" onchange="calculateHoldEntry()" style="max-width:100%">
-                                    <option value="right">Right Turns</option>
-                                    <option value="left">Left Turns</option>
-                                </select>
+                        <div class="hold-turn-btns" style="margin-top:8px">
+                            <label class="input-label" style="text-align:center;display:block;margin-bottom:5px">Turn Direction</label>
+                            <div class="toggle-btn-group">
+                                <button class="toggle-btn" id="hold-turn-l" onclick="setHoldTurn('left')">L</button>
+                                <button class="toggle-btn active" id="hold-turn-r" onclick="setHoldTurn('right')">R</button>
                             </div>
+                            <input type="hidden" id="hold-turn-dir" value="right">
                         </div>
                         <div class="hold-display" id="hold-display">
-                            <svg viewBox="0 0 280 200" style="width:100%;height:100%">
-                                <!-- Hold pattern -->
-                                <ellipse cx="170" cy="100" rx="50" ry="70" fill="none" stroke="#444" stroke-width="2" id="hold-oval"/>
-                                <!-- Inbound leg -->
-                                <line x1="120" y1="100" x2="50" y2="100" stroke="#00ff88" stroke-width="3" id="hold-inbound-line"/>
-                                <!-- Fix point -->
-                                <circle cx="120" cy="100" r="6" fill="#FF8200" id="hold-fix-point"/>
-                                <!-- Aircraft -->
-                                <g id="aircraft-symbol" transform="translate(30, 100)">
-                                    <line x1="0" y1="-30" x2="0" y2="0" stroke="#00d4ff" stroke-width="3"/>
-                                    <polygon points="0,-35 -8,-25 8,-25" fill="#00d4ff"/>
+                            <svg viewBox="0 0 300 300" style="width:100%;height:100%">
+                                <!-- Entry sectors (relative to inbound course) - centered on fix -->
+                                <g id="hold-sectors" transform="rotate(0, 150, 150)">
+                                    <!-- Direct sector - green (approaching from behind the hold) -->
+                                    <path d="M150,150 L150,10 A140,140 0 0,1 290,150 L150,150" fill="rgba(0,255,136,0.15)" stroke="none" id="sector-direct"/>
+                                    <!-- Teardrop sector - yellow (70° from direct boundary) -->
+                                    <path d="M150,150 L290,150 A140,140 0 0,1 197,280 L150,150" fill="rgba(255,215,0,0.15)" stroke="none" id="sector-teardrop"/>
+                                    <!-- Parallel sector - blue (opposite to inbound) -->
+                                    <path d="M150,150 L197,280 A140,140 0 0,1 150,10 L150,150" fill="rgba(0,212,255,0.15)" stroke="none" id="sector-parallel"/>
+                                    <!-- Sector boundary lines -->
+                                    <line x1="150" y1="150" x2="150" y2="10" stroke="#666" stroke-width="1" stroke-dasharray="5,5"/>
+                                    <line x1="150" y1="150" x2="290" y2="150" stroke="#666" stroke-width="1" stroke-dasharray="5,5"/>
+                                    <line x1="150" y1="150" x2="197" y2="280" stroke="#666" stroke-width="1" stroke-dasharray="5,5"/>
                                 </g>
+                                <!-- Hold pattern racetrack - FIX AT CENTER (150,150) -->
+                                <g id="hold-pattern" transform="rotate(0, 150, 150)">
+                                    <!-- Inbound leg - approaching fix from below -->
+                                    <line x1="150" y1="220" x2="150" y2="155" stroke="#00ff88" stroke-width="3"/>
+                                    <!-- Inbound arrow pointing to fix -->
+                                    <polygon points="150,160 145,175 155,175" fill="#00ff88"/>
+                                    <!-- Turn at fix - arc to the right to outbound side -->
+                                    <path d="M150,150 A35,35 0 0,1 185,115" fill="none" stroke="#666" stroke-width="2"/>
+                                    <!-- Outbound leg - parallel to inbound, offset right -->
+                                    <line x1="185" y1="115" x2="185" y2="50" stroke="#666" stroke-width="2"/>
+                                    <!-- Turn at outbound end - arc back toward inbound -->
+                                    <path d="M185,50 A35,35 0 0,1 150,15" fill="none" stroke="#666" stroke-width="2"/>
+                                    <!-- Continuation leg back to inbound intercept -->
+                                    <line x1="150" y1="15" x2="115" y2="50" stroke="#666" stroke-width="2" stroke-dasharray="4,4"/>
+                                    <line x1="115" y1="50" x2="115" y2="120" stroke="#666" stroke-width="2" stroke-dasharray="4,4"/>
+                                    <!-- Intercept back to inbound leg -->
+                                    <path d="M115,120 Q115,160 150,180" fill="none" stroke="#666" stroke-width="2" stroke-dasharray="4,4"/>
+                                </g>
+                                <!-- FIX at center - prominent marker -->
+                                <circle cx="150" cy="150" r="10" fill="none" stroke="#FF8200" stroke-width="3" id="hold-fix"/>
+                                <circle cx="150" cy="150" r="4" fill="#FF8200"/>
+                                <text x="165" y="145" fill="#FF8200" font-size="12" font-weight="bold">FIX</text>
+                                <!-- Aircraft symbol (points toward fix) -->
+                                <g id="aircraft-symbol" transform="translate(150, 150)">
+                                    <line x1="0" y1="0" x2="0" y2="-40" stroke="#00d4ff" stroke-width="3"/>
+                                    <polygon points="0,-45 -7,-35 7,-35" fill="#00d4ff"/>
+                                    <!-- Fuselage -->
+                                    <ellipse cx="0" cy="-20" rx="4" ry="15" fill="#00d4ff"/>
+                                </g>
+                                <!-- Sector labels -->
+                                <text id="label-direct" x="200" y="55" fill="#00ff88" font-size="11" font-weight="bold">DIRECT</text>
+                                <text id="label-teardrop" x="230" y="180" fill="#ffd700" font-size="11" font-weight="bold">TEARDROP</text>
+                                <text id="label-parallel" x="30" y="180" fill="#00d4ff" font-size="11" font-weight="bold">PARALLEL</text>
                             </svg>
                         </div>
                         <div class="entry-type-display">
@@ -2170,34 +2668,49 @@
                         </div>
                         <div class="tz-converter" id="tz-results">
                             <div class="tz-row">
-                                <span class="tz-label">UTC</span>
+                                <span class="tz-offset">+0</span>
                                 <span class="tz-time" id="tz-utc">--:--</span>
-                                <span class="tz-offset">+0</span>
+                                <span class="tz-label">UTC</span>
                             </div>
                             <div class="tz-row">
-                                <span class="tz-label">DXB/MCT</span>
-                                <span class="tz-time" id="tz-dxb">--:--</span>
-                                <span class="tz-offset">+4</span>
-                            </div>
-                            <div class="tz-row">
-                                <span class="tz-label">RUH/JED</span>
-                                <span class="tz-time" id="tz-ruh">--:--</span>
                                 <span class="tz-offset">+3</span>
+                                <span class="tz-time" id="tz-ruh">--:--</span>
+                                <span class="tz-label">RUH/JED/KWI/BAH</span>
                             </div>
                             <div class="tz-row">
-                                <span class="tz-label">DEL/BOM</span>
-                                <span class="tz-time" id="tz-del">--:--</span>
-                                <span class="tz-offset">+5:30</span>
-                            </div>
-                            <div class="tz-row">
-                                <span class="tz-label">IKA/THR</span>
-                                <span class="tz-time" id="tz-ika">--:--</span>
                                 <span class="tz-offset">+3:30</span>
+                                <span class="tz-time" id="tz-ika">--:--</span>
+                                <span class="tz-label">IKA/MHD/SYZ</span>
                             </div>
                             <div class="tz-row">
-                                <span class="tz-label">LGW</span>
-                                <span class="tz-time" id="tz-lgw">--:--</span>
-                                <span class="tz-offset">+0</span>
+                                <span class="tz-offset">+4</span>
+                                <span class="tz-time" id="tz-dxb">--:--</span>
+                                <span class="tz-label">DXB/MCT/TBS</span>
+                            </div>
+                            <div class="tz-row">
+                                <span class="tz-offset">+4:30</span>
+                                <span class="tz-time" id="tz-kbl">--:--</span>
+                                <span class="tz-label">KBL</span>
+                            </div>
+                            <div class="tz-row">
+                                <span class="tz-offset">+5</span>
+                                <span class="tz-time" id="tz-khi">--:--</span>
+                                <span class="tz-label">KHI/LHE/ISB/TAS</span>
+                            </div>
+                            <div class="tz-row">
+                                <span class="tz-offset">+5:30</span>
+                                <span class="tz-time" id="tz-del">--:--</span>
+                                <span class="tz-label">DEL/BOM/COK/CMB</span>
+                            </div>
+                            <div class="tz-row">
+                                <span class="tz-offset">+6</span>
+                                <span class="tz-time" id="tz-dac">--:--</span>
+                                <span class="tz-label">DAC/ALA</span>
+                            </div>
+                            <div class="tz-row">
+                                <span class="tz-offset">+7</span>
+                                <span class="tz-time" id="tz-bkk">--:--</span>
+                                <span class="tz-label">BKK</span>
                             </div>
                         </div>
                         <button class="clear-btn" onclick="clearTimezones()">Clear</button>
@@ -2242,6 +2755,229 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                             <tr><td>0</td><td>Ice/Water on Ice</td><td class="grf-bad">Nil</td><td>Unreliable</td></tr>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TIME Tab (ETA, Timezone, Time Calculations) -->
+        <div class="tab-content" id="tab-time">
+            <div class="fdp-container">
+                <div class="top-sections" style="grid-template-columns: repeat(2, 1fr);">
+                    <!-- ETA Countdown -->
+                    <div class="section">
+                        <div class="section-title">ETA Countdown</div>
+                        <div class="utc-display">UTC: <span id="utc-clock">--:--:--</span></div>
+                        <div class="input-grid-2">
+                            <div class="input-group">
+                                <label class="input-label">ETA (UTC)</label>
+                                <button class="input-btn placeholder" id="eta-time-btn" onclick="openTimePicker('eta-time')">0000</button>
+                                <input type="hidden" id="eta-time" value="">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">UTC NOW</label>
+                                <button class="input-btn placeholder" id="utc-manual-btn" onclick="openTimePicker('utc-manual')">AUTO</button>
+                                <input type="hidden" id="utc-manual" value="">
+                            </div>
+                        </div>
+                        <div class="eta-countdown" id="eta-countdown">--:--:--</div>
+                        <div class="results-row" style="border: none; padding-top: 10px;">
+                            <div class="result-item">
+                                <div class="result-label">ELAPSED</div>
+                                <div class="result-value" id="time-elapsed" style="color: #00d4ff;">--:--</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-label">REMAINING</div>
+                                <div class="result-value" id="time-remaining" style="color: #00ff88;">--:--</div>
+                            </div>
+                        </div>
+                        <button class="clear-btn" id="eta-clear">Clear</button>
+                    </div>
+
+                    <!-- Timezone Converter (duplicate from REF for quick access) -->
+                    <div class="section">
+                        <div class="section-title">Timezone Converter</div>
+                        <div class="input-grid-2" style="margin-bottom:15px">
+                            <div class="input-group">
+                                <label class="input-label">Input Time</label>
+                                <button class="input-btn" id="time-tz-input-btn" onclick="openTimePicker('time-tz-input')" style="max-width:100%">----</button>
+                                <input type="hidden" id="time-tz-input" value="">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Input Zone</label>
+                                <select class="fdp-select" id="time-tz-zone" onchange="calculateTimeTabTimezones()" style="max-width:100%">
+                                    <option value="0" selected>UTC</option>
+                                    <option value="4">DXB (+4)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="preset-btn" onclick="setCurrentUTC()" style="margin-bottom: 10px;">Current Time</button>
+                        <div class="tz-converter" id="time-tz-results">
+                            <div class="tz-row">
+                                <span class="tz-offset">+0</span>
+                                <span class="tz-time" id="time-tz-utc">--:--</span>
+                                <span class="tz-label">UTC</span>
+                            </div>
+                            <div class="tz-row">
+                                <span class="tz-offset">+4</span>
+                                <span class="tz-time" id="time-tz-dxb">--:--</span>
+                                <span class="tz-label">DXB</span>
+                            </div>
+                        </div>
+                        <button class="clear-btn" onclick="clearTimeTabTimezones()">Clear</button>
+                    </div>
+                </div>
+
+                <!-- Speed-Distance-Time Calculator -->
+                <div class="section" style="max-width: 600px; margin: 20px auto 0;">
+                    <div class="section-title">Speed-Distance-Time Calculator</div>
+                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Speed (kts)</label>
+                            <button class="input-btn" id="sdt-speed-btn" onclick="openWeightPicker('sdt-speed', 'Speed', 'kts')" style="max-width: 100%">---</button>
+                            <input type="hidden" id="sdt-speed" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Distance (nm)</label>
+                            <button class="input-btn" id="sdt-dist-btn" onclick="openWeightPicker('sdt-dist', 'Distance', 'nm')" style="max-width: 100%">---</button>
+                            <input type="hidden" id="sdt-dist" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Time (min)</label>
+                            <button class="input-btn" id="sdt-time-btn" onclick="openWeightPicker('sdt-time', 'Time', 'min')" style="max-width: 100%">---</button>
+                            <input type="hidden" id="sdt-time" value="">
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 10px;">
+                        <button class="preset-btn" onclick="calculateSDT('speed')">Calculate Speed</button>
+                        <button class="preset-btn" onclick="calculateSDT('distance')">Calculate Distance</button>
+                        <button class="preset-btn" onclick="calculateSDT('time')">Calculate Time</button>
+                    </div>
+                    <div class="fdp-result-value" id="sdt-result" style="text-align: center; margin-top: 15px; font-size: 1.5rem; color: #00ff88;">---</div>
+                    <button class="clear-btn" onclick="clearSDT()">Clear</button>
+                </div>
+
+                <!-- Catch-Up Calculator -->
+                <div class="section" style="max-width: 600px; margin: 20px auto 0;">
+                    <div class="section-title">Catch-Up Calculator</div>
+                    <p style="color: #888; font-size: 0.75rem; text-align: center; margin-bottom: 10px;">
+                        Calculate time to catch up or speed required
+                    </p>
+                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Distance Ahead (nm)</label>
+                            <button class="input-btn" id="catchup-dist-btn" onclick="openWeightPicker('catchup-dist', 'Distance', 'nm')" style="max-width: 100%">---</button>
+                            <input type="hidden" id="catchup-dist" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Their GS (kts)</label>
+                            <button class="input-btn" id="catchup-their-gs-btn" onclick="openWeightPicker('catchup-their-gs', 'Their GS', 'kts')" style="max-width: 100%">---</button>
+                            <input type="hidden" id="catchup-their-gs" value="">
+                        </div>
+                    </div>
+                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 10px;">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Your GS (kts)</label>
+                            <button class="input-btn" id="catchup-your-gs-btn" onclick="openWeightPicker('catchup-your-gs', 'Your GS', 'kts')" style="max-width: 100%">---</button>
+                            <input type="hidden" id="catchup-your-gs" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Time Limit (min)</label>
+                            <button class="input-btn" id="catchup-time-btn" onclick="openWeightPicker('catchup-time', 'Time', 'min')" style="max-width: 100%">---</button>
+                            <input type="hidden" id="catchup-time" value="">
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 10px;">
+                        <button class="preset-btn" onclick="calculateCatchUp('time')">Time to Catch Up</button>
+                        <button class="preset-btn" onclick="calculateCatchUp('speed')">Speed Required</button>
+                    </div>
+                    <div class="fdp-result-value" id="catchup-result" style="text-align: center; margin-top: 15px; font-size: 1.3rem; color: #00ff88;">---</div>
+                    <button class="clear-btn" onclick="clearCatchUp()">Clear</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOTES Tab (Scratchpad) -->
+        <div class="tab-content" id="tab-notes">
+            <div class="fdp-container">
+                <div class="section" style="max-width: 800px; margin: 0 auto;">
+                    <div class="section-title">Scratchpad</div>
+                    <div class="scratchpad-container">
+                        <textarea class="scratchpad-textarea" id="notes-scratchpad" placeholder="ATIS, Clearances, Notes..." style="min-height: 300px;"></textarea>
+                        <div style="display:flex;gap:10px;margin-top:10px">
+                            <button class="preset-btn" style="flex:1" onclick="saveNotesScratchpad()">Save to History</button>
+                            <button class="clear-btn" style="flex:1;margin:0" onclick="clearNotesScratchpad()">Clear</button>
+                        </div>
+                        <div class="scratchpad-history" id="notes-scratchpad-history"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SET Tab (Settings) -->
+        <div class="tab-content" id="tab-set">
+            <div class="fdp-container">
+                <div class="top-sections" style="grid-template-columns: repeat(2, 1fr);">
+                    <!-- Quick Reset -->
+                    <div class="section">
+                        <div class="section-title">Quick Reset</div>
+                        <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px; text-align: center;">
+                            Reset all entries and timers. Notes will be preserved.
+                        </p>
+                        <button class="clear-btn" style="width: 100%; padding: 15px; font-size: 1.1rem;" onclick="quickResetAll()">
+                            Reset All Data
+                        </button>
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
+                            <button class="preset-btn" style="width: 100%;" onclick="exportAllData()">
+                                Export to Markdown
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preferences -->
+                    <div class="section">
+                        <div class="section-title">Preferences</div>
+                        <div class="fdp-row" style="flex-direction: column; gap: 15px;">
+                            <div class="fdp-field">
+                                <label class="fdp-label">Default Aircraft</label>
+                                <select class="fdp-select" id="pref-aircraft" onchange="savePreferences()" style="max-width: 100%;">
+                                    <option value="B738">B738</option>
+                                    <option value="B38M">B38M</option>
+                                    <option value="B39M">B39M</option>
+                                </select>
+                            </div>
+                            <div class="fdp-field">
+                                <label class="fdp-label">Default Timezone</label>
+                                <select class="fdp-select" id="pref-timezone" onchange="savePreferences()" style="max-width: 100%;">
+                                    <option value="0">UTC</option>
+                                    <option value="4" selected>DXB (+4)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Status -->
+                <div class="section" style="max-width: 600px; margin: 20px auto 0;">
+                    <div class="section-title">Data Status</div>
+                    <div class="fdp-results" style="margin-top: 0;">
+                        <div class="fdp-result-grid" style="grid-template-columns: repeat(3, 1fr);">
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Schedule Sectors</div>
+                                <div class="fdp-result-value" id="status-sectors" style="color: #FF8200;">0</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Active Timers</div>
+                                <div class="fdp-result-value" id="status-timers" style="color: #00ff88;">0</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Notes Saved</div>
+                                <div class="fdp-result-value" id="status-notes" style="color: #00d4ff;">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: #666; font-size: 0.75rem; margin-top: 15px;">
+                        All data is stored locally in your browser and persists across sessions.
+                    </p>
                 </div>
             </div>
         </div>
@@ -2396,6 +3132,9 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     calculateMLF();
                 }
                 else if (fieldId === 'opt-acc' || fieldId === 'airfield-elev') calculateACC();
+                else if (fieldId.startsWith('xwind-')) calculateCrosswind();
+                else if (fieldId.startsWith('hold-')) calculateHoldEntry();
+                else if (fieldId === 'isa-alt') calculateISA();
             });
         }
 
@@ -2450,6 +3189,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             const limits = aircraftLimits[selectedAircraft];
             document.getElementById('mtw-limit').textContent = 'MTW: ' + limits.mtw.toLocaleString();
             document.getElementById('mtow-limit').textContent = 'MTOW: ' + limits.mtow.toLocaleString();
+            document.getElementById('mlw-limit').textContent = 'MLW: ' + limits.mlw.toLocaleString();
             document.getElementById('mzfw-limit').textContent = 'MZFW: ' + limits.mzfw.toLocaleString();
         }
 
@@ -2580,6 +3320,28 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 adj: document.getElementById('fuel-adj').value
             };
             localStorage.setItem('flightFuel', JSON.stringify(fuel));
+        }
+
+        function setFullTanks() {
+            // B737 max fuel: 20,200 kg (wing tanks 3,700 per side = 7,400 + center tank 12,800)
+            document.getElementById('fuel-req').value = '20200';
+            document.getElementById('fuel-req-btn').textContent = '20,200';
+            document.getElementById('fuel-req-btn').classList.remove('placeholder');
+            document.getElementById('tank-left').value = '3700';
+            document.getElementById('tank-left-btn').textContent = '3,700';
+            document.getElementById('tank-right').value = '3700';
+            document.getElementById('tank-right-btn').textContent = '3,700';
+            calculateFuel();
+            saveFuel();
+        }
+
+        function resetTankSplit() {
+            document.getElementById('tank-left').value = '3700';
+            document.getElementById('tank-left-btn').textContent = '3,700';
+            document.getElementById('tank-right').value = '3700';
+            document.getElementById('tank-right-btn').textContent = '3,700';
+            calculateFuel();
+            saveFuel();
         }
 
         function calculateFuel() {
@@ -2831,7 +3593,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         const defaultTimers = [
             { name: 'APU', type: 'countdown', hours: 0, minutes: 11 },
             { name: 'APU Start', type: 'countdown', hours: 3, minutes: 0 },
-            { name: 'Timer 3', type: 'stopwatch', hours: 0, minutes: 0 },
+            { name: 'Ctrl Rest', type: 'countdown', hours: 0, minutes: 30 },
             { name: 'Timer 4', type: 'stopwatch', hours: 0, minutes: 0 },
             { name: 'Timer 5', type: 'stopwatch', hours: 0, minutes: 0 }
         ];
@@ -2993,6 +3755,11 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             const utcTime = now.toISOString().substring(11, 19);
             document.getElementById('utc-clock').textContent = utcTime;
             document.getElementById('strip-utc-clock').textContent = utcTime;
+
+            // DXB time (UTC+4)
+            const dxbTime = new Date(now.getTime() + 4 * 60 * 60 * 1000);
+            const dxbTimeStr = dxbTime.toISOString().substring(11, 19);
+            document.getElementById('strip-dxb-clock').textContent = dxbTimeStr;
         }
 
         function updateActiveTimersStrip() {
@@ -3044,11 +3811,14 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             const etaStr = document.getElementById('eta-time').value;
             const manualStr = document.getElementById('utc-manual').value;
             const etaDisplay = document.getElementById('eta-countdown');
+            const stripEta = document.getElementById('strip-eta');
+            const stripEtaTime = document.getElementById('strip-eta-time');
 
             const eta = parseTime(etaStr);
             if (!eta) {
                 etaDisplay.textContent = '--:--:--';
                 etaDisplay.className = 'eta-countdown';
+                stripEta.style.display = 'none';
                 return;
             }
 
@@ -3080,21 +3850,31 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             const diffMins = etaMins - nowMins;
             const diffSecs = Math.max(0, Math.floor(diffMins * 60));
 
+            // Update strip ETA
+            stripEta.style.display = 'flex';
+            const h = Math.floor(diffSecs / 3600);
+            const m = Math.floor((diffSecs % 3600) / 60);
+            const s = diffSecs % 60;
+            const timeStr = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+
             if (diffSecs <= 0) {
                 etaDisplay.textContent = '00:00:00';
                 etaDisplay.className = 'eta-countdown critical';
+                stripEtaTime.textContent = '00:00';
+                stripEtaTime.className = 'strip-eta-time critical';
             } else {
-                const h = Math.floor(diffSecs / 3600);
-                const m = Math.floor((diffSecs % 3600) / 60);
-                const s = diffSecs % 60;
-                etaDisplay.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                etaDisplay.textContent = timeStr;
+                stripEtaTime.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
 
                 if (diffMins <= 10) {
                     etaDisplay.className = 'eta-countdown critical';
+                    stripEtaTime.className = 'strip-eta-time critical';
                 } else if (diffMins <= 30) {
                     etaDisplay.className = 'eta-countdown warning';
+                    stripEtaTime.className = 'strip-eta-time warning';
                 } else {
                     etaDisplay.className = 'eta-countdown';
+                    stripEtaTime.className = 'strip-eta-time';
                 }
             }
         }
@@ -3131,6 +3911,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             const zfw = parseInt(document.getElementById('calc-zfw').value, 10) || 0;
             const fob = parseInt(document.getElementById('calc-fob').value, 10) || 0;
             const taxi = parseInt(document.getElementById('calc-taxi').value, 10) || 0;
+            const trip = parseInt(document.getElementById('calc-trip').value, 10) || 0;
 
             const limits = aircraftLimits[selectedAircraft];
             let warnings = [];
@@ -3138,6 +3919,8 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             // Calculate weights
             const taxiWt = zfw + fob;  // Taxi weight = ZFW + total fuel
             const tow = zfw + fob - taxi;  // TOW = ZFW + FOB - Taxi fuel
+            const estLdgFuel = fob - taxi - trip;  // Estimated landing fuel
+            const ldw = zfw + estLdgFuel;  // Landing weight = ZFW + landing fuel
 
             // Update ZFW display
             const zfwEl = document.getElementById('zfw-display');
@@ -3182,6 +3965,30 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 } else {
                     towEl.style.color = '#FF8200';
                 }
+            }
+
+            // Update estimated landing fuel display
+            const estLdgFuelEl = document.getElementById('est-ldg-fuel');
+            if (fob > 0 && trip > 0) {
+                estLdgFuelEl.textContent = estLdgFuel.toLocaleString() + ' kg';
+                estLdgFuelEl.style.color = estLdgFuel < 0 ? '#ff5252' : '#7ec8e3';
+            } else {
+                estLdgFuelEl.textContent = '---';
+            }
+
+            // Update Landing Weight display
+            const ldwEl = document.getElementById('ldw-result');
+            if (zfw > 0 && fob > 0 && trip > 0) {
+                ldwEl.textContent = ldw.toLocaleString();
+                if (ldw > limits.mlw) {
+                    ldwEl.style.color = '#ff5252';
+                    warnings.push(`Est. LDW exceeds MLW by ${(ldw - limits.mlw).toLocaleString()} kg`);
+                } else {
+                    ldwEl.style.color = '#00ff88';
+                }
+            } else {
+                ldwEl.textContent = '---';
+                ldwEl.style.color = '#00ff88';
             }
 
             // Display warnings
@@ -3625,14 +4432,20 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             return Math.max(0, (timer.remaining / timer.initialTime) * 100);
         }
 
-        function flashTimer(index, count = 5) {
+        // Start continuous flashing on timer (CSS animation handles the visual)
+        function flashTimer(index) {
             const card = document.getElementById(`timer-${index}`);
-            if (!card || count <= 0) return;
-            card.classList.add('flashing');
-            setTimeout(() => {
+            if (card) {
+                card.classList.add('flashing');
+            }
+        }
+
+        // Stop flashing when timer is reset
+        function stopFlashing(index) {
+            const card = document.getElementById(`timer-${index}`);
+            if (card) {
                 card.classList.remove('flashing');
-                setTimeout(() => flashTimer(index, count - 1), 150);
-            }, 300);
+            }
         }
 
         function createTimerHTML(timer, index) {
@@ -3676,6 +4489,9 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                                 ${isRunning ? 'Pause' : 'Start'}
                             </button>
                             <button class="timer-btn btn-reset" onclick="resetTimer(${index})">Reset</button>
+                            ${timer.type === 'countdown' ? `
+                            <button class="timer-btn btn-repeat" onclick="repeatTimer(${index})" title="Reset & Start">↻</button>
+                            ` : ''}
                         </div>
                     </div>
                 </div>
@@ -3725,7 +4541,8 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                         timer.remaining = Math.max(0, timer.remaining - elapsed);
                         if (wasPositive && timer.remaining === 0) {
                             timer.running = false;
-                            flashTimer(index, 5);
+                            timer.expired = true; // Mark as expired for continuous flashing
+                            flashTimer(index); // Flash continuously until reset
                             renderTimers();
                             return;
                         }
@@ -3787,10 +4604,27 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         function resetTimer(index) {
             const timer = timers[index];
             timer.running = false;
+            timer.expired = false; // Clear expired flag
             timer.remaining = timer.type === 'countdown' ? timer.initialTime : 0;
             timer.elapsed = 0;
+            stopFlashing(index); // Stop continuous flashing
             saveState();
             renderTimers();
+        }
+
+        function repeatTimer(index) {
+            const timer = timers[index];
+            timer.running = false;
+            timer.expired = false;
+            timer.remaining = timer.initialTime;
+            timer.elapsed = 0;
+            stopFlashing(index);
+            // Immediately start the timer
+            timer.running = true;
+            timer.lastUpdate = Date.now();
+            saveState();
+            renderTimers();
+            startAnimationLoop();
         }
 
         function setTimerType(index, type) {
@@ -3852,7 +4686,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         });
 
         document.getElementById('calc-clear').addEventListener('click', () => {
-            ['zfw', 'fob', 'taxi'].forEach(field => {
+            ['zfw', 'fob', 'taxi', 'trip'].forEach(field => {
                 document.getElementById('calc-' + field).value = '';
                 const btn = document.getElementById('calc-' + field + '-btn');
                 btn.textContent = '0';
@@ -3862,6 +4696,9 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             document.getElementById('tow-result').style.color = '#FF8200';
             document.getElementById('taxi-wt-result').textContent = '---';
             document.getElementById('taxi-wt-result').style.color = '#00ff88';
+            document.getElementById('ldw-result').textContent = '---';
+            document.getElementById('ldw-result').style.color = '#00ff88';
+            document.getElementById('est-ldg-fuel').textContent = '---';
             document.getElementById('zfw-display').textContent = '---';
             document.getElementById('zfw-display').style.color = '#7ec8e3';
             document.getElementById('tow-warnings').innerHTML = '';
@@ -3880,7 +4717,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             localStorage.removeItem('flightACC');
         });
 
-        document.getElementById('rw12r-btn').addEventListener('click', () => {
+        document.getElementById('dxb-elev-btn').addEventListener('click', () => {
             document.getElementById('airfield-elev').value = '62';
             document.getElementById('airfield-elev-btn').textContent = '62';
             document.getElementById('airfield-elev-btn').classList.remove('placeholder');
@@ -3926,8 +4763,451 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             localStorage.removeItem('flightLayover');
         });
 
+        // ============ FDP SYNC FUNCTIONS ============
+        let fdpSetupCollapsed = false;
+
+        function toggleFDPSetup() {
+            const content = document.getElementById('fdp-setup-content');
+            const toggle = document.getElementById('fdp-setup-toggle');
+            fdpSetupCollapsed = !fdpSetupCollapsed;
+            if (fdpSetupCollapsed) {
+                content.style.display = 'none';
+                toggle.textContent = '▶';
+            } else {
+                content.style.display = 'block';
+                toggle.textContent = '▼';
+            }
+        }
+
+        function syncFromSchedule() {
+            // Get schedule data
+            const reportTime = document.getElementById('sched-report').value;
+
+            // Sync report time
+            if (reportTime) {
+                document.getElementById('fdp-report').value = reportTime;
+                document.getElementById('fdp-report-btn').textContent = reportTime;
+            }
+
+            // Sync sector count
+            document.getElementById('fdp-sectors').value = currentSectorCount.toString();
+            updateSectorInputs();
+
+            // Sync sector times from schedule
+            for (let s = 1; s <= currentSectorCount; s++) {
+                const std = document.getElementById(`s${s}-std`).value;
+                const sta = document.getElementById(`s${s}-sta`).value;
+                const actualOff = document.getElementById(`s${s}-off`).value;
+                const actualIn = document.getElementById(`s${s}-in`).value;
+
+                // Set scheduled times
+                if (std) {
+                    const offInput = document.getElementById(`sector-${s}-off`);
+                    const offBtn = document.getElementById(`sector-${s}-off-btn`);
+                    if (offInput) {
+                        offInput.value = std;
+                        if (offBtn) offBtn.textContent = std;
+                    }
+                }
+                if (sta) {
+                    const inInput = document.getElementById(`sector-${s}-in`);
+                    const inBtn = document.getElementById(`sector-${s}-in-btn`);
+                    if (inInput) {
+                        inInput.value = sta;
+                        if (inBtn) inBtn.textContent = sta;
+                    }
+                }
+
+                // Set actual times if available
+                if (actualOff) {
+                    const actualOffInput = document.getElementById(`actual-${s}-off`);
+                    const actualOffBtn = document.getElementById(`actual-${s}-off-btn`);
+                    if (actualOffInput) {
+                        actualOffInput.value = actualOff;
+                        if (actualOffBtn) actualOffBtn.textContent = actualOff;
+                    }
+                }
+                if (actualIn) {
+                    const actualInInput = document.getElementById(`actual-${s}-in`);
+                    const actualInBtn = document.getElementById(`actual-${s}-in-btn`);
+                    if (actualInInput) {
+                        actualInInput.value = actualIn;
+                        if (actualInBtn) actualInBtn.textContent = actualIn;
+                    }
+                }
+            }
+
+            calculateFDP();
+            alert('Synced ' + currentSectorCount + ' sector(s) from Schedule');
+        }
+
+        // ============ SCHEDULE TAB FUNCTIONS ============
+        let currentSectorCount = 1;
+
+        function addSector() {
+            if (currentSectorCount < 4) {
+                currentSectorCount++;
+                document.getElementById(`sector-${currentSectorCount}-block`).style.display = 'block';
+                document.getElementById('sched-total-sectors').textContent = currentSectorCount;
+                saveSchedule();
+            }
+        }
+
+        function removeSector() {
+            if (currentSectorCount > 1) {
+                document.getElementById(`sector-${currentSectorCount}-block`).style.display = 'none';
+                currentSectorCount--;
+                document.getElementById('sched-total-sectors').textContent = currentSectorCount;
+                saveSchedule();
+            }
+        }
+
+        function clearSchedule() {
+            if (confirm('Clear all schedule data?')) {
+                for (let s = 1; s <= 4; s++) {
+                    ['flt', 'dep', 'arr', 'std', 'sta', 'pax', 'stand', 'out', 'off', 'on', 'in'].forEach(field => {
+                        const input = document.getElementById(`s${s}-${field}`);
+                        const btn = document.getElementById(`s${s}-${field}-btn`);
+                        if (input) input.value = '';
+                        if (btn) btn.textContent = field === 'pax' ? '---' : (field === 'flt' ? 'FZ___' : (field === 'dep' || field === 'arr' ? field.toUpperCase() : (field === 'stand' ? '---' : '----')));
+                    });
+                    document.getElementById(`s${s}-block`).textContent = '--:--';
+                    document.getElementById(`s${s}-flight`).textContent = '--:--';
+                }
+                document.getElementById('sched-report').value = '';
+                document.getElementById('sched-report-btn').textContent = '----';
+                document.getElementById('sched-tail').value = '';
+                document.getElementById('sched-tail-btn').textContent = 'A6-___';
+                currentSectorCount = 1;
+                for (let s = 2; s <= 4; s++) {
+                    document.getElementById(`sector-${s}-block`).style.display = 'none';
+                }
+                document.getElementById('sched-total-sectors').textContent = '1';
+                document.getElementById('sched-total-block').textContent = '--:--';
+                document.getElementById('sched-total-flight').textContent = '--:--';
+                document.getElementById('sched-duty-time').textContent = '--:--';
+                localStorage.removeItem('flightSchedule');
+            }
+        }
+
+        function onScheduleChange() {
+            saveSchedule();
+            // Sync aircraft selection to PERF tab
+            const aircraft = document.getElementById('sched-aircraft').value;
+            selectAircraft(aircraft);
+        }
+
+        function saveSchedule() {
+            const schedule = {
+                sectorCount: currentSectorCount,
+                report: document.getElementById('sched-report').value,
+                aircraft: document.getElementById('sched-aircraft').value,
+                tail: document.getElementById('sched-tail').value,
+                sectors: []
+            };
+            for (let s = 1; s <= 4; s++) {
+                schedule.sectors.push({
+                    flt: document.getElementById(`s${s}-flt`)?.value || '',
+                    dep: document.getElementById(`s${s}-dep`)?.value || '',
+                    arr: document.getElementById(`s${s}-arr`)?.value || '',
+                    std: document.getElementById(`s${s}-std`)?.value || '',
+                    sta: document.getElementById(`s${s}-sta`)?.value || '',
+                    pax: document.getElementById(`s${s}-pax`)?.value || '',
+                    stand: document.getElementById(`s${s}-stand`)?.value || '',
+                    out: document.getElementById(`s${s}-out`)?.value || '',
+                    off: document.getElementById(`s${s}-off`)?.value || '',
+                    on: document.getElementById(`s${s}-on`)?.value || '',
+                    in: document.getElementById(`s${s}-in`)?.value || ''
+                });
+            }
+            localStorage.setItem('flightSchedule', JSON.stringify(schedule));
+        }
+
+        function loadSchedule() {
+            try {
+                const saved = localStorage.getItem('flightSchedule');
+                if (saved) {
+                    const schedule = JSON.parse(saved);
+                    currentSectorCount = schedule.sectorCount || 1;
+                    if (schedule.report) {
+                        document.getElementById('sched-report').value = schedule.report;
+                        document.getElementById('sched-report-btn').textContent = schedule.report;
+                    }
+                    if (schedule.aircraft) {
+                        document.getElementById('sched-aircraft').value = schedule.aircraft;
+                    }
+                    if (schedule.tail) {
+                        document.getElementById('sched-tail').value = schedule.tail;
+                        document.getElementById('sched-tail-btn').textContent = schedule.tail || 'A6-___';
+                    }
+                    for (let s = 1; s <= 4; s++) {
+                        if (s <= currentSectorCount) {
+                            document.getElementById(`sector-${s}-block`).style.display = 'block';
+                        }
+                        if (schedule.sectors && schedule.sectors[s-1]) {
+                            const sector = schedule.sectors[s-1];
+                            Object.keys(sector).forEach(field => {
+                                const input = document.getElementById(`s${s}-${field}`);
+                                const btn = document.getElementById(`s${s}-${field}-btn`);
+                                if (input && sector[field]) {
+                                    input.value = sector[field];
+                                    if (btn) btn.textContent = sector[field];
+                                }
+                            });
+                        }
+                    }
+                    document.getElementById('sched-total-sectors').textContent = currentSectorCount;
+                }
+            } catch (e) {
+                console.error('Error loading schedule:', e);
+            }
+        }
+
+        // Text picker for non-numeric inputs
+        function openTextPicker(fieldId, title) {
+            const currentValue = document.getElementById(fieldId).value || '';
+            const newValue = prompt(title + ':', currentValue);
+            if (newValue !== null) {
+                document.getElementById(fieldId).value = newValue;
+                document.getElementById(fieldId + '-btn').textContent = newValue || (fieldId.includes('flt') ? 'FZ___' : (fieldId.includes('tail') ? 'A6-___' : '---'));
+                saveSchedule();
+            }
+        }
+
+        // ============ TIME TAB FUNCTIONS ============
+        function setCurrentUTC() {
+            const now = new Date();
+            const utcHours = String(now.getUTCHours()).padStart(2, '0');
+            const utcMins = String(now.getUTCMinutes()).padStart(2, '0');
+            const timeStr = utcHours + utcMins;
+            document.getElementById('time-tz-input').value = timeStr;
+            document.getElementById('time-tz-input-btn').textContent = timeStr;
+            calculateTimeTabTimezones();
+        }
+
+        function calculateTimeTabTimezones() {
+            const inputStr = document.getElementById('time-tz-input').value;
+            const inputZone = parseFloat(document.getElementById('time-tz-zone').value);
+            if (!inputStr || inputStr.length < 3) return;
+
+            const input = parseTime(inputStr);
+            if (!input) return;
+
+            const utcMins = input.hours * 60 + input.minutes - (inputZone * 60);
+            const formatTimeOffset = (mins) => {
+                let m = ((mins % 1440) + 1440) % 1440;
+                const h = Math.floor(m / 60);
+                const min = m % 60;
+                return String(h).padStart(2, '0') + ':' + String(min).padStart(2, '0');
+            };
+
+            document.getElementById('time-tz-utc').textContent = formatTimeOffset(utcMins);
+            document.getElementById('time-tz-dxb').textContent = formatTimeOffset(utcMins + 240);
+        }
+
+        function clearTimeTabTimezones() {
+            document.getElementById('time-tz-input').value = '';
+            document.getElementById('time-tz-input-btn').textContent = '----';
+            document.getElementById('time-tz-utc').textContent = '--:--';
+            document.getElementById('time-tz-dxb').textContent = '--:--';
+        }
+
+        function calculateSDT(solve) {
+            const speed = parseFloat(document.getElementById('sdt-speed').value) || 0;
+            const dist = parseFloat(document.getElementById('sdt-dist').value) || 0;
+            const time = parseFloat(document.getElementById('sdt-time').value) || 0;
+            let result = '---';
+
+            if (solve === 'speed' && dist > 0 && time > 0) {
+                const s = (dist / time) * 60;
+                result = Math.round(s) + ' kts';
+            } else if (solve === 'distance' && speed > 0 && time > 0) {
+                const d = (speed * time) / 60;
+                result = Math.round(d) + ' nm';
+            } else if (solve === 'time' && speed > 0 && dist > 0) {
+                const t = (dist / speed) * 60;
+                result = Math.round(t) + ' min';
+            }
+
+            document.getElementById('sdt-result').textContent = result;
+        }
+
+        function clearSDT() {
+            ['sdt-speed', 'sdt-dist', 'sdt-time'].forEach(id => {
+                document.getElementById(id).value = '';
+                document.getElementById(id + '-btn').textContent = '---';
+            });
+            document.getElementById('sdt-result').textContent = '---';
+        }
+
+        // ============ CATCH-UP CALCULATOR ============
+        function calculateCatchUp(solve) {
+            const dist = parseFloat(document.getElementById('catchup-dist').value) || 0;
+            const theirGS = parseFloat(document.getElementById('catchup-their-gs').value) || 0;
+            const yourGS = parseFloat(document.getElementById('catchup-your-gs').value) || 0;
+            const timeLimit = parseFloat(document.getElementById('catchup-time').value) || 0;
+            let result = '---';
+            let color = '#00ff88';
+
+            if (solve === 'time') {
+                // Calculate time to catch up: Distance / (YourGS - TheirGS)
+                if (dist > 0 && yourGS > theirGS) {
+                    const gsDiff = yourGS - theirGS;
+                    const timeHours = dist / gsDiff;
+                    const timeMins = Math.round(timeHours * 60);
+                    const hours = Math.floor(timeMins / 60);
+                    const mins = timeMins % 60;
+                    if (hours > 0) {
+                        result = hours + 'h ' + mins + 'm to catch up';
+                    } else {
+                        result = timeMins + ' min to catch up';
+                    }
+                } else if (yourGS <= theirGS && dist > 0) {
+                    result = 'Cannot catch up (too slow)';
+                    color = '#ff5252';
+                }
+            } else if (solve === 'speed') {
+                // Calculate speed required: (Distance / Time) + TheirGS
+                if (dist > 0 && timeLimit > 0 && theirGS > 0) {
+                    const timeHours = timeLimit / 60;
+                    const requiredGS = Math.round((dist / timeHours) + theirGS);
+                    result = requiredGS + ' kts required';
+                    if (requiredGS > 500) {
+                        color = '#ffd700'; // Yellow warning for high speed
+                    }
+                }
+            }
+
+            const resultEl = document.getElementById('catchup-result');
+            resultEl.textContent = result;
+            resultEl.style.color = color;
+        }
+
+        function clearCatchUp() {
+            ['catchup-dist', 'catchup-their-gs', 'catchup-your-gs', 'catchup-time'].forEach(id => {
+                document.getElementById(id).value = '';
+                document.getElementById(id + '-btn').textContent = '---';
+            });
+            document.getElementById('catchup-result').textContent = '---';
+            document.getElementById('catchup-result').style.color = '#00ff88';
+        }
+
+        // ============ NOTES TAB FUNCTIONS ============
+        function saveNotesScratchpad() {
+            const content = document.getElementById('notes-scratchpad').value.trim();
+            if (!content) return;
+
+            const history = JSON.parse(localStorage.getItem('notesScratchpadHistory') || '[]');
+            history.unshift({
+                timestamp: new Date().toISOString(),
+                content: content
+            });
+            if (history.length > 20) history.pop();
+            localStorage.setItem('notesScratchpadHistory', JSON.stringify(history));
+            renderNotesScratchpadHistory();
+        }
+
+        function clearNotesScratchpad() {
+            document.getElementById('notes-scratchpad').value = '';
+        }
+
+        function renderNotesScratchpadHistory() {
+            const history = JSON.parse(localStorage.getItem('notesScratchpadHistory') || '[]');
+            const container = document.getElementById('notes-scratchpad-history');
+            if (!container) return;
+
+            container.innerHTML = history.map((item, index) => `
+                <div class="scratchpad-history-item">
+                    <div class="history-timestamp">${new Date(item.timestamp).toLocaleString()}</div>
+                    <div class="history-content">${item.content.substring(0, 100)}${item.content.length > 100 ? '...' : ''}</div>
+                    <button class="history-delete" onclick="deleteNotesHistoryItem(${index})">×</button>
+                </div>
+            `).join('');
+        }
+
+        function deleteNotesHistoryItem(index) {
+            const history = JSON.parse(localStorage.getItem('notesScratchpadHistory') || '[]');
+            history.splice(index, 1);
+            localStorage.setItem('notesScratchpadHistory', JSON.stringify(history));
+            renderNotesScratchpadHistory();
+        }
+
+        // ============ SETTINGS TAB FUNCTIONS ============
+        function quickResetAll() {
+            if (confirm('Reset all data except notes? This cannot be undone.')) {
+                // Clear schedule
+                localStorage.removeItem('flightSchedule');
+                // Clear timers
+                localStorage.removeItem('flightTimers');
+                // Clear OOOI
+                localStorage.removeItem('flightOOOI');
+                // Clear ETA
+                localStorage.removeItem('flightETA');
+                // Clear TOW
+                localStorage.removeItem('flightTOW');
+                // Clear ACC
+                localStorage.removeItem('flightACC');
+                // Clear Fuel
+                localStorage.removeItem('flightFuel');
+                // Clear Layover
+                localStorage.removeItem('flightLayover');
+                // Clear FDP
+                localStorage.removeItem('flightFDP');
+
+                // Reload page to reset all values
+                location.reload();
+            }
+        }
+
+        function exportAllData() {
+            const now = new Date();
+            let md = `# Flight Ops Export\n\n`;
+            md += `**Generated:** ${now.toISOString()}\n\n`;
+
+            // Schedule
+            const schedule = JSON.parse(localStorage.getItem('flightSchedule') || '{}');
+            md += `## Schedule\n\n`;
+            md += `- Sectors: ${schedule.sectorCount || 0}\n`;
+            md += `- Aircraft: ${schedule.aircraft || 'N/A'}\n`;
+            md += `- Tail: ${schedule.tail || 'N/A'}\n\n`;
+
+            // Notes
+            const notes = document.getElementById('notes-scratchpad')?.value || '';
+            md += `## Notes\n\n\`\`\`\n${notes || 'No notes'}\n\`\`\`\n\n`;
+
+            // Download
+            const blob = new Blob([md], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `flight-ops-${now.toISOString().split('T')[0]}.md`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function savePreferences() {
+            const prefs = {
+                aircraft: document.getElementById('pref-aircraft').value,
+                timezone: document.getElementById('pref-timezone').value
+            };
+            localStorage.setItem('flightPreferences', JSON.stringify(prefs));
+        }
+
+        function loadPreferences() {
+            try {
+                const saved = localStorage.getItem('flightPreferences');
+                if (saved) {
+                    const prefs = JSON.parse(saved);
+                    if (prefs.aircraft) document.getElementById('pref-aircraft').value = prefs.aircraft;
+                    if (prefs.timezone) document.getElementById('pref-timezone').value = prefs.timezone;
+                }
+            } catch (e) {}
+        }
+
         // ============ INITIALIZE ============
         loadState();
+        loadSchedule();
+        loadPreferences();
         loadOOOI();
         loadETA();
         loadTOW();
@@ -3990,11 +5270,94 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         });
 
         // ============ CROSSWIND CALCULATOR ============
+        function openRunwayHdgPicker() {
+            const currentVal = document.getElementById('xwind-rwy').value || '';
+            openPicker('Runway Heading', '°', currentVal, 3, false, (val) => {
+                let hdg = parseInt(val) || 0;
+                if (hdg > 360) hdg = 360;
+                const hdgStr = hdg ? hdg.toString().padStart(3, '0') : '';
+                document.getElementById('xwind-rwy').value = hdgStr;
+                document.getElementById('xwind-rwy-btn').textContent = hdgStr ? hdgStr + '°' : '---°';
+                document.getElementById('xwind-rwy-btn').classList.toggle('placeholder', !hdgStr);
+                calculateCrosswind();
+            });
+        }
+
+        function openWindDirPicker() {
+            const currentVal = document.getElementById('xwind-dir').value || '';
+            openPicker('Wind Direction', '°', currentVal, 3, false, (val) => {
+                let dir = parseInt(val) || 0;
+                if (dir > 360) dir = 360;
+                const dirStr = dir ? dir.toString().padStart(3, '0') : '';
+                document.getElementById('xwind-dir').value = dirStr;
+                document.getElementById('xwind-dir-btn').textContent = dirStr ? dirStr + '°' : '---°';
+                document.getElementById('xwind-dir-btn').classList.toggle('placeholder', !dirStr);
+                calculateCrosswind();
+            });
+        }
+
+        function openWindSpdPicker(fieldId, title) {
+            const currentVal = document.getElementById(fieldId).value || '';
+            openPicker(title, 'kt', currentVal, 3, false, (val) => {
+                const spd = parseInt(val) || 0;
+                document.getElementById(fieldId).value = spd || '';
+                document.getElementById(fieldId + '-btn').textContent = spd ? spd + ' kt' : '-- kt';
+                document.getElementById(fieldId + '-btn').classList.toggle('placeholder', !spd);
+                calculateCrosswind();
+            });
+        }
+
         function calculateCrosswind() {
             const rwyInput = document.getElementById('xwind-rwy').value;
             const dirInput = document.getElementById('xwind-dir').value;
             const spdInput = document.getElementById('xwind-spd').value;
             const gustInput = document.getElementById('xwind-gust').value;
+
+            // Update SVG runway rotation
+            const runwaySvg = document.getElementById('runway-svg');
+            const windArrowSvg = document.getElementById('wind-arrow-svg');
+
+            if (rwyInput) {
+                const rwyHdg = parseInt(rwyInput);
+                runwaySvg.setAttribute('transform', `rotate(${rwyHdg}, 100, 100)`);
+
+                // Update runway numbers (heading / 10, rounded)
+                const rwyNum = Math.round(rwyHdg / 10) || 36;
+                const reciprocal = rwyNum > 18 ? rwyNum - 18 : rwyNum + 18;
+
+                // Position runway numbers at the ends of the runway (accounting for rotation)
+                const rwyRad = rwyHdg * Math.PI / 180;
+                // Approach end (where the runway number faces - at threshold end)
+                const approachX = 100 + Math.sin(rwyRad) * 80;
+                const approachY = 100 - Math.cos(rwyRad) * 80;
+                // Departure end (reciprocal)
+                const departX = 100 - Math.sin(rwyRad) * 80;
+                const departY = 100 + Math.cos(rwyRad) * 80;
+
+                const rwyNumApproach = document.getElementById('rwy-num-approach');
+                const rwyNumDepart = document.getElementById('rwy-num-depart');
+                rwyNumApproach.setAttribute('x', approachX);
+                rwyNumApproach.setAttribute('y', approachY + 4);
+                rwyNumApproach.textContent = rwyNum.toString().padStart(2, '0');
+                rwyNumDepart.setAttribute('x', departX);
+                rwyNumDepart.setAttribute('y', departY + 4);
+                rwyNumDepart.textContent = reciprocal.toString().padStart(2, '0');
+            }
+
+            if (dirInput) {
+                const windDir = parseInt(dirInput);
+                // Wind arrow shows where wind is coming FROM (arrow points toward center)
+                windArrowSvg.setAttribute('transform', `rotate(${windDir}, 100, 100)`);
+
+                // Position wind direction label near the arrow source
+                const windRad = windDir * Math.PI / 180;
+                const labelX = 100 + Math.sin(windRad) * 75;
+                const labelY = 100 - Math.cos(windRad) * 75;
+                const windLabel = document.getElementById('wind-dir-label');
+                windLabel.setAttribute('x', labelX);
+                windLabel.setAttribute('y', labelY + 4);
+                windLabel.textContent = dirInput.padStart(3, '0') + '°';
+            }
 
             if (!rwyInput || !dirInput || !spdInput) {
                 document.getElementById('headwind-val').textContent = '--';
@@ -4002,7 +5365,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 return;
             }
 
-            const rwyHdg = parseInt(rwyInput) * 10; // Convert runway number to heading
+            const rwyHdg = parseInt(rwyInput); // Now using heading directly
             const windDir = parseInt(dirInput);
             const windSpd = parseInt(spdInput);
             const gust = gustInput ? parseInt(gustInput) : windSpd;
@@ -4032,24 +5395,84 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             const crosswindEl = document.getElementById('crosswind-val');
             const side = angleDiff > 0 ? 'R' : 'L';
             crosswindEl.textContent = `${crosswind}${side}`;
+        }
 
-            // Update wind arrow rotation
-            const arrowRotation = windDir - rwyHdg;
-            document.getElementById('wind-arrow').style.transform = `translateX(-50%) rotate(${arrowRotation}deg)`;
+        function openOPTWindPicker() {
+            const currentDir = document.getElementById('xwind-dir').value || '';
+            const currentSpd = document.getElementById('xwind-spd').value || '';
+            const currentVal = currentDir && currentSpd ? `${currentDir}/${currentSpd}` : '';
+
+            const input = prompt('Enter wind in OPT format:\n• 220/13 (direction/speed in kt)\n• 220/3m (direction/speed in m/s)\n\nExamples: 270/15, 180/5m', currentVal);
+
+            if (input !== null && input.trim()) {
+                // Parse OPT format: DIR/SPD or DIR/SPDm
+                const match = input.trim().match(/^(\d{1,3})\/(\d{1,3})(m)?$/i);
+                if (match) {
+                    let dir = parseInt(match[1]);
+                    let spd = parseInt(match[2]);
+                    const isMetersPerSec = match[3] && match[3].toLowerCase() === 'm';
+
+                    // Convert m/s to knots if needed (1 m/s ≈ 1.944 kt)
+                    if (isMetersPerSec) {
+                        spd = Math.round(spd * 1.944);
+                    }
+
+                    // Validate direction
+                    if (dir > 360) dir = 360;
+                    if (dir === 0) dir = 360;
+
+                    // Set values
+                    document.getElementById('xwind-dir').value = dir.toString();
+                    document.getElementById('xwind-dir-btn').textContent = dir.toString().padStart(3, '0') + '°';
+                    document.getElementById('xwind-spd').value = spd.toString();
+                    document.getElementById('xwind-spd-btn').textContent = spd + ' kt';
+                    document.getElementById('xwind-opt-btn').textContent = `${dir.toString().padStart(3, '0')}/${spd}`;
+
+                    calculateCrosswind();
+                } else {
+                    alert('Invalid format. Use: 220/13 or 220/3m');
+                }
+            }
         }
 
         function clearCrosswind() {
             ['xwind-rwy', 'xwind-dir', 'xwind-spd', 'xwind-gust'].forEach(id => {
                 document.getElementById(id).value = '';
-                document.getElementById(id + '-btn').textContent = '---';
-                document.getElementById(id + '-btn').classList.add('placeholder');
             });
+            document.getElementById('xwind-rwy-btn').textContent = '---°';
+            document.getElementById('xwind-dir-btn').textContent = '---°';
+            document.getElementById('xwind-spd-btn').textContent = '-- kt';
+            document.getElementById('xwind-gust-btn').textContent = '-- kt';
             document.getElementById('headwind-val').textContent = '--';
             document.getElementById('crosswind-val').textContent = '--';
-            document.getElementById('wind-arrow').style.transform = 'translateX(-50%) rotate(0deg)';
+            document.getElementById('runway-svg').setAttribute('transform', 'rotate(0, 100, 100)');
+            document.getElementById('wind-arrow-svg').setAttribute('transform', 'rotate(0, 100, 100)');
+            document.getElementById('rwy-num-approach').textContent = '';
+            document.getElementById('rwy-num-depart').textContent = '';
+            document.getElementById('wind-dir-label').textContent = '';
         }
 
         // ============ HOLD ENTRY CALCULATOR ============
+        function openHeadingPicker(fieldId, title) {
+            const currentVal = document.getElementById(fieldId).value || '';
+            openPicker(title, '°', currentVal, 3, false, (val) => {
+                let hdg = parseInt(val) || 0;
+                if (hdg > 360) hdg = 360;
+                const hdgStr = hdg ? hdg.toString().padStart(3, '0') : '';
+                document.getElementById(fieldId).value = hdgStr;
+                document.getElementById(fieldId + '-btn').textContent = hdgStr || '---';
+                document.getElementById(fieldId + '-btn').classList.toggle('placeholder', !hdgStr);
+                calculateHoldEntry();
+            });
+        }
+
+        function setHoldTurn(dir) {
+            document.getElementById('hold-turn-dir').value = dir;
+            document.getElementById('hold-turn-l').classList.toggle('active', dir === 'left');
+            document.getElementById('hold-turn-r').classList.toggle('active', dir === 'right');
+            calculateHoldEntry();
+        }
+
         function calculateHoldEntry() {
             const inboundInput = document.getElementById('hold-inbound').value;
             const hdgInput = document.getElementById('hold-hdg').value;
@@ -4109,19 +5532,51 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         function updateHoldGraphic(inbound, yourHdg, turnDir, entryType) {
-            const svg = document.querySelector('#hold-display svg');
+            const sectors = document.getElementById('hold-sectors');
+            const holdPattern = document.getElementById('hold-pattern');
             const aircraft = document.getElementById('aircraft-symbol');
-            const holdOval = document.getElementById('hold-oval');
 
-            // Rotate aircraft to show heading relative to hold
-            const relAngle = yourHdg - inbound;
-            aircraft.setAttribute('transform', `translate(30, 100) rotate(${relAngle})`);
+            // Rotate sectors and hold pattern based on inbound course
+            // Inbound is from the south (180°) by default, so rotation = inbound - 180
+            // This makes the inbound leg point in the direction of the inbound course
+            const rotation = inbound - 180;
+            sectors.setAttribute('transform', `rotate(${rotation}, 150, 150)`);
 
-            // Mirror hold pattern for left turns
+            // For left-hand holds, mirror the pattern horizontally around the fix
             if (turnDir === 'left') {
-                holdOval.setAttribute('cx', '110');
+                holdPattern.setAttribute('transform', `rotate(${rotation}, 150, 150) scale(-1,1) translate(-300,0)`);
             } else {
-                holdOval.setAttribute('cx', '170');
+                holdPattern.setAttribute('transform', `rotate(${rotation}, 150, 150)`);
+            }
+
+            // Position aircraft based on your heading approaching the fix
+            // Aircraft is positioned at the edge of the sector circle, pointing toward fix
+            const radius = 110;
+            const angleRad = (yourHdg - 90) * Math.PI / 180; // -90 to align with SVG coords (0° = up)
+            const acX = 150 + radius * Math.cos(angleRad);
+            const acY = 150 + radius * Math.sin(angleRad);
+
+            // Aircraft points toward center (fix) at 150,150
+            const pointAngle = Math.atan2(150 - acY, 150 - acX) * 180 / Math.PI + 90;
+            aircraft.setAttribute('transform', `translate(${acX}, ${acY}) rotate(${pointAngle})`);
+
+            // Highlight active sector based on entry type
+            const sectorDirect = document.getElementById('sector-direct');
+            const sectorTeardrop = document.getElementById('sector-teardrop');
+            const sectorParallel = document.getElementById('sector-parallel');
+
+            // Reset all sectors to dim
+            sectorDirect.setAttribute('fill', 'rgba(0,255,136,0.15)');
+            sectorTeardrop.setAttribute('fill', 'rgba(255,215,0,0.15)');
+            sectorParallel.setAttribute('fill', 'rgba(0,212,255,0.15)');
+
+            // Highlight the active entry sector
+            if (entryType === 'DIRECT') {
+                sectorDirect.setAttribute('fill', 'rgba(0,255,136,0.4)');
+            } else if (entryType === 'TEARDROP') {
+                sectorTeardrop.setAttribute('fill', 'rgba(255,215,0,0.4)');
+            } else if (entryType === 'PARALLEL') {
+                sectorParallel.setAttribute('fill', 'rgba(0,212,255,0.4)');
             }
         }
 
@@ -4162,14 +5617,104 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             }
         }
 
+        let isaTempNegative = false;
+
         function openISAPicker() {
             const currentVal = document.getElementById('isa-oat').value || '15';
-            openPicker('OAT Temperature', '°C', parseInt(currentVal), 3, true, (val) => {
-                document.getElementById('isa-oat').value = val;
-                document.getElementById('isa-oat-btn').textContent = `${val >= 0 ? '+' : ''}${val}`;
+            const absVal = Math.abs(parseInt(currentVal));
+            isaTempNegative = parseInt(currentVal) < 0;
+            openTempPicker('OAT Temperature', absVal.toString(), (val, isNeg) => {
+                const finalVal = isNeg ? -parseInt(val || 0) : parseInt(val || 0);
+                document.getElementById('isa-oat').value = finalVal;
+                document.getElementById('isa-oat-btn').textContent = `${finalVal >= 0 ? '+' : ''}${finalVal}`;
                 document.getElementById('isa-oat-btn').classList.remove('placeholder');
                 calculateISA();
             });
+        }
+
+        function openTempPicker(title, currentValue, callback) {
+            // Create temp picker modal if it doesn't exist
+            let tempModal = document.getElementById('temp-picker-modal');
+            if (!tempModal) {
+                tempModal = document.createElement('div');
+                tempModal.id = 'temp-picker-modal';
+                tempModal.className = 'modal-overlay';
+                tempModal.innerHTML = `
+                    <div class="picker-container">
+                        <div class="picker-display">
+                            <span id="temp-picker-sign" style="font-size:1.8rem;color:#FF8200;cursor:pointer" onclick="toggleTempSign()">+</span>
+                            <span id="temp-picker-value">0</span>
+                            <span class="picker-unit">°C</span>
+                        </div>
+                        <div class="picker-title" id="temp-picker-title">${title}</div>
+                        <div class="picker-grid">
+                            <button class="picker-btn" onclick="tempPickerAppend('1')">1</button>
+                            <button class="picker-btn" onclick="tempPickerAppend('2')">2</button>
+                            <button class="picker-btn" onclick="tempPickerAppend('3')">3</button>
+                            <button class="picker-btn" onclick="tempPickerAppend('4')">4</button>
+                            <button class="picker-btn" onclick="tempPickerAppend('5')">5</button>
+                            <button class="picker-btn" onclick="tempPickerAppend('6')">6</button>
+                            <button class="picker-btn" onclick="tempPickerAppend('7')">7</button>
+                            <button class="picker-btn" onclick="tempPickerAppend('8')">8</button>
+                            <button class="picker-btn" onclick="tempPickerAppend('9')">9</button>
+                            <button class="picker-btn sign-btn" onclick="toggleTempSign()">+/-</button>
+                            <button class="picker-btn" onclick="tempPickerAppend('0')">0</button>
+                            <button class="picker-btn" onclick="tempPickerBackspace()">&#9003;</button>
+                        </div>
+                        <div class="picker-actions">
+                            <button class="picker-cancel" onclick="closeTempPicker()">Cancel</button>
+                            <button class="picker-confirm" onclick="confirmTempPicker()">OK</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(tempModal);
+            }
+
+            window.tempPickerCallback = callback;
+            window.tempPickerValue = currentValue || '';
+            window.tempPickerFirstInput = true;
+            document.getElementById('temp-picker-title').textContent = title;
+            document.getElementById('temp-picker-sign').textContent = isaTempNegative ? '-' : '+';
+            updateTempPickerDisplay();
+            tempModal.classList.add('active');
+        }
+
+        function updateTempPickerDisplay() {
+            document.getElementById('temp-picker-value').textContent = window.tempPickerValue || '0';
+        }
+
+        function toggleTempSign() {
+            isaTempNegative = !isaTempNegative;
+            document.getElementById('temp-picker-sign').textContent = isaTempNegative ? '-' : '+';
+        }
+
+        function tempPickerAppend(digit) {
+            if (window.tempPickerFirstInput && window.tempPickerValue.length > 0) {
+                window.tempPickerValue = '';
+            }
+            window.tempPickerFirstInput = false;
+            if (window.tempPickerValue.length < 3) {
+                window.tempPickerValue += digit;
+                updateTempPickerDisplay();
+            }
+        }
+
+        function tempPickerBackspace() {
+            window.tempPickerFirstInput = false;
+            window.tempPickerValue = window.tempPickerValue.slice(0, -1);
+            updateTempPickerDisplay();
+        }
+
+        function closeTempPicker() {
+            document.getElementById('temp-picker-modal').classList.remove('active');
+            window.tempPickerCallback = null;
+        }
+
+        function confirmTempPicker() {
+            if (window.tempPickerCallback) {
+                window.tempPickerCallback(window.tempPickerValue, isaTempNegative);
+            }
+            closeTempPicker();
         }
 
         function clearISA() {
@@ -4188,7 +5733,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             const inputZone = parseFloat(document.getElementById('tz-input-zone').value);
 
             if (!inputTime || inputTime.length < 3) {
-                ['tz-utc', 'tz-dxb', 'tz-ruh', 'tz-del', 'tz-ika', 'tz-lgw'].forEach(id => {
+                ['tz-utc', 'tz-ruh', 'tz-ika', 'tz-dxb', 'tz-kbl', 'tz-khi', 'tz-del', 'tz-dac', 'tz-bkk'].forEach(id => {
                     document.getElementById(id).textContent = '--:--';
                 });
                 return;
@@ -4206,11 +5751,14 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
             const zones = [
                 { id: 'tz-utc', offset: 0 },
-                { id: 'tz-dxb', offset: 4 },
                 { id: 'tz-ruh', offset: 3 },
-                { id: 'tz-del', offset: 5.5 },
                 { id: 'tz-ika', offset: 3.5 },
-                { id: 'tz-lgw', offset: 0 }
+                { id: 'tz-dxb', offset: 4 },
+                { id: 'tz-kbl', offset: 4.5 },
+                { id: 'tz-khi', offset: 5 },
+                { id: 'tz-del', offset: 5.5 },
+                { id: 'tz-dac', offset: 6 },
+                { id: 'tz-bkk', offset: 7 }
             ];
 
             zones.forEach(zone => {
@@ -4229,7 +5777,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             document.getElementById('tz-input').value = '';
             document.getElementById('tz-input-btn').textContent = '----';
             document.getElementById('tz-input-btn').classList.add('placeholder');
-            ['tz-utc', 'tz-dxb', 'tz-ruh', 'tz-del', 'tz-ika', 'tz-lgw'].forEach(id => {
+            ['tz-utc', 'tz-ruh', 'tz-ika', 'tz-dxb', 'tz-kbl', 'tz-khi', 'tz-del', 'tz-dac', 'tz-bkk'].forEach(id => {
                 document.getElementById(id).textContent = '--:--';
             });
         }
