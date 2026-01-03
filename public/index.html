@@ -1563,7 +1563,8 @@
                         <span>Sector 1</span>
                         <span id="sector-1-turnaround" class="turnaround-badge" style="display: none;">T/A: --:--</span>
                     </div>
-                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr repeat(4, 1fr); gap: 10px; margin-bottom: 10px;">
+                    <!-- Flight Info Row -->
+                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr 1fr 1fr; gap: 10px; margin-bottom: 10px;">
                         <div class="fdp-field">
                             <label class="fdp-label">Flight #</label>
                             <button class="input-btn" id="s1-flt-btn" onclick="openFlightPicker('s1-flt')" style="max-width: 100%;">FZ___</button>
@@ -1580,16 +1581,6 @@
                             <input type="hidden" id="s1-arr" value="">
                         </div>
                         <div class="fdp-field">
-                            <label class="fdp-label">STD</label>
-                            <button class="input-btn" id="s1-std-btn" onclick="openTimePicker('s1-std')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s1-std" value="">
-                        </div>
-                        <div class="fdp-field">
-                            <label class="fdp-label">STA</label>
-                            <button class="input-btn" id="s1-sta-btn" onclick="openTimePicker('s1-sta')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s1-sta" value="">
-                        </div>
-                        <div class="fdp-field">
                             <label class="fdp-label">PAX</label>
                             <button class="input-btn" id="s1-pax-btn" onclick="openWeightPicker('s1-pax', 'PAX')" style="max-width: 100%">---</button>
                             <input type="hidden" id="s1-pax" value="">
@@ -1600,28 +1591,47 @@
                             <input type="hidden" id="s1-stand" value="">
                         </div>
                     </div>
-                    <!-- OOOI for Sector 1 -->
-                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(4, 1fr) 2fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
+                    <!-- Times Grid: STD/OUT | OFF | ON | STA/IN | RESULTS -->
+                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
+                        <!-- Departure Times -->
                         <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">OUT</label>
-                            <button class="input-btn" id="s1-out-btn" onclick="openTimePicker('s1-out')" style="max-width: 100%">----</button>
+                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STD</label>
+                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">OUT</label>
+                            </div>
+                            <div style="display: flex; gap: 4px;">
+                                <button class="input-btn" id="s1-std-btn" onclick="openTimePicker('s1-std')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                                <button class="input-btn" id="s1-out-btn" onclick="openTimePicker('s1-out')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            </div>
+                            <input type="hidden" id="s1-std" value="">
                             <input type="hidden" id="s1-out" value="">
                         </div>
+                        <!-- OFF Time -->
                         <div class="fdp-field">
                             <label class="fdp-label" style="color: #00d4ff;">OFF</label>
                             <button class="input-btn" id="s1-off-btn" onclick="openTimePicker('s1-off')" style="max-width: 100%">----</button>
                             <input type="hidden" id="s1-off" value="">
                         </div>
+                        <!-- ON Time -->
                         <div class="fdp-field">
                             <label class="fdp-label" style="color: #00d4ff;">ON</label>
                             <button class="input-btn" id="s1-on-btn" onclick="openTimePicker('s1-on')" style="max-width: 100%">----</button>
                             <input type="hidden" id="s1-on" value="">
                         </div>
+                        <!-- Arrival Times -->
                         <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">IN</label>
-                            <button class="input-btn" id="s1-in-btn" onclick="openTimePicker('s1-in')" style="max-width: 100%">----</button>
+                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STA</label>
+                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">IN</label>
+                            </div>
+                            <div style="display: flex; gap: 4px;">
+                                <button class="input-btn" id="s1-sta-btn" onclick="openTimePicker('s1-sta')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                                <button class="input-btn" id="s1-in-btn" onclick="openTimePicker('s1-in')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            </div>
+                            <input type="hidden" id="s1-sta" value="">
                             <input type="hidden" id="s1-in" value="">
                         </div>
+                        <!-- Results -->
                         <div class="fdp-field" style="display: flex; gap: 15px; align-items: center; justify-content: center;">
                             <div style="text-align: center;">
                                 <div class="fdp-label">BLOCK</div>
@@ -1641,7 +1651,8 @@
                         <span>Sector 2</span>
                         <span id="sector-2-turnaround" class="turnaround-badge">T/A: --:--</span>
                     </div>
-                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr repeat(4, 1fr); gap: 10px; margin-bottom: 10px;">
+                    <!-- Flight Info Row -->
+                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr 1fr 1fr; gap: 10px; margin-bottom: 10px;">
                         <div class="fdp-field">
                             <label class="fdp-label">Flight #</label>
                             <button class="input-btn" id="s2-flt-btn" onclick="openFlightPicker('s2-flt')" style="max-width: 100%;">FZ___</button>
@@ -1658,16 +1669,6 @@
                             <input type="hidden" id="s2-arr" value="">
                         </div>
                         <div class="fdp-field">
-                            <label class="fdp-label">STD</label>
-                            <button class="input-btn" id="s2-std-btn" onclick="openTimePicker('s2-std')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s2-std" value="">
-                        </div>
-                        <div class="fdp-field">
-                            <label class="fdp-label">STA</label>
-                            <button class="input-btn" id="s2-sta-btn" onclick="openTimePicker('s2-sta')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s2-sta" value="">
-                        </div>
-                        <div class="fdp-field">
                             <label class="fdp-label">PAX</label>
                             <button class="input-btn" id="s2-pax-btn" onclick="openWeightPicker('s2-pax', 'PAX')" style="max-width: 100%">---</button>
                             <input type="hidden" id="s2-pax" value="">
@@ -1678,11 +1679,18 @@
                             <input type="hidden" id="s2-stand" value="">
                         </div>
                     </div>
-                    <!-- OOOI for Sector 2 -->
-                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(4, 1fr) 2fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
+                    <!-- Times Grid -->
+                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
                         <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">OUT</label>
-                            <button class="input-btn" id="s2-out-btn" onclick="openTimePicker('s2-out')" style="max-width: 100%">----</button>
+                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STD</label>
+                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">OUT</label>
+                            </div>
+                            <div style="display: flex; gap: 4px;">
+                                <button class="input-btn" id="s2-std-btn" onclick="openTimePicker('s2-std')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                                <button class="input-btn" id="s2-out-btn" onclick="openTimePicker('s2-out')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            </div>
+                            <input type="hidden" id="s2-std" value="">
                             <input type="hidden" id="s2-out" value="">
                         </div>
                         <div class="fdp-field">
@@ -1696,8 +1704,15 @@
                             <input type="hidden" id="s2-on" value="">
                         </div>
                         <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">IN</label>
-                            <button class="input-btn" id="s2-in-btn" onclick="openTimePicker('s2-in')" style="max-width: 100%">----</button>
+                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STA</label>
+                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">IN</label>
+                            </div>
+                            <div style="display: flex; gap: 4px;">
+                                <button class="input-btn" id="s2-sta-btn" onclick="openTimePicker('s2-sta')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                                <button class="input-btn" id="s2-in-btn" onclick="openTimePicker('s2-in')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            </div>
+                            <input type="hidden" id="s2-sta" value="">
                             <input type="hidden" id="s2-in" value="">
                         </div>
                         <div class="fdp-field" style="display: flex; gap: 15px; align-items: center; justify-content: center;">
@@ -1719,7 +1734,8 @@
                         <span>Sector 3</span>
                         <span id="sector-3-turnaround" class="turnaround-badge">T/A: --:--</span>
                     </div>
-                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr repeat(4, 1fr); gap: 10px; margin-bottom: 10px;">
+                    <!-- Flight Info Row -->
+                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr 1fr 1fr; gap: 10px; margin-bottom: 10px;">
                         <div class="fdp-field">
                             <label class="fdp-label">Flight #</label>
                             <button class="input-btn" id="s3-flt-btn" onclick="openFlightPicker('s3-flt')" style="max-width: 100%;">FZ___</button>
@@ -1736,16 +1752,6 @@
                             <input type="hidden" id="s3-arr" value="">
                         </div>
                         <div class="fdp-field">
-                            <label class="fdp-label">STD</label>
-                            <button class="input-btn" id="s3-std-btn" onclick="openTimePicker('s3-std')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s3-std" value="">
-                        </div>
-                        <div class="fdp-field">
-                            <label class="fdp-label">STA</label>
-                            <button class="input-btn" id="s3-sta-btn" onclick="openTimePicker('s3-sta')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s3-sta" value="">
-                        </div>
-                        <div class="fdp-field">
                             <label class="fdp-label">PAX</label>
                             <button class="input-btn" id="s3-pax-btn" onclick="openWeightPicker('s3-pax', 'PAX')" style="max-width: 100%">---</button>
                             <input type="hidden" id="s3-pax" value="">
@@ -1756,11 +1762,18 @@
                             <input type="hidden" id="s3-stand" value="">
                         </div>
                     </div>
-                    <!-- OOOI for Sector 3 -->
-                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(4, 1fr) 2fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
+                    <!-- Times Grid -->
+                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
                         <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">OUT</label>
-                            <button class="input-btn" id="s3-out-btn" onclick="openTimePicker('s3-out')" style="max-width: 100%">----</button>
+                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STD</label>
+                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">OUT</label>
+                            </div>
+                            <div style="display: flex; gap: 4px;">
+                                <button class="input-btn" id="s3-std-btn" onclick="openTimePicker('s3-std')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                                <button class="input-btn" id="s3-out-btn" onclick="openTimePicker('s3-out')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            </div>
+                            <input type="hidden" id="s3-std" value="">
                             <input type="hidden" id="s3-out" value="">
                         </div>
                         <div class="fdp-field">
@@ -1774,8 +1787,15 @@
                             <input type="hidden" id="s3-on" value="">
                         </div>
                         <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">IN</label>
-                            <button class="input-btn" id="s3-in-btn" onclick="openTimePicker('s3-in')" style="max-width: 100%">----</button>
+                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STA</label>
+                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">IN</label>
+                            </div>
+                            <div style="display: flex; gap: 4px;">
+                                <button class="input-btn" id="s3-sta-btn" onclick="openTimePicker('s3-sta')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                                <button class="input-btn" id="s3-in-btn" onclick="openTimePicker('s3-in')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            </div>
+                            <input type="hidden" id="s3-sta" value="">
                             <input type="hidden" id="s3-in" value="">
                         </div>
                         <div class="fdp-field" style="display: flex; gap: 15px; align-items: center; justify-content: center;">
@@ -1797,7 +1817,8 @@
                         <span>Sector 4</span>
                         <span id="sector-4-turnaround" class="turnaround-badge">T/A: --:--</span>
                     </div>
-                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr repeat(4, 1fr); gap: 10px; margin-bottom: 10px;">
+                    <!-- Flight Info Row -->
+                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr 1fr 1fr; gap: 10px; margin-bottom: 10px;">
                         <div class="fdp-field">
                             <label class="fdp-label">Flight #</label>
                             <button class="input-btn" id="s4-flt-btn" onclick="openFlightPicker('s4-flt')" style="max-width: 100%;">FZ___</button>
@@ -1814,16 +1835,6 @@
                             <input type="hidden" id="s4-arr" value="">
                         </div>
                         <div class="fdp-field">
-                            <label class="fdp-label">STD</label>
-                            <button class="input-btn" id="s4-std-btn" onclick="openTimePicker('s4-std')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s4-std" value="">
-                        </div>
-                        <div class="fdp-field">
-                            <label class="fdp-label">STA</label>
-                            <button class="input-btn" id="s4-sta-btn" onclick="openTimePicker('s4-sta')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s4-sta" value="">
-                        </div>
-                        <div class="fdp-field">
                             <label class="fdp-label">PAX</label>
                             <button class="input-btn" id="s4-pax-btn" onclick="openWeightPicker('s4-pax', 'PAX')" style="max-width: 100%">---</button>
                             <input type="hidden" id="s4-pax" value="">
@@ -1834,11 +1845,18 @@
                             <input type="hidden" id="s4-stand" value="">
                         </div>
                     </div>
-                    <!-- OOOI for Sector 4 -->
-                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(4, 1fr) 2fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
+                    <!-- Times Grid -->
+                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
                         <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">OUT</label>
-                            <button class="input-btn" id="s4-out-btn" onclick="openTimePicker('s4-out')" style="max-width: 100%">----</button>
+                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STD</label>
+                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">OUT</label>
+                            </div>
+                            <div style="display: flex; gap: 4px;">
+                                <button class="input-btn" id="s4-std-btn" onclick="openTimePicker('s4-std')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                                <button class="input-btn" id="s4-out-btn" onclick="openTimePicker('s4-out')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            </div>
+                            <input type="hidden" id="s4-std" value="">
                             <input type="hidden" id="s4-out" value="">
                         </div>
                         <div class="fdp-field">
@@ -1852,8 +1870,15 @@
                             <input type="hidden" id="s4-on" value="">
                         </div>
                         <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">IN</label>
-                            <button class="input-btn" id="s4-in-btn" onclick="openTimePicker('s4-in')" style="max-width: 100%">----</button>
+                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STA</label>
+                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">IN</label>
+                            </div>
+                            <div style="display: flex; gap: 4px;">
+                                <button class="input-btn" id="s4-sta-btn" onclick="openTimePicker('s4-sta')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                                <button class="input-btn" id="s4-in-btn" onclick="openTimePicker('s4-in')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            </div>
+                            <input type="hidden" id="s4-sta" value="">
                             <input type="hidden" id="s4-in" value="">
                         </div>
                         <div class="fdp-field" style="display: flex; gap: 15px; align-items: center; justify-content: center;">
