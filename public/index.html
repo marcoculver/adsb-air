@@ -1535,15 +1535,10 @@
                     <p style="color: #888; font-size: 0.85rem;">Enter your flight roster below. Data will auto-populate to FDP, OOOI, and other tabs.</p>
                 </div>
 
-                <!-- Report Time -->
+                <!-- Duty Information -->
                 <div class="fdp-section">
                     <div class="section-title">Duty Information</div>
-                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
-                        <div class="fdp-field">
-                            <label class="fdp-label">Report Time (Local)</label>
-                            <button class="input-btn" id="sched-report-btn" onclick="openTimePicker('sched-report')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="sched-report" value="">
-                        </div>
+                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
                         <div class="fdp-field">
                             <label class="fdp-label">Aircraft</label>
                             <button class="input-btn" id="sched-aircraft-btn" onclick="openAircraftPicker()" style="max-width: 100%;">B738</button>
@@ -4965,13 +4960,20 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         function syncFromSchedule() {
-            // Get schedule data
-            const reportTime = document.getElementById('sched-report').value;
-
-            // Sync report time
-            if (reportTime) {
-                document.getElementById('fdp-report').value = reportTime;
-                document.getElementById('fdp-report-btn').textContent = reportTime;
+            // Auto-calculate report time: 1 hour before first sector STD
+            const firstStd = document.getElementById('s1-std').value;
+            if (firstStd) {
+                const stdTime = parseTime(firstStd);
+                if (stdTime) {
+                    // Subtract 60 minutes for report time
+                    let reportMins = (stdTime.hours * 60 + stdTime.minutes) - 60;
+                    if (reportMins < 0) reportMins += 1440; // Handle day wrap
+                    const reportHours = Math.floor(reportMins / 60);
+                    const reportMinutes = reportMins % 60;
+                    const reportTime = String(reportHours).padStart(2, '0') + String(reportMinutes).padStart(2, '0');
+                    document.getElementById('fdp-report').value = reportTime;
+                    document.getElementById('fdp-report-btn').textContent = reportTime;
+                }
             }
 
             // Sync sector count
@@ -5059,8 +5061,6 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     document.getElementById(`s${s}-block`).textContent = '--:--';
                     document.getElementById(`s${s}-flight`).textContent = '--:--';
                 }
-                document.getElementById('sched-report').value = '';
-                document.getElementById('sched-report-btn').textContent = '----';
                 document.getElementById('sched-tail').value = '';
                 document.getElementById('sched-tail-btn').textContent = 'A6-___';
                 currentSectorCount = 1;
@@ -5085,7 +5085,6 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         function saveSchedule() {
             const schedule = {
                 sectorCount: currentSectorCount,
-                report: document.getElementById('sched-report').value,
                 aircraft: document.getElementById('sched-aircraft').value,
                 tail: document.getElementById('sched-tail').value,
                 sectors: []
@@ -5114,10 +5113,6 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 if (saved) {
                     const schedule = JSON.parse(saved);
                     currentSectorCount = schedule.sectorCount || 1;
-                    if (schedule.report) {
-                        document.getElementById('sched-report').value = schedule.report;
-                        document.getElementById('sched-report-btn').textContent = schedule.report;
-                    }
                     if (schedule.aircraft) {
                         document.getElementById('sched-aircraft').value = schedule.aircraft;
                         document.getElementById('sched-aircraft-btn').textContent = schedule.aircraft;
