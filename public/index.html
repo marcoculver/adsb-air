@@ -1546,15 +1546,12 @@
                         </div>
                         <div class="fdp-field">
                             <label class="fdp-label">Aircraft</label>
-                            <select class="fdp-select" id="sched-aircraft" onchange="onScheduleChange()" style="max-width: 100%">
-                                <option value="B738">B738</option>
-                                <option value="B38M">B38M</option>
-                                <option value="B39M">B39M</option>
-                            </select>
+                            <button class="input-btn" id="sched-aircraft-btn" onclick="openAircraftPicker()" style="max-width: 100%;">B738</button>
+                            <input type="hidden" id="sched-aircraft" value="B738">
                         </div>
                         <div class="fdp-field">
                             <label class="fdp-label">Tail Number</label>
-                            <button class="input-btn" id="sched-tail-btn" onclick="openTextPicker('sched-tail', 'Tail Number')" style="max-width: 100%; font-size: 0.9rem;">A6-___</button>
+                            <button class="input-btn" id="sched-tail-btn" onclick="openTailPicker()" style="max-width: 100%;">A6-___</button>
                             <input type="hidden" id="sched-tail" value="">
                         </div>
                     </div>
@@ -1569,7 +1566,7 @@
                     <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr repeat(4, 1fr); gap: 10px; margin-bottom: 10px;">
                         <div class="fdp-field">
                             <label class="fdp-label">Flight #</label>
-                            <button class="input-btn" id="s1-flt-btn" onclick="openTextPicker('s1-flt', 'Flight Number')" style="max-width: 100%; font-size: 0.85rem;">FZ___</button>
+                            <button class="input-btn" id="s1-flt-btn" onclick="openFlightPicker('s1-flt')" style="max-width: 100%;">FZ___</button>
                             <input type="hidden" id="s1-flt" value="">
                         </div>
                         <div class="fdp-field">
@@ -1647,7 +1644,7 @@
                     <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr repeat(4, 1fr); gap: 10px; margin-bottom: 10px;">
                         <div class="fdp-field">
                             <label class="fdp-label">Flight #</label>
-                            <button class="input-btn" id="s2-flt-btn" onclick="openTextPicker('s2-flt', 'Flight Number')" style="max-width: 100%; font-size: 0.85rem;">FZ___</button>
+                            <button class="input-btn" id="s2-flt-btn" onclick="openFlightPicker('s2-flt')" style="max-width: 100%;">FZ___</button>
                             <input type="hidden" id="s2-flt" value="">
                         </div>
                         <div class="fdp-field">
@@ -1725,7 +1722,7 @@
                     <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr repeat(4, 1fr); gap: 10px; margin-bottom: 10px;">
                         <div class="fdp-field">
                             <label class="fdp-label">Flight #</label>
-                            <button class="input-btn" id="s3-flt-btn" onclick="openTextPicker('s3-flt', 'Flight Number')" style="max-width: 100%; font-size: 0.85rem;">FZ___</button>
+                            <button class="input-btn" id="s3-flt-btn" onclick="openFlightPicker('s3-flt')" style="max-width: 100%;">FZ___</button>
                             <input type="hidden" id="s3-flt" value="">
                         </div>
                         <div class="fdp-field">
@@ -1803,7 +1800,7 @@
                     <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 2fr repeat(4, 1fr); gap: 10px; margin-bottom: 10px;">
                         <div class="fdp-field">
                             <label class="fdp-label">Flight #</label>
-                            <button class="input-btn" id="s4-flt-btn" onclick="openTextPicker('s4-flt', 'Flight Number')" style="max-width: 100%; font-size: 0.85rem;">FZ___</button>
+                            <button class="input-btn" id="s4-flt-btn" onclick="openFlightPicker('s4-flt')" style="max-width: 100%;">FZ___</button>
                             <input type="hidden" id="s4-flt" value="">
                         </div>
                         <div class="fdp-field">
@@ -3017,6 +3014,108 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             <div class="picker-actions">
                 <button class="picker-cancel" onclick="closePicker()">Cancel</button>
                 <button class="picker-confirm" onclick="confirmPicker()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aircraft Picker Modal -->
+    <div class="modal-overlay" id="aircraft-picker-modal">
+        <div class="number-picker" style="max-width: 280px;">
+            <div class="picker-title">Select Aircraft</div>
+            <div style="display: flex; flex-direction: column; gap: 10px; padding: 15px;">
+                <button class="picker-btn" id="ac-pick-b738" onclick="selectAircraftPick('B738')" style="padding: 15px; font-size: 1.2rem;">B738</button>
+                <button class="picker-btn" id="ac-pick-b38m" onclick="selectAircraftPick('B38M')" style="padding: 15px; font-size: 1.2rem;">B38M</button>
+                <button class="picker-btn" id="ac-pick-b39m" onclick="selectAircraftPick('B39M')" style="padding: 15px; font-size: 1.2rem;">B39M</button>
+            </div>
+            <div class="picker-actions">
+                <button class="picker-cancel" onclick="closeAircraftPicker()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flight Number Picker Modal -->
+    <div class="modal-overlay" id="flight-picker-modal">
+        <div class="number-picker" style="max-width: 320px;">
+            <div class="picker-title">Flight Number</div>
+            <div class="picker-display">
+                <span style="color: #888; font-size: 1.4rem;">FZ</span>
+                <span class="picker-value" id="flight-picker-value" style="font-size: 1.8rem;">___</span>
+                <span id="flight-picker-suffix" style="font-size: 1.4rem; color: #FF8200; margin-left: 2px;"></span>
+            </div>
+            <div class="picker-buttons">
+                <button class="picker-btn" onclick="flightPickerAppend('1')">1</button>
+                <button class="picker-btn" onclick="flightPickerAppend('2')">2</button>
+                <button class="picker-btn" onclick="flightPickerAppend('3')">3</button>
+                <button class="picker-btn" onclick="flightPickerAppend('4')">4</button>
+                <button class="picker-btn" onclick="flightPickerAppend('5')">5</button>
+                <button class="picker-btn" onclick="flightPickerAppend('6')">6</button>
+                <button class="picker-btn" onclick="flightPickerAppend('7')">7</button>
+                <button class="picker-btn" onclick="flightPickerAppend('8')">8</button>
+                <button class="picker-btn" onclick="flightPickerAppend('9')">9</button>
+                <button class="picker-btn clear" onclick="flightPickerClear()">C</button>
+                <button class="picker-btn" onclick="flightPickerAppend('0')">0</button>
+                <button class="picker-btn" onclick="flightPickerBackspace()">&larr;</button>
+            </div>
+            <div style="display: flex; gap: 10px; padding: 10px 15px;">
+                <button class="picker-btn" id="flight-suffix-none" onclick="setFlightSuffix('')" style="flex: 1; padding: 12px; background: rgba(255,130,0,0.3);">None</button>
+                <button class="picker-btn" id="flight-suffix-a" onclick="setFlightSuffix('A')" style="flex: 1; padding: 12px;">A</button>
+                <button class="picker-btn" id="flight-suffix-b" onclick="setFlightSuffix('B')" style="flex: 1; padding: 12px;">B</button>
+            </div>
+            <div class="picker-actions">
+                <button class="picker-cancel" onclick="closeFlightPicker()">Cancel</button>
+                <button class="picker-confirm" onclick="confirmFlightPicker()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tail Number Picker Modal -->
+    <div class="modal-overlay" id="tail-picker-modal">
+        <div class="number-picker" style="max-width: 320px;">
+            <div class="picker-title">Tail Number</div>
+            <div class="picker-display">
+                <span style="color: #888; font-size: 1.4rem;">A6-</span>
+                <span class="picker-value" id="tail-picker-value" style="font-size: 1.8rem;">___</span>
+            </div>
+            <div class="picker-buttons" style="grid-template-columns: repeat(5, 1fr);">
+                <button class="picker-btn" onclick="tailPickerAppend('F')">F</button>
+                <button class="picker-btn" onclick="tailPickerAppend('E')">E</button>
+                <button class="picker-btn" onclick="tailPickerAppend('M')">M</button>
+                <button class="picker-btn" onclick="tailPickerAppend('N')">N</button>
+                <button class="picker-btn" onclick="tailPickerAppend('1')">1</button>
+                <button class="picker-btn" onclick="tailPickerAppend('A')">A</button>
+                <button class="picker-btn" onclick="tailPickerAppend('B')">B</button>
+                <button class="picker-btn" onclick="tailPickerAppend('C')">C</button>
+                <button class="picker-btn" onclick="tailPickerAppend('D')">D</button>
+                <button class="picker-btn" onclick="tailPickerAppend('2')">2</button>
+                <button class="picker-btn" onclick="tailPickerAppend('G')">G</button>
+                <button class="picker-btn" onclick="tailPickerAppend('H')">H</button>
+                <button class="picker-btn" onclick="tailPickerAppend('I')">I</button>
+                <button class="picker-btn" onclick="tailPickerAppend('J')">J</button>
+                <button class="picker-btn" onclick="tailPickerAppend('3')">3</button>
+                <button class="picker-btn" onclick="tailPickerAppend('K')">K</button>
+                <button class="picker-btn" onclick="tailPickerAppend('L')">L</button>
+                <button class="picker-btn" onclick="tailPickerAppend('O')">O</button>
+                <button class="picker-btn" onclick="tailPickerAppend('P')">P</button>
+                <button class="picker-btn" onclick="tailPickerAppend('4')">4</button>
+                <button class="picker-btn" onclick="tailPickerAppend('Q')">Q</button>
+                <button class="picker-btn" onclick="tailPickerAppend('R')">R</button>
+                <button class="picker-btn" onclick="tailPickerAppend('S')">S</button>
+                <button class="picker-btn" onclick="tailPickerAppend('T')">T</button>
+                <button class="picker-btn" onclick="tailPickerAppend('5')">5</button>
+                <button class="picker-btn" onclick="tailPickerAppend('U')">U</button>
+                <button class="picker-btn" onclick="tailPickerAppend('V')">V</button>
+                <button class="picker-btn" onclick="tailPickerAppend('W')">W</button>
+                <button class="picker-btn" onclick="tailPickerAppend('X')">X</button>
+                <button class="picker-btn" onclick="tailPickerAppend('6')">6</button>
+                <button class="picker-btn" onclick="tailPickerAppend('Y')">Y</button>
+                <button class="picker-btn" onclick="tailPickerAppend('Z')">Z</button>
+                <button class="picker-btn clear" onclick="tailPickerClear()">C</button>
+                <button class="picker-btn" onclick="tailPickerBackspace()">&larr;</button>
+                <button class="picker-btn" onclick="tailPickerAppend('7')">7</button>
+            </div>
+            <div class="picker-actions">
+                <button class="picker-cancel" onclick="closeTailPicker()">Cancel</button>
+                <button class="picker-confirm" onclick="confirmTailPicker()">OK</button>
             </div>
         </div>
     </div>
@@ -4996,6 +5095,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     }
                     if (schedule.aircraft) {
                         document.getElementById('sched-aircraft').value = schedule.aircraft;
+                        document.getElementById('sched-aircraft-btn').textContent = schedule.aircraft;
                     }
                     if (schedule.tail) {
                         document.getElementById('sched-tail').value = schedule.tail;
@@ -5033,6 +5133,149 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 document.getElementById(fieldId + '-btn').textContent = newValue || (fieldId.includes('flt') ? 'FZ___' : (fieldId.includes('tail') ? 'A6-___' : '---'));
                 saveSchedule();
             }
+        }
+
+        // ============ AIRCRAFT PICKER ============
+        function openAircraftPicker() {
+            const current = document.getElementById('sched-aircraft').value || 'B738';
+            // Highlight current selection
+            document.querySelectorAll('#aircraft-picker-modal .picker-btn').forEach(btn => {
+                btn.style.background = 'rgba(0, 0, 0, 0.3)';
+            });
+            const currentBtn = document.getElementById('ac-pick-' + current.toLowerCase());
+            if (currentBtn) {
+                currentBtn.style.background = 'rgba(255, 130, 0, 0.4)';
+            }
+            document.getElementById('aircraft-picker-modal').classList.add('active');
+        }
+
+        function closeAircraftPicker() {
+            document.getElementById('aircraft-picker-modal').classList.remove('active');
+        }
+
+        function selectAircraftPick(type) {
+            document.getElementById('sched-aircraft').value = type;
+            document.getElementById('sched-aircraft-btn').textContent = type;
+            closeAircraftPicker();
+            onScheduleChange();
+            saveSchedule();
+        }
+
+        // ============ FLIGHT NUMBER PICKER ============
+        let flightPickerFieldId = '';
+        let flightPickerValue = '';
+        let flightPickerSuffix = '';
+
+        function openFlightPicker(fieldId) {
+            flightPickerFieldId = fieldId;
+            const currentValue = document.getElementById(fieldId).value || '';
+            // Parse existing value (format: FZ123 or FZ123A or FZ123B)
+            const match = currentValue.match(/^FZ(\d+)([AB])?$/i);
+            if (match) {
+                flightPickerValue = match[1];
+                flightPickerSuffix = (match[2] || '').toUpperCase();
+            } else {
+                flightPickerValue = '';
+                flightPickerSuffix = '';
+            }
+            updateFlightPickerDisplay();
+            updateFlightSuffixButtons();
+            document.getElementById('flight-picker-modal').classList.add('active');
+        }
+
+        function updateFlightPickerDisplay() {
+            document.getElementById('flight-picker-value').textContent = flightPickerValue || '___';
+            document.getElementById('flight-picker-suffix').textContent = flightPickerSuffix;
+        }
+
+        function updateFlightSuffixButtons() {
+            document.getElementById('flight-suffix-none').style.background = flightPickerSuffix === '' ? 'rgba(255,130,0,0.4)' : 'rgba(0,0,0,0.3)';
+            document.getElementById('flight-suffix-a').style.background = flightPickerSuffix === 'A' ? 'rgba(255,130,0,0.4)' : 'rgba(0,0,0,0.3)';
+            document.getElementById('flight-suffix-b').style.background = flightPickerSuffix === 'B' ? 'rgba(255,130,0,0.4)' : 'rgba(0,0,0,0.3)';
+        }
+
+        function flightPickerAppend(digit) {
+            if (flightPickerValue.length < 4) {
+                flightPickerValue += digit;
+                updateFlightPickerDisplay();
+            }
+        }
+
+        function flightPickerBackspace() {
+            flightPickerValue = flightPickerValue.slice(0, -1);
+            updateFlightPickerDisplay();
+        }
+
+        function flightPickerClear() {
+            flightPickerValue = '';
+            flightPickerSuffix = '';
+            updateFlightPickerDisplay();
+            updateFlightSuffixButtons();
+        }
+
+        function setFlightSuffix(suffix) {
+            flightPickerSuffix = suffix;
+            updateFlightPickerDisplay();
+            updateFlightSuffixButtons();
+        }
+
+        function closeFlightPicker() {
+            document.getElementById('flight-picker-modal').classList.remove('active');
+            flightPickerFieldId = '';
+        }
+
+        function confirmFlightPicker() {
+            if (flightPickerFieldId && flightPickerValue) {
+                const fullValue = 'FZ' + flightPickerValue + flightPickerSuffix;
+                document.getElementById(flightPickerFieldId).value = fullValue;
+                document.getElementById(flightPickerFieldId + '-btn').textContent = fullValue;
+                saveSchedule();
+            }
+            closeFlightPicker();
+        }
+
+        // ============ TAIL NUMBER PICKER ============
+        let tailPickerValue = '';
+
+        function openTailPicker() {
+            const currentValue = document.getElementById('sched-tail').value || '';
+            // Remove A6- prefix if present
+            tailPickerValue = currentValue.replace(/^A6-/i, '');
+            updateTailPickerDisplay();
+            document.getElementById('tail-picker-modal').classList.add('active');
+        }
+
+        function updateTailPickerDisplay() {
+            document.getElementById('tail-picker-value').textContent = tailPickerValue || '___';
+        }
+
+        function tailPickerAppend(char) {
+            if (tailPickerValue.length < 3) {
+                tailPickerValue += char;
+                updateTailPickerDisplay();
+            }
+        }
+
+        function tailPickerBackspace() {
+            tailPickerValue = tailPickerValue.slice(0, -1);
+            updateTailPickerDisplay();
+        }
+
+        function tailPickerClear() {
+            tailPickerValue = '';
+            updateTailPickerDisplay();
+        }
+
+        function closeTailPicker() {
+            document.getElementById('tail-picker-modal').classList.remove('active');
+        }
+
+        function confirmTailPicker() {
+            const fullValue = tailPickerValue ? 'A6-' + tailPickerValue : '';
+            document.getElementById('sched-tail').value = fullValue;
+            document.getElementById('sched-tail-btn').textContent = fullValue || 'A6-___';
+            closeTailPicker();
+            saveSchedule();
         }
 
         // ============ TIME TAB FUNCTIONS ============
