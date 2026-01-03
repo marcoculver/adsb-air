@@ -2384,29 +2384,25 @@
                 </div>
 
                 <div class="fdp-section">
-                    <div class="section-title">Scheduled Sector Times</div>
+                    <div class="section-title">Sector Times (Scheduled vs Actual)</div>
                     <div class="sector-inputs" id="sector-inputs">
                         <!-- Dynamically filled -->
                     </div>
-
-                    <div class="actual-tracking">
-                        <div class="actual-tracking-title">Actual Times Tracking</div>
-                        <div class="actual-sector-grid" id="actual-sector-inputs">
-                            <!-- Dynamically filled -->
+                    <div class="actual-sector-grid" id="actual-sector-inputs" style="display:none;">
+                        <!-- Hidden - combined into sector-inputs now -->
+                    </div>
+                    <div class="duty-estimate" id="duty-estimate" style="margin-top: 15px;">
+                        <div class="duty-estimate-row">
+                            <span class="duty-estimate-label">Estimated Duty End (Local):</span>
+                            <span class="duty-estimate-value" id="est-duty-end-local" style="color:#00ff88; font-size:1.3rem">--:--</span>
                         </div>
-                        <div class="duty-estimate" id="duty-estimate">
-                            <div class="duty-estimate-row">
-                                <span class="duty-estimate-label">Estimated Duty End (Local):</span>
-                                <span class="duty-estimate-value" id="est-duty-end-local" style="color:#00ff88; font-size:1.3rem">--:--</span>
-                            </div>
-                            <div class="duty-estimate-row">
-                                <span class="duty-estimate-label" style="color:#666">UTC:</span>
-                                <span class="duty-estimate-value" id="est-duty-end" style="color:#888; font-size:0.95rem">--:--</span>
-                            </div>
-                            <div class="duty-estimate-row">
-                                <span class="duty-estimate-label">Status:</span>
-                                <span class="duty-estimate-value green" id="duty-status">---</span>
-                            </div>
+                        <div class="duty-estimate-row">
+                            <span class="duty-estimate-label" style="color:#666">UTC:</span>
+                            <span class="duty-estimate-value" id="est-duty-end" style="color:#888; font-size:0.95rem">--:--</span>
+                        </div>
+                        <div class="duty-estimate-row">
+                            <span class="duty-estimate-label">Status:</span>
+                            <span class="duty-estimate-value green" id="duty-status">---</span>
                         </div>
                     </div>
                 </div>
@@ -4329,59 +4325,58 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         function updateSectorInputs() {
             const sectors = parseInt(document.getElementById('fdp-sectors').value, 10);
             const container = document.getElementById('sector-inputs');
-            const actualContainer = document.getElementById('actual-sector-inputs');
             let html = '';
-            let actualHtml = '';
 
             for (let i = 1; i <= sectors; i++) {
                 html += `
-                    <div class="sector-card">
+                    <div class="sector-card" style="margin-bottom: 10px;">
                         <div class="sector-title">Sector ${i}</div>
-                        <div class="sector-field">
-                            <label>STD (Local)</label>
-                            <button class="input-btn" style="width:100%;max-width:100%"
-                                    id="sector-${i}-std-btn"
-                                    onclick="openTimePicker('sector-${i}-std')">----</button>
-                            <input type="hidden" id="sector-${i}-std" value="">
-                        </div>
-                        <div class="sector-field">
-                            <label>STA (Local)</label>
-                            <button class="input-btn" style="width:100%;max-width:100%"
-                                    id="sector-${i}-sta-btn"
-                                    onclick="openTimePicker('sector-${i}-sta')">----</button>
-                            <input type="hidden" id="sector-${i}-sta" value="">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <!-- Departure: STD vs Actual OFF -->
+                            <div class="sector-field">
+                                <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                                    <label style="flex:1; color: #888; font-size: 0.65rem; text-align: center;">STD</label>
+                                    <label style="flex:1; color: #00d4ff; font-size: 0.65rem; text-align: center;">OFF</label>
+                                </div>
+                                <div style="display: flex; gap: 4px;">
+                                    <button class="input-btn" style="flex:1; font-size: 0.9rem; padding: 8px 4px;"
+                                            id="sector-${i}-std-btn"
+                                            onclick="openTimePicker('sector-${i}-std')">----</button>
+                                    <button class="input-btn" style="flex:1; font-size: 0.9rem; padding: 8px 4px;"
+                                            id="actual-${i}-off-btn"
+                                            onclick="openTimePicker('actual-${i}-off')">----</button>
+                                </div>
+                                <input type="hidden" id="sector-${i}-std" value="">
+                                <input type="hidden" id="actual-${i}-off" value="">
+                            </div>
+                            <!-- Arrival: STA vs Actual ON -->
+                            <div class="sector-field">
+                                <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                                    <label style="flex:1; color: #888; font-size: 0.65rem; text-align: center;">STA</label>
+                                    <label style="flex:1; color: #00d4ff; font-size: 0.65rem; text-align: center;">ON</label>
+                                </div>
+                                <div style="display: flex; gap: 4px;">
+                                    <button class="input-btn" style="flex:1; font-size: 0.9rem; padding: 8px 4px;"
+                                            id="sector-${i}-sta-btn"
+                                            onclick="openTimePicker('sector-${i}-sta')">----</button>
+                                    <button class="input-btn" style="flex:1; font-size: 0.9rem; padding: 8px 4px;"
+                                            id="actual-${i}-on-btn"
+                                            onclick="openTimePicker('actual-${i}-on')">----</button>
+                                </div>
+                                <input type="hidden" id="sector-${i}-sta" value="">
+                                <input type="hidden" id="actual-${i}-on" value="">
+                            </div>
                         </div>
                         ${i < sectors ? `
-                        <div class="turnaround-display">
+                        <div class="turnaround-display" style="margin-top: 8px;">
                             <div class="turnaround-label">Turnaround</div>
                             <div class="turnaround-value" id="turnaround-${i}">--:--</div>
                         </div>
                         ` : ''}
                     </div>
                 `;
-
-                actualHtml += `
-                    <div class="sector-card">
-                        <div class="sector-title">Sector ${i}</div>
-                        <div class="sector-field">
-                            <label>Actual OFF</label>
-                            <button class="input-btn" style="width:100%;max-width:100%"
-                                    id="actual-${i}-off-btn"
-                                    onclick="openTimePicker('actual-${i}-off')">----</button>
-                            <input type="hidden" id="actual-${i}-off" value="">
-                        </div>
-                        <div class="sector-field">
-                            <label>Actual ON</label>
-                            <button class="input-btn" style="width:100%;max-width:100%"
-                                    id="actual-${i}-on-btn"
-                                    onclick="openTimePicker('actual-${i}-on')">----</button>
-                            <input type="hidden" id="actual-${i}-on" value="">
-                        </div>
-                    </div>
-                `;
             }
             container.innerHTML = html;
-            actualContainer.innerHTML = actualHtml;
         }
 
         function calculateSectorTurnarounds() {
