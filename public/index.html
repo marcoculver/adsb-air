@@ -188,6 +188,12 @@
             gap: 10px;
             margin-bottom: 20px;
             justify-content: center;
+            position: sticky;
+            top: 75px;
+            z-index: 99;
+            background: rgba(0, 15, 30, 0.98);
+            padding: 10px 0;
+            backdrop-filter: blur(10px);
         }
 
         .tab-btn {
@@ -3102,10 +3108,21 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 document.getElementById(fieldId).value = val;
                 const btn = document.getElementById(fieldId + '-btn');
                 if (btn) {
-                    btn.textContent = val ? val.padStart(4, '0') : (fieldId === 'utc-manual' ? 'AUTO' : (fieldId.startsWith('layover-') ? '----' : '0000'));
+                    btn.textContent = val ? val.padStart(4, '0') : (fieldId === 'utc-manual' ? 'AUTO' : (fieldId.startsWith('layover-') ? '----' : '----'));
                     btn.classList.toggle('placeholder', !val);
                 }
-                if (fieldId.startsWith('oooi-')) calculateOOOI();
+                // Handle sector OOOI (s1-out, s1-off, s2-on, etc.)
+                const sectorMatch = fieldId.match(/^s(\d)-(out|off|on|in)$/);
+                if (sectorMatch) {
+                    calculateSectorTimes(parseInt(sectorMatch[1]));
+                    // Also recalculate next sector's turnaround if exists
+                    const nextSector = parseInt(sectorMatch[1]) + 1;
+                    if (nextSector <= currentSectorCount) {
+                        calculateSectorTimes(nextSector);
+                    }
+                    saveSchedule();
+                }
+                else if (fieldId.startsWith('oooi-')) calculateOOOI();
                 else if (fieldId === 'eta-time') { etaManualStartTime = null; calculateETA(); }
                 else if (fieldId === 'utc-manual') { etaManualStartTime = val ? Date.now() : null; saveETA(); calculateETA(); }
                 else if (fieldId === 'fdp-report' || fieldId === 'fdp-actual-report') calculateFDP();
@@ -3114,6 +3131,11 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     estimateDutyEnd();
                 }
                 else if (fieldId.startsWith('layover-')) calculateLayover();
+                else if (fieldId.startsWith('s') && fieldId.includes('-std')) {
+                    // STD changed - update schedule
+                    saveSchedule();
+                }
+                else if (fieldId.startsWith('time-tz-')) calculateTimeTabTimezones();
             });
         }
 
@@ -3654,30 +3676,43 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
         // ============ OOOI ============
         function loadOOOI() {
+            // Load OOOI data for all 4 sectors
             const saved = localStorage.getItem('flightOOOI');
             if (saved) {
                 try {
-                    const oooi = JSON.parse(saved);
-                    ['out', 'off', 'on', 'in'].forEach(field => {
-                        const val = oooi[field] || '';
-                        document.getElementById('oooi-' + field).value = val;
-                        const btn = document.getElementById('oooi-' + field + '-btn');
-                        btn.textContent = val ? val.padStart(4, '0') : '0000';
-                        btn.classList.toggle('placeholder', !val);
-                    });
-                    calculateOOOI();
-                } catch (e) {}
+                    const data = JSON.parse(saved);
+                    for (let s = 1; s <= 4; s++) {
+                        const sectorData = data['s' + s] || {};
+                        ['out', 'off', 'on', 'in'].forEach(field => {
+                            const val = sectorData[field] || '';
+                            const el = document.getElementById(`s${s}-${field}`);
+                            if (el) {
+                                el.value = val;
+                                const btn = document.getElementById(`s${s}-${field}-btn`);
+                                if (btn) {
+                                    btn.textContent = val ? val.padStart(4, '0') : '----';
+                                }
+                            }
+                        });
+                        calculateSectorTimes(s);
+                    }
+                } catch (e) {
+                    console.log('Error loading OOOI:', e);
+                }
             }
         }
 
         function saveOOOI() {
-            const oooi = {
-                out: document.getElementById('oooi-out').value,
-                off: document.getElementById('oooi-off').value,
-                on: document.getElementById('oooi-on').value,
-                in: document.getElementById('oooi-in').value
-            };
-            localStorage.setItem('flightOOOI', JSON.stringify(oooi));
+            const data = {};
+            for (let s = 1; s <= 4; s++) {
+                data['s' + s] = {
+                    out: document.getElementById(`s${s}-out`)?.value || '',
+                    off: document.getElementById(`s${s}-off`)?.value || '',
+                    on: document.getElementById(`s${s}-on`)?.value || '',
+                    in: document.getElementById(`s${s}-in`)?.value || ''
+                };
+            }
+            localStorage.setItem('flightOOOI', JSON.stringify(data));
         }
 
         function parseTime(str) {
@@ -3706,15 +3741,37 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
         }
 
-        function calculateOOOI() {
-            const out = parseTime(document.getElementById('oooi-out').value);
-            const off = parseTime(document.getElementById('oooi-off').value);
-            const on = parseTime(document.getElementById('oooi-on').value);
-            const inn = parseTime(document.getElementById('oooi-in').value);
+        function calculateSectorTimes(sectorNum) {
+            const out = parseTime(document.getElementById(`s${sectorNum}-out`)?.value);
+            const off = parseTime(document.getElementById(`s${sectorNum}-off`)?.value);
+            const on = parseTime(document.getElementById(`s${sectorNum}-on`)?.value);
+            const inn = parseTime(document.getElementById(`s${sectorNum}-in`)?.value);
 
-            document.getElementById('block-time').textContent = formatMinutes(timeDiff(out, inn));
-            document.getElementById('flight-time').textContent = formatMinutes(timeDiff(off, on));
+            const blockEl = document.getElementById(`s${sectorNum}-block`);
+            const flightEl = document.getElementById(`s${sectorNum}-flight`);
+
+            if (blockEl) blockEl.textContent = formatMinutes(timeDiff(out, inn));
+            if (flightEl) flightEl.textContent = formatMinutes(timeDiff(off, on));
+
+            // Calculate turnaround from previous sector
+            if (sectorNum > 1) {
+                const prevIn = parseTime(document.getElementById(`s${sectorNum - 1}-in`)?.value);
+                const currOut = out;
+                const taEl = document.getElementById(`sector-${sectorNum}-turnaround`);
+                if (taEl && prevIn && currOut) {
+                    taEl.textContent = 'T/A: ' + formatMinutes(timeDiff(prevIn, currOut));
+                    taEl.style.display = 'inline';
+                }
+            }
+
             saveOOOI();
+        }
+
+        function calculateOOOI() {
+            // Calculate times for all visible sectors
+            for (let s = 1; s <= currentSectorCount; s++) {
+                calculateSectorTimes(s);
+            }
         }
 
         // ============ ETA ============
