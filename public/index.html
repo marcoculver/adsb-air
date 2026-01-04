@@ -4360,15 +4360,15 @@
                     </div>
                 </div>
 
-                <!-- Callsign Lookup -->
+                <!-- Callsign / Route Lookup -->
                 <div class="section" style="max-width: 800px; margin: 20px auto 0;">
-                    <div class="section-title">Callsign Lookup</div>
+                    <div class="section-title">Callsign / Route Lookup</div>
                     <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px; text-align: center;">
-                        Search by callsign suffix (e.g. 2LA, 307, 1A) to find airline and route
+                        Search by callsign (e.g. 2LA, 307) or route (e.g. DXB-TBS, OMDB-UGTB)
                     </p>
                     <div class="fdp-field">
-                        <label class="fdp-label">Callsign</label>
-                        <input type="text" class="fdp-input" id="callsign-input" placeholder="e.g. 2LA, 307, 1A"
+                        <label class="fdp-label">Callsign or Route</label>
+                        <input type="text" class="fdp-input" id="callsign-input" placeholder="e.g. 2LA or DXB-TBS"
                                oninput="lookupCallsign()" style="text-transform: uppercase; font-size: 1.2rem; text-align: center;">
                     </div>
                     <div class="fdp-results" style="margin-top: 20px;">
@@ -8298,13 +8298,24 @@
             return iataParts.join('-');
         }
 
-        // ============ CALLSIGN LOOKUP ============
+        // ============ CALLSIGN / ROUTE LOOKUP ============
+        function iataToIcaoAirport(iata) {
+            if (!airportsDatabase) return iata;
+            // Search for IATA code in airports database
+            for (var icao in airportsDatabase) {
+                if (airportsDatabase[icao].i === iata) {
+                    return icao;
+                }
+            }
+            return iata; // Return as-is if not found (might already be ICAO)
+        }
+
         function lookupCallsign() {
             var input = document.getElementById('callsign-input').value.toUpperCase().trim();
             var resultsEl = document.getElementById('callsign-results');
 
             if (!input) {
-                resultsEl.innerHTML = '<div style="text-align: center; color: #888;">Enter a callsign to search</div>';
+                resultsEl.innerHTML = '<div style="text-align: center; color: #888;">Enter a callsign or route to search</div>';
                 return;
             }
 
@@ -8314,29 +8325,72 @@
             }
 
             var matches = [];
+            var isRouteSearch = input.indexOf('-') !== -1;
 
-            // Search through all airlines and flight numbers
-            Object.keys(routeDatabase).forEach(function(airlineIcao) {
-                var flights = routeDatabase[airlineIcao];
-                Object.keys(flights).forEach(function(flightNum) {
-                    if (flightNum.toUpperCase() === input || flightNum.toUpperCase().indexOf(input) === 0) {
-                        var routeIcao = flights[flightNum];
-                        var routeIata = icaoToIataRoute(routeIcao);
-                        matches.push({
-                            airline: airlineIcao,
-                            flight: flightNum,
-                            routeIcao: routeIcao,
-                            routeIata: routeIata,
-                            exact: flightNum.toUpperCase() === input
-                        });
+            if (isRouteSearch) {
+                // Route search - find all flights for this route
+                var parts = input.split('-');
+                var searchRouteIcao = '';
+
+                // Convert IATA to ICAO if needed
+                if (parts.length >= 2) {
+                    var dep = parts[0].length === 3 ? iataToIcaoAirport(parts[0]) : parts[0];
+                    var arr = parts[1].length === 3 ? iataToIcaoAirport(parts[1]) : parts[1];
+                    searchRouteIcao = dep + '-' + arr;
+                    if (parts.length > 2) {
+                        // Handle multi-leg routes
+                        for (var i = 2; i < parts.length; i++) {
+                            var leg = parts[i].length === 3 ? iataToIcaoAirport(parts[i]) : parts[i];
+                            searchRouteIcao += '-' + leg;
+                        }
                     }
-                });
-            });
+                }
 
-            // Sort: exact matches first, then alphabetically
+                Object.keys(routeDatabase).forEach(function(airlineIcao) {
+                    var flights = routeDatabase[airlineIcao];
+                    Object.keys(flights).forEach(function(flightNum) {
+                        var routeIcao = flights[flightNum];
+                        // Check if route matches (exact or contains)
+                        if (routeIcao === searchRouteIcao || routeIcao.indexOf(searchRouteIcao) !== -1) {
+                            var routeIata = icaoToIataRoute(routeIcao);
+                            matches.push({
+                                airline: airlineIcao,
+                                flight: flightNum,
+                                routeIcao: routeIcao,
+                                routeIata: routeIata,
+                                exact: routeIcao === searchRouteIcao
+                            });
+                        }
+                    });
+                });
+            } else {
+                // Callsign search
+                Object.keys(routeDatabase).forEach(function(airlineIcao) {
+                    var flights = routeDatabase[airlineIcao];
+                    Object.keys(flights).forEach(function(flightNum) {
+                        if (flightNum.toUpperCase() === input || flightNum.toUpperCase().indexOf(input) === 0) {
+                            var routeIcao = flights[flightNum];
+                            var routeIata = icaoToIataRoute(routeIcao);
+                            matches.push({
+                                airline: airlineIcao,
+                                flight: flightNum,
+                                routeIcao: routeIcao,
+                                routeIata: routeIata,
+                                exact: flightNum.toUpperCase() === input
+                            });
+                        }
+                    });
+                });
+            }
+
+            // Sort: exact matches first, then by flight number
             matches.sort(function(a, b) {
                 if (a.exact && !b.exact) return -1;
                 if (!a.exact && b.exact) return 1;
+                // Sort numerically if possible
+                var aNum = parseInt(a.flight, 10);
+                var bNum = parseInt(b.flight, 10);
+                if (!isNaN(aNum) && !isNaN(bNum)) return aNum - bNum;
                 return (a.airline + a.flight).localeCompare(b.airline + b.flight);
             });
 
@@ -8345,9 +8399,14 @@
                 return;
             }
 
-            // Limit to 20 results
-            var displayMatches = matches.slice(0, 20);
+            // Limit to 50 results for route searches
+            var limit = isRouteSearch ? 50 : 20;
+            var displayMatches = matches.slice(0, limit);
             var html = '';
+
+            if (isRouteSearch) {
+                html += '<div style="text-align: center; color: #00d4ff; padding: 10px; border-bottom: 1px solid rgba(255,130,0,0.3);">' + matches.length + ' flight(s) found</div>';
+            }
 
             displayMatches.forEach(function(m) {
                 html += '<div style="padding: 10px; border-bottom: 1px solid rgba(255,130,0,0.2); display: flex; justify-content: space-between; align-items: center;">';
@@ -8362,8 +8421,8 @@
                 html += '</div>';
             });
 
-            if (matches.length > 20) {
-                html += '<div style="text-align: center; color: #888; padding: 10px;">...and ' + (matches.length - 20) + ' more matches</div>';
+            if (matches.length > limit) {
+                html += '<div style="text-align: center; color: #888; padding: 10px;">...and ' + (matches.length - limit) + ' more matches</div>';
             }
 
             resultsEl.innerHTML = html;
