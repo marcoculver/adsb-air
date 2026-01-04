@@ -8110,12 +8110,18 @@
 
         // IATA to ICAO airline code mapping
         var airlineIataToIcao = {
+            // Gulf
             'FZ': 'FDB', 'EK': 'UAE', 'EY': 'ETD', 'GF': 'GFA', 'QR': 'QTR',
-            'SV': 'SVA', 'WY': 'OMA', 'KU': 'KAC', 'RJ': 'RJA', 'TK': 'THY'
+            'SV': 'SVA', 'WY': 'OMA', 'KU': 'KAC', 'RJ': 'RJA', 'TK': 'THY',
+            // Indian
+            'AI': 'AIC', 'IX': 'AXB', '6E': 'IGO', 'SG': 'SEJ',
+            '9W': 'JAI', 'G8': 'GOW', 'QP': 'AKJ',
+            // Pakistani
+            'PK': 'PIA', 'PA': 'ABQ'
         };
 
         // Load route database
-        fetch('routes.json')
+        fetch('/dashboard/routes.json')
             .then(function(response) { return response.json(); })
             .then(function(data) {
                 routeDatabase = data;
@@ -8137,7 +8143,7 @@
             });
 
         // Load airports database for ICAO to IATA conversion
-        fetch('airports.json')
+        fetch('/dashboard/airports.json')
             .then(function(response) { return response.json(); })
             .then(function(data) {
                 airportsDatabase = data;
