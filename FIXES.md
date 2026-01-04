@@ -18,7 +18,7 @@
 ## Timers Tab Fixes
 
 - [x] Fix blank Timers page
-- [ ] Timers should flash continuously when done until reset
+- [x] Timers flash continuously when done until reset
 
 ## NAV Tab Features
 
@@ -27,6 +27,19 @@
   - Outputs all formats: DD, DMS, DMM, DMM Compact, LIDO 1/2/3, ARINC 424
   - Auto-detects input format
   - Validates coordinate ranges
+
+## LMC Tab (Last Minute Change Calculator)
+
+- [x] LMC Calculator with correction tables
+  - Aircraft: 737-800, 737-8, 737-9 (all 189Y config)
+  - PAX zones: OA (front), OB (mid), OC (rear)
+  - Cargo zones: FH (forward hold), AH (aft hold), BLK (bulk)
+  - Fuel zones: CTR (center tank), WING (wing tanks)
+  - Calculates weight changes and IU corrections
+  - Validates: Weight ≤500kg, IU ≤5.0, ZFW ≥45,000kg
+  - Checks MZFW, RTOW, RLW limits
+  - Manual method: max 3 changes, Skybook: max 10
+  - Outputs PASS/REJECT with new loadsheet / performance recalc guidance
 
 ## Future Features
 

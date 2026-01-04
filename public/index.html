@@ -1519,6 +1519,220 @@
         .timer-btn:active {
             transform: scale(0.98);
         }
+
+        /* LMC Calculator Styles */
+        .lmc-summary {
+            background: rgba(0, 40, 80, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .lmc-summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+        }
+
+        .lmc-label {
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .lmc-value {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #00d4ff;
+            font-size: 1rem;
+        }
+
+        .lmc-validation {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .lmc-check {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: rgba(0, 40, 80, 0.3);
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .lmc-check-icon {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .lmc-check.pass .lmc-check-icon { color: #00ff88; }
+        .lmc-check.fail .lmc-check-icon { color: #ff5252; }
+        .lmc-check.warn .lmc-check-icon { color: #ffd700; }
+        .lmc-check.pass { border-left: 3px solid #00ff88; }
+        .lmc-check.fail { border-left: 3px solid #ff5252; }
+        .lmc-check.warn { border-left: 3px solid #ffd700; }
+
+        .lmc-decision {
+            border-radius: 10px;
+            padding: 15px 20px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .lmc-decision.pending {
+            background: rgba(100, 100, 100, 0.3);
+            border: 2px solid #666;
+        }
+
+        .lmc-decision.pass {
+            background: rgba(0, 200, 80, 0.2);
+            border: 2px solid #00ff88;
+        }
+
+        .lmc-decision.fail {
+            background: rgba(255, 50, 50, 0.2);
+            border: 2px solid #ff5252;
+        }
+
+        .lmc-decision-main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .lmc-decision-icon {
+            font-size: 1.8rem;
+        }
+
+        .lmc-decision.pass .lmc-decision-icon { color: #00ff88; }
+        .lmc-decision.fail .lmc-decision-icon { color: #ff5252; }
+        .lmc-decision.pending .lmc-decision-icon { color: #888; }
+
+        .lmc-decision-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .lmc-decision.pass .lmc-decision-text { color: #00ff88; }
+        .lmc-decision.fail .lmc-decision-text { color: #ff5252; }
+        .lmc-decision.pending .lmc-decision-text { color: #888; }
+
+        .lmc-decision-details {
+            background: rgba(0, 40, 80, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        .lmc-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 0.85rem;
+        }
+
+        .lmc-detail-label { color: #888; }
+        .lmc-detail-value { color: #e8e8e8; font-weight: bold; }
+
+        .lmc-audit {
+            background: rgba(0, 20, 40, 0.5);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.8rem;
+        }
+
+        .lmc-audit-title {
+            color: #888;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .lmc-audit-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .lmc-audit-item:last-child { border-bottom: none; }
+
+        .lmc-change-entry {
+            background: rgba(0, 40, 80, 0.4);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid #00d4ff;
+        }
+
+        .lmc-change-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .lmc-change-type {
+            font-weight: bold;
+            color: #00d4ff;
+            font-size: 0.9rem;
+        }
+
+        .lmc-change-remove {
+            background: rgba(255, 82, 82, 0.3);
+            border: none;
+            color: #ff5252;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .lmc-change-remove:hover {
+            background: rgba(255, 82, 82, 0.5);
+        }
+
+        .lmc-change-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .lmc-field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .lmc-field-label {
+            font-size: 0.7rem;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .lmc-field-select, .lmc-field-input {
+            background: rgba(0, 40, 80, 0.5);
+            border: 1px solid rgba(0, 180, 255, 0.3);
+            border-radius: 6px;
+            color: #e8e8e8;
+            padding: 8px;
+            font-size: 0.9rem;
+        }
+
+        .lmc-result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 8px;
+            background: rgba(0, 60, 100, 0.3);
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+
+        .lmc-result-label { color: #888; font-size: 0.8rem; }
+        .lmc-result-value { color: #00ff88; font-family: 'Courier New', monospace; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -1553,6 +1767,7 @@
             <button class="tab-btn" onclick="switchTab('tmr')">TMR</button>
             <button class="tab-btn" onclick="switchTab('lay')">LAY</button>
             <button class="tab-btn" onclick="switchTab('ref')">REF</button>
+            <button class="tab-btn" onclick="switchTab('lmc')">LMC</button>
             <button class="tab-btn" onclick="switchTab('notes')">NOTES</button>
             <button class="tab-btn" onclick="switchTab('set')">SET</button>
         </div>
@@ -3029,6 +3244,212 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     <div class="fdp-result-value" id="catchup-result" style="text-align: center; margin-top: 15px; font-size: 1.3rem; color: #00ff88;">---</div>
                     <button class="clear-btn" onclick="clearCatchUp()">Clear</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- LMC Tab (Last Minute Change Calculator) -->
+        <div class="tab-content" id="tab-lmc">
+            <div class="fdp-container">
+                <!-- Setup Section -->
+                <div class="top-sections" style="grid-template-columns: 1fr 1fr;">
+                    <div class="section">
+                        <div class="section-title">Aircraft & Method</div>
+                        <div class="input-grid-2">
+                            <div class="input-group">
+                                <label class="input-label">Aircraft Model</label>
+                                <select class="fdp-select" id="lmc-aircraft" onchange="updateLmcConfig()">
+                                    <option value="737-800">737-800</option>
+                                    <option value="737-8" selected>737-8</option>
+                                    <option value="737-9">737-9</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Configuration</label>
+                                <select class="fdp-select" id="lmc-config" onchange="lmcCalculate()">
+                                    <option value="189Y" selected>189Y</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-grid-2" style="margin-top: 10px;">
+                            <div class="input-group">
+                                <label class="input-label">Method</label>
+                                <select class="fdp-select" id="lmc-method" onchange="lmcCalculate()">
+                                    <option value="manual">Manual (max 3 changes)</option>
+                                    <option value="skybook">Skybook (max 10 changes)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Std Pax Weight (kg)</label>
+                                <button class="input-btn" id="lmc-pax-weight-btn" onclick="openWeightPicker('lmc-pax-weight', 'Pax Weight', 'kg')" style="max-width:100%">84</button>
+                                <input type="hidden" id="lmc-pax-weight" value="84">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">Baseline Weights (from Loadsheet)</div>
+                        <div class="input-grid-2">
+                            <div class="input-group">
+                                <label class="input-label">ZFW Initial (kg)</label>
+                                <button class="input-btn" id="lmc-zfw-btn" onclick="openWeightPicker('lmc-zfw', 'ZFW', 'kg')" style="max-width:100%">0</button>
+                                <input type="hidden" id="lmc-zfw" value="">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">MZFW Limit (kg)</label>
+                                <button class="input-btn" id="lmc-mzfw-btn" onclick="openWeightPicker('lmc-mzfw', 'MZFW', 'kg')" style="max-width:100%">0</button>
+                                <input type="hidden" id="lmc-mzfw" value="">
+                            </div>
+                        </div>
+                        <div class="input-grid-2">
+                            <div class="input-group">
+                                <label class="input-label">TOW Initial (kg)</label>
+                                <button class="input-btn" id="lmc-tow-btn" onclick="openWeightPicker('lmc-tow', 'TOW', 'kg')" style="max-width:100%">0</button>
+                                <input type="hidden" id="lmc-tow" value="">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">RTOW Limit (kg)</label>
+                                <button class="input-btn" id="lmc-rtow-btn" onclick="openWeightPicker('lmc-rtow', 'RTOW', 'kg')" style="max-width:100%">0</button>
+                                <input type="hidden" id="lmc-rtow" value="">
+                            </div>
+                        </div>
+                        <div class="input-grid-2">
+                            <div class="input-group">
+                                <label class="input-label">LW Initial (kg)</label>
+                                <button class="input-btn" id="lmc-lw-btn" onclick="openWeightPicker('lmc-lw', 'LW', 'kg')" style="max-width:100%">0</button>
+                                <input type="hidden" id="lmc-lw" value="">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">RLW Limit (kg)</label>
+                                <button class="input-btn" id="lmc-rlw-btn" onclick="openWeightPicker('lmc-rlw', 'RLW', 'kg')" style="max-width:100%">0</button>
+                                <input type="hidden" id="lmc-rlw" value="">
+                            </div>
+                        </div>
+                        <div class="input-group" style="margin-top: 5px;">
+                            <label class="input-label">Underload Available (kg)</label>
+                            <button class="input-btn" id="lmc-underload-btn" onclick="openWeightPicker('lmc-underload', 'Underload', 'kg')" style="max-width:50%">0</button>
+                            <input type="hidden" id="lmc-underload" value="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LMC Changes Entry -->
+                <div class="section" style="margin-top: 20px;">
+                    <div class="section-title">LMC Changes</div>
+                    <div id="lmc-changes-container">
+                        <!-- Change entries will be added here -->
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <button class="preset-btn" onclick="addLmcChange('PAX')" style="flex: 1;">+ PAX</button>
+                        <button class="preset-btn" onclick="addLmcChange('CARGO')" style="flex: 1;">+ CARGO</button>
+                        <button class="preset-btn" onclick="addLmcChange('BAGGAGE')" style="flex: 1;">+ BAGGAGE</button>
+                        <button class="preset-btn" onclick="addLmcChange('FUEL')" style="flex: 1;">+ FUEL</button>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="top-sections" style="grid-template-columns: 1fr 1fr; margin-top: 20px;">
+                    <!-- Summary -->
+                    <div class="section">
+                        <div class="section-title">LMC Summary</div>
+                        <div class="lmc-summary">
+                            <div class="lmc-summary-row">
+                                <span>Total Weight Change:</span>
+                                <span id="lmc-total-weight" class="lmc-value">0 kg</span>
+                            </div>
+                            <div class="lmc-summary-row">
+                                <span>Total IU Correction:</span>
+                                <span id="lmc-total-iu" class="lmc-value">0.0 IU</span>
+                            </div>
+                            <div class="lmc-summary-row">
+                                <span>Number of Changes:</span>
+                                <span id="lmc-num-changes" class="lmc-value">0</span>
+                            </div>
+                            <div class="lmc-summary-row" style="border-top: 1px solid #444; padding-top: 10px; margin-top: 10px;">
+                                <span>ZFW Corrected:</span>
+                                <span id="lmc-zfw-corr" class="lmc-value">--- kg</span>
+                            </div>
+                            <div class="lmc-summary-row">
+                                <span>TOW Corrected:</span>
+                                <span id="lmc-tow-corr" class="lmc-value">--- kg</span>
+                            </div>
+                            <div class="lmc-summary-row">
+                                <span>LW Corrected:</span>
+                                <span id="lmc-lw-corr" class="lmc-value">--- kg</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Validation -->
+                    <div class="section">
+                        <div class="section-title">Validation Checks</div>
+                        <div class="lmc-validation" id="lmc-validation">
+                            <div class="lmc-check" id="lmc-check-weight">
+                                <span class="lmc-check-icon">○</span>
+                                <span>Weight change ≤ 500 kg</span>
+                            </div>
+                            <div class="lmc-check" id="lmc-check-iu">
+                                <span class="lmc-check-icon">○</span>
+                                <span>Index change ≤ 5.0 IU</span>
+                            </div>
+                            <div class="lmc-check" id="lmc-check-zfw-min">
+                                <span class="lmc-check-icon">○</span>
+                                <span>ZFW ≥ 45,000 kg</span>
+                            </div>
+                            <div class="lmc-check" id="lmc-check-changes">
+                                <span class="lmc-check-icon">○</span>
+                                <span>Changes within limit</span>
+                            </div>
+                            <div class="lmc-check" id="lmc-check-underload">
+                                <span class="lmc-check-icon">○</span>
+                                <span>Within underload</span>
+                            </div>
+                            <div class="lmc-check" id="lmc-check-mzfw">
+                                <span class="lmc-check-icon">○</span>
+                                <span>ZFW ≤ MZFW</span>
+                            </div>
+                            <div class="lmc-check" id="lmc-check-rtow">
+                                <span class="lmc-check-icon">○</span>
+                                <span>TOW ≤ RTOW</span>
+                            </div>
+                            <div class="lmc-check" id="lmc-check-rlw">
+                                <span class="lmc-check-icon">○</span>
+                                <span>LW ≤ RLW</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Decision Banner -->
+                <div class="section" style="margin-top: 20px;">
+                    <div class="section-title">Decision</div>
+                    <div id="lmc-decision-banner" class="lmc-decision pending">
+                        <div class="lmc-decision-main">
+                            <span class="lmc-decision-icon">?</span>
+                            <span class="lmc-decision-text">Enter LMC changes to calculate</span>
+                        </div>
+                    </div>
+                    <div class="lmc-decision-details" id="lmc-decision-details" style="display: none;">
+                        <div class="lmc-detail-row">
+                            <span>New Loadsheet Required:</span>
+                            <span id="lmc-new-loadsheet" class="lmc-detail-value">---</span>
+                        </div>
+                        <div class="lmc-detail-row">
+                            <span>Recalc Takeoff Performance:</span>
+                            <span id="lmc-recalc-perf" class="lmc-detail-value">---</span>
+                        </div>
+                        <div id="lmc-perf-reason" style="font-size: 0.75rem; color: #888; margin-top: 5px;"></div>
+                    </div>
+                </div>
+
+                <!-- Line Items Audit -->
+                <div class="section" style="margin-top: 20px;">
+                    <div class="section-title">Line Item Details</div>
+                    <div class="lmc-audit" id="lmc-audit">
+                        <div style="color: #666; text-align: center; padding: 20px;">No changes entered</div>
+                    </div>
+                </div>
+
+                <button class="clear-btn" onclick="clearLmc()" style="margin-top: 15px;">Clear All</button>
             </div>
         </div>
 
@@ -7076,6 +7497,380 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     </div>
                 `;
             }).join('');
+        }
+
+        // ============ LMC CALCULATOR ============
+        // LMC correction table: IU per unit (1 pax = 84kg, cargo = 100kg)
+        var lmcCorrectionTable = {
+            '737-800': {
+                '189Y': {
+                    // PAX zones (IU per passenger)
+                    'OA': { desc: 'Rows 1-5', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-33', onload: 0.6, offload: -0.6, unit: 'PAX' },
+                    // Cargo holds (IU per 100kg)
+                    'FH': { desc: 'Forward Hold', onload: -0.8, offload: 0.8, unit: '100kg' },
+                    'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
+                    'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
+                    // Fuel (IU per 1000kg)
+                    'CTR': { desc: 'Center Tank', onload: -0.1, offload: 0.1, unit: '1000kg' },
+                    'WING': { desc: 'Wing Tanks', onload: -0.05, offload: 0.05, unit: '1000kg' }
+                }
+            },
+            '737-8': {
+                '189Y': {
+                    'OA': { desc: 'Rows 1-5', onload: -1.1, offload: 1.1, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-33', onload: 0.6, offload: -0.6, unit: 'PAX' },
+                    'FH': { desc: 'Forward Hold', onload: -0.9, offload: 0.9, unit: '100kg' },
+                    'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
+                    'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
+                    'CTR': { desc: 'Center Tank', onload: -0.1, offload: 0.1, unit: '1000kg' },
+                    'WING': { desc: 'Wing Tanks', onload: -0.05, offload: 0.05, unit: '1000kg' }
+                }
+            },
+            '737-9': {
+                '189Y': {
+                    'OA': { desc: 'Rows 1-6', onload: -1.2, offload: 1.2, unit: 'PAX' },
+                    'OB': { desc: 'Rows 7-18', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 19-36', onload: 0.6, offload: -0.6, unit: 'PAX' },
+                    'FH': { desc: 'Forward Hold', onload: -0.9, offload: 0.9, unit: '100kg' },
+                    'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
+                    'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
+                    'CTR': { desc: 'Center Tank', onload: -0.1, offload: 0.1, unit: '1000kg' },
+                    'WING': { desc: 'Wing Tanks', onload: -0.05, offload: 0.05, unit: '1000kg' }
+                }
+            }
+        };
+
+        var lmcChanges = [];
+        var lmcChangeCounter = 0;
+
+        function updateLmcConfig() {
+            var aircraft = document.getElementById('lmc-aircraft').value;
+            var configSelect = document.getElementById('lmc-config');
+
+            // Clear options
+            configSelect.innerHTML = '';
+
+            // Get configs for selected aircraft
+            var configs = lmcCorrectionTable[aircraft];
+            if (configs) {
+                Object.keys(configs).forEach(function(cfg) {
+                    var opt = document.createElement('option');
+                    opt.value = cfg;
+                    opt.textContent = cfg;
+                    configSelect.appendChild(opt);
+                });
+            }
+
+            lmcCalculate();
+        }
+
+        function addLmcChange(type) {
+            var aircraft = document.getElementById('lmc-aircraft').value;
+            var config = document.getElementById('lmc-config').value;
+            var table = lmcCorrectionTable[aircraft] && lmcCorrectionTable[aircraft][config];
+            if (!table) return;
+
+            var id = 'lmc-change-' + (++lmcChangeCounter);
+            var zones = [];
+
+            if (type === 'PAX') {
+                zones = ['OA', 'OB', 'OC'];
+            } else if (type === 'CARGO' || type === 'BAGGAGE') {
+                zones = ['FH', 'AH', 'BLK'];
+            } else if (type === 'FUEL') {
+                zones = ['CTR', 'WING'];
+            }
+
+            var change = {
+                id: id,
+                type: type,
+                zone: zones[0],
+                action: 'onload',
+                quantity: 0,
+                weight: 0,
+                iu: 0
+            };
+
+            lmcChanges.push(change);
+            renderLmcChanges();
+        }
+
+        function removeLmcChange(id) {
+            lmcChanges = lmcChanges.filter(function(c) { return c.id !== id; });
+            renderLmcChanges();
+            lmcCalculate();
+        }
+
+        function renderLmcChanges() {
+            var container = document.getElementById('lmc-changes-container');
+            var aircraft = document.getElementById('lmc-aircraft').value;
+            var config = document.getElementById('lmc-config').value;
+            var table = lmcCorrectionTable[aircraft] && lmcCorrectionTable[aircraft][config];
+            var paxWeight = parseInt(document.getElementById('lmc-pax-weight').value) || 84;
+
+            container.innerHTML = lmcChanges.map(function(change) {
+                var zones = [];
+                if (change.type === 'PAX') {
+                    zones = ['OA', 'OB', 'OC'];
+                } else if (change.type === 'CARGO' || change.type === 'BAGGAGE') {
+                    zones = ['FH', 'AH', 'BLK'];
+                } else if (change.type === 'FUEL') {
+                    zones = ['CTR', 'WING'];
+                }
+
+                return '<div class="lmc-change-entry" id="' + change.id + '">' +
+                    '<div class="lmc-change-header">' +
+                        '<span class="lmc-change-type">' + change.type + '</span>' +
+                        '<button class="lmc-change-remove" onclick="removeLmcChange(\'' + change.id + '\')">Remove</button>' +
+                    '</div>' +
+                    '<div class="lmc-change-fields">' +
+                        '<div class="lmc-field-group">' +
+                            '<span class="lmc-field-label">Action</span>' +
+                            '<select class="lmc-field-select" onchange="updateLmcChange(\'' + change.id + '\', \'action\', this.value)">' +
+                                '<option value="onload"' + (change.action === 'onload' ? ' selected' : '') + '>ON Load</option>' +
+                                '<option value="offload"' + (change.action === 'offload' ? ' selected' : '') + '>OFF Load</option>' +
+                            '</select>' +
+                        '</div>' +
+                        '<div class="lmc-field-group">' +
+                            '<span class="lmc-field-label">Zone</span>' +
+                            '<select class="lmc-field-select" onchange="updateLmcChange(\'' + change.id + '\', \'zone\', this.value)">' +
+                                zones.map(function(z) {
+                                    var zoneInfo = table[z] || { desc: z };
+                                    return '<option value="' + z + '"' + (change.zone === z ? ' selected' : '') + '>' + z + ' - ' + zoneInfo.desc + '</option>';
+                                }).join('') +
+                            '</select>' +
+                        '</div>' +
+                        '<div class="lmc-field-group">' +
+                            '<span class="lmc-field-label">' + (change.type === 'PAX' ? 'PAX Count' : 'Weight (kg)') + '</span>' +
+                            '<input type="number" class="lmc-field-input" value="' + change.quantity + '" onchange="updateLmcChange(\'' + change.id + '\', \'quantity\', this.value)">' +
+                        '</div>' +
+                        '<div class="lmc-field-group">' +
+                            '<span class="lmc-field-label">Result</span>' +
+                            '<div class="lmc-result-row">' +
+                                '<span class="lmc-result-label">Δ Weight:</span>' +
+                                '<span class="lmc-result-value" id="' + change.id + '-weight">0 kg</span>' +
+                            '</div>' +
+                            '<div class="lmc-result-row">' +
+                                '<span class="lmc-result-label">Δ IU:</span>' +
+                                '<span class="lmc-result-value" id="' + change.id + '-iu">0.0</span>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        function updateLmcChange(id, field, value) {
+            var change = lmcChanges.find(function(c) { return c.id === id; });
+            if (change) {
+                change[field] = field === 'quantity' ? parseFloat(value) || 0 : value;
+                lmcCalculate();
+            }
+        }
+
+        function lmcCalculate() {
+            var aircraft = document.getElementById('lmc-aircraft').value;
+            var config = document.getElementById('lmc-config').value;
+            var method = document.getElementById('lmc-method').value;
+            var paxWeight = parseInt(document.getElementById('lmc-pax-weight').value) || 84;
+
+            var table = lmcCorrectionTable[aircraft] && lmcCorrectionTable[aircraft][config];
+            if (!table) return;
+
+            // Get baseline weights
+            var zfw = parseInt(document.getElementById('lmc-zfw').value) || 0;
+            var mzfw = parseInt(document.getElementById('lmc-mzfw').value) || 0;
+            var tow = parseInt(document.getElementById('lmc-tow').value) || 0;
+            var rtow = parseInt(document.getElementById('lmc-rtow').value) || 0;
+            var lw = parseInt(document.getElementById('lmc-lw').value) || 0;
+            var rlw = parseInt(document.getElementById('lmc-rlw').value) || 0;
+            var underload = parseInt(document.getElementById('lmc-underload').value) || 0;
+
+            // Calculate totals
+            var totalWeight = 0;
+            var totalIU = 0;
+            var auditItems = [];
+
+            lmcChanges.forEach(function(change) {
+                var zoneData = table[change.zone];
+                if (!zoneData) return;
+
+                var weight = 0;
+                var units = 0;
+
+                if (change.type === 'PAX') {
+                    weight = change.quantity * paxWeight;
+                    units = change.quantity;
+                } else if (change.type === 'FUEL') {
+                    weight = change.quantity;
+                    units = change.quantity / 1000; // Convert to 1000kg units
+                } else {
+                    weight = change.quantity;
+                    units = change.quantity / 100; // Convert to 100kg units
+                }
+
+                var iuRate = change.action === 'onload' ? zoneData.onload : zoneData.offload;
+                var iu = units * iuRate;
+
+                // Apply sign based on action
+                if (change.action === 'offload') {
+                    weight = -weight;
+                }
+
+                change.weight = weight;
+                change.iu = iu;
+                totalWeight += weight;
+                totalIU += iu;
+
+                // Update display
+                var weightEl = document.getElementById(change.id + '-weight');
+                var iuEl = document.getElementById(change.id + '-iu');
+                if (weightEl) weightEl.textContent = (weight >= 0 ? '+' : '') + weight.toLocaleString() + ' kg';
+                if (iuEl) {
+                    iuEl.textContent = (iu >= 0 ? '+' : '') + iu.toFixed(1) + ' IU';
+                    iuEl.style.color = Math.abs(iu) <= 5 ? '#00ff88' : '#ff5252';
+                }
+
+                auditItems.push({
+                    type: change.type,
+                    zone: change.zone,
+                    action: change.action,
+                    qty: change.quantity,
+                    weight: weight,
+                    iu: iu
+                });
+            });
+
+            // Update summary
+            document.getElementById('lmc-total-weight').textContent = (totalWeight >= 0 ? '+' : '') + totalWeight.toLocaleString() + ' kg';
+            document.getElementById('lmc-total-iu').textContent = (totalIU >= 0 ? '+' : '') + totalIU.toFixed(1) + ' IU';
+            document.getElementById('lmc-num-changes').textContent = lmcChanges.length;
+
+            // Corrected weights
+            var corrZfw = zfw > 0 ? zfw + totalWeight : 0;
+            var corrTow = tow > 0 ? tow + totalWeight : 0;
+            var corrLw = lw > 0 ? lw + totalWeight : 0;
+
+            document.getElementById('lmc-zfw-corr').textContent = corrZfw > 0 ? corrZfw.toLocaleString() + ' kg' : '--- kg';
+            document.getElementById('lmc-tow-corr').textContent = corrTow > 0 ? corrTow.toLocaleString() + ' kg' : '--- kg';
+            document.getElementById('lmc-lw-corr').textContent = corrLw > 0 ? corrLw.toLocaleString() + ' kg' : '--- kg';
+
+            // Validation checks
+            var maxChanges = method === 'manual' ? 3 : 10;
+            var checks = {
+                weight: { pass: Math.abs(totalWeight) <= 500, value: totalWeight },
+                iu: { pass: Math.abs(totalIU) <= 5.0, value: totalIU },
+                zfwMin: { pass: corrZfw === 0 || corrZfw >= 45000, value: corrZfw },
+                changes: { pass: lmcChanges.length <= maxChanges, value: lmcChanges.length },
+                underload: { pass: totalWeight <= 0 || (underload > 0 && totalWeight <= underload), value: totalWeight },
+                mzfw: { pass: corrZfw === 0 || mzfw === 0 || corrZfw <= mzfw, value: corrZfw },
+                rtow: { pass: corrTow === 0 || rtow === 0 || corrTow <= rtow, value: corrTow },
+                rlw: { pass: corrLw === 0 || rlw === 0 || corrLw <= rlw, value: corrLw }
+            };
+
+            // Update check displays
+            updateLmcCheck('lmc-check-weight', checks.weight.pass, 'Weight change ≤ 500 kg', totalWeight.toLocaleString() + ' kg');
+            updateLmcCheck('lmc-check-iu', checks.iu.pass, 'Index change ≤ 5.0 IU', totalIU.toFixed(1) + ' IU');
+            updateLmcCheck('lmc-check-zfw-min', checks.zfwMin.pass, 'ZFW ≥ 45,000 kg', corrZfw > 0 ? corrZfw.toLocaleString() + ' kg' : 'N/A');
+            updateLmcCheck('lmc-check-changes', checks.changes.pass, 'Changes ≤ ' + maxChanges + ' (' + method + ')', lmcChanges.length + ' changes');
+            updateLmcCheck('lmc-check-underload', checks.underload.pass || totalWeight <= 0, 'Within underload', totalWeight <= 0 ? 'Offloading' : (underload > 0 ? totalWeight + ' ≤ ' + underload : 'No underload set'));
+            updateLmcCheck('lmc-check-mzfw', checks.mzfw.pass, 'ZFW ≤ MZFW', corrZfw > 0 && mzfw > 0 ? corrZfw.toLocaleString() + ' ≤ ' + mzfw.toLocaleString() : 'N/A');
+            updateLmcCheck('lmc-check-rtow', checks.rtow.pass, 'TOW ≤ RTOW', corrTow > 0 && rtow > 0 ? corrTow.toLocaleString() + ' ≤ ' + rtow.toLocaleString() : 'N/A');
+            updateLmcCheck('lmc-check-rlw', checks.rlw.pass, 'LW ≤ RLW', corrLw > 0 && rlw > 0 ? corrLw.toLocaleString() + ' ≤ ' + rlw.toLocaleString() : 'N/A');
+
+            // Overall decision
+            var allPass = checks.weight.pass && checks.iu.pass && checks.zfwMin.pass &&
+                         checks.changes.pass && (checks.underload.pass || totalWeight <= 0) &&
+                         checks.mzfw.pass && checks.rtow.pass && checks.rlw.pass;
+
+            var banner = document.getElementById('lmc-decision-banner');
+            var detailsDiv = document.getElementById('lmc-decision-details');
+
+            if (lmcChanges.length === 0) {
+                banner.className = 'lmc-decision pending';
+                banner.innerHTML = '<div class="lmc-decision-main"><span class="lmc-decision-icon">?</span><span class="lmc-decision-text">Enter LMC changes to calculate</span></div>';
+                detailsDiv.style.display = 'none';
+            } else if (allPass) {
+                banner.className = 'lmc-decision pass';
+                banner.innerHTML = '<div class="lmc-decision-main"><span class="lmc-decision-icon">✓</span><span class="lmc-decision-text">LMC ACCEPTED</span></div>';
+                detailsDiv.style.display = 'block';
+            } else {
+                banner.className = 'lmc-decision fail';
+                banner.innerHTML = '<div class="lmc-decision-main"><span class="lmc-decision-icon">✗</span><span class="lmc-decision-text">LMC REJECTED - New Loadsheet Required</span></div>';
+                detailsDiv.style.display = 'block';
+            }
+
+            // Determine if new loadsheet / performance recalc needed
+            var needsLoadsheet = !allPass;
+            var needsPerf = !checks.rtow.pass || !checks.rlw.pass || Math.abs(totalWeight) > 200;
+            var perfReason = '';
+            if (!checks.rtow.pass) perfReason = 'TOW exceeds RTOW';
+            else if (!checks.rlw.pass) perfReason = 'LW exceeds RLW';
+            else if (Math.abs(totalWeight) > 200) perfReason = 'Weight change > 200 kg';
+
+            document.getElementById('lmc-new-loadsheet').textContent = needsLoadsheet ? 'YES' : 'NO';
+            document.getElementById('lmc-new-loadsheet').style.color = needsLoadsheet ? '#ff5252' : '#00ff88';
+            document.getElementById('lmc-recalc-perf').textContent = needsPerf ? 'YES' : 'NO';
+            document.getElementById('lmc-recalc-perf').style.color = needsPerf ? '#ffd700' : '#00ff88';
+            document.getElementById('lmc-perf-reason').textContent = perfReason;
+
+            // Update audit trail
+            var auditDiv = document.getElementById('lmc-audit');
+            if (auditItems.length > 0) {
+                auditDiv.innerHTML = '<div class="lmc-audit-title">Change Log</div>' +
+                    auditItems.map(function(item) {
+                        return '<div class="lmc-audit-item">' +
+                            '<span>' + item.action.toUpperCase() + ' ' + item.type + ' (' + item.zone + '): ' + item.qty + (item.type === 'PAX' ? ' pax' : ' kg') + '</span>' +
+                            '<span style="color:#00d4ff">' + (item.weight >= 0 ? '+' : '') + item.weight + ' kg / ' + (item.iu >= 0 ? '+' : '') + item.iu.toFixed(1) + ' IU</span>' +
+                        '</div>';
+                    }).join('');
+            } else {
+                auditDiv.innerHTML = '<div class="lmc-audit-title">Change Log</div><div style="color:#666;text-align:center;padding:10px;">No changes entered</div>';
+            }
+        }
+
+        function updateLmcCheck(id, pass, label, value) {
+            var el = document.getElementById(id);
+            el.className = 'lmc-check ' + (pass ? 'pass' : 'fail');
+            el.innerHTML = '<span class="lmc-check-icon">' + (pass ? '✓' : '✗') + '</span>' +
+                          '<span>' + label + '</span>' +
+                          '<span style="margin-left:auto;color:' + (pass ? '#00ff88' : '#ff5252') + '">' + value + '</span>';
+        }
+
+        function clearLmc() {
+            lmcChanges = [];
+            lmcChangeCounter = 0;
+            document.getElementById('lmc-zfw').value = '';
+            document.getElementById('lmc-zfw-btn').textContent = '0';
+            document.getElementById('lmc-mzfw').value = '';
+            document.getElementById('lmc-mzfw-btn').textContent = '0';
+            document.getElementById('lmc-tow').value = '';
+            document.getElementById('lmc-tow-btn').textContent = '0';
+            document.getElementById('lmc-rtow').value = '';
+            document.getElementById('lmc-rtow-btn').textContent = '0';
+            document.getElementById('lmc-lw').value = '';
+            document.getElementById('lmc-lw-btn').textContent = '0';
+            document.getElementById('lmc-rlw').value = '';
+            document.getElementById('lmc-rlw-btn').textContent = '0';
+            document.getElementById('lmc-underload').value = '';
+            document.getElementById('lmc-underload-btn').textContent = '0';
+            renderLmcChanges();
+            lmcCalculate();
+        }
+
+        // Weight picker for LMC inputs
+        function openWeightPicker(fieldId, label, unit) {
+            var currentValue = document.getElementById(fieldId).value || '';
+            var newValue = prompt(label + ' (' + unit + '):', currentValue);
+            if (newValue !== null) {
+                var num = parseInt(newValue.replace(/,/g, '')) || 0;
+                document.getElementById(fieldId).value = num;
+                document.getElementById(fieldId + '-btn').textContent = num > 0 ? num.toLocaleString() : '0';
+                lmcCalculate();
+            }
         }
 
         // ============ EVENT LISTENERS FOR NEW CALCULATORS ============
