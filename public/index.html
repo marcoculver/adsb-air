@@ -1148,6 +1148,13 @@
             #tab-perf .input-grid-2 {
                 grid-template-columns: 1fr 1fr !important;
             }
+            #tab-perf .maneuver-grid {
+                grid-template-columns: repeat(4, 1fr) !important;
+                gap: 5px !important;
+            }
+            #tab-perf .maneuver-grid > div {
+                padding: 8px 4px !important;
+            }
             /* REF tab mobile */
             #tab-ref .top-sections {
                 grid-template-columns: 1fr !important;
@@ -2646,6 +2653,87 @@
                         </div>
                     </div>
                     <button class="clear-btn" id="acc-clear">Clear</button>
+                </div>
+            </div>
+
+            <!-- VREF / Maneuver Speed Calculator -->
+            <div class="top-sections" style="margin-top: 20px;">
+                <div class="section">
+                    <div class="section-title">VREF / Maneuver Speeds</div>
+                    <div class="aircraft-selector" style="margin-bottom:12px">
+                        <button class="aircraft-btn active" id="vref-ac-b738" onclick="selectVrefAircraft('B738')">B738</button>
+                        <button class="aircraft-btn" id="vref-ac-b38m" onclick="selectVrefAircraft('B38M')">B38M</button>
+                        <button class="aircraft-btn" id="vref-ac-b39m" onclick="selectVrefAircraft('B39M')">B39M</button>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Landing Weight (kg)</label>
+                        <button class="input-btn placeholder" id="vref-weight-btn" onclick="openWeightPicker('vref-weight', 'Landing Weight')" style="max-width: 100%;">---</button>
+                        <input type="hidden" id="vref-weight" value="">
+                    </div>
+
+                    <!-- VREF Results -->
+                    <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
+                        <div style="color: #888; font-size: 0.75rem; text-align: center; margin-bottom: 10px;">REFERENCE SPEEDS</div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center;">
+                            <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 0.7rem; color: #888;">VREF 40</div>
+                                <div id="vref-40" style="font-size: 1.5rem; color: #FF8200; font-family: monospace; font-weight: bold;">---</div>
+                            </div>
+                            <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 0.7rem; color: #888;">VREF 30</div>
+                                <div id="vref-30" style="font-size: 1.5rem; color: #FF8200; font-family: monospace; font-weight: bold;">---</div>
+                            </div>
+                            <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 0.7rem; color: #888;">VREF 15</div>
+                                <div id="vref-15" style="font-size: 1.5rem; color: #FF8200; font-family: monospace; font-weight: bold;">---</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Maneuver Speeds -->
+                    <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
+                        <div style="color: #888; font-size: 0.75rem; text-align: center; margin-bottom: 10px;">MANEUVER SPEEDS</div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center;" class="maneuver-grid">
+                            <div style="background: rgba(0,100,150,0.2); padding: 10px; border-radius: 8px;">
+                                <div style="font-size: 0.65rem; color: #7ec8e3;">UP</div>
+                                <div id="man-up" style="font-size: 1.1rem; color: #00d4ff; font-family: monospace;">---</div>
+                            </div>
+                            <div style="background: rgba(0,100,150,0.2); padding: 10px; border-radius: 8px;">
+                                <div style="font-size: 0.65rem; color: #7ec8e3;">FLAP 1</div>
+                                <div id="man-1" style="font-size: 1.1rem; color: #00d4ff; font-family: monospace;">---</div>
+                            </div>
+                            <div style="background: rgba(0,100,150,0.2); padding: 10px; border-radius: 8px;">
+                                <div style="font-size: 0.65rem; color: #7ec8e3;">FLAP 5</div>
+                                <div id="man-5" style="font-size: 1.1rem; color: #00d4ff; font-family: monospace;">---</div>
+                            </div>
+                            <div style="background: rgba(0,100,150,0.2); padding: 10px; border-radius: 8px;">
+                                <div style="font-size: 0.65rem; color: #7ec8e3;">FLAP 10</div>
+                                <div id="man-10" style="font-size: 1.1rem; color: #00d4ff; font-family: monospace;">---</div>
+                            </div>
+                            <div style="background: rgba(0,100,150,0.2); padding: 10px; border-radius: 8px;">
+                                <div style="font-size: 0.65rem; color: #7ec8e3;">FLAP 15</div>
+                                <div id="man-15" style="font-size: 1.1rem; color: #00d4ff; font-family: monospace;">---</div>
+                            </div>
+                            <div style="background: rgba(0,100,150,0.2); padding: 10px; border-radius: 8px;">
+                                <div style="font-size: 0.65rem; color: #7ec8e3;">FLAP 25</div>
+                                <div id="man-25" style="font-size: 1.1rem; color: #00d4ff; font-family: monospace;">---</div>
+                            </div>
+                            <div style="background: rgba(0,100,150,0.2); padding: 10px; border-radius: 8px;">
+                                <div style="font-size: 0.65rem; color: #7ec8e3;">FLAP 30</div>
+                                <div id="man-30" style="font-size: 1.1rem; color: #00ff88; font-family: monospace;">---</div>
+                            </div>
+                            <div style="background: rgba(0,100,150,0.2); padding: 10px; border-radius: 8px;">
+                                <div style="font-size: 0.65rem; color: #7ec8e3;">FLAP 40</div>
+                                <div id="man-40" style="font-size: 1.1rem; color: #00ff88; font-family: monospace;">---</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Aircraft Info -->
+                    <div id="vref-info" style="margin-top: 12px; text-align: center; font-size: 0.7rem; color: #666;">
+                        Select aircraft and enter landing weight
+                    </div>
+                    <button class="clear-btn" onclick="clearVref()">Clear</button>
                 </div>
             </div>
 
@@ -5077,6 +5165,9 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 else if (fieldId.startsWith('lmc-')) {
                     lmcCalculate();
                 }
+                else if (fieldId === 'vref-weight') {
+                    calculateVref();
+                }
             });
         }
 
@@ -6090,6 +6181,177 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 document.getElementById('acc-result').textContent = result.toLocaleString() + ' ft';
             }
             saveACC();
+        }
+
+        // ============ VREF / MANEUVER SPEED CALCULATOR ============
+        var vrefAircraftData = {
+            'B738': {
+                name: 'B737-800',
+                engine: 'CFM56-7B27B1',
+                refAlt: 10000,
+                vref: [
+                    { weight: 85000, f40: 159, f30: 167, f15: 174 },
+                    { weight: 80000, f40: 154, f30: 162, f15: 169 },
+                    { weight: 75000, f40: 148, f30: 156, f15: 163 },
+                    { weight: 70000, f40: 143, f30: 151, f15: 157 },
+                    { weight: 65000, f40: 139, f30: 147, f15: 153 },
+                    { weight: 60000, f40: 133, f30: 141, f15: 147 },
+                    { weight: 55000, f40: 127, f30: 134, f15: 140 },
+                    { weight: 50000, f40: 121, f30: 128, f15: 133 },
+                    { weight: 45000, f40: 114, f30: 121, f15: 126 },
+                    { weight: 40000, f40: 107, f30: 114, f15: 119 }
+                ]
+            },
+            'B38M': {
+                name: 'B737-8 MAX',
+                engine: 'LEAP-1B28B1',
+                refAlt: 14500,
+                vref: [
+                    { weight: 90000, f40: 169, f30: 169, f15: 179 },
+                    { weight: 85000, f40: 163, f30: 165, f15: 173 },
+                    { weight: 80000, f40: 156, f30: 160, f15: 168 },
+                    { weight: 75000, f40: 149, f30: 154, f15: 162 },
+                    { weight: 70000, f40: 144, f30: 149, f15: 156 },
+                    { weight: 65000, f40: 140, f30: 145, f15: 152 },
+                    { weight: 60000, f40: 134, f30: 139, f15: 145 },
+                    { weight: 55000, f40: 128, f30: 132, f15: 139 },
+                    { weight: 50000, f40: 121, f30: 126, f15: 132 },
+                    { weight: 45000, f40: 115, f30: 119, f15: 125 },
+                    { weight: 40000, f40: 108, f30: 112, f15: 118 }
+                ]
+            },
+            'B39M': {
+                name: 'B737-9 MAX',
+                engine: 'LEAP-1B28B1',
+                refAlt: 14500,
+                vref: [
+                    { weight: 90000, f40: 169, f30: 167, f15: 177 },
+                    { weight: 85000, f40: 163, f30: 162, f15: 171 },
+                    { weight: 80000, f40: 156, f30: 157, f15: 166 },
+                    { weight: 75000, f40: 149, f30: 152, f15: 160 },
+                    { weight: 70000, f40: 144, f30: 148, f15: 155 },
+                    { weight: 65000, f40: 139, f30: 142, f15: 150 },
+                    { weight: 60000, f40: 134, f30: 137, f15: 143 },
+                    { weight: 55000, f40: 127, f30: 131, f15: 137 },
+                    { weight: 50000, f40: 121, f30: 124, f15: 130 },
+                    { weight: 45000, f40: 114, f30: 118, f15: 123 },
+                    { weight: 40000, f40: 107, f30: 111, f15: 115 }
+                ]
+            }
+        };
+
+        var selectedVrefAircraft = 'B738';
+
+        function selectVrefAircraft(acType) {
+            selectedVrefAircraft = acType;
+            // Update button states
+            document.querySelectorAll('[id^="vref-ac-"]').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('vref-ac-' + acType.toLowerCase()).classList.add('active');
+            calculateVref();
+        }
+
+        function interpolateVref(weight, acType) {
+            var data = vrefAircraftData[acType];
+            if (!data) return null;
+
+            var vrefTable = data.vref;
+            // Find the two weights to interpolate between
+            var lower = null, upper = null;
+
+            for (var i = 0; i < vrefTable.length; i++) {
+                if (weight >= vrefTable[i].weight) {
+                    upper = vrefTable[i];
+                    lower = vrefTable[i + 1] || vrefTable[i];
+                    break;
+                }
+            }
+
+            // If weight is below minimum in table
+            if (!upper) {
+                upper = vrefTable[vrefTable.length - 1];
+                lower = upper;
+            }
+
+            // If weight is above maximum in table
+            if (weight > vrefTable[0].weight) {
+                upper = vrefTable[0];
+                lower = vrefTable[0];
+            }
+
+            // Linear interpolation
+            if (upper.weight === lower.weight) {
+                return { f40: upper.f40, f30: upper.f30, f15: upper.f15 };
+            }
+
+            var ratio = (weight - lower.weight) / (upper.weight - lower.weight);
+            return {
+                f40: Math.round(lower.f40 + ratio * (upper.f40 - lower.f40)),
+                f30: Math.round(lower.f30 + ratio * (upper.f30 - lower.f30)),
+                f15: Math.round(lower.f15 + ratio * (upper.f15 - lower.f15))
+            };
+        }
+
+        function calculateVref() {
+            var weight = parseInt(document.getElementById('vref-weight').value, 10) || 0;
+            var acData = vrefAircraftData[selectedVrefAircraft];
+
+            if (weight === 0) {
+                // Clear all displays
+                document.getElementById('vref-40').textContent = '---';
+                document.getElementById('vref-30').textContent = '---';
+                document.getElementById('vref-15').textContent = '---';
+                ['up', '1', '5', '10', '15', '25', '30', '40'].forEach(function(f) {
+                    document.getElementById('man-' + f).textContent = '---';
+                });
+                document.getElementById('vref-info').textContent = 'Select aircraft and enter landing weight';
+                return;
+            }
+
+            // Get interpolated VREF values
+            var vref = interpolateVref(weight, selectedVrefAircraft);
+            if (!vref) return;
+
+            // Display VREF speeds
+            document.getElementById('vref-40').textContent = vref.f40;
+            document.getElementById('vref-30').textContent = vref.f30;
+            document.getElementById('vref-15').textContent = vref.f15;
+
+            // Calculate and display maneuver speeds based on VREF40
+            // Formulas: UP = VREF40+70, F1 = VREF40+50, F5/F10 = VREF40+30, F15 = VREF40+20, F25 = VREF40+10
+            document.getElementById('man-up').textContent = vref.f40 + 70;
+            document.getElementById('man-1').textContent = vref.f40 + 50;
+            document.getElementById('man-5').textContent = vref.f40 + 30;
+            document.getElementById('man-10').textContent = vref.f40 + 30;
+            document.getElementById('man-15').textContent = vref.f40 + 20;
+            document.getElementById('man-25').textContent = vref.f40 + 10;
+            document.getElementById('man-30').textContent = vref.f30;
+            document.getElementById('man-40').textContent = vref.f40;
+
+            // Update info
+            var minW = acData.vref[acData.vref.length - 1].weight;
+            var maxW = acData.vref[0].weight;
+            var info = acData.name + ' | ' + acData.engine + ' | Ref Alt: ' + acData.refAlt.toLocaleString() + ' ft';
+            if (weight < minW || weight > maxW) {
+                info += ' | WEIGHT OUT OF RANGE';
+                document.getElementById('vref-info').style.color = '#ff5252';
+            } else {
+                document.getElementById('vref-info').style.color = '#666';
+            }
+            document.getElementById('vref-info').textContent = info;
+        }
+
+        function clearVref() {
+            document.getElementById('vref-weight').value = '';
+            document.getElementById('vref-weight-btn').textContent = '---';
+            document.getElementById('vref-weight-btn').classList.add('placeholder');
+            document.getElementById('vref-40').textContent = '---';
+            document.getElementById('vref-30').textContent = '---';
+            document.getElementById('vref-15').textContent = '---';
+            ['up', '1', '5', '10', '15', '25', '30', '40'].forEach(function(f) {
+                document.getElementById('man-' + f).textContent = '---';
+            });
+            document.getElementById('vref-info').textContent = 'Select aircraft and enter landing weight';
+            document.getElementById('vref-info').style.color = '#666';
         }
 
         // ============ FDP CALCULATOR ============
