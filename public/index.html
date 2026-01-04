@@ -3248,6 +3248,23 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         </div>
     </div>
 
+    <!-- Time Picker Modal (validates HHMM format) -->
+    <div class="modal-overlay" id="time-picker-modal">
+        <div class="number-picker" style="max-width: 300px;">
+            <div class="picker-title" id="time-picker-title">Enter Time</div>
+            <div class="picker-display">
+                <span class="picker-value" id="time-picker-value" style="font-size: 2.2rem; letter-spacing: 4px;">----</span>
+            </div>
+            <div class="picker-buttons" id="time-picker-digits" style="grid-template-columns: repeat(5, 1fr); gap: 6px;">
+                <!-- Digits will be dynamically generated -->
+            </div>
+            <div class="picker-actions">
+                <button class="picker-cancel" onclick="closeTimePicker()">Cancel</button>
+                <button class="picker-confirm" onclick="confirmTimePicker()">OK</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ============ GLOBAL VARIABLES ============
         var currentSectorCount = 1;
@@ -3335,28 +3352,34 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             closePicker();
         }
 
-        // Time picker (HHMM format)
+        // ============ TIME PICKER (HHMM with validation) ============
+        var timePickerValue = '';
+        var timePickerFieldId = '';
+        var timePickerCallback = null;
+
         function openTimePicker(fieldId) {
+            timePickerFieldId = fieldId;
             const currentVal = document.getElementById(fieldId).value || '';
-            openPicker('Enter Time (HHMM)', '', currentVal, 4, false, (val) => {
+            timePickerValue = currentVal;
+
+            // Set up callback for when confirmed
+            timePickerCallback = function(val) {
                 document.getElementById(fieldId).value = val;
                 const btn = document.getElementById(fieldId + '-btn');
                 if (btn) {
-                    btn.textContent = val ? val.padStart(4, '0') : (fieldId === 'utc-manual' ? 'AUTO' : (fieldId.startsWith('layover-') ? '----' : '----'));
+                    btn.textContent = val ? val.padStart(4, '0') : (fieldId === 'utc-manual' ? 'AUTO' : '----');
                     btn.classList.toggle('placeholder', !val);
                 }
                 // Handle sector OOOI (s1-out, s1-off, s2-on, etc.)
                 const sectorMatch = fieldId.match(/^s(\d)-(out|off|on|in)$/);
                 if (sectorMatch) {
                     calculateSectorTimes(parseInt(sectorMatch[1]));
-                    // Also recalculate next sector's turnaround if exists
                     const nextSector = parseInt(sectorMatch[1]) + 1;
                     if (nextSector <= currentSectorCount) {
                         calculateSectorTimes(nextSector);
                     }
                     saveSchedule();
                 }
-                // Handle sector STD/STA for delay calculations
                 else if (fieldId.match(/^s(\d)-(std|sta)$/)) {
                     const schedMatch = fieldId.match(/^s(\d)-(std|sta)$/);
                     calculateSectorTimes(parseInt(schedMatch[1]));
@@ -3372,7 +3395,113 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 }
                 else if (fieldId.startsWith('layover-')) calculateLayover();
                 else if (fieldId.startsWith('time-tz-')) calculateTimeTabTimezones();
-            });
+            };
+
+            updateTimePickerDisplay();
+            updateTimePickerDigits();
+            document.getElementById('time-picker-modal').classList.add('active');
+        }
+
+        function updateTimePickerDisplay() {
+            var display = timePickerValue.padEnd(4, '-');
+            // Format as HH:MM style display
+            var formatted = display.substring(0, 2) + display.substring(2, 4);
+            document.getElementById('time-picker-value').textContent = formatted;
+        }
+
+        function getValidDigitsForPosition(pos) {
+            // pos 0: First hour digit - 0, 1, 2
+            // pos 1: Second hour digit - depends on first digit
+            // pos 2: First minute digit - 0-5
+            // pos 3: Second minute digit - 0-9
+
+            if (pos === 0) {
+                return [0, 1, 2];
+            } else if (pos === 1) {
+                var firstDigit = parseInt(timePickerValue[0]) || 0;
+                if (firstDigit === 2) {
+                    return [0, 1, 2, 3]; // 20-23
+                } else {
+                    return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; // 00-19
+                }
+            } else if (pos === 2) {
+                return [0, 1, 2, 3, 4, 5]; // 00-59 minutes
+            } else if (pos === 3) {
+                return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            }
+            return [];
+        }
+
+        function updateTimePickerDigits() {
+            var grid = document.getElementById('time-picker-digits');
+            var currentPos = timePickerValue.length;
+            var validDigits = getValidDigitsForPosition(currentPos);
+            var html = '';
+
+            for (var d = 0; d <= 9; d++) {
+                var isValid = validDigits.includes(d);
+                if (isValid) {
+                    html += '<button class="picker-btn" onclick="timePickerAppend(\'' + d + '\')" style="min-width: 0; padding: 15px 0; font-size: 1.3rem;">' + d + '</button>';
+                } else {
+                    html += '<button class="picker-btn" style="min-width: 0; padding: 15px 0; font-size: 1.3rem; opacity: 0.15; pointer-events: none;"> </button>';
+                }
+            }
+
+            // Add Clear and Backspace buttons
+            html += '<button class="picker-btn clear" onclick="timePickerClear()" style="min-width: 0; padding: 15px 0;">C</button>';
+            html += '<button class="picker-btn" onclick="timePickerBackspace()" style="min-width: 0; padding: 15px 0;">←</button>';
+
+            // Add NOW button for quick current time entry
+            html += '<button class="picker-btn" onclick="timePickerNow()" style="min-width: 0; padding: 15px 0; font-size: 0.8rem; background: rgba(0,212,255,0.3); grid-column: span 3;">NOW</button>';
+
+            grid.innerHTML = html;
+        }
+
+        function timePickerAppend(digit) {
+            if (timePickerValue.length < 4) {
+                timePickerValue += digit;
+                updateTimePickerDisplay();
+                updateTimePickerDigits();
+
+                // Auto-confirm when 4 digits entered
+                if (timePickerValue.length === 4) {
+                    confirmTimePicker();
+                }
+            }
+        }
+
+        function timePickerBackspace() {
+            timePickerValue = timePickerValue.slice(0, -1);
+            updateTimePickerDisplay();
+            updateTimePickerDigits();
+        }
+
+        function timePickerClear() {
+            timePickerValue = '';
+            updateTimePickerDisplay();
+            updateTimePickerDigits();
+        }
+
+        function timePickerNow() {
+            var now = new Date();
+            var h = String(now.getUTCHours()).padStart(2, '0');
+            var m = String(now.getUTCMinutes()).padStart(2, '0');
+            timePickerValue = h + m;
+            updateTimePickerDisplay();
+            confirmTimePicker();
+        }
+
+        function closeTimePicker() {
+            document.getElementById('time-picker-modal').classList.remove('active');
+        }
+
+        function confirmTimePicker() {
+            if (timePickerCallback && timePickerValue.length === 4) {
+                timePickerCallback(timePickerValue);
+            } else if (timePickerCallback && timePickerValue.length === 0) {
+                timePickerCallback('');
+            }
+            closeTimePicker();
         }
 
         // Weight picker (with commas)
