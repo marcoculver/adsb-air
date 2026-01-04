@@ -176,6 +176,15 @@
         .strip-timer.color-expired .strip-timer-icon { --strip-color: #ff5252; }
         .strip-timer.color-neutral .strip-timer-icon { --strip-color: #00d4ff; }
 
+        .strip-timer.flashing {
+            animation: stripFlashRed 0.6s ease-in-out infinite;
+        }
+
+        @keyframes stripFlashRed {
+            0%, 100% { background: rgba(0, 37, 64, 0.6); }
+            50% { background: rgba(255, 50, 0, 0.6); box-shadow: 0 0 15px rgba(255, 50, 0, 0.8); }
+        }
+
         .strip-no-active {
             color: #666;
             font-size: 0.85rem;
@@ -4251,7 +4260,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
         function updateActiveTimersStrip() {
             const stripContainer = document.getElementById('strip-timers');
-            const activeTimers = timers.filter(t => t.running || (t.type === 'countdown' && t.remaining > 0 && t.remaining < t.initialTime));
+            const activeTimers = timers.filter(t => t.running || t.expired || (t.type === 'countdown' && t.remaining > 0 && t.remaining < t.initialTime));
 
             if (activeTimers.length === 0) {
                 stripContainer.innerHTML = '<span class="strip-no-active">No active timers</span>';
@@ -4259,7 +4268,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             }
 
             stripContainer.innerHTML = timers.map((timer, index) => {
-                if (!timer.running && !(timer.type === 'countdown' && timer.remaining > 0 && timer.remaining < timer.initialTime)) {
+                if (!timer.running && !timer.expired && !(timer.type === 'countdown' && timer.remaining > 0 && timer.remaining < timer.initialTime)) {
                     return '';
                 }
                 const colorClass = getColorClass(timer);
@@ -4267,7 +4276,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 const displayTime = timer.type === 'countdown' ? timer.remaining : timer.elapsed;
 
                 return `
-                    <div class="strip-timer ${colorClass}" onclick="switchTab('timers')" data-timer-index="${index}">
+                    <div class="strip-timer ${colorClass}${timer.expired ? ' flashing' : ''}" onclick="switchTab('timers')" data-timer-index="${index}">
                         <div class="strip-timer-icon" style="--strip-progress: ${progress}%">
                             <div class="strip-timer-icon-inner"></div>
                         </div>
@@ -4289,7 +4298,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             const progress = getProgress(timer);
             const displayTime = timer.type === 'countdown' ? timer.remaining : timer.elapsed;
 
-            stripTimer.className = `strip-timer ${colorClass}`;
+            stripTimer.className = `strip-timer ${colorClass}${timer.expired ? ' flashing' : ''}`;
             stripTimer.querySelector('.strip-timer-icon').style.setProperty('--strip-progress', `${progress}%`);
             stripTimer.querySelector('.strip-timer-value').textContent = formatTime(displayTime);
         }
@@ -4943,7 +4952,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             const minutes = Math.floor((timer.initialTime % 3600000) / 60000);
 
             return `
-                <div class="timer-card ${colorClass}" id="timer-${index}">
+                <div class="timer-card ${colorClass}${timer.expired ? ' flashing' : ''}" id="timer-${index}">
                     <div class="clock-container">
                         <div class="clock-face" style="--progress: ${progress}%">
                             <div class="clock-inner">
