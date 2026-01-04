@@ -8352,10 +8352,11 @@
             displayMatches.forEach(function(m) {
                 html += '<div style="padding: 10px; border-bottom: 1px solid rgba(255,130,0,0.2); display: flex; justify-content: space-between; align-items: center;">';
                 html += '<div>';
-                html += '<span style="color: #00d4ff; font-weight: bold; font-size: 1.1rem;">' + m.airline + ' ' + m.flight + '</span>';
+                html += '<span style="color: #00d4ff; font-weight: bold; font-size: 1.3rem;">' + m.flight + '</span>';
+                html += '<span style="color: #888; font-size: 0.85rem; margin-left: 8px;">(' + m.airline + ')</span>';
                 html += '</div>';
                 html += '<div style="text-align: right;">';
-                html += '<div style="color: #00ff88; font-size: 1rem;">' + m.routeIata + '</div>';
+                html += '<div style="color: #00ff88; font-size: 1.1rem;">' + m.routeIata + '</div>';
                 html += '<div style="color: #888; font-size: 0.8rem;">' + m.routeIcao + '</div>';
                 html += '</div>';
                 html += '</div>';
