@@ -3013,7 +3013,105 @@
                     </div>
                 </div>
 
-                <!-- Second row: Coordinates Converter -->
+                <!-- Weather Calculator Row -->
+                <div class="top-sections" style="grid-template-columns: 1fr 1fr; margin-top: 20px;">
+                    <!-- Weather / Feels Like Calculator -->
+                    <div class="section">
+                        <div class="section-title">Weather / Feels Like</div>
+                        <div class="input-grid-2">
+                            <div class="input-group">
+                                <label class="input-label">Temperature (°C)</label>
+                                <input type="number" class="fdp-input" id="wx-temp" placeholder="e.g., 35" oninput="calculateWeather()">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Dew Point (°C)</label>
+                                <input type="number" class="fdp-input" id="wx-dewpoint" placeholder="e.g., 20" oninput="calculateWeather()">
+                            </div>
+                        </div>
+                        <div class="input-grid-2" style="margin-top: 10px;">
+                            <div class="input-group">
+                                <label class="input-label">Wind Speed (kt)</label>
+                                <input type="number" class="fdp-input" id="wx-wind" placeholder="e.g., 15" oninput="calculateWeather()">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Relative Humidity</label>
+                                <div class="fdp-result-value" id="wx-rh" style="font-size: 1.2rem; color: #00d4ff;">---%</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center;">
+                                <div>
+                                    <div style="font-size: 0.75rem; color: #888; margin-bottom: 5px;">Heat Index</div>
+                                    <div class="fdp-result-value" id="wx-heat-index" style="font-size: 1.3rem; color: #ff8200;">---°C</div>
+                                    <div id="wx-heat-warning" style="font-size: 0.65rem; margin-top: 5px;"></div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.75rem; color: #888; margin-bottom: 5px;">Wind Chill</div>
+                                    <div class="fdp-result-value" id="wx-wind-chill" style="font-size: 1.3rem; color: #00d4ff;">---°C</div>
+                                    <div id="wx-chill-warning" style="font-size: 0.65rem; margin-top: 5px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align: center; font-size: 0.65rem; color: #666; margin-top: 10px;">
+                            Heat Index: T ≥ 27°C | Wind Chill: T ≤ 10°C, Wind ≥ 5kt
+                        </div>
+                        <button class="clear-btn" onclick="clearWeather()">Clear</button>
+                    </div>
+
+                    <!-- Glide Path / Rate of Descent Calculator -->
+                    <div class="section">
+                        <div class="section-title">Glide Path / Rate of Descent</div>
+                        <div class="input-grid-2">
+                            <div class="input-group">
+                                <label class="input-label">Airport Elevation (ft)</label>
+                                <input type="number" class="fdp-input" id="gp-elev" placeholder="e.g., 62" value="62" oninput="calculateGlidePath()">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">OAT at Airport (°C)</label>
+                                <input type="number" class="fdp-input" id="gp-oat" placeholder="e.g., 35" oninput="calculateGlidePath()">
+                            </div>
+                        </div>
+                        <div class="input-grid-2" style="margin-top: 10px;">
+                            <div class="input-group">
+                                <label class="input-label">Published GP (°)</label>
+                                <input type="number" class="fdp-input" id="gp-angle" placeholder="e.g., 3.0" value="3.0" step="0.1" oninput="calculateGlidePath()">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Ground Speed (kt)</label>
+                                <input type="number" class="fdp-input" id="gp-gs" placeholder="e.g., 140" oninput="calculateGlidePath()">
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center;">
+                                <div>
+                                    <div style="font-size: 0.7rem; color: #888;">ISA at Elevation</div>
+                                    <div class="fdp-result-value" id="gp-isa" style="font-size: 1rem;">---°C</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.7rem; color: #888;">Temp Deviation</div>
+                                    <div class="fdp-result-value" id="gp-dev" style="font-size: 1rem;">---</div>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center; margin-top: 15px;">
+                                <div>
+                                    <div style="font-size: 0.7rem; color: #888;">Effective GP Angle</div>
+                                    <div class="fdp-result-value" id="gp-effective" style="font-size: 1.3rem; color: #00ff88;">---°</div>
+                                    <div id="gp-hot-cold" style="font-size: 0.75rem; margin-top: 3px;"></div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.7rem; color: #888;">Rate of Descent</div>
+                                    <div class="fdp-result-value" id="gp-rod" style="font-size: 1.3rem; color: #ff8200;">--- fpm</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align: center; font-size: 0.65rem; color: #666; margin-top: 10px;">
+                            Hot = fly lower (steeper) | Cold = fly higher (shallower)
+                        </div>
+                        <button class="clear-btn" onclick="clearGlidePath()">Clear</button>
+                    </div>
+                </div>
+
+                <!-- Coordinates Converter Row -->
                 <div class="top-sections" style="grid-template-columns: 1fr; margin-top: 20px;">
                     <div class="section">
                         <div class="section-title">Coordinates / LIDO Converter</div>
@@ -7046,6 +7144,210 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             document.getElementById('isa-temp').textContent = '+15°C';
             document.getElementById('isa-dev').textContent = 'ISA ±0°C';
             document.getElementById('isa-dev').className = 'isa-deviation neutral';
+        }
+
+        // ============ WEATHER / FEELS LIKE CALCULATOR ============
+        function calculateWeather() {
+            var temp = parseFloat(document.getElementById('wx-temp').value);
+            var dewpoint = parseFloat(document.getElementById('wx-dewpoint').value);
+            var windKt = parseFloat(document.getElementById('wx-wind').value) || 0;
+
+            // Convert knots to km/h for wind chill formula (1 kt = 1.852 km/h)
+            var windKmh = windKt * 1.852;
+
+            // Calculate Relative Humidity using Magnus formula
+            var rh = null;
+            if (!isNaN(temp) && !isNaN(dewpoint)) {
+                var a = 17.625;
+                var b = 243.04;
+                var alphaTd = (a * dewpoint) / (b + dewpoint);
+                var alphaT = (a * temp) / (b + temp);
+                rh = 100 * (Math.exp(alphaTd) / Math.exp(alphaT));
+                rh = Math.min(100, Math.max(0, rh)); // Clamp to 0-100
+                document.getElementById('wx-rh').textContent = Math.round(rh) + '%';
+                document.getElementById('wx-rh').style.color = rh > 80 ? '#ff8200' : rh > 60 ? '#ffd700' : '#00d4ff';
+            } else {
+                document.getElementById('wx-rh').textContent = '---%';
+                document.getElementById('wx-rh').style.color = '#00d4ff';
+            }
+
+            // Calculate Heat Index (valid for T >= 27°C / 80°F and RH >= 40%)
+            var heatIndexEl = document.getElementById('wx-heat-index');
+            var heatWarningEl = document.getElementById('wx-heat-warning');
+            if (!isNaN(temp) && temp >= 27 && rh !== null) {
+                // Convert to Fahrenheit for NOAA formula
+                var tempF = temp * 9/5 + 32;
+                var hi = -42.379 + 2.04901523 * tempF + 10.14333127 * rh
+                       - 0.22475541 * tempF * rh - 0.00683783 * tempF * tempF
+                       - 0.05481717 * rh * rh + 0.00122874 * tempF * tempF * rh
+                       + 0.00085282 * tempF * rh * rh - 0.00000199 * tempF * tempF * rh * rh;
+                // Convert back to Celsius
+                var hiC = (hi - 32) * 5/9;
+                heatIndexEl.textContent = Math.round(hiC) + '°C';
+
+                // Heat index warnings
+                if (hiC >= 54) {
+                    heatIndexEl.style.color = '#ff0000';
+                    heatWarningEl.innerHTML = '<span style="color:#ff0000">EXTREME DANGER</span>';
+                } else if (hiC >= 41) {
+                    heatIndexEl.style.color = '#ff5252';
+                    heatWarningEl.innerHTML = '<span style="color:#ff5252">Danger</span>';
+                } else if (hiC >= 32) {
+                    heatIndexEl.style.color = '#ff8200';
+                    heatWarningEl.innerHTML = '<span style="color:#ff8200">Extreme Caution</span>';
+                } else if (hiC >= 27) {
+                    heatIndexEl.style.color = '#ffd700';
+                    heatWarningEl.innerHTML = '<span style="color:#ffd700">Caution</span>';
+                } else {
+                    heatIndexEl.style.color = '#00ff88';
+                    heatWarningEl.innerHTML = '';
+                }
+            } else {
+                heatIndexEl.textContent = '---°C';
+                heatIndexEl.style.color = '#ff8200';
+                heatWarningEl.innerHTML = !isNaN(temp) && temp < 27 ? '<span style="color:#666">T < 27°C</span>' : '';
+            }
+
+            // Calculate Wind Chill (valid for T <= 10°C and wind >= 4.8 km/h)
+            var windChillEl = document.getElementById('wx-wind-chill');
+            var chillWarningEl = document.getElementById('wx-chill-warning');
+            if (!isNaN(temp) && temp <= 10 && windKmh >= 4.8) {
+                var wc = 13.12 + 0.6215 * temp - 11.37 * Math.pow(windKmh, 0.16) + 0.3965 * temp * Math.pow(windKmh, 0.16);
+                windChillEl.textContent = Math.round(wc) + '°C';
+
+                // Wind chill warnings
+                if (wc <= -40) {
+                    windChillEl.style.color = '#ff0000';
+                    chillWarningEl.innerHTML = '<span style="color:#ff0000">EXTREME</span>';
+                } else if (wc <= -28) {
+                    windChillEl.style.color = '#ff5252';
+                    chillWarningEl.innerHTML = '<span style="color:#ff5252">Frostbite risk</span>';
+                } else if (wc <= -10) {
+                    windChillEl.style.color = '#00d4ff';
+                    chillWarningEl.innerHTML = '<span style="color:#00d4ff">Very Cold</span>';
+                } else {
+                    windChillEl.style.color = '#00ff88';
+                    chillWarningEl.innerHTML = '';
+                }
+            } else {
+                windChillEl.textContent = '---°C';
+                windChillEl.style.color = '#00d4ff';
+                if (!isNaN(temp) && temp > 10) {
+                    chillWarningEl.innerHTML = '<span style="color:#666">T > 10°C</span>';
+                } else if (windKmh < 4.8) {
+                    chillWarningEl.innerHTML = '<span style="color:#666">Wind < 3kt</span>';
+                } else {
+                    chillWarningEl.innerHTML = '';
+                }
+            }
+        }
+
+        function clearWeather() {
+            document.getElementById('wx-temp').value = '';
+            document.getElementById('wx-dewpoint').value = '';
+            document.getElementById('wx-wind').value = '';
+            document.getElementById('wx-rh').textContent = '---%';
+            document.getElementById('wx-rh').style.color = '#00d4ff';
+            document.getElementById('wx-heat-index').textContent = '---°C';
+            document.getElementById('wx-heat-index').style.color = '#ff8200';
+            document.getElementById('wx-heat-warning').innerHTML = '';
+            document.getElementById('wx-wind-chill').textContent = '---°C';
+            document.getElementById('wx-wind-chill').style.color = '#00d4ff';
+            document.getElementById('wx-chill-warning').innerHTML = '';
+        }
+
+        // ============ GLIDE PATH / RATE OF DESCENT CALCULATOR ============
+        function calculateGlidePath() {
+            var elev = parseFloat(document.getElementById('gp-elev').value) || 0;
+            var oat = parseFloat(document.getElementById('gp-oat').value);
+            var gpAngle = parseFloat(document.getElementById('gp-angle').value) || 3.0;
+            var gs = parseFloat(document.getElementById('gp-gs').value);
+
+            // Calculate ISA temperature at airport elevation
+            // ISA at sea level = 15°C, lapse rate = 1.98°C per 1000ft
+            var isaAtElev = 15 - (elev / 1000) * 1.98;
+            document.getElementById('gp-isa').textContent = isaAtElev.toFixed(1) + '°C';
+
+            // Calculate temperature deviation from ISA
+            var gpDevEl = document.getElementById('gp-dev');
+            var gpEffectiveEl = document.getElementById('gp-effective');
+            var gpHotColdEl = document.getElementById('gp-hot-cold');
+            var gpRodEl = document.getElementById('gp-rod');
+
+            if (!isNaN(oat)) {
+                var tempDev = oat - isaAtElev;
+                if (tempDev >= 0) {
+                    gpDevEl.textContent = 'ISA +' + Math.round(tempDev) + '°C';
+                    gpDevEl.style.color = '#ff8200';
+                } else {
+                    gpDevEl.textContent = 'ISA ' + Math.round(tempDev) + '°C';
+                    gpDevEl.style.color = '#00d4ff';
+                }
+
+                // Calculate effective glide path angle
+                // Hot = air is less dense = fly lower = steeper effective angle
+                // Cold = air is denser = fly higher = shallower effective angle
+                // Correction: approximately 0.1° per 15°C deviation from ISA
+                // More accurate: use temperature ratio
+                var tempRatio = (273.15 + isaAtElev) / (273.15 + oat);
+                var effectiveGP = gpAngle * tempRatio;
+
+                gpEffectiveEl.textContent = effectiveGP.toFixed(2) + '°';
+
+                if (tempDev > 5) {
+                    gpHotColdEl.innerHTML = '<span style="color:#ff8200">HOT - Fly Lower</span>';
+                    gpEffectiveEl.style.color = '#ff8200';
+                } else if (tempDev < -5) {
+                    gpHotColdEl.innerHTML = '<span style="color:#00d4ff">COLD - Fly Higher</span>';
+                    gpEffectiveEl.style.color = '#00d4ff';
+                } else {
+                    gpHotColdEl.innerHTML = '<span style="color:#00ff88">Near ISA</span>';
+                    gpEffectiveEl.style.color = '#00ff88';
+                }
+            } else {
+                gpDevEl.textContent = '---';
+                gpDevEl.style.color = '#888';
+                gpEffectiveEl.textContent = gpAngle.toFixed(2) + '°';
+                gpEffectiveEl.style.color = '#00ff88';
+                gpHotColdEl.innerHTML = '';
+            }
+
+            // Calculate Rate of Descent
+            // ROD (fpm) = Ground Speed (nm/hr) × tan(GP angle) × 6076.12 / 60
+            // Simplified: ROD = GS × GP(degrees) × 17.45 / 60 ≈ GS × GP × 0.29
+            // Or using tangent: ROD = GS × tan(GP × π/180) × 101.27
+            if (!isNaN(gs) && gs > 0) {
+                var gpRad = gpAngle * Math.PI / 180;
+                var rod = gs * Math.tan(gpRad) * 101.27;
+                gpRodEl.textContent = Math.round(rod) + ' fpm';
+
+                // Color based on typical ranges
+                if (rod > 1000) {
+                    gpRodEl.style.color = '#ff5252';
+                } else if (rod > 800) {
+                    gpRodEl.style.color = '#ff8200';
+                } else {
+                    gpRodEl.style.color = '#00ff88';
+                }
+            } else {
+                gpRodEl.textContent = '--- fpm';
+                gpRodEl.style.color = '#ff8200';
+            }
+        }
+
+        function clearGlidePath() {
+            document.getElementById('gp-elev').value = '62';
+            document.getElementById('gp-oat').value = '';
+            document.getElementById('gp-angle').value = '3.0';
+            document.getElementById('gp-gs').value = '';
+            document.getElementById('gp-isa').textContent = '---°C';
+            document.getElementById('gp-dev').textContent = '---';
+            document.getElementById('gp-dev').style.color = '#888';
+            document.getElementById('gp-effective').textContent = '---°';
+            document.getElementById('gp-effective').style.color = '#00ff88';
+            document.getElementById('gp-hot-cold').innerHTML = '';
+            document.getElementById('gp-rod').textContent = '--- fpm';
+            document.getElementById('gp-rod').style.color = '#ff8200';
         }
 
         // ============ COORDINATES / LIDO CONVERTER ============
