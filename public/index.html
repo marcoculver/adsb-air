@@ -4305,8 +4305,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 <button class="picker-btn clear" onclick="pickerClear()">C</button>
                 <button class="picker-btn" onclick="pickerAppend('0')">0</button>
                 <button class="picker-btn" onclick="pickerBackspace()">&larr;</button>
-                <button class="picker-btn" onclick="pickerAppend('00')" style="font-size:1rem; grid-column: span 1;">00</button>
-                <button class="picker-btn" onclick="pickerAppend('000')" style="font-size:0.9rem; grid-column: span 2;">000</button>
+                <button class="picker-btn" onclick="pickerAppend('.')" style="font-size:1.5rem; grid-column: span 3;">.</button>
             </div>
             <div class="picker-actions">
                 <button class="picker-cancel" onclick="closePicker()">Cancel</button>
@@ -4817,7 +4816,12 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             }
             pickerFirstInput = false;
 
-            // Handle multi-digit append (00, 000, 0000)
+            // Prevent multiple decimal points
+            if (digit === '.' && pickerValue.includes('.')) {
+                return;
+            }
+
+            // Handle multi-digit append
             const newLength = pickerValue.length + digit.length;
             if (newLength <= pickerMaxLength) {
                 pickerValue += digit;
@@ -5177,19 +5181,9 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             // Convert stored kg to tonnes for display
             const currentTonnes = currentVal ? (parseInt(currentVal) / 1000).toFixed(1) : '';
 
-            openPicker(title || 'Enter Weight', 'T', currentTonnes.replace('.', ''), 4, false, (val) => {
-                // val is like "611" for 61.1 tonnes
-                // Insert decimal before last digit
-                var tonnes = 0;
-                if (val.length === 0) {
-                    tonnes = 0;
-                } else if (val.length === 1) {
-                    tonnes = parseFloat('0.' + val);
-                } else if (val.length === 2) {
-                    tonnes = parseFloat(val[0] + '.' + val[1]);
-                } else {
-                    tonnes = parseFloat(val.slice(0, -1) + '.' + val.slice(-1));
-                }
+            openPicker(title || 'Enter Weight', 'T', currentTonnes, 5, false, (val) => {
+                // val is now like "61.1" directly
+                var tonnes = parseFloat(val) || 0;
 
                 // Convert to kg and store
                 var kg = Math.round(tonnes * 1000);
