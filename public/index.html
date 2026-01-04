@@ -3027,17 +3027,20 @@
                         <div class="input-grid-2">
                             <div class="input-group">
                                 <label class="input-label">Temperature (°C)</label>
-                                <input type="number" class="fdp-input" id="wx-temp" placeholder="e.g., 35" oninput="calculateWeather()">
+                                <button class="input-btn" id="wx-temp-btn" onclick="openWxTempPicker('wx-temp', 'Temperature')" style="max-width: 100%;">---</button>
+                                <input type="hidden" id="wx-temp" value="">
                             </div>
                             <div class="input-group">
                                 <label class="input-label">Dew Point (°C)</label>
-                                <input type="number" class="fdp-input" id="wx-dewpoint" placeholder="e.g., 20" oninput="calculateWeather()">
+                                <button class="input-btn" id="wx-dewpoint-btn" onclick="openWxTempPicker('wx-dewpoint', 'Dew Point')" style="max-width: 100%;">---</button>
+                                <input type="hidden" id="wx-dewpoint" value="">
                             </div>
                         </div>
                         <div class="input-grid-2" style="margin-top: 10px;">
                             <div class="input-group">
                                 <label class="input-label">Wind Speed (kt)</label>
-                                <input type="number" class="fdp-input" id="wx-wind" placeholder="e.g., 15" oninput="calculateWeather()">
+                                <button class="input-btn" id="wx-wind-btn" onclick="openWeightPicker('wx-wind', 'Wind Speed', 'kt')" style="max-width: 100%;">---</button>
+                                <input type="hidden" id="wx-wind" value="">
                             </div>
                             <div class="input-group">
                                 <label class="input-label">Relative Humidity</label>
@@ -3070,21 +3073,25 @@
                         <div class="input-grid-2">
                             <div class="input-group">
                                 <label class="input-label">Airport Elevation (ft)</label>
-                                <input type="number" class="fdp-input" id="gp-elev" placeholder="e.g., 62" value="62" oninput="calculateGlidePath()">
+                                <button class="input-btn" id="gp-elev-btn" onclick="openWeightPicker('gp-elev', 'Elevation', 'ft')" style="max-width: 100%;">62</button>
+                                <input type="hidden" id="gp-elev" value="62">
                             </div>
                             <div class="input-group">
                                 <label class="input-label">OAT at Airport (°C)</label>
-                                <input type="number" class="fdp-input" id="gp-oat" placeholder="e.g., 35" oninput="calculateGlidePath()">
+                                <button class="input-btn" id="gp-oat-btn" onclick="openWxTempPicker('gp-oat', 'OAT')" style="max-width: 100%;">---</button>
+                                <input type="hidden" id="gp-oat" value="">
                             </div>
                         </div>
                         <div class="input-grid-2" style="margin-top: 10px;">
                             <div class="input-group">
                                 <label class="input-label">Published GP (°)</label>
-                                <input type="number" class="fdp-input" id="gp-angle" placeholder="e.g., 3.0" value="3.0" step="0.1" oninput="calculateGlidePath()">
+                                <button class="input-btn" id="gp-angle-btn" onclick="openGlidePicker('gp-angle', 'Glide Path')" style="max-width: 100%;">3.0</button>
+                                <input type="hidden" id="gp-angle" value="3.0">
                             </div>
                             <div class="input-group">
                                 <label class="input-label">Ground Speed (kt)</label>
-                                <input type="number" class="fdp-input" id="gp-gs" placeholder="e.g., 140" oninput="calculateGlidePath()">
+                                <button class="input-btn" id="gp-gs-btn" onclick="openWeightPicker('gp-gs', 'Ground Speed', 'kt')" style="max-width: 100%;">---</button>
+                                <input type="hidden" id="gp-gs" value="">
                             </div>
                         </div>
                         <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
@@ -4211,6 +4218,8 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 else if (fieldId.startsWith('hold-')) calculateHoldEntry();
                 else if (fieldId === 'isa-alt') calculateISA();
                 else if (fieldId.startsWith('sdt-')) autoCalculateSDT();
+                else if (fieldId.startsWith('wx-')) calculateWeather();
+                else if (fieldId.startsWith('gp-')) calculateGlidePath();
                 else if (fieldId.startsWith('catchup-')) {
                     // Auto-update catch-up display when values change
                 }
@@ -7249,6 +7258,39 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             document.getElementById('isa-dev').className = 'isa-deviation neutral';
         }
 
+        // ============ WEATHER TEMPERATURE PICKER ============
+        var wxTempFieldId = '';
+        var wxTempNegative = false;
+
+        function openWxTempPicker(fieldId, title) {
+            wxTempFieldId = fieldId;
+            var currentVal = document.getElementById(fieldId).value || '0';
+            var absVal = Math.abs(parseInt(currentVal)) || 0;
+            wxTempNegative = parseInt(currentVal) < 0;
+
+            openTempPicker(title, absVal.toString(), function(val, isNeg) {
+                var finalVal = isNeg ? -parseInt(val || 0) : parseInt(val || 0);
+                document.getElementById(fieldId).value = finalVal;
+                var btn = document.getElementById(fieldId + '-btn');
+                if (btn) {
+                    btn.textContent = (finalVal >= 0 ? '+' : '') + finalVal + '°C';
+                }
+                // Trigger appropriate calculate function
+                if (fieldId.startsWith('wx-')) {
+                    calculateWeather();
+                } else if (fieldId.startsWith('gp-')) {
+                    calculateGlidePath();
+                }
+            });
+        }
+
+        // ============ GLIDE PATH ANGLE PICKER ============
+        function openGlidePicker(fieldId, title) {
+            var currentVal = document.getElementById(fieldId).value || '3.0';
+            // Use the generic weight picker but format for decimal
+            openWeightPicker(fieldId, title, '°');
+        }
+
         // ============ WEATHER / FEELS LIKE CALCULATOR ============
         function calculateWeather() {
             var temp = parseFloat(document.getElementById('wx-temp').value);
@@ -7347,8 +7389,11 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
         function clearWeather() {
             document.getElementById('wx-temp').value = '';
+            document.getElementById('wx-temp-btn').textContent = '---';
             document.getElementById('wx-dewpoint').value = '';
+            document.getElementById('wx-dewpoint-btn').textContent = '---';
             document.getElementById('wx-wind').value = '';
+            document.getElementById('wx-wind-btn').textContent = '---';
             document.getElementById('wx-rh').textContent = '---%';
             document.getElementById('wx-rh').style.color = '#00d4ff';
             document.getElementById('wx-heat-index').textContent = '---°C';
@@ -7440,9 +7485,13 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
         function clearGlidePath() {
             document.getElementById('gp-elev').value = '62';
+            document.getElementById('gp-elev-btn').textContent = '62';
             document.getElementById('gp-oat').value = '';
+            document.getElementById('gp-oat-btn').textContent = '---';
             document.getElementById('gp-angle').value = '3.0';
+            document.getElementById('gp-angle-btn').textContent = '3.0';
             document.getElementById('gp-gs').value = '';
+            document.getElementById('gp-gs-btn').textContent = '---';
             document.getElementById('gp-isa').textContent = '---°C';
             document.getElementById('gp-dev').textContent = '---';
             document.getElementById('gp-dev').style.color = '#888';
