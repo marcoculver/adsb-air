@@ -2666,8 +2666,11 @@
                         <button class="aircraft-btn" id="vref-ac-b39m" onclick="selectVrefAircraft('B39M')">B39M</button>
                     </div>
                     <div class="input-group">
-                        <label class="input-label">Landing Weight (kg)</label>
-                        <button class="input-btn placeholder" id="vref-weight-btn" onclick="openWeightPicker('vref-weight', 'Landing Weight')" style="max-width: 100%;">---</button>
+                        <label class="input-label">Landing Weight</label>
+                        <div class="input-btn-with-unit" style="width: 100%;">
+                            <button class="input-btn placeholder" id="vref-weight-btn" onclick="openTonnesPicker('vref-weight', 'Landing Weight')" style="max-width: 100%; padding-right: 30px;">---</button>
+                            <span class="input-btn-unit" style="right: 10px;">T</span>
+                        </div>
                         <input type="hidden" id="vref-weight" value="">
                     </div>
 
@@ -5165,7 +5168,40 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 else if (fieldId.startsWith('lmc-')) {
                     lmcCalculate();
                 }
-                else if (fieldId === 'vref-weight') {
+            });
+        }
+
+        // Tonnes picker for VREF weight entry (format: xx.x)
+        function openTonnesPicker(fieldId, title) {
+            const currentVal = document.getElementById(fieldId).value || '';
+            // Convert stored kg to tonnes for display
+            const currentTonnes = currentVal ? (parseInt(currentVal) / 1000).toFixed(1) : '';
+
+            openPicker(title || 'Enter Weight', 'T', currentTonnes.replace('.', ''), 4, false, (val) => {
+                // val is like "611" for 61.1 tonnes
+                // Insert decimal before last digit
+                var tonnes = 0;
+                if (val.length === 0) {
+                    tonnes = 0;
+                } else if (val.length === 1) {
+                    tonnes = parseFloat('0.' + val);
+                } else if (val.length === 2) {
+                    tonnes = parseFloat(val[0] + '.' + val[1]);
+                } else {
+                    tonnes = parseFloat(val.slice(0, -1) + '.' + val.slice(-1));
+                }
+
+                // Convert to kg and store
+                var kg = Math.round(tonnes * 1000);
+                document.getElementById(fieldId).value = kg;
+
+                const btn = document.getElementById(fieldId + '-btn');
+                if (btn) {
+                    btn.textContent = tonnes > 0 ? tonnes.toFixed(1) : '---';
+                    btn.classList.toggle('placeholder', tonnes === 0);
+                }
+
+                if (fieldId === 'vref-weight') {
                     calculateVref();
                 }
             });
@@ -6332,7 +6368,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             var maxW = acData.vref[0].weight;
             var info = acData.name + ' | ' + acData.engine + ' | Ref Alt: ' + acData.refAlt.toLocaleString() + ' ft';
             if (weight < minW || weight > maxW) {
-                info += ' | WEIGHT OUT OF RANGE';
+                info += ' | RANGE: ' + (minW/1000).toFixed(1) + '-' + (maxW/1000).toFixed(1) + ' T';
                 document.getElementById('vref-info').style.color = '#ff5252';
             } else {
                 document.getElementById('vref-info').style.color = '#666';
