@@ -1170,11 +1170,20 @@
             #tab-set .top-sections {
                 grid-template-columns: 1fr !important;
             }
-            /* FDP tab mobile - handle sector grids */
-            #tab-fdp .fdp-row[style*="grid-template-columns: 1fr 2fr 1fr 1fr"] {
-                grid-template-columns: 1fr 1fr !important;
+            /* FDP tab mobile */
+            #tab-fdp .fdp-row {
+                display: grid !important;
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
             }
-            #tab-fdp .fdp-row[style*="grid-template-columns: 1fr 1fr 1fr 0.8fr"] {
+            #tab-fdp .sector-inputs {
+                grid-template-columns: 1fr !important;
+            }
+            #tab-fdp .local-offset-selector {
+                flex-direction: column;
+                gap: 8px;
+            }
+            #tab-fdp .fdp-results-grid {
                 grid-template-columns: 1fr 1fr !important;
             }
             /* FUEL tab mobile */
@@ -3157,9 +3166,6 @@
                         </div>
                     </div>
                     </div><!-- End fdp-setup-content -->
-                    <button class="preset-btn" onclick="syncFromSchedule()" style="margin-top: 10px; width: 100%;">
-                        Sync from Schedule
-                    </button>
                 </div>
 
                 <div class="fdp-section">
@@ -4775,6 +4781,11 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
             document.getElementById(`tab-${tab}`).classList.add('active');
+
+            // Auto-sync FDP from schedule when opening FDP tab
+            if (tab === 'fdp') {
+                syncFromSchedule();
+            }
         }
 
         // ============ NUMBER PICKER ============
