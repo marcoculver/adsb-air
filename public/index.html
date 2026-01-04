@@ -3256,18 +3256,16 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                         <div class="section-title">Aircraft & Method</div>
                         <div class="input-grid-2">
                             <div class="input-group">
-                                <label class="input-label">Aircraft Model</label>
-                                <select class="fdp-select" id="lmc-aircraft" onchange="updateLmcConfig()">
-                                    <option value="737-800">737-800</option>
-                                    <option value="737-8" selected>737-8</option>
-                                    <option value="737-9">737-9</option>
-                                </select>
+                                <label class="input-label">Tail Number</label>
+                                <div style="display: flex; gap: 5px;">
+                                    <button class="input-btn" id="lmc-tail-btn" onclick="openLmcTailPicker()" style="flex: 1;">---</button>
+                                    <button class="preset-btn" onclick="autofillLmcFromSchedule()" style="font-size: 0.7rem; padding: 5px 8px;">From Sched</button>
+                                </div>
+                                <input type="hidden" id="lmc-tail" value="">
                             </div>
                             <div class="input-group">
-                                <label class="input-label">Configuration</label>
-                                <select class="fdp-select" id="lmc-config" onchange="lmcCalculate()">
-                                    <option value="189Y" selected>189Y</option>
-                                </select>
+                                <label class="input-label">Type / Config</label>
+                                <div id="lmc-aircraft-info" style="background: rgba(0,40,80,0.5); padding: 8px; border-radius: 6px; font-size: 0.85rem; color: #00d4ff;">---</div>
                             </div>
                         </div>
                         <div class="input-grid-2" style="margin-top: 10px;">
@@ -3279,9 +3277,12 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                                 </select>
                             </div>
                             <div class="input-group">
-                                <label class="input-label">Std Pax Weight (kg)</label>
-                                <button class="input-btn" id="lmc-pax-weight-btn" onclick="openWeightPicker('lmc-pax-weight', 'Pax Weight', 'kg')" style="max-width:100%">84</button>
-                                <input type="hidden" id="lmc-pax-weight" value="84">
+                                <label class="input-label">Pax Weights (M/F/C)</label>
+                                <div style="display: flex; gap: 5px; font-size: 0.75rem; color: #888;">
+                                    <span style="flex:1; text-align:center;">M: 88kg</span>
+                                    <span style="flex:1; text-align:center;">F: 70kg</span>
+                                    <span style="flex:1; text-align:center;">C: 35kg</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -6007,8 +6008,16 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             'FQ': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
         };
 
-        function openTailPicker() {
-            const currentValue = document.getElementById('sched-tail').value || '';
+        var tailPickerContext = 'schedule'; // 'schedule' or 'lmc'
+
+        function openTailPicker(context) {
+            tailPickerContext = context || 'schedule';
+            var currentValue = '';
+            if (tailPickerContext === 'lmc') {
+                currentValue = document.getElementById('lmc-tail').value || '';
+            } else {
+                currentValue = document.getElementById('sched-tail').value || '';
+            }
             tailPickerValue = currentValue.replace(/^A6-/i, '');
             tailSelectedPrefix = '';
             updateTailPickerDisplay();
@@ -6084,11 +6093,16 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         function confirmTailPicker() {
-            const fullValue = tailPickerValue ? 'A6-' + tailPickerValue : '';
-            document.getElementById('sched-tail').value = fullValue;
-            document.getElementById('sched-tail-btn').textContent = fullValue || 'A6-___';
-            closeTailPicker();
-            saveSchedule();
+            if (tailPickerContext === 'lmc') {
+                setLmcTail(tailPickerValue);
+                closeTailPicker();
+            } else {
+                var fullValue = tailPickerValue ? 'A6-' + tailPickerValue : '';
+                document.getElementById('sched-tail').value = fullValue;
+                document.getElementById('sched-tail-btn').textContent = fullValue || 'A6-___';
+                closeTailPicker();
+                saveSchedule();
+            }
         }
 
         // ============ TIME TAB FUNCTIONS ============
@@ -7500,28 +7514,59 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         // ============ LMC CALCULATOR ============
-        // LMC correction table: IU per unit (1 pax = 84kg, cargo = 100kg)
+        // Standard pax weights
+        var LMC_PAX_WEIGHTS = { male: 88, female: 70, child: 35 };
+
+        // LMC correction table by aircraft type and config
+        // IU values: negative = forward CG shift, positive = aft CG shift
         var lmcCorrectionTable = {
             '737-800': {
-                '189Y': {
-                    // PAX zones (IU per passenger)
-                    'OA': { desc: 'Rows 1-5', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                '10J156Y/166Y': {
+                    'OA': { desc: 'Rows 1-5 (J+Y)', onload: -1.0, offload: 1.0, unit: 'PAX' },
                     'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 17-33', onload: 0.6, offload: -0.6, unit: 'PAX' },
-                    // Cargo holds (IU per 100kg)
+                    'OC': { desc: 'Rows 17-31', onload: 0.6, offload: -0.6, unit: 'PAX' },
                     'FH': { desc: 'Forward Hold', onload: -0.8, offload: 0.8, unit: '100kg' },
                     'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
                     'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
-                    // Fuel (IU per 1000kg)
+                    'CTR': { desc: 'Center Tank', onload: -0.1, offload: 0.1, unit: '1000kg' },
+                    'WING': { desc: 'Wing Tanks', onload: -0.05, offload: 0.05, unit: '1000kg' }
+                },
+                '12J162Y/174Y': {
+                    'OA': { desc: 'Rows 1-6 (J+Y)', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                    'OB': { desc: 'Rows 7-17', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 18-33', onload: 0.6, offload: -0.6, unit: 'PAX' },
+                    'FH': { desc: 'Forward Hold', onload: -0.8, offload: 0.8, unit: '100kg' },
+                    'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
+                    'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
                     'CTR': { desc: 'Center Tank', onload: -0.1, offload: 0.1, unit: '1000kg' },
                     'WING': { desc: 'Wing Tanks', onload: -0.05, offload: 0.05, unit: '1000kg' }
                 }
             },
             '737-8': {
-                '189Y': {
-                    'OA': { desc: 'Rows 1-5', onload: -1.1, offload: 1.1, unit: 'PAX' },
+                '10J156Y/166Y': {
+                    'OA': { desc: 'Rows 1-5 (J+Y)', onload: -1.1, offload: 1.1, unit: 'PAX' },
                     'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 17-33', onload: 0.6, offload: -0.6, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-31', onload: 0.6, offload: -0.6, unit: 'PAX' },
+                    'FH': { desc: 'Forward Hold', onload: -0.9, offload: 0.9, unit: '100kg' },
+                    'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
+                    'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
+                    'CTR': { desc: 'Center Tank', onload: -0.1, offload: 0.1, unit: '1000kg' },
+                    'WING': { desc: 'Wing Tanks', onload: -0.05, offload: 0.05, unit: '1000kg' }
+                },
+                '12J162Y/174Y': {
+                    'OA': { desc: 'Rows 1-6 (J+Y)', onload: -1.1, offload: 1.1, unit: 'PAX' },
+                    'OB': { desc: 'Rows 7-17', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 18-33', onload: 0.6, offload: -0.6, unit: 'PAX' },
+                    'FH': { desc: 'Forward Hold', onload: -0.9, offload: 0.9, unit: '100kg' },
+                    'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
+                    'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
+                    'CTR': { desc: 'Center Tank', onload: -0.1, offload: 0.1, unit: '1000kg' },
+                    'WING': { desc: 'Wing Tanks', onload: -0.05, offload: 0.05, unit: '1000kg' }
+                },
+                '186Y': {
+                    'OA': { desc: 'Rows 1-5', onload: -1.1, offload: 1.1, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-17', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 18-33', onload: 0.6, offload: -0.6, unit: 'PAX' },
                     'FH': { desc: 'Forward Hold', onload: -0.9, offload: 0.9, unit: '100kg' },
                     'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
                     'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
@@ -7530,10 +7575,10 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 }
             },
             '737-9': {
-                '189Y': {
-                    'OA': { desc: 'Rows 1-6', onload: -1.2, offload: 1.2, unit: 'PAX' },
-                    'OB': { desc: 'Rows 7-18', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 19-36', onload: 0.6, offload: -0.6, unit: 'PAX' },
+                '16J156Y/172Y': {
+                    'OA': { desc: 'Rows 1-7 (J+Y)', onload: -1.2, offload: 1.2, unit: 'PAX' },
+                    'OB': { desc: 'Rows 8-19', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 20-36', onload: 0.6, offload: -0.6, unit: 'PAX' },
                     'FH': { desc: 'Forward Hold', onload: -0.9, offload: 0.9, unit: '100kg' },
                     'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
                     'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
@@ -7545,33 +7590,57 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
         var lmcChanges = [];
         var lmcChangeCounter = 0;
+        var lmcSelectedTail = '';
+        var lmcAircraftType = '';
+        var lmcAircraftConfig = '';
 
-        function updateLmcConfig() {
-            var aircraft = document.getElementById('lmc-aircraft').value;
-            var configSelect = document.getElementById('lmc-config');
+        function openLmcTailPicker() {
+            // Use the existing tail picker modal with LMC context
+            openTailPicker('lmc');
+        }
 
-            // Clear options
-            configSelect.innerHTML = '';
+        function setLmcTail(tail) {
+            lmcSelectedTail = tail;
+            document.getElementById('lmc-tail').value = tail;
+            document.getElementById('lmc-tail-btn').textContent = tail || '---';
 
-            // Get configs for selected aircraft
-            var configs = lmcCorrectionTable[aircraft];
-            if (configs) {
-                Object.keys(configs).forEach(function(cfg) {
-                    var opt = document.createElement('option');
-                    opt.value = cfg;
-                    opt.textContent = cfg;
-                    configSelect.appendChild(opt);
-                });
+            // Look up aircraft info from fleet
+            if (fleetData && fleetData.aircraft && fleetData.aircraft['A6-' + tail]) {
+                var ac = fleetData.aircraft['A6-' + tail];
+                lmcAircraftType = ac.type;
+                lmcAircraftConfig = ac.config;
+                document.getElementById('lmc-aircraft-info').innerHTML = ac.type + '<br><span style="font-size:0.75rem;color:#888;">' + ac.config + '</span>';
+            } else if (tail) {
+                document.getElementById('lmc-aircraft-info').innerHTML = '<span style="color:#ff5252;">Tail not in fleet</span>';
+                lmcAircraftType = '';
+                lmcAircraftConfig = '';
+            } else {
+                document.getElementById('lmc-aircraft-info').textContent = '---';
+                lmcAircraftType = '';
+                lmcAircraftConfig = '';
             }
 
             lmcCalculate();
         }
 
+        function autofillLmcFromSchedule() {
+            // Get tail from schedule tab
+            var tailEl = document.getElementById('sched-tail');
+            if (tailEl && tailEl.value) {
+                // Strip A6- prefix if present
+                var tail = tailEl.value.replace(/^A6-/i, '');
+                setLmcTail(tail);
+            } else {
+                alert('No tail number set in Schedule tab');
+            }
+        }
+
         function addLmcChange(type) {
-            var aircraft = document.getElementById('lmc-aircraft').value;
-            var config = document.getElementById('lmc-config').value;
-            var table = lmcCorrectionTable[aircraft] && lmcCorrectionTable[aircraft][config];
-            if (!table) return;
+            var table = getLmcTable();
+            if (!table) {
+                alert('Please select a tail number first');
+                return;
+            }
 
             var id = 'lmc-change-' + (++lmcChangeCounter);
             var zones = [];
@@ -7589,6 +7658,9 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 type: type,
                 zone: zones[0],
                 action: 'onload',
+                male: 0,
+                female: 0,
+                child: 0,
                 quantity: 0,
                 weight: 0,
                 iu: 0
@@ -7596,6 +7668,11 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
             lmcChanges.push(change);
             renderLmcChanges();
+        }
+
+        function getLmcTable() {
+            if (!lmcAircraftType || !lmcAircraftConfig) return null;
+            return lmcCorrectionTable[lmcAircraftType] && lmcCorrectionTable[lmcAircraftType][lmcAircraftConfig];
         }
 
         function removeLmcChange(id) {
@@ -7606,10 +7683,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
         function renderLmcChanges() {
             var container = document.getElementById('lmc-changes-container');
-            var aircraft = document.getElementById('lmc-aircraft').value;
-            var config = document.getElementById('lmc-config').value;
-            var table = lmcCorrectionTable[aircraft] && lmcCorrectionTable[aircraft][config];
-            var paxWeight = parseInt(document.getElementById('lmc-pax-weight').value) || 84;
+            var table = getLmcTable();
 
             container.innerHTML = lmcChanges.map(function(change) {
                 var zones = [];
@@ -7619,6 +7693,24 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     zones = ['FH', 'AH', 'BLK'];
                 } else if (change.type === 'FUEL') {
                     zones = ['CTR', 'WING'];
+                }
+
+                // Different input fields for PAX vs CARGO/FUEL
+                var inputFields = '';
+                if (change.type === 'PAX') {
+                    inputFields = '<div class="lmc-field-group" style="grid-column: span 2;">' +
+                        '<span class="lmc-field-label">PAX Count (M / F / C)</span>' +
+                        '<div style="display: flex; gap: 5px;">' +
+                            '<input type="number" class="lmc-field-input" placeholder="M" value="' + (change.male || '') + '" onchange="updateLmcPax(\'' + change.id + '\', \'male\', this.value)" style="flex:1;text-align:center;">' +
+                            '<input type="number" class="lmc-field-input" placeholder="F" value="' + (change.female || '') + '" onchange="updateLmcPax(\'' + change.id + '\', \'female\', this.value)" style="flex:1;text-align:center;">' +
+                            '<input type="number" class="lmc-field-input" placeholder="C" value="' + (change.child || '') + '" onchange="updateLmcPax(\'' + change.id + '\', \'child\', this.value)" style="flex:1;text-align:center;">' +
+                        '</div>' +
+                    '</div>';
+                } else {
+                    inputFields = '<div class="lmc-field-group">' +
+                        '<span class="lmc-field-label">Weight (kg)</span>' +
+                        '<input type="number" class="lmc-field-input" value="' + change.quantity + '" onchange="updateLmcChange(\'' + change.id + '\', \'quantity\', this.value)">' +
+                    '</div>';
                 }
 
                 return '<div class="lmc-change-entry" id="' + change.id + '">' +
@@ -7638,15 +7730,12 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                             '<span class="lmc-field-label">Zone</span>' +
                             '<select class="lmc-field-select" onchange="updateLmcChange(\'' + change.id + '\', \'zone\', this.value)">' +
                                 zones.map(function(z) {
-                                    var zoneInfo = table[z] || { desc: z };
+                                    var zoneInfo = (table && table[z]) || { desc: z };
                                     return '<option value="' + z + '"' + (change.zone === z ? ' selected' : '') + '>' + z + ' - ' + zoneInfo.desc + '</option>';
                                 }).join('') +
                             '</select>' +
                         '</div>' +
-                        '<div class="lmc-field-group">' +
-                            '<span class="lmc-field-label">' + (change.type === 'PAX' ? 'PAX Count' : 'Weight (kg)') + '</span>' +
-                            '<input type="number" class="lmc-field-input" value="' + change.quantity + '" onchange="updateLmcChange(\'' + change.id + '\', \'quantity\', this.value)">' +
-                        '</div>' +
+                        inputFields +
                         '<div class="lmc-field-group">' +
                             '<span class="lmc-field-label">Result</span>' +
                             '<div class="lmc-result-row">' +
@@ -7663,6 +7752,14 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             }).join('');
         }
 
+        function updateLmcPax(id, paxType, value) {
+            var change = lmcChanges.find(function(c) { return c.id === id; });
+            if (change) {
+                change[paxType] = parseInt(value) || 0;
+                lmcCalculate();
+            }
+        }
+
         function updateLmcChange(id, field, value) {
             var change = lmcChanges.find(function(c) { return c.id === id; });
             if (change) {
@@ -7672,13 +7769,8 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         function lmcCalculate() {
-            var aircraft = document.getElementById('lmc-aircraft').value;
-            var config = document.getElementById('lmc-config').value;
             var method = document.getElementById('lmc-method').value;
-            var paxWeight = parseInt(document.getElementById('lmc-pax-weight').value) || 84;
-
-            var table = lmcCorrectionTable[aircraft] && lmcCorrectionTable[aircraft][config];
-            if (!table) return;
+            var table = getLmcTable();
 
             // Get baseline weights
             var zfw = parseInt(document.getElementById('lmc-zfw').value) || 0;
@@ -7695,15 +7787,20 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             var auditItems = [];
 
             lmcChanges.forEach(function(change) {
-                var zoneData = table[change.zone];
-                if (!zoneData) return;
+                var zoneData = table ? table[change.zone] : null;
 
                 var weight = 0;
                 var units = 0;
+                var paxCount = 0;
 
                 if (change.type === 'PAX') {
-                    weight = change.quantity * paxWeight;
-                    units = change.quantity;
+                    // Calculate weight using M/F/C with standard weights
+                    var maleWeight = (change.male || 0) * LMC_PAX_WEIGHTS.male;
+                    var femaleWeight = (change.female || 0) * LMC_PAX_WEIGHTS.female;
+                    var childWeight = (change.child || 0) * LMC_PAX_WEIGHTS.child;
+                    weight = maleWeight + femaleWeight + childWeight;
+                    paxCount = (change.male || 0) + (change.female || 0) + (change.child || 0);
+                    units = paxCount;
                 } else if (change.type === 'FUEL') {
                     weight = change.quantity;
                     units = change.quantity / 1000; // Convert to 1000kg units
@@ -7712,7 +7809,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     units = change.quantity / 100; // Convert to 100kg units
                 }
 
-                var iuRate = change.action === 'onload' ? zoneData.onload : zoneData.offload;
+                var iuRate = zoneData ? (change.action === 'onload' ? zoneData.onload : zoneData.offload) : 0;
                 var iu = units * iuRate;
 
                 // Apply sign based on action
@@ -7734,11 +7831,16 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     iuEl.style.color = Math.abs(iu) <= 5 ? '#00ff88' : '#ff5252';
                 }
 
+                // Build audit description
+                var qtyDesc = change.type === 'PAX' ?
+                    (change.male || 0) + 'M/' + (change.female || 0) + 'F/' + (change.child || 0) + 'C' :
+                    change.quantity + ' kg';
+
                 auditItems.push({
                     type: change.type,
                     zone: change.zone,
                     action: change.action,
-                    qty: change.quantity,
+                    qtyDesc: qtyDesc,
                     weight: weight,
                     iu: iu
                 });
@@ -7823,7 +7925,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 auditDiv.innerHTML = '<div class="lmc-audit-title">Change Log</div>' +
                     auditItems.map(function(item) {
                         return '<div class="lmc-audit-item">' +
-                            '<span>' + item.action.toUpperCase() + ' ' + item.type + ' (' + item.zone + '): ' + item.qty + (item.type === 'PAX' ? ' pax' : ' kg') + '</span>' +
+                            '<span>' + item.action.toUpperCase() + ' ' + item.type + ' (' + item.zone + '): ' + item.qtyDesc + '</span>' +
                             '<span style="color:#00d4ff">' + (item.weight >= 0 ? '+' : '') + item.weight + ' kg / ' + (item.iu >= 0 ? '+' : '') + item.iu.toFixed(1) + ' IU</span>' +
                         '</div>';
                     }).join('');
@@ -7843,6 +7945,14 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         function clearLmc() {
             lmcChanges = [];
             lmcChangeCounter = 0;
+            // Clear tail selection
+            lmcSelectedTail = '';
+            lmcAircraftType = '';
+            lmcAircraftConfig = '';
+            document.getElementById('lmc-tail').value = '';
+            document.getElementById('lmc-tail-btn').textContent = '---';
+            document.getElementById('lmc-aircraft-info').textContent = '---';
+            // Clear weights
             document.getElementById('lmc-zfw').value = '';
             document.getElementById('lmc-zfw-btn').textContent = '0';
             document.getElementById('lmc-mzfw').value = '';
