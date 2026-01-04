@@ -4300,7 +4300,32 @@
         <!-- MISC Tab (Miscellaneous Tools) -->
         <div class="tab-content" id="tab-misc">
             <div class="fdp-container">
-                <div class="top-sections" style="grid-template-columns: 1fr;">
+                <div class="top-sections" style="grid-template-columns: repeat(2, 1fr);">
+                    <!-- Flight Route Lookup -->
+                    <div class="section">
+                        <div class="section-title">Flight Route Lookup</div>
+                        <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px; text-align: center;">
+                            Enter a flight number to find the route
+                        </p>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Flight</label>
+                            <input type="text" class="fdp-input" id="route-flight-input" placeholder="e.g. FZ307, EK1, QR100"
+                                   oninput="lookupFlightRoute()" style="text-transform: uppercase; font-size: 1.2rem; text-align: center;">
+                        </div>
+                        <div class="fdp-results" style="margin-top: 20px;">
+                            <div class="fdp-result-grid" style="grid-template-columns: 1fr;">
+                                <div class="fdp-result-item">
+                                    <div class="fdp-result-label">Route</div>
+                                    <div class="fdp-result-value" id="route-result" style="font-size: 1.3rem;">---</div>
+                                    <div class="fdp-result-utc" id="route-icao" style="color: #888;">---</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px; text-align: center; font-size: 0.75rem; color: #666;" id="route-status">
+                            Loading route database...
+                        </div>
+                    </div>
+
                     <!-- Registration Prefix Lookup -->
                     <div class="section">
                         <div class="section-title">Registration Prefix Lookup</div>
@@ -8022,6 +8047,102 @@
                 // Reload page to reset all values
                 location.reload();
             }
+        }
+
+        // ============ FLIGHT ROUTE LOOKUP ============
+        var routeDatabase = null;
+        var airportsDatabase = null;
+
+        // IATA to ICAO airline code mapping
+        var airlineIataToIcao = {
+            'FZ': 'FDB', 'EK': 'UAE', 'EY': 'ETD', 'GF': 'GFA', 'QR': 'QTR',
+            'SV': 'SVA', 'WY': 'OMA', 'KU': 'KAC', 'RJ': 'RJA', 'TK': 'THY'
+        };
+
+        // Load route database
+        fetch('routes.json')
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                routeDatabase = data;
+                var totalRoutes = Object.values(data).reduce(function(sum, routes) {
+                    return sum + Object.keys(routes).length;
+                }, 0);
+                var statusEl = document.getElementById('route-status');
+                if (statusEl) {
+                    statusEl.textContent = Object.keys(data).length + ' airlines, ' + totalRoutes.toLocaleString() + ' routes loaded';
+                    statusEl.style.color = '#00ff88';
+                }
+            })
+            .catch(function(err) {
+                var statusEl = document.getElementById('route-status');
+                if (statusEl) {
+                    statusEl.textContent = 'Failed to load route database';
+                    statusEl.style.color = '#ff5252';
+                }
+            });
+
+        // Load airports database for ICAO to IATA conversion
+        fetch('airports.json')
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                airportsDatabase = data;
+            })
+            .catch(function(err) {
+                console.log('Airports database not loaded');
+            });
+
+        function lookupFlightRoute() {
+            var input = document.getElementById('route-flight-input').value.toUpperCase().trim();
+            var resultEl = document.getElementById('route-result');
+            var icaoEl = document.getElementById('route-icao');
+
+            if (!input || !routeDatabase) {
+                resultEl.textContent = '---';
+                icaoEl.textContent = '---';
+                return;
+            }
+
+            // Parse flight number - extract airline code and number
+            var match = input.match(/^([A-Z]{2,3})(\d+[A-Z]?)$/);
+            if (!match) {
+                resultEl.textContent = 'Invalid format';
+                resultEl.style.color = '#ff5252';
+                icaoEl.textContent = 'Use format: FZ307, EK1';
+                return;
+            }
+
+            var airlineCode = match[1];
+            var flightNum = match[2];
+
+            // Convert IATA to ICAO if needed
+            var icaoCode = airlineIataToIcao[airlineCode] || airlineCode;
+
+            // Look up route
+            if (routeDatabase[icaoCode] && routeDatabase[icaoCode][flightNum]) {
+                var routeIcao = routeDatabase[icaoCode][flightNum];
+                var routeIata = icaoToIataRoute(routeIcao);
+
+                resultEl.textContent = routeIata;
+                resultEl.style.color = '#00ff88';
+                icaoEl.textContent = icaoCode + flightNum + ': ' + routeIcao;
+            } else {
+                resultEl.textContent = 'Not found';
+                resultEl.style.color = '#ff5252';
+                icaoEl.textContent = icaoCode + flightNum + ' not in database';
+            }
+        }
+
+        function icaoToIataRoute(icaoRoute) {
+            if (!airportsDatabase) return icaoRoute;
+
+            var parts = icaoRoute.split('-');
+            var iataParts = parts.map(function(icao) {
+                if (airportsDatabase[icao] && airportsDatabase[icao].i) {
+                    return airportsDatabase[icao].i;
+                }
+                return icao;
+            });
+            return iataParts.join('-');
         }
 
         // ============ REGISTRATION PREFIX LOOKUP ============
