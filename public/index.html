@@ -4360,6 +4360,24 @@
                     </div>
                 </div>
 
+                <!-- Callsign Lookup -->
+                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
+                    <div class="section-title">Callsign Lookup</div>
+                    <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px; text-align: center;">
+                        Search by callsign suffix (e.g. 2LA, 307, 1A) to find airline and route
+                    </p>
+                    <div class="fdp-field">
+                        <label class="fdp-label">Callsign</label>
+                        <input type="text" class="fdp-input" id="callsign-input" placeholder="e.g. 2LA, 307, 1A"
+                               oninput="lookupCallsign()" style="text-transform: uppercase; font-size: 1.2rem; text-align: center;">
+                    </div>
+                    <div class="fdp-results" style="margin-top: 20px;">
+                        <div id="callsign-results" style="max-height: 300px; overflow-y: auto;">
+                            <div style="text-align: center; color: #888;">Enter a callsign to search</div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Pantry Selector Calculator -->
                 <div class="section" style="max-width: 800px; margin: 20px auto 0;">
                     <div class="section-title">Pantry Selector (DXB)</div>
@@ -8278,6 +8296,76 @@
                 return icao;
             });
             return iataParts.join('-');
+        }
+
+        // ============ CALLSIGN LOOKUP ============
+        function lookupCallsign() {
+            var input = document.getElementById('callsign-input').value.toUpperCase().trim();
+            var resultsEl = document.getElementById('callsign-results');
+
+            if (!input) {
+                resultsEl.innerHTML = '<div style="text-align: center; color: #888;">Enter a callsign to search</div>';
+                return;
+            }
+
+            if (!routeDatabase) {
+                resultsEl.innerHTML = '<div style="text-align: center; color: #ff5252;">Route database not loaded</div>';
+                return;
+            }
+
+            var matches = [];
+
+            // Search through all airlines and flight numbers
+            Object.keys(routeDatabase).forEach(function(airlineIcao) {
+                var flights = routeDatabase[airlineIcao];
+                Object.keys(flights).forEach(function(flightNum) {
+                    if (flightNum.toUpperCase() === input || flightNum.toUpperCase().indexOf(input) === 0) {
+                        var routeIcao = flights[flightNum];
+                        var routeIata = icaoToIataRoute(routeIcao);
+                        matches.push({
+                            airline: airlineIcao,
+                            flight: flightNum,
+                            routeIcao: routeIcao,
+                            routeIata: routeIata,
+                            exact: flightNum.toUpperCase() === input
+                        });
+                    }
+                });
+            });
+
+            // Sort: exact matches first, then alphabetically
+            matches.sort(function(a, b) {
+                if (a.exact && !b.exact) return -1;
+                if (!a.exact && b.exact) return 1;
+                return (a.airline + a.flight).localeCompare(b.airline + b.flight);
+            });
+
+            if (matches.length === 0) {
+                resultsEl.innerHTML = '<div style="text-align: center; color: #ff5252;">No matches found for "' + input + '"</div>';
+                return;
+            }
+
+            // Limit to 20 results
+            var displayMatches = matches.slice(0, 20);
+            var html = '';
+
+            displayMatches.forEach(function(m) {
+                html += '<div style="padding: 10px; border-bottom: 1px solid rgba(255,130,0,0.2); display: flex; justify-content: space-between; align-items: center;">';
+                html += '<div>';
+                html += '<span style="color: #00d4ff; font-weight: bold; font-size: 1.1rem;">' + m.airline + ' ' + m.flight + '</span>';
+                html += '</div>';
+                html += '<div style="text-align: right;">';
+                html += '<div style="color: #00ff88; font-size: 1rem;">' + m.routeIata + '</div>';
+                html += '<div style="color: #888; font-size: 0.8rem;">' + m.routeIcao + '</div>';
+                html += '</div>';
+                html += '</div>';
+            });
+
+            if (matches.length > 20) {
+                html += '<div style="text-align: center; color: #888; padding: 10px;">...and ' + (matches.length - 20) + ' more matches</div>';
+            }
+
+            resultsEl.innerHTML = html;
         }
 
         // ============ REGISTRATION PREFIX LOOKUP ============
