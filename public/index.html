@@ -7514,6 +7514,16 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         // ============ LMC CALCULATOR ============
+        // Fleet data (loaded from fleet.json)
+        var fleetData = null;
+
+        function loadFleetData() {
+            fetch('fleet.json')
+                .then(function(response) { return response.json(); })
+                .then(function(data) { fleetData = data; })
+                .catch(function(err) { console.error('Failed to load fleet data:', err); });
+        }
+
         // Standard pax weights
         var LMC_PAX_WEIGHTS = { male: 88, female: 70, child: 35 };
 
@@ -8000,6 +8010,9 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
         // Load scratchpad history on startup
         loadScratchpadHistory();
+
+        // Load fleet data for LMC calculator
+        loadFleetData();
     </script>
 </body>
 </html>
