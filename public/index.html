@@ -1733,6 +1733,88 @@
 
         .lmc-result-label { color: #888; font-size: 0.8rem; }
         .lmc-result-value { color: #00ff88; font-family: 'Courier New', monospace; font-weight: bold; }
+
+        /* Qibla Display Styles */
+        .strip-qibla {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-left: 15px;
+            border-left: 1px solid rgba(255, 130, 0, 0.3);
+        }
+
+        .strip-qibla:hover {
+            opacity: 0.8;
+        }
+
+        .strip-qibla-arrow {
+            font-size: 1.6rem;
+            color: #00ff88;
+            transition: transform 0.3s ease;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .strip-qibla-value {
+            font-size: 0.9rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .strip-qibla-label {
+            font-size: 0.65rem;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .strip-qibla.no-gps .strip-qibla-arrow,
+        .strip-qibla.no-gps .strip-qibla-value {
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .qibla-modal-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .qibla-source-toggle {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .qibla-source-btn {
+            padding: 10px 20px;
+            border: 2px solid rgba(0, 180, 255, 0.3);
+            background: rgba(0, 40, 80, 0.5);
+            color: #888;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .qibla-source-btn.active {
+            background: rgba(0, 180, 255, 0.3);
+            border-color: #00d4ff;
+            color: #00d4ff;
+        }
+
+        .qibla-gps-status {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(0, 40, 80, 0.3);
+        }
+
+        .qibla-gps-status.connected {
+            border-left: 3px solid #00ff88;
+        }
+
+        .qibla-gps-status.disconnected {
+            border-left: 3px solid #ff5252;
+        }
     </style>
 </head>
 <body>
@@ -1753,6 +1835,11 @@
             </div>
             <div class="strip-timers" id="strip-timers">
                 <span class="strip-no-active">No active timers</span>
+            </div>
+            <div class="strip-qibla" id="strip-qibla" onclick="openQiblaModal()" style="margin-left: auto; cursor: pointer;">
+                <div class="strip-qibla-arrow" id="strip-qibla-arrow">&#10148;</div>
+                <div class="strip-qibla-value" id="strip-qibla-value">---°</div>
+                <div class="strip-qibla-label">QIBLA</div>
             </div>
         </div>
 
@@ -3692,6 +3779,60 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             <div class="picker-actions">
                 <button class="picker-cancel" onclick="closeTimePicker()">Cancel</button>
                 <button class="picker-confirm" onclick="confirmTimePicker()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Qibla Settings Modal -->
+    <div class="modal-overlay" id="qibla-modal">
+        <div class="number-picker" style="max-width: 350px;">
+            <div class="picker-title">Qibla Direction</div>
+            <div class="qibla-modal-content">
+                <div class="qibla-source-toggle">
+                    <button class="qibla-source-btn" id="qibla-gps-btn" onclick="setQiblaSource('gps')">GPS</button>
+                    <button class="qibla-source-btn active" id="qibla-manual-btn" onclick="setQiblaSource('manual')">Manual</button>
+                </div>
+
+                <div id="qibla-gps-section" style="display: none;">
+                    <div class="qibla-gps-status disconnected" id="qibla-gps-status">
+                        <div style="font-size: 1.2rem; margin-bottom: 5px;">GPS Status</div>
+                        <div id="qibla-gps-status-text">Connecting...</div>
+                        <div id="qibla-gps-position" style="margin-top: 10px; font-family: 'Courier New', monospace; font-size: 0.85rem;"></div>
+                    </div>
+                </div>
+
+                <div id="qibla-manual-section">
+                    <div class="input-grid-2">
+                        <div class="input-group">
+                            <label class="input-label">Latitude</label>
+                            <input type="text" class="fdp-input" id="qibla-lat" placeholder="e.g. 25.2532" style="text-align: center;">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Longitude</label>
+                            <input type="text" class="fdp-input" id="qibla-lon" placeholder="e.g. 55.3657" style="text-align: center;">
+                        </div>
+                    </div>
+                    <div class="input-group" style="margin-top: 10px;">
+                        <label class="input-label">Aircraft Heading (°)</label>
+                        <input type="number" class="fdp-input" id="qibla-heading" placeholder="e.g. 090" min="0" max="360" style="text-align: center;">
+                    </div>
+                    <button class="preset-btn" onclick="calculateQiblaFromManual()" style="margin-top: 10px; width: 100%;">Calculate Qibla</button>
+                </div>
+
+                <div class="section" style="margin-top: 10px; padding: 10px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 0.75rem; color: #888;">Qibla Bearing (True)</div>
+                        <div id="qibla-bearing-result" style="font-size: 1.5rem; font-family: 'Courier New', monospace; color: #00d4ff;">---°</div>
+                    </div>
+                    <div style="text-align: center; margin-top: 10px;">
+                        <div style="font-size: 0.75rem; color: #888;">Relative to Heading</div>
+                        <div id="qibla-relative-result" style="font-size: 2rem; font-family: 'Courier New', monospace; color: #00ff88; font-weight: bold;">---°</div>
+                        <div id="qibla-direction-text" style="font-size: 0.85rem; color: #888;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="picker-actions">
+                <button class="picker-cancel" onclick="closeQiblaModal()">Close</button>
             </div>
         </div>
     </div>
@@ -8063,6 +8204,213 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
         // Load fleet data for LMC calculator
         loadFleetData();
+
+        // ============ QIBLA DIRECTION ============
+        // Mecca coordinates (Kaaba)
+        var MECCA_LAT = 21.4225;
+        var MECCA_LON = 39.8262;
+
+        // Qibla state
+        var qiblaSource = 'manual'; // 'gps' or 'manual'
+        var qiblaGpsConnected = false;
+        var qiblaCurrentLat = null;
+        var qiblaCurrentLon = null;
+        var qiblaCurrentHeading = null;
+        var qiblaGpsInterval = null;
+
+        function openQiblaModal() {
+            document.getElementById('qibla-modal').classList.add('active');
+            if (qiblaSource === 'gps') {
+                startGpsPolling();
+            }
+        }
+
+        function closeQiblaModal() {
+            document.getElementById('qibla-modal').classList.remove('active');
+        }
+
+        function setQiblaSource(source) {
+            qiblaSource = source;
+            document.getElementById('qibla-gps-btn').classList.toggle('active', source === 'gps');
+            document.getElementById('qibla-manual-btn').classList.toggle('active', source === 'manual');
+            document.getElementById('qibla-gps-section').style.display = source === 'gps' ? 'block' : 'none';
+            document.getElementById('qibla-manual-section').style.display = source === 'manual' ? 'block' : 'none';
+
+            if (source === 'gps') {
+                startGpsPolling();
+            } else {
+                stopGpsPolling();
+            }
+        }
+
+        function startGpsPolling() {
+            if (qiblaGpsInterval) return;
+
+            fetchGpsData();
+            qiblaGpsInterval = setInterval(fetchGpsData, 2000); // Poll every 2 seconds
+        }
+
+        function stopGpsPolling() {
+            if (qiblaGpsInterval) {
+                clearInterval(qiblaGpsInterval);
+                qiblaGpsInterval = null;
+            }
+        }
+
+        function fetchGpsData() {
+            // Try to fetch from gpsd via a local endpoint
+            // gpsd typically runs on port 2947, but we need a proxy for browser access
+            // Try the Pi's gpsd-http endpoint if available
+            fetch('/gps')
+                .then(function(response) {
+                    if (!response.ok) throw new Error('GPS not available');
+                    return response.json();
+                })
+                .then(function(data) {
+                    if (data && data.class === 'TPV') {
+                        qiblaGpsConnected = true;
+                        qiblaCurrentLat = data.lat;
+                        qiblaCurrentLon = data.lon;
+                        qiblaCurrentHeading = data.track || 0;
+
+                        updateGpsStatus(true, data.lat, data.lon, data.track);
+                        calculateAndDisplayQibla(data.lat, data.lon, data.track || 0);
+                    } else if (data && data.lat !== undefined) {
+                        // Alternative format
+                        qiblaGpsConnected = true;
+                        qiblaCurrentLat = data.lat;
+                        qiblaCurrentLon = data.lon;
+                        qiblaCurrentHeading = data.heading || data.track || 0;
+
+                        updateGpsStatus(true, data.lat, data.lon, qiblaCurrentHeading);
+                        calculateAndDisplayQibla(data.lat, data.lon, qiblaCurrentHeading);
+                    } else {
+                        throw new Error('Invalid GPS data');
+                    }
+                })
+                .catch(function(err) {
+                    qiblaGpsConnected = false;
+                    updateGpsStatus(false);
+                });
+        }
+
+        function updateGpsStatus(connected, lat, lon, heading) {
+            var statusEl = document.getElementById('qibla-gps-status');
+            var statusTextEl = document.getElementById('qibla-gps-status-text');
+            var positionEl = document.getElementById('qibla-gps-position');
+
+            if (connected) {
+                statusEl.classList.remove('disconnected');
+                statusEl.classList.add('connected');
+                statusTextEl.textContent = 'GPS Connected';
+                positionEl.innerHTML =
+                    'LAT: ' + lat.toFixed(4) + '°<br>' +
+                    'LON: ' + lon.toFixed(4) + '°<br>' +
+                    'HDG: ' + (heading !== null && heading !== undefined ? Math.round(heading) + '°' : 'N/A');
+            } else {
+                statusEl.classList.remove('connected');
+                statusEl.classList.add('disconnected');
+                statusTextEl.textContent = 'GPS Disconnected';
+                positionEl.innerHTML = 'No GPS data available.<br>Switch to Manual mode.';
+            }
+        }
+
+        function calculateQiblaBearing(lat, lon) {
+            // Calculate bearing from current position to Mecca using spherical trigonometry
+            var lat1 = lat * Math.PI / 180;
+            var lat2 = MECCA_LAT * Math.PI / 180;
+            var dLon = (MECCA_LON - lon) * Math.PI / 180;
+
+            var y = Math.sin(dLon) * Math.cos(lat2);
+            var x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+
+            var bearing = Math.atan2(y, x) * 180 / Math.PI;
+            bearing = (bearing + 360) % 360; // Normalize to 0-360
+
+            return bearing;
+        }
+
+        function calculateQiblaFromManual() {
+            var latStr = document.getElementById('qibla-lat').value.trim();
+            var lonStr = document.getElementById('qibla-lon').value.trim();
+            var headingStr = document.getElementById('qibla-heading').value.trim();
+
+            var lat = parseFloat(latStr);
+            var lon = parseFloat(lonStr);
+            var heading = parseFloat(headingStr) || 0;
+
+            if (isNaN(lat) || isNaN(lon)) {
+                alert('Please enter valid coordinates');
+                return;
+            }
+
+            if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+                alert('Coordinates out of range.\nLatitude: -90 to 90\nLongitude: -180 to 180');
+                return;
+            }
+
+            qiblaCurrentLat = lat;
+            qiblaCurrentLon = lon;
+            qiblaCurrentHeading = heading;
+
+            calculateAndDisplayQibla(lat, lon, heading);
+        }
+
+        function calculateAndDisplayQibla(lat, lon, heading) {
+            var qiblaBearing = calculateQiblaBearing(lat, lon);
+            var relativeBearing = (qiblaBearing - heading + 360) % 360;
+
+            // Display in modal
+            document.getElementById('qibla-bearing-result').textContent = Math.round(qiblaBearing) + '°';
+            document.getElementById('qibla-relative-result').textContent = Math.round(relativeBearing) + '°';
+
+            // Direction text
+            var dirText = '';
+            if (relativeBearing > 337.5 || relativeBearing <= 22.5) {
+                dirText = 'Ahead';
+            } else if (relativeBearing > 22.5 && relativeBearing <= 67.5) {
+                dirText = 'Ahead Right';
+            } else if (relativeBearing > 67.5 && relativeBearing <= 112.5) {
+                dirText = 'Right';
+            } else if (relativeBearing > 112.5 && relativeBearing <= 157.5) {
+                dirText = 'Behind Right';
+            } else if (relativeBearing > 157.5 && relativeBearing <= 202.5) {
+                dirText = 'Behind';
+            } else if (relativeBearing > 202.5 && relativeBearing <= 247.5) {
+                dirText = 'Behind Left';
+            } else if (relativeBearing > 247.5 && relativeBearing <= 292.5) {
+                dirText = 'Left';
+            } else {
+                dirText = 'Ahead Left';
+            }
+            document.getElementById('qibla-direction-text').textContent = dirText;
+
+            // Update info strip
+            updateQiblaStrip(relativeBearing, dirText);
+        }
+
+        function updateQiblaStrip(relativeBearing, dirText) {
+            var stripEl = document.getElementById('strip-qibla');
+            var arrowEl = document.getElementById('strip-qibla-arrow');
+            var valueEl = document.getElementById('strip-qibla-value');
+
+            stripEl.classList.remove('no-gps');
+            valueEl.textContent = Math.round(relativeBearing) + '°';
+
+            // Rotate arrow to point in qibla direction
+            arrowEl.style.transform = 'rotate(' + relativeBearing + 'deg)';
+            arrowEl.style.display = 'inline-block';
+        }
+
+        function resetQiblaStrip() {
+            var stripEl = document.getElementById('strip-qibla');
+            var arrowEl = document.getElementById('strip-qibla-arrow');
+            var valueEl = document.getElementById('strip-qibla-value');
+
+            stripEl.classList.add('no-gps');
+            valueEl.textContent = '---°';
+            arrowEl.style.transform = 'rotate(0deg)';
+        }
     </script>
 </body>
 </html>
