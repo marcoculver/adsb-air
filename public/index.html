@@ -3531,6 +3531,98 @@
                         <button class="clear-btn" onclick="clearCoordConverter()">Clear</button>
                     </div>
                 </div>
+
+                <!-- Airport Distance & Info Row -->
+                <div class="top-sections" style="grid-template-columns: 1fr 1fr; margin-top: 20px;">
+                    <!-- Airport Distance Calculator -->
+                    <div class="section">
+                        <div class="section-title">Airport Distance Calculator</div>
+                        <div class="input-grid-2">
+                            <div class="input-group">
+                                <label class="input-label">From (ICAO)</label>
+                                <input type="text" class="fdp-input" id="dist-from" placeholder="OMDB" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value = this.value.toUpperCase(); calculateAirportDistance()">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">To (ICAO)</label>
+                                <input type="text" class="fdp-input" id="dist-to" placeholder="EGLL" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value = this.value.toUpperCase(); calculateAirportDistance()">
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 0.75rem; color: #888; margin-bottom: 5px;">GREAT CIRCLE DISTANCE</div>
+                                <div class="fdp-result-value" id="dist-result-nm" style="font-size: 2rem; color: #FF8200;">--- nm</div>
+                                <div class="fdp-result-value" id="dist-result-km" style="font-size: 1rem; color: #00d4ff; margin-top: 5px;">--- km</div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; text-align: center;">
+                                <div>
+                                    <div style="font-size: 0.7rem; color: #888;">From</div>
+                                    <div id="dist-from-name" style="font-size: 0.85rem; color: #00ff88;">---</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.7rem; color: #888;">To</div>
+                                    <div id="dist-to-name" style="font-size: 0.85rem; color: #ff5252;">---</div>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; text-align: center;">
+                                <div>
+                                    <div style="font-size: 0.7rem; color: #888;">Initial Track</div>
+                                    <div id="dist-track" style="font-size: 1.1rem; color: #00d4ff;">---°</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.7rem; color: #888;">Est. Flight Time</div>
+                                    <div id="dist-time" style="font-size: 1.1rem; color: #ffd700;">--:--</div>
+                                    <div style="font-size: 0.65rem; color: #666;">@ 450 kt GS</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="clear-btn" onclick="clearDistanceCalc()">Clear</button>
+                    </div>
+
+                    <!-- Airport Info Lookup -->
+                    <div class="section">
+                        <div class="section-title">Airport Info Lookup</div>
+                        <div class="input-group">
+                            <label class="input-label">ICAO or IATA Code</label>
+                            <input type="text" class="fdp-input" id="apt-lookup" placeholder="OMDB or DXB" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value = this.value.toUpperCase(); lookupAirport()">
+                        </div>
+                        <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
+                            <div id="apt-info-result" style="display: none;">
+                                <div style="text-align: center; margin-bottom: 15px;">
+                                    <div id="apt-info-name" style="font-size: 1.1rem; color: #FF8200; font-weight: bold;">---</div>
+                                    <div id="apt-info-city" style="font-size: 0.9rem; color: #00d4ff;">---</div>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                    <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center;">
+                                        <div style="font-size: 0.7rem; color: #888;">ICAO</div>
+                                        <div id="apt-info-icao" style="font-size: 1.2rem; color: #00ff88; font-family: monospace;">----</div>
+                                    </div>
+                                    <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center;">
+                                        <div style="font-size: 0.7rem; color: #888;">IATA</div>
+                                        <div id="apt-info-iata" style="font-size: 1.2rem; color: #00ff88; font-family: monospace;">---</div>
+                                    </div>
+                                    <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center;">
+                                        <div style="font-size: 0.7rem; color: #888;">ELEVATION</div>
+                                        <div id="apt-info-elev" style="font-size: 1.2rem; color: #ffd700; font-family: monospace;">--- ft</div>
+                                    </div>
+                                    <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center;">
+                                        <div style="font-size: 0.7rem; color: #888;">COUNTRY</div>
+                                        <div id="apt-info-country" style="font-size: 1.2rem; color: #00d4ff; font-family: monospace;">--</div>
+                                    </div>
+                                </div>
+                                <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center; margin-top: 10px;">
+                                    <div style="font-size: 0.7rem; color: #888;">COORDINATES</div>
+                                    <div id="apt-info-coords" style="font-size: 0.95rem; color: #00d4ff; font-family: monospace;">---</div>
+                                </div>
+                                <button class="preset-btn" style="width: 100%; margin-top: 10px;" onclick="useElevationFromLookup()">Use Elevation in Calculators</button>
+                            </div>
+                            <div id="apt-info-empty" style="text-align: center; color: #666; padding: 30px;">
+                                Enter ICAO or IATA code to lookup airport info<br>
+                                <span style="font-size: 0.75rem;">Database: 8,800+ airports worldwide</span>
+                            </div>
+                        </div>
+                        <button class="clear-btn" onclick="clearAirportLookup()">Clear</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -4116,8 +4208,8 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 <button class="picker-btn clear" onclick="pickerClear()">C</button>
                 <button class="picker-btn" onclick="pickerAppend('0')">0</button>
                 <button class="picker-btn" onclick="pickerBackspace()">&larr;</button>
-                <button class="picker-btn" onclick="pickerAppend('00')" style="font-size:1rem">00</button>
-                <button class="picker-btn" onclick="pickerAppend('000')" style="font-size:0.9rem">000</button>
+                <button class="picker-btn" onclick="pickerAppend('00')" style="font-size:1rem; grid-column: span 1;">00</button>
+                <button class="picker-btn" onclick="pickerAppend('000')" style="font-size:0.9rem; grid-column: span 2;">000</button>
             </div>
             <div class="picker-actions">
                 <button class="picker-cancel" onclick="closePicker()">Cancel</button>
@@ -8705,6 +8797,190 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             document.getElementById('coord-lido2').textContent = '---';
             document.getElementById('coord-lido3').textContent = '---';
             document.getElementById('coord-arinc').textContent = '---';
+        }
+
+        // ============ AIRPORT DISTANCE CALCULATOR ============
+        var lastLookupIcao = null;
+        var lastLookupElev = null;
+
+        function calculateAirportDistance() {
+            var fromCode = document.getElementById('dist-from').value.trim().toUpperCase();
+            var toCode = document.getElementById('dist-to').value.trim().toUpperCase();
+
+            // Reset if inputs incomplete
+            if (fromCode.length < 3 || toCode.length < 3) {
+                document.getElementById('dist-result-nm').textContent = '--- nm';
+                document.getElementById('dist-result-km').textContent = '--- km';
+                document.getElementById('dist-from-name').textContent = '---';
+                document.getElementById('dist-to-name').textContent = '---';
+                document.getElementById('dist-track').textContent = '---°';
+                document.getElementById('dist-time').textContent = '--:--';
+                return;
+            }
+
+            // Try to find airports (ICAO first, then IATA)
+            var fromApt = getAirport(fromCode) || getAirportByIATA(fromCode);
+            var toApt = getAirport(toCode) || getAirportByIATA(toCode);
+
+            if (!fromApt) {
+                document.getElementById('dist-from-name').textContent = 'Not found';
+                document.getElementById('dist-from-name').style.color = '#ff5252';
+                return;
+            } else {
+                document.getElementById('dist-from-name').textContent = (fromApt.m || fromApt.n) + (fromApt.i ? ' (' + fromApt.i + ')' : '');
+                document.getElementById('dist-from-name').style.color = '#00ff88';
+            }
+
+            if (!toApt) {
+                document.getElementById('dist-to-name').textContent = 'Not found';
+                document.getElementById('dist-to-name').style.color = '#ff5252';
+                return;
+            } else {
+                document.getElementById('dist-to-name').textContent = (toApt.m || toApt.n) + (toApt.i ? ' (' + toApt.i + ')' : '');
+                document.getElementById('dist-to-name').style.color = '#ff5252';
+            }
+
+            // Calculate great circle distance
+            var lat1 = fromApt.c[0], lon1 = fromApt.c[1];
+            var lat2 = toApt.c[0], lon2 = toApt.c[1];
+
+            var distNm = calculateDistanceNm(lat1, lon1, lat2, lon2);
+            var distKm = distNm * 1.852;
+
+            document.getElementById('dist-result-nm').textContent = Math.round(distNm).toLocaleString() + ' nm';
+            document.getElementById('dist-result-km').textContent = Math.round(distKm).toLocaleString() + ' km';
+
+            // Calculate initial track
+            var track = calculateInitialBearing(lat1, lon1, lat2, lon2);
+            document.getElementById('dist-track').textContent = Math.round(track) + '°';
+
+            // Estimated flight time at 450 kt
+            var timeHrs = distNm / 450;
+            var hrs = Math.floor(timeHrs);
+            var mins = Math.round((timeHrs - hrs) * 60);
+            document.getElementById('dist-time').textContent = hrs + ':' + String(mins).padStart(2, '0');
+        }
+
+        function calculateDistanceNm(lat1, lon1, lat2, lon2) {
+            var R = 3440.065; // Earth radius in nm
+            var toRad = Math.PI / 180;
+            var dLat = (lat2 - lat1) * toRad;
+            var dLon = (lon2 - lon1) * toRad;
+            var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(lat1 * toRad) * Math.cos(lat2 * toRad) *
+                    Math.sin(dLon/2) * Math.sin(dLon/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function calculateInitialBearing(lat1, lon1, lat2, lon2) {
+            var toRad = Math.PI / 180;
+            var toDeg = 180 / Math.PI;
+            var dLon = (lon2 - lon1) * toRad;
+            lat1 = lat1 * toRad;
+            lat2 = lat2 * toRad;
+            var y = Math.sin(dLon) * Math.cos(lat2);
+            var x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+            var brng = Math.atan2(y, x) * toDeg;
+            return (brng + 360) % 360;
+        }
+
+        function clearDistanceCalc() {
+            document.getElementById('dist-from').value = '';
+            document.getElementById('dist-to').value = '';
+            document.getElementById('dist-result-nm').textContent = '--- nm';
+            document.getElementById('dist-result-km').textContent = '--- km';
+            document.getElementById('dist-from-name').textContent = '---';
+            document.getElementById('dist-to-name').textContent = '---';
+            document.getElementById('dist-track').textContent = '---°';
+            document.getElementById('dist-time').textContent = '--:--';
+        }
+
+        // ============ AIRPORT INFO LOOKUP ============
+        function lookupAirport() {
+            var code = document.getElementById('apt-lookup').value.trim().toUpperCase();
+
+            if (code.length < 3) {
+                document.getElementById('apt-info-result').style.display = 'none';
+                document.getElementById('apt-info-empty').style.display = 'block';
+                lastLookupIcao = null;
+                lastLookupElev = null;
+                return;
+            }
+
+            // Try ICAO first, then IATA
+            var apt = getAirport(code);
+            var icao = code;
+            if (!apt) {
+                var result = getAirportByIATA(code);
+                if (result) {
+                    apt = result;
+                    icao = result.icao;
+                }
+            }
+
+            if (!apt) {
+                document.getElementById('apt-info-result').style.display = 'none';
+                document.getElementById('apt-info-empty').style.display = 'block';
+                document.getElementById('apt-info-empty').innerHTML = 'Airport not found: ' + code + '<br><span style="font-size: 0.75rem;">Try ICAO (4 letters) or IATA (3 letters)</span>';
+                lastLookupIcao = null;
+                lastLookupElev = null;
+                return;
+            }
+
+            // Display info
+            document.getElementById('apt-info-result').style.display = 'block';
+            document.getElementById('apt-info-empty').style.display = 'none';
+
+            document.getElementById('apt-info-name').textContent = apt.n;
+            document.getElementById('apt-info-city').textContent = apt.m || 'N/A';
+            document.getElementById('apt-info-icao').textContent = icao;
+            document.getElementById('apt-info-iata').textContent = apt.i || '---';
+            document.getElementById('apt-info-elev').textContent = apt.e !== undefined ? apt.e + ' ft' : '--- ft';
+            document.getElementById('apt-info-country').textContent = apt.y || '--';
+
+            // Format coordinates
+            var lat = apt.c[0], lon = apt.c[1];
+            var latDir = lat >= 0 ? 'N' : 'S';
+            var lonDir = lon >= 0 ? 'E' : 'W';
+            document.getElementById('apt-info-coords').textContent = Math.abs(lat).toFixed(4) + '°' + latDir + '  ' + Math.abs(lon).toFixed(4) + '°' + lonDir;
+
+            // Store for elevation use
+            lastLookupIcao = icao;
+            lastLookupElev = apt.e;
+        }
+
+        function useElevationFromLookup() {
+            if (lastLookupElev !== null && lastLookupElev !== undefined) {
+                // Update Glide Path calculator elevation
+                document.getElementById('gp-elev').value = lastLookupElev;
+                document.getElementById('gp-elev-btn').textContent = lastLookupElev;
+                document.getElementById('gp-elev-btn').classList.remove('placeholder');
+
+                // Update Acceleration Height calculator if it exists
+                var accElevField = document.getElementById('acc-elev');
+                var accElevBtn = document.getElementById('acc-elev-btn');
+                if (accElevField && accElevBtn) {
+                    accElevField.value = lastLookupElev;
+                    accElevBtn.textContent = lastLookupElev;
+                    accElevBtn.classList.remove('placeholder');
+                }
+
+                // Trigger recalculation
+                if (typeof calculateGlidePath === 'function') calculateGlidePath();
+                if (typeof calculateAccHeight === 'function') calculateAccHeight();
+
+                alert('Elevation ' + lastLookupElev + ' ft applied to calculators');
+            }
+        }
+
+        function clearAirportLookup() {
+            document.getElementById('apt-lookup').value = '';
+            document.getElementById('apt-info-result').style.display = 'none';
+            document.getElementById('apt-info-empty').style.display = 'block';
+            document.getElementById('apt-info-empty').innerHTML = 'Enter ICAO or IATA code to lookup airport info<br><span style="font-size: 0.75rem;">Database: 8,800+ airports worldwide</span>';
+            lastLookupIcao = null;
+            lastLookupElev = null;
         }
 
         // ============ TIMEZONE CONVERTER ============
