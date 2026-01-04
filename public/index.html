@@ -6,6 +6,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Flight Ops</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <style>
         * {
             margin: 0;
@@ -194,19 +198,35 @@
         /* Tab Navigation */
         .tab-nav {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 20px;
-            justify-content: center;
+            justify-content: flex-start;
+            position: -webkit-sticky;
             position: sticky;
-            top: 75px;
-            z-index: 99;
+            top: 80px;
+            z-index: 100;
             background: rgba(0, 15, 30, 0.98);
-            padding: 10px 0;
+            padding: 10px 15px;
             backdrop-filter: blur(10px);
+            overflow-x: auto;
+            flex-wrap: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+            border-bottom: 1px solid rgba(255, 130, 0, 0.2);
+            margin-left: -15px;
+            margin-right: -15px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .tab-nav::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
         }
 
         .tab-btn {
-            padding: 10px 25px;
+            padding: 10px 18px;
+            flex-shrink: 0;
             font-size: 1rem;
             border: none;
             border-radius: 10px;
@@ -1067,6 +1087,166 @@
             text-align: right;
         }
 
+        /* Timezone converter mobile responsive */
+        @media (max-width: 480px) {
+            .tz-row {
+                gap: 8px;
+                padding: 8px;
+            }
+            .tz-offset {
+                width: 35px;
+                font-size: 0.75rem;
+            }
+            .tz-time {
+                font-size: 1.1rem;
+            }
+            .tz-label {
+                width: 70px;
+                font-size: 0.65rem;
+            }
+            .tz-row select {
+                width: 60px !important;
+                font-size: 0.65rem !important;
+                padding: 2px !important;
+            }
+        }
+
+        /* LMC mobile responsive */
+        @media (max-width: 600px) {
+            #tab-lmc .top-sections {
+                grid-template-columns: 1fr !important;
+            }
+            .lmc-change-fields {
+                grid-template-columns: 1fr 1fr !important;
+            }
+            .lmc-field-group[style*="span 2"] {
+                grid-column: span 2 !important;
+            }
+            /* NAV tab mobile */
+            #tab-nav .top-sections {
+                grid-template-columns: 1fr !important;
+            }
+            #tab-nav .wind-display,
+            #tab-nav .hold-display {
+                max-width: 280px;
+                margin: 10px auto;
+            }
+            #tab-nav .component-display {
+                gap: 10px;
+            }
+            #tab-nav .component-value {
+                font-size: 1.1rem;
+            }
+            /* PERF tab mobile - stack 3 columns vertically */
+            #tab-perf .top-sections {
+                grid-template-columns: 1fr !important;
+            }
+            #tab-perf .input-grid-3 {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 8px !important;
+            }
+            #tab-perf .input-grid-2 {
+                grid-template-columns: 1fr 1fr !important;
+            }
+            /* REF tab mobile */
+            #tab-ref .top-sections {
+                grid-template-columns: 1fr !important;
+            }
+            #tab-ref .coord-results-grid {
+                grid-template-columns: 1fr !important;
+            }
+            /* TIME tab mobile */
+            #tab-time .top-sections {
+                grid-template-columns: 1fr !important;
+            }
+            /* SET tab mobile */
+            #tab-set .top-sections {
+                grid-template-columns: 1fr !important;
+            }
+            /* FDP tab mobile - handle sector grids */
+            #tab-fdp .fdp-row[style*="grid-template-columns: 1fr 2fr 1fr 1fr"] {
+                grid-template-columns: 1fr 1fr !important;
+            }
+            #tab-fdp .fdp-row[style*="grid-template-columns: 1fr 1fr 1fr 0.8fr"] {
+                grid-template-columns: 1fr 1fr !important;
+            }
+            /* FUEL tab mobile */
+            #tab-fuel .top-sections {
+                grid-template-columns: 1fr !important;
+            }
+            #tab-fuel .fdp-row[style*="grid-template-columns:1fr 1fr 1fr"] {
+                grid-template-columns: 1fr 1fr !important;
+            }
+            /* SCHED tab mobile */
+            #tab-sched .fdp-row[style*="grid-template-columns: 1fr 1fr 1fr"] {
+                grid-template-columns: 1fr 1fr !important;
+            }
+            #tab-sched .fdp-row[style*="grid-template-columns: 1fr 2fr 1fr 1fr"] {
+                grid-template-columns: 1fr 1fr !important;
+            }
+            #tab-sched .fdp-row[style*="grid-template-columns: 1fr 1fr 1fr 0.8fr"] {
+                grid-template-columns: 1fr 1fr !important;
+            }
+            #tab-sched .fdp-result-grid[style*="repeat(4, 1fr)"] {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+            /* TMR tab mobile */
+            #tab-tmr .top-sections {
+                grid-template-columns: 1fr !important;
+            }
+            /* LAY tab mobile */
+            #tab-lay .top-sections {
+                grid-template-columns: 1fr !important;
+            }
+            /* NOTES tab mobile */
+            #tab-notes .top-sections {
+                grid-template-columns: 1fr !important;
+            }
+            /* General mobile adjustments */
+            .section {
+                min-width: auto !important;
+            }
+            .input-btn {
+                min-width: 50px;
+            }
+            .tab-nav {
+                flex-wrap: wrap;
+                gap: 2px;
+            }
+            .tab-btn {
+                padding: 8px 10px;
+                font-size: 0.75rem;
+            }
+            /* Top strip mobile */
+            .active-timers-strip {
+                padding: 8px 10px;
+                gap: 10px;
+            }
+            .strip-clock-time {
+                font-size: 1rem;
+            }
+            .strip-gps {
+                display: none;
+            }
+            .strip-qibla {
+                padding: 6px;
+            }
+            .strip-qibla-arrow {
+                font-size: 1rem;
+            }
+            /* MAP tab mobile */
+            #tab-map .map-info-row {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            #tab-map .map-info-row > div {
+                flex: 1 1 45%;
+            }
+            #map-container {
+                height: 350px !important;
+            }
+        }
+
         /* Toggle Buttons */
         .toggle-btn-group {
             display: flex;
@@ -1506,8 +1686,15 @@
             }
 
             .tab-btn {
-                padding: 8px 15px;
-                font-size: 0.9rem;
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                flex-shrink: 0;
+            }
+
+            .tab-nav {
+                top: 70px;
+                padding: 8px 10px;
+                gap: 6px;
             }
         }
 
@@ -1734,6 +1921,25 @@
         .lmc-result-label { color: #888; font-size: 0.8rem; }
         .lmc-result-value { color: #00ff88; font-family: 'Courier New', monospace; font-weight: bold; }
 
+        .lmc-toggle-btn {
+            background: rgba(0, 40, 80, 0.5);
+            border: 1px solid rgba(0, 180, 255, 0.3);
+            border-radius: 4px;
+            color: #aaa;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lmc-toggle-btn:hover {
+            background: rgba(0, 100, 180, 0.4);
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+        .lmc-toggle-btn.active {
+            background: rgba(0, 180, 255, 0.3);
+            border-color: #00d4ff;
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
         /* Qibla Display Styles */
         .strip-qibla {
             display: flex;
@@ -1771,6 +1977,36 @@
         .strip-qibla.no-gps .strip-qibla-value {
             color: #ffd700;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .strip-gps {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 0 12px;
+            border-right: 1px solid rgba(255, 130, 0, 0.3);
+        }
+
+        .strip-gps-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .strip-gps-label {
+            font-size: 0.6rem;
+            color: #666;
+            min-width: 22px;
+        }
+
+        .strip-gps-value {
+            font-size: 0.75rem;
+            font-family: 'Courier New', monospace;
+            color: #00d4ff;
+        }
+
+        .strip-gps.no-fix .strip-gps-value {
+            color: #888;
         }
 
         .qibla-modal-content {
@@ -1836,7 +2072,19 @@
             <div class="strip-timers" id="strip-timers">
                 <span class="strip-no-active">No active timers</span>
             </div>
-            <div class="strip-qibla" id="strip-qibla" onclick="openQiblaModal()" style="margin-left: auto; cursor: pointer;">
+            <div class="strip-gps" id="strip-gps" style="margin-left: auto;">
+                <div class="strip-gps-row">
+                    <span class="strip-gps-label">POS</span>
+                    <span class="strip-gps-value" id="strip-gps-pos">---</span>
+                </div>
+                <div class="strip-gps-row">
+                    <span class="strip-gps-label">TRK</span>
+                    <span class="strip-gps-value" id="strip-gps-trk">---°</span>
+                    <span class="strip-gps-label" style="margin-left: 8px;">GS</span>
+                    <span class="strip-gps-value" id="strip-gps-gs">---kt</span>
+                </div>
+            </div>
+            <div class="strip-qibla" id="strip-qibla" onclick="openQiblaModal()" style="cursor: pointer;">
                 <div class="strip-qibla-arrow" id="strip-qibla-arrow">&#10148;</div>
                 <div class="strip-qibla-value" id="strip-qibla-value">---°</div>
                 <div class="strip-qibla-label">QIBLA</div>
@@ -1851,6 +2099,7 @@
             <button class="tab-btn" onclick="switchTab('perf')">PERF</button>
             <button class="tab-btn" onclick="switchTab('time')">TIME</button>
             <button class="tab-btn" onclick="switchTab('nav')">NAV</button>
+            <button class="tab-btn" onclick="switchTab('map')">MAP</button>
             <button class="tab-btn" onclick="switchTab('tmr')">TMR</button>
             <button class="tab-btn" onclick="switchTab('lay')">LAY</button>
             <button class="tab-btn" onclick="switchTab('ref')">REF</button>
@@ -2397,6 +2646,85 @@
                 </div>
             </div>
 
+        </div>
+
+        <!-- MAP Tab -->
+        <div class="tab-content" id="tab-map">
+            <div class="fdp-container">
+                <div class="fdp-section">
+                    <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Moving Map</span>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="preset-btn" id="map-center-btn" onclick="centerMapOnPosition()">Center</button>
+                            <button class="preset-btn" id="map-follow-btn" onclick="toggleMapFollow()" style="background: rgba(0, 255, 136, 0.3); border-color: #00ff88;">Follow</button>
+                        </div>
+                    </div>
+                    <div id="map-container" style="height: 500px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 130, 0, 0.3);"></div>
+                    <div class="map-info-row" style="display: flex; justify-content: space-between; margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px;">
+                        <div style="text-align: center;">
+                            <div style="color: #888; font-size: 0.75rem;">POSITION</div>
+                            <div id="map-position" style="color: #00d4ff; font-family: monospace;">---</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="color: #888; font-size: 0.75rem;">TRACK</div>
+                            <div id="map-track" style="color: #00ff88; font-family: monospace;">---°</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="color: #888; font-size: 0.75rem;">GROUND SPEED</div>
+                            <div id="map-gs" style="color: #FF8200; font-family: monospace;">--- kt</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="color: #888; font-size: 0.75rem;">ALTITUDE</div>
+                            <div id="map-alt" style="color: #ffd700; font-family: monospace;">--- ft</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Route Entry -->
+                <div class="fdp-section">
+                    <div class="section-title">Route / GeoJSON</div>
+                    <div class="input-grid-2">
+                        <div class="input-group">
+                            <label class="input-label">From (ICAO)</label>
+                            <input type="text" class="fdp-input" id="route-from" placeholder="OMDB" maxlength="4" style="text-transform: uppercase; text-align: center;">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">To (ICAO)</label>
+                            <input type="text" class="fdp-input" id="route-to" placeholder="EGLL" maxlength="4" style="text-transform: uppercase; text-align: center;">
+                        </div>
+                    </div>
+                    <button class="preset-btn" style="width: 100%; margin-top: 10px;" onclick="drawRoute()">Draw Great Circle</button>
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,130,0,0.2);">
+                        <label class="input-label">Paste GeoJSON Route</label>
+                        <textarea id="geojson-input" class="fdp-input" placeholder='{"type":"Feature","geometry":{"type":"LineString","coordinates":[[55.36,25.25],[0.46,51.47]]}}' style="width: 100%; height: 80px; resize: vertical; font-family: monospace; font-size: 0.8rem;"></textarea>
+                        <button class="preset-btn" style="width: 100%; margin-top: 8px;" onclick="loadGeoJSON()">Load GeoJSON</button>
+                    </div>
+                </div>
+                <!-- Track Log -->
+                <div class="fdp-section">
+                    <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Track Log</span>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="preset-btn" id="track-toggle-btn" onclick="toggleTrackLog()">Start Recording</button>
+                            <button class="clear-btn" onclick="clearTrackLog()">Clear</button>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 15px; margin-top: 10px;">
+                        <div style="text-align: center;">
+                            <div style="color: #888; font-size: 0.75rem;">POINTS</div>
+                            <div id="track-points" style="color: #00d4ff; font-size: 1.2rem;">0</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="color: #888; font-size: 0.75rem;">DISTANCE</div>
+                            <div id="track-distance" style="color: #00ff88; font-size: 1.2rem;">0 nm</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="color: #888; font-size: 0.75rem;">DURATION</div>
+                            <div id="track-duration" style="color: #FF8200; font-size: 1.2rem;">00:00</div>
+                        </div>
+                    </div>
+                    <button class="preset-btn" style="width: 100%; margin-top: 10px;" onclick="exportTrackLog()">Export GPX</button>
+                </div>
+            </div>
         </div>
 
         <!-- Timers Tab -->
@@ -3354,67 +3682,79 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                         <button class="clear-btn" id="eta-clear">Clear</button>
                     </div>
 
-                    <!-- Timezone Converter (duplicate from REF for quick access) -->
-                    <div class="section">
-                        <div class="section-title">Timezone Converter</div>
-                        <div class="input-grid-2" style="margin-bottom:15px">
-                            <div class="input-group">
-                                <label class="input-label">Input Time</label>
-                                <button class="input-btn" id="time-tz-input-btn" onclick="openTimePicker('time-tz-input')" style="max-width:100%">----</button>
-                                <input type="hidden" id="time-tz-input" value="">
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label">Input Zone</label>
-                                <select class="fdp-select" id="time-tz-zone" onchange="calculateTimeTabTimezones()" style="max-width:100%">
-                                    <option value="0" selected>UTC</option>
-                                    <option value="4">DXB (+4)</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button class="preset-btn" onclick="setCurrentUTC()" style="margin-bottom: 10px;">Current Time</button>
-                        <div class="tz-converter" id="time-tz-results">
-                            <div class="tz-row">
-                                <span class="tz-offset">+0</span>
-                                <span class="tz-time" id="time-tz-utc">--:--</span>
-                                <span class="tz-label">UTC</span>
-                            </div>
-                            <div class="tz-row">
-                                <span class="tz-offset">+4</span>
-                                <span class="tz-time" id="time-tz-dxb">--:--</span>
-                                <span class="tz-label">DXB</span>
-                            </div>
-                        </div>
-                        <button class="clear-btn" onclick="clearTimeTabTimezones()">Clear</button>
-                    </div>
                 </div>
 
                 <!-- Speed-Distance-Time Calculator -->
                 <div class="section" style="max-width: 600px; margin: 20px auto 0;">
                     <div class="section-title">Speed-Distance-Time Calculator</div>
-                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
-                        <div class="fdp-field">
-                            <label class="fdp-label">Speed (kts)</label>
-                            <button class="input-btn" id="sdt-speed-btn" onclick="openWeightPicker('sdt-speed', 'Speed', 'kts')" style="max-width: 100%">---</button>
-                            <input type="hidden" id="sdt-speed" value="">
+
+                    <!-- Row 1: Speed × Time = Distance -->
+                    <div class="sdt-row" style="display: flex; align-items: flex-end; gap: 8px; margin-bottom: 12px;">
+                        <div style="flex: 1; min-width: 70px;">
+                            <label class="fdp-label" style="font-size: 0.65rem;">Speed (kts)</label>
+                            <div style="display: flex; gap: 3px;">
+                                <button class="input-btn" id="sdt1-speed-btn" onclick="openWeightPicker('sdt1-speed', 'Speed', 'kts')" style="flex: 1; padding: 8px 4px; font-size: 0.9rem;">---</button>
+                                <button class="preset-btn" onclick="fillSpeedFromGps('sdt1-speed')" style="font-size: 0.6rem; padding: 4px 5px;">GPS</button>
+                            </div>
+                            <input type="hidden" id="sdt1-speed" value="">
                         </div>
-                        <div class="fdp-field">
-                            <label class="fdp-label">Distance (nm)</label>
-                            <button class="input-btn" id="sdt-dist-btn" onclick="openWeightPicker('sdt-dist', 'Distance', 'nm')" style="max-width: 100%">---</button>
-                            <input type="hidden" id="sdt-dist" value="">
+                        <span style="color: #FF8200; font-size: 1.2rem; padding-bottom: 8px;">×</span>
+                        <div style="flex: 1; min-width: 70px;">
+                            <label class="fdp-label" style="font-size: 0.65rem;">Time</label>
+                            <button class="input-btn" id="sdt1-time-btn" onclick="openSDTDuration('sdt1-time')" style="padding: 8px 4px; font-size: 0.9rem;">---</button>
+                            <input type="hidden" id="sdt1-time" value="">
                         </div>
-                        <div class="fdp-field">
-                            <label class="fdp-label">Time (min)</label>
-                            <button class="input-btn" id="sdt-time-btn" onclick="openWeightPicker('sdt-time', 'Time', 'min')" style="max-width: 100%">---</button>
-                            <input type="hidden" id="sdt-time" value="">
+                        <span style="color: #FF8200; font-size: 1.2rem; padding-bottom: 8px;">=</span>
+                        <div style="flex: 1; min-width: 80px; text-align: center;">
+                            <label class="fdp-label" style="font-size: 0.65rem;">Distance</label>
+                            <div class="fdp-result-value" id="sdt1-result" style="font-size: 1.1rem; color: #00ff88; padding: 8px 0;">--- nm</div>
                         </div>
                     </div>
-                    <div style="text-align: center; margin-top: 10px;">
-                        <button class="preset-btn" onclick="calculateSDT('speed')">Calculate Speed</button>
-                        <button class="preset-btn" onclick="calculateSDT('distance')">Calculate Distance</button>
-                        <button class="preset-btn" onclick="calculateSDT('time')">Calculate Time</button>
+
+                    <!-- Row 2: Distance ÷ Speed = Time -->
+                    <div class="sdt-row" style="display: flex; align-items: flex-end; gap: 8px; margin-bottom: 12px;">
+                        <div style="flex: 1; min-width: 70px;">
+                            <label class="fdp-label" style="font-size: 0.65rem;">Distance (nm)</label>
+                            <button class="input-btn" id="sdt2-dist-btn" onclick="openWeightPicker('sdt2-dist', 'Distance', 'nm')" style="padding: 8px 4px; font-size: 0.9rem;">---</button>
+                            <input type="hidden" id="sdt2-dist" value="">
+                        </div>
+                        <span style="color: #FF8200; font-size: 1.2rem; padding-bottom: 8px;">÷</span>
+                        <div style="flex: 1; min-width: 70px;">
+                            <label class="fdp-label" style="font-size: 0.65rem;">Speed (kts)</label>
+                            <div style="display: flex; gap: 3px;">
+                                <button class="input-btn" id="sdt2-speed-btn" onclick="openWeightPicker('sdt2-speed', 'Speed', 'kts')" style="flex: 1; padding: 8px 4px; font-size: 0.9rem;">---</button>
+                                <button class="preset-btn" onclick="fillSpeedFromGps('sdt2-speed')" style="font-size: 0.6rem; padding: 4px 5px;">GPS</button>
+                            </div>
+                            <input type="hidden" id="sdt2-speed" value="">
+                        </div>
+                        <span style="color: #FF8200; font-size: 1.2rem; padding-bottom: 8px;">=</span>
+                        <div style="flex: 1; min-width: 80px; text-align: center;">
+                            <label class="fdp-label" style="font-size: 0.65rem;">Time</label>
+                            <div class="fdp-result-value" id="sdt2-result" style="font-size: 1.1rem; color: #00ff88; padding: 8px 0;">--- min</div>
+                        </div>
                     </div>
-                    <div class="fdp-result-value" id="sdt-result" style="text-align: center; margin-top: 15px; font-size: 1.5rem; color: #00ff88;">---</div>
-                    <button class="clear-btn" onclick="clearSDT()">Clear</button>
+
+                    <!-- Row 3: Distance ÷ Time = Speed -->
+                    <div class="sdt-row" style="display: flex; align-items: flex-end; gap: 8px; margin-bottom: 12px;">
+                        <div style="flex: 1; min-width: 70px;">
+                            <label class="fdp-label" style="font-size: 0.65rem;">Distance (nm)</label>
+                            <button class="input-btn" id="sdt3-dist-btn" onclick="openWeightPicker('sdt3-dist', 'Distance', 'nm')" style="padding: 8px 4px; font-size: 0.9rem;">---</button>
+                            <input type="hidden" id="sdt3-dist" value="">
+                        </div>
+                        <span style="color: #FF8200; font-size: 1.2rem; padding-bottom: 8px;">÷</span>
+                        <div style="flex: 1; min-width: 70px;">
+                            <label class="fdp-label" style="font-size: 0.65rem;">Time</label>
+                            <button class="input-btn" id="sdt3-time-btn" onclick="openSDTDuration('sdt3-time')" style="padding: 8px 4px; font-size: 0.9rem;">---</button>
+                            <input type="hidden" id="sdt3-time" value="">
+                        </div>
+                        <span style="color: #FF8200; font-size: 1.2rem; padding-bottom: 8px;">=</span>
+                        <div style="flex: 1; min-width: 80px; text-align: center;">
+                            <label class="fdp-label" style="font-size: 0.65rem;">Speed</label>
+                            <div class="fdp-result-value" id="sdt3-result" style="font-size: 1.1rem; color: #00ff88; padding: 8px 0;">--- kts</div>
+                        </div>
+                    </div>
+
+                    <button class="clear-btn" onclick="clearAllSDT()">Clear All</button>
                 </div>
 
                 <!-- Catch-Up Calculator -->
@@ -3438,12 +3778,15 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     <div class="fdp-row" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 10px;">
                         <div class="fdp-field">
                             <label class="fdp-label">Your GS (kts)</label>
-                            <button class="input-btn" id="catchup-your-gs-btn" onclick="openWeightPicker('catchup-your-gs', 'Your GS', 'kts')" style="max-width: 100%">---</button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="input-btn" id="catchup-your-gs-btn" onclick="openWeightPicker('catchup-your-gs', 'Your GS', 'kts')" style="flex: 1;">---</button>
+                                <button class="preset-btn" onclick="fillSpeedFromGps('catchup-your-gs')" style="font-size: 0.65rem; padding: 5px 6px;" title="Fill from GPS">GPS</button>
+                            </div>
                             <input type="hidden" id="catchup-your-gs" value="">
                         </div>
                         <div class="fdp-field">
-                            <label class="fdp-label">Time Limit (min)</label>
-                            <button class="input-btn" id="catchup-time-btn" onclick="openWeightPicker('catchup-time', 'Time', 'min')" style="max-width: 100%">---</button>
+                            <label class="fdp-label">Time Limit</label>
+                            <button class="input-btn" id="catchup-time-btn" onclick="openCatchupDuration('catchup-time')" style="max-width: 100%">---</button>
                             <input type="hidden" id="catchup-time" value="">
                         </div>
                     </div>
@@ -3476,6 +3819,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                             <div class="input-group">
                                 <label class="input-label">Type / Config</label>
                                 <div id="lmc-aircraft-info" style="background: rgba(0,40,80,0.5); padding: 8px; border-radius: 6px; font-size: 0.85rem; color: #00d4ff;">---</div>
+                                <div id="lmc-config-selector" style="display:none; gap:5px; margin-top:5px;"></div>
                             </div>
                         </div>
                         <div class="input-grid-2" style="margin-top: 10px;">
@@ -3552,7 +3896,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     <div style="display: flex; gap: 10px; margin-top: 10px;">
                         <button class="preset-btn" onclick="addLmcChange('PAX')" style="flex: 1;">+ PAX</button>
                         <button class="preset-btn" onclick="addLmcChange('CARGO')" style="flex: 1;">+ CARGO</button>
-                        <button class="preset-btn" onclick="addLmcChange('BAGGAGE')" style="flex: 1;">+ BAGGAGE</button>
+                        <button class="preset-btn" onclick="addLmcChange('BAGS')" style="flex: 1;">+ BAGS</button>
                         <button class="preset-btn" onclick="addLmcChange('FUEL')" style="flex: 1;">+ FUEL</button>
                     </div>
                 </div>
@@ -3783,6 +4127,38 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         </div>
     </div>
 
+    <!-- Duration Picker Modal (smart h/m entry) -->
+    <div class="modal-overlay" id="duration-picker-modal">
+        <div class="number-picker">
+            <div class="picker-title" id="duration-picker-title">Enter Time</div>
+            <div class="picker-display" style="flex-direction: column; gap: 5px;">
+                <span class="picker-value" id="duration-picker-value" style="font-size: 1.8rem;">0m</span>
+                <span style="font-size: 0.7rem; color: #888;" id="duration-picker-mins">= 0 minutes</span>
+            </div>
+            <div class="picker-buttons">
+                <button class="picker-btn" onclick="durationAppend('1')">1</button>
+                <button class="picker-btn" onclick="durationAppend('2')">2</button>
+                <button class="picker-btn" onclick="durationAppend('3')">3</button>
+                <button class="picker-btn" onclick="durationAppend('4')">4</button>
+                <button class="picker-btn" onclick="durationAppend('5')">5</button>
+                <button class="picker-btn" onclick="durationAppend('6')">6</button>
+                <button class="picker-btn" onclick="durationAppend('7')">7</button>
+                <button class="picker-btn" onclick="durationAppend('8')">8</button>
+                <button class="picker-btn" onclick="durationAppend('9')">9</button>
+                <button class="picker-btn" onclick="durationAppend('h')" style="background: rgba(255,130,0,0.3); color: #FF8200; font-weight: bold;">h</button>
+                <button class="picker-btn" onclick="durationAppend('0')">0</button>
+                <button class="picker-btn" onclick="durationAppend('m')" style="background: rgba(0,212,255,0.3); color: #00d4ff; font-weight: bold;">m</button>
+                <button class="picker-btn clear" onclick="durationClear()">C</button>
+                <button class="picker-btn" onclick="durationBackspace()">&larr;</button>
+                <button class="picker-btn" onclick="durationAppend('30')" style="font-size: 0.9rem;">30</button>
+            </div>
+            <div class="picker-actions">
+                <button class="picker-cancel" onclick="closeDurationPicker()">Cancel</button>
+                <button class="picker-confirm" onclick="confirmDurationPicker()">OK</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Aircraft Picker Modal -->
     <div class="modal-overlay" id="aircraft-picker-modal">
         <div class="number-picker" style="max-width: 280px;">
@@ -3912,11 +4288,11 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             <div class="picker-title">Qibla Direction</div>
             <div class="qibla-modal-content">
                 <div class="qibla-source-toggle">
-                    <button class="qibla-source-btn" id="qibla-gps-btn" onclick="setQiblaSource('gps')">GPS</button>
-                    <button class="qibla-source-btn active" id="qibla-manual-btn" onclick="setQiblaSource('manual')">Manual</button>
+                    <button class="qibla-source-btn active" id="qibla-gps-btn" onclick="setQiblaSource('gps')">GPS</button>
+                    <button class="qibla-source-btn" id="qibla-manual-btn" onclick="setQiblaSource('manual')">Manual</button>
                 </div>
 
-                <div id="qibla-gps-section" style="display: none;">
+                <div id="qibla-gps-section">
                     <div class="qibla-gps-status disconnected" id="qibla-gps-status">
                         <div style="font-size: 1.2rem; margin-bottom: 5px;">GPS Status</div>
                         <div id="qibla-gps-status-text">Connecting...</div>
@@ -3924,7 +4300,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     </div>
                 </div>
 
-                <div id="qibla-manual-section">
+                <div id="qibla-manual-section" style="display: none;">
                     <div class="input-grid-2">
                         <div class="input-group">
                             <label class="input-label">Latitude</label>
@@ -3963,6 +4339,195 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
     <script>
         // ============ GLOBAL VARIABLES ============
         var currentSectorCount = 1;
+        var fleetData = null;
+
+        // Load fleet data immediately on page load
+        function loadFleetData() {
+            // Build absolute URL - ensure we use /dashboard/ path
+            var path = window.location.pathname;
+            // If path is /dashboard (no trailing slash), add it
+            if (path === '/dashboard') path = '/dashboard/';
+            // If path ends with index.html, remove it
+            path = path.replace(/index\.html$/, '');
+            // Ensure trailing slash
+            if (!path.endsWith('/')) path += '/';
+            var url = path + 'fleet.json';
+            fetch(url)
+                .then(function(response) {
+                    if (!response.ok) throw new Error('HTTP ' + response.status);
+                    return response.json();
+                })
+                .then(function(data) { fleetData = data; })
+                .catch(function(err) { console.error('Failed to load fleet data:', err.message || err); });
+        }
+        loadFleetData(); // Call immediately
+
+        // Standard pax weights
+        var LMC_PAX_WEIGHTS = { male: 88, female: 70, child: 35 };
+
+        // LMC correction table by aircraft type and config (from OM-B Section 6)
+        // IU values: negative = forward CG shift, positive = aft CG shift
+        var lmcCorrectionTable = {
+            '737-800': {
+                '189Y': {
+                    'OA': { desc: 'Rows 1-5', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
+                    'OD': { desc: 'Rows 28-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (742kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2440kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3157kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (474kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WING': { desc: 'Wing Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WING+CTR': { desc: 'Wing+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
+                },
+                '12J162Y': {
+                    'OA': { desc: 'Rows 1-3', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
+                    'OD': { desc: 'Rows 28-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3157kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (474kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WING': { desc: 'Wing Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WING+CTR': { desc: 'Wing+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
+                },
+                '174Y': {
+                    'OA': { desc: 'Rows 1-5', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
+                    'OD': { desc: 'Rows 28-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3157kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (474kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WING': { desc: 'Wing Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WING+CTR': { desc: 'Wing+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
+                },
+                '10J156Y': {
+                    'OA': { desc: 'Rows 1-3', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-26', onload: 0.3, offload: -0.3, unit: 'PAX' },
+                    'OD': { desc: 'Rows 27-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3157kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (474kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WING': { desc: 'Wing Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WING+CTR': { desc: 'Wing+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
+                },
+                '166Y': {
+                    'OA': { desc: 'Rows 1-5', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
+                    'OD': { desc: 'Rows 28-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3157kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (474kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WING': { desc: 'Wing Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WING+CTR': { desc: 'Wing+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
+                }
+            },
+            '737-8': {
+                '10J156Y': {
+                    'OA': { desc: 'Rows 1-3', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-26', onload: 0.3, offload: -0.3, unit: 'PAX' },
+                    'OD': { desc: 'Rows 27-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3631kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (473kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WING': { desc: 'Wing Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WING+CTR': { desc: 'Wing+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
+                },
+                '166Y': {
+                    'OA': { desc: 'Rows 1-5', onload: -0.9, offload: 0.9, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-27', onload: 0.3, offload: -0.3, unit: 'PAX' },
+                    'OD': { desc: 'Rows 28-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3631kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (473kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WING': { desc: 'Wing Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WING+CTR': { desc: 'Wing+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
+                },
+                '12J162Y': {
+                    'OA': { desc: 'Rows 1-3', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
+                    'OD': { desc: 'Rows 28-32', onload: 1.0, offload: -1.0, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3560kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (448kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WING': { desc: 'Wing Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WING+CTR': { desc: 'Wing+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
+                },
+                '174Y': {
+                    'OA': { desc: 'Rows 1-5', onload: -0.9, offload: 0.9, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
+                    'OD': { desc: 'Rows 28-32', onload: 1.0, offload: -1.0, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3560kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (448kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WING': { desc: 'Wing Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WING+CTR': { desc: 'Wing+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
+                },
+                '186Y': {
+                    'OA': { desc: 'Rows 1-5', onload: -0.9, offload: 0.9, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-26', onload: 0.3, offload: -0.3, unit: 'PAX' },
+                    'OD': { desc: 'Rows 27-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3560kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (448kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WING': { desc: 'Wing Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WING+CTR': { desc: 'Wing+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
+                }
+            },
+            '737-9': {
+                'ALL': {
+                    'OA': { desc: 'Rows 1-5', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-17', onload: -0.3, offload: 0.3, unit: 'PAX' },
+                    'OC': { desc: 'Rows 18-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
+                    'OD': { desc: 'Rows 28-33', onload: 1.0, offload: -1.0, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (675kg)', onload: -1.4, offload: 1.4, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2884kg)', onload: -0.8, offload: 0.8, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (4715kg)', onload: 0.7, offload: -0.7, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (370kg)', onload: 1.3, offload: -1.3, unit: '100kg' },
+                    'WING': { desc: 'Wing Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WING+CTR': { desc: 'Wing+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
+                }
+            }
+        };
+
+        // Parse dual config from fleet.json
+        // "10J156Y/166Y" -> ["10J156Y", "166Y"] (10 business+156 eco OR 166 all eco)
+        // "12J162Y/174Y" -> ["12J162Y", "174Y"] (12 business+162 eco OR 174 all eco)
+        function parseFleetConfig(config) {
+            if (!config) return [];
+            // Handle dual configs like "10J156Y/166Y" or "12J162Y/174Y"
+            var match = config.match(/^(\d+J)(\d+Y)\/(\d+Y)$/);
+            if (match) {
+                return [match[1] + match[2], match[3]]; // e.g., ["10J156Y", "166Y"]
+            }
+            // Handle single configs like "186Y" or "189Y"
+            return [config];
+        }
+
+        // Get available configs for an aircraft type
+        function getAvailableConfigs(aircraftType) {
+            var typeTable = lmcCorrectionTable[aircraftType];
+            if (!typeTable) return [];
+            return Object.keys(typeTable);
+        }
 
         // ============ TAB SWITCHING ============
         function switchTab(tab) {
@@ -4045,6 +4610,140 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 console.error('Picker callback error:', e);
             }
             closePicker();
+        }
+
+        // ============ DURATION PICKER (smart h/m entry) ============
+        var durationValue = '';
+        var durationCallback = null;
+        var durationFieldId = '';
+        var durationFirstInput = true;
+
+        function openDurationPicker(fieldId, title, callback) {
+            durationFieldId = fieldId;
+            durationCallback = callback;
+            durationFirstInput = true;
+
+            // Get current value and convert back to display format
+            var currentMins = parseInt(document.getElementById(fieldId).value) || 0;
+            if (currentMins > 0) {
+                var h = Math.floor(currentMins / 60);
+                var m = currentMins % 60;
+                if (h > 0 && m > 0) {
+                    durationValue = h + 'h' + m + 'm';
+                } else if (h > 0) {
+                    durationValue = h + 'h';
+                } else {
+                    durationValue = m + 'm';
+                }
+            } else {
+                durationValue = '';
+            }
+
+            document.getElementById('duration-picker-title').textContent = title || 'Enter Time';
+            updateDurationDisplay();
+            document.getElementById('duration-picker-modal').classList.add('active');
+        }
+
+        function parseDurationToMinutes(str) {
+            if (!str) return 0;
+            str = str.toLowerCase().trim();
+
+            // Try patterns: "1h30m", "1h30", "1h", "30m", "90"
+            var hours = 0, mins = 0;
+
+            // Pattern: XhYm or XhY
+            var match = str.match(/^(\d+)h(\d+)m?$/);
+            if (match) {
+                hours = parseInt(match[1]) || 0;
+                mins = parseInt(match[2]) || 0;
+                return hours * 60 + mins;
+            }
+
+            // Pattern: Xh (hours only)
+            match = str.match(/^(\d+)h$/);
+            if (match) {
+                hours = parseInt(match[1]) || 0;
+                return hours * 60;
+            }
+
+            // Pattern: Xm (minutes only)
+            match = str.match(/^(\d+)m$/);
+            if (match) {
+                mins = parseInt(match[1]) || 0;
+                return mins;
+            }
+
+            // Plain number (assume minutes)
+            if (/^\d+$/.test(str)) {
+                return parseInt(str) || 0;
+            }
+
+            return 0;
+        }
+
+        function formatDurationDisplay(str) {
+            var mins = parseDurationToMinutes(str);
+            if (mins === 0) return '= 0 minutes';
+            var h = Math.floor(mins / 60);
+            var m = mins % 60;
+            if (h > 0 && m > 0) {
+                return '= ' + h + 'h ' + m + 'm (' + mins + ' min)';
+            } else if (h > 0) {
+                return '= ' + h + ' hour' + (h > 1 ? 's' : '') + ' (' + mins + ' min)';
+            } else {
+                return '= ' + m + ' minutes';
+            }
+        }
+
+        function updateDurationDisplay() {
+            var display = durationValue || '0';
+            document.getElementById('duration-picker-value').textContent = display;
+            document.getElementById('duration-picker-mins').textContent = formatDurationDisplay(durationValue);
+        }
+
+        function durationAppend(char) {
+            if (durationFirstInput && durationValue.length > 0 && /\d/.test(char)) {
+                durationValue = '';
+            }
+            durationFirstInput = false;
+
+            // Prevent multiple h or m
+            if (char === 'h' && durationValue.includes('h')) return;
+            if (char === 'm' && durationValue.includes('m')) return;
+
+            // Prevent h after m
+            if (char === 'h' && durationValue.includes('m')) return;
+
+            // Max reasonable length
+            if (durationValue.length < 8) {
+                durationValue += char;
+                updateDurationDisplay();
+            }
+        }
+
+        function durationClear() {
+            durationValue = '';
+            durationFirstInput = false;
+            updateDurationDisplay();
+        }
+
+        function durationBackspace() {
+            durationValue = durationValue.slice(0, -1);
+            durationFirstInput = false;
+            updateDurationDisplay();
+        }
+
+        function closeDurationPicker() {
+            document.getElementById('duration-picker-modal').classList.remove('active');
+            durationCallback = null;
+        }
+
+        function confirmDurationPicker() {
+            var mins = parseDurationToMinutes(durationValue);
+            if (durationCallback) {
+                durationCallback(mins);
+            }
+            closeDurationPicker();
         }
 
         // ============ TIME PICKER (HHMM with validation) ============
@@ -4217,11 +4916,16 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 else if (fieldId.startsWith('xwind-')) calculateCrosswind();
                 else if (fieldId.startsWith('hold-')) calculateHoldEntry();
                 else if (fieldId === 'isa-alt') calculateISA();
-                else if (fieldId.startsWith('sdt-')) autoCalculateSDT();
+                else if (fieldId.startsWith('sdt1-')) calculateSDT1();
+                else if (fieldId.startsWith('sdt2-')) calculateSDT2();
+                else if (fieldId.startsWith('sdt3-')) calculateSDT3();
                 else if (fieldId.startsWith('wx-')) calculateWeather();
                 else if (fieldId.startsWith('gp-')) calculateGlidePath();
                 else if (fieldId.startsWith('catchup-')) {
                     // Auto-update catch-up display when values change
+                }
+                else if (fieldId.startsWith('lmc-')) {
+                    lmcCalculate();
                 }
             });
         }
@@ -4513,6 +5217,16 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 document.getElementById('uplift-diff').textContent = '--- %';
                 document.getElementById('uplift-diff').className = 'fdp-result-value';
                 document.getElementById('uplift-status').innerHTML = '';
+            }
+
+            // Autofill converter with actual uplift (if entered and converter is empty or matches previous value)
+            if (actualUplift > 0) {
+                var convLitres = parseInt(document.getElementById('conv-litres').value, 10) || 0;
+                // Only autofill if converter is empty or was previously autofilled with same value
+                if (convLitres === 0 || convLitres === window.lastAutofilledUplift) {
+                    calculateConverter('litres', actualUplift);
+                    window.lastAutofilledUplift = actualUplift;
+                }
             }
 
             saveFuel();
@@ -4964,7 +5678,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 const displayTime = timer.type === 'countdown' ? timer.remaining : timer.elapsed;
 
                 return `
-                    <div class="strip-timer ${colorClass}${timer.expired ? ' flashing' : ''}" onclick="switchTab('timers')" data-timer-index="${index}">
+                    <div class="strip-timer ${colorClass}${timer.expired ? ' flashing' : ''}" onclick="switchTab('tmr')" data-timer-index="${index}">
                         <div class="strip-timer-icon" style="--strip-progress: ${progress}%">
                             <div class="strip-timer-icon-inner"></div>
                         </div>
@@ -6417,41 +7131,48 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             var configSelect = document.getElementById('sched-config');
             configSelect.innerHTML = '';
 
-            // Get available configs for this aircraft type from lmcCorrectionTable
-            var configs = [];
-            if (lmcCorrectionTable[aircraftType]) {
-                configs = Object.keys(lmcCorrectionTable[aircraftType]);
-            }
-
-            // If no configs found in table, use the default from fleet
-            if (configs.length === 0) {
-                configs = [defaultConfig];
-            }
-
-            // Normalize default config for matching
-            var normalizedDefault = normalizeConfig(defaultConfig);
+            // Parse config like "10J156Y/166Y" into ["10J/156Y", "10J/166Y"]
+            // Or "186Y" stays as ["186Y"]
+            var configs = parseConfigOptions(defaultConfig);
 
             // Add options
-            configs.forEach(function(cfg) {
+            configs.forEach(function(cfg, index) {
                 var option = document.createElement('option');
                 option.value = cfg;
                 option.textContent = cfg;
-                // Select the matching config
-                if (cfg === normalizedDefault || cfg === defaultConfig) {
+                if (index === 0) {
                     option.selected = true;
                     selectedConfig = cfg;
                 }
                 configSelect.appendChild(option);
             });
 
-            // If nothing matched, select first option
-            if (!selectedConfig && configs.length > 0) {
-                configSelect.value = configs[0];
-                selectedConfig = configs[0];
-            }
-
             // Trigger config change to update other tabs
             onConfigChange();
+        }
+
+        // Parse config string into selectable options
+        // "10J156Y/166Y" -> ["10J156Y", "166Y"] (10 business+156 eco OR 166 all eco)
+        // "12J162Y/174Y" -> ["12J162Y", "174Y"] (12 business+162 eco OR 174 all eco)
+        // "16J156Y/172Y" -> ["16J156Y", "172Y"] (16 business+156 eco OR 172 all eco)
+        // "186Y" -> ["186Y"]
+        function parseConfigOptions(config) {
+            if (!config) return [];
+
+            // Check if it has the pattern {digits}J{digits}Y/{digits}Y
+            var match = config.match(/^(\d+J)(\d+Y)\/(\d+Y)$/);
+            if (match) {
+                // Split into two options:
+                // First: business + economy (e.g., "10J156Y")
+                // Second: all economy (e.g., "166Y")
+                return [
+                    match[1] + match[2],  // e.g., "10J156Y" (10 business + 156 economy)
+                    match[3]              // e.g., "166Y" (all economy)
+                ];
+            }
+
+            // Single config like "186Y" - just return as-is
+            return [config];
         }
 
         function onConfigChange() {
@@ -6482,6 +7203,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         function calculateTimeTabTimezones() {
             const inputStr = document.getElementById('time-tz-input').value;
             const inputZone = parseFloat(document.getElementById('time-tz-zone').value);
+            const outputZone = parseFloat(document.getElementById('time-tz-output-zone').value);
             if (!inputStr || inputStr.length < 3) return;
 
             const input = parseTime(inputStr);
@@ -6497,6 +7219,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
             document.getElementById('time-tz-utc').textContent = formatTimeOffset(utcMins);
             document.getElementById('time-tz-dxb').textContent = formatTimeOffset(utcMins + 240);
+            document.getElementById('time-tz-custom').textContent = formatTimeOffset(utcMins + (outputZone * 60));
         }
 
         function clearTimeTabTimezones() {
@@ -6504,72 +7227,86 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             document.getElementById('time-tz-input-btn').textContent = '----';
             document.getElementById('time-tz-utc').textContent = '--:--';
             document.getElementById('time-tz-dxb').textContent = '--:--';
+            document.getElementById('time-tz-custom').textContent = '--:--';
         }
 
-        function autoCalculateSDT() {
-            // Auto-calculate the missing field based on which 2 are filled
-            const speed = parseFloat(document.getElementById('sdt-speed').value) || 0;
-            const dist = parseFloat(document.getElementById('sdt-dist').value) || 0;
-            const time = parseFloat(document.getElementById('sdt-time').value) || 0;
-
-            let result = '---';
-
-            if (speed > 0 && dist > 0 && time === 0) {
-                // Calculate time
-                const t = (dist / speed) * 60;
-                result = Math.round(t) + ' min';
-                document.getElementById('sdt-time').value = Math.round(t);
-                document.getElementById('sdt-time-btn').textContent = Math.round(t);
-                document.getElementById('sdt-time-btn').classList.remove('placeholder');
-            } else if (speed > 0 && time > 0 && dist === 0) {
-                // Calculate distance
-                const d = (speed * time) / 60;
-                result = Math.round(d) + ' nm';
-                document.getElementById('sdt-dist').value = Math.round(d);
-                document.getElementById('sdt-dist-btn').textContent = Math.round(d);
-                document.getElementById('sdt-dist-btn').classList.remove('placeholder');
-            } else if (dist > 0 && time > 0 && speed === 0) {
-                // Calculate speed
-                const s = (dist / time) * 60;
-                result = Math.round(s) + ' kts';
-                document.getElementById('sdt-speed').value = Math.round(s);
-                document.getElementById('sdt-speed-btn').textContent = Math.round(s);
-                document.getElementById('sdt-speed-btn').classList.remove('placeholder');
-            }
-
-            document.getElementById('sdt-result').textContent = result;
-        }
-
-        function calculateSDT(solve) {
-            const speed = parseFloat(document.getElementById('sdt-speed').value) || 0;
-            const dist = parseFloat(document.getElementById('sdt-dist').value) || 0;
-            const time = parseFloat(document.getElementById('sdt-time').value) || 0;
-            let result = '---';
-
-            if (solve === 'speed' && dist > 0 && time > 0) {
-                const s = (dist / time) * 60;
-                result = Math.round(s) + ' kts';
-            } else if (solve === 'distance' && speed > 0 && time > 0) {
-                const d = (speed * time) / 60;
-                result = Math.round(d) + ' nm';
-            } else if (solve === 'time' && speed > 0 && dist > 0) {
-                const t = (dist / speed) * 60;
-                result = Math.round(t) + ' min';
+        // Helper to format minutes as h:mm or just minutes
+        function formatMinutesDisplay(mins) {
+            if (!mins || mins <= 0) return '---';
+            var h = Math.floor(mins / 60);
+            var m = mins % 60;
+            if (h > 0 && m > 0) {
+                return h + 'h' + m + 'm';
+            } else if (h > 0) {
+                return h + 'h';
             } else {
-                // Auto-calculate if no solve specified
-                autoCalculateSDT();
-                return;
+                return m + 'm';
             }
-
-            document.getElementById('sdt-result').textContent = result;
         }
 
-        function clearSDT() {
-            ['sdt-speed', 'sdt-dist', 'sdt-time'].forEach(id => {
+        // Open duration picker for SDT time fields
+        function openSDTDuration(fieldId) {
+            openDurationPicker(fieldId, 'Enter Time', function(mins) {
+                document.getElementById(fieldId).value = mins;
+                document.getElementById(fieldId + '-btn').textContent = formatMinutesDisplay(mins);
+                // Trigger calculation
+                if (fieldId === 'sdt1-time') calculateSDT1();
+                else if (fieldId === 'sdt3-time') calculateSDT3();
+            });
+        }
+
+        // Open duration picker for catch-up time field
+        function openCatchupDuration(fieldId) {
+            openDurationPicker(fieldId, 'Time Limit', function(mins) {
+                document.getElementById(fieldId).value = mins;
+                document.getElementById(fieldId + '-btn').textContent = formatMinutesDisplay(mins);
+            });
+        }
+
+        // Row 1: Speed × Time = Distance
+        function calculateSDT1() {
+            const speed = parseFloat(document.getElementById('sdt1-speed').value) || 0;
+            const time = parseFloat(document.getElementById('sdt1-time').value) || 0;
+            if (speed > 0 && time > 0) {
+                const dist = Math.round((speed * time) / 60);
+                document.getElementById('sdt1-result').textContent = dist + ' nm';
+            } else {
+                document.getElementById('sdt1-result').textContent = '--- nm';
+            }
+        }
+
+        // Row 2: Distance ÷ Speed = Time
+        function calculateSDT2() {
+            const dist = parseFloat(document.getElementById('sdt2-dist').value) || 0;
+            const speed = parseFloat(document.getElementById('sdt2-speed').value) || 0;
+            if (dist > 0 && speed > 0) {
+                const time = Math.round((dist / speed) * 60);
+                document.getElementById('sdt2-result').textContent = time + ' min';
+            } else {
+                document.getElementById('sdt2-result').textContent = '--- min';
+            }
+        }
+
+        // Row 3: Distance ÷ Time = Speed
+        function calculateSDT3() {
+            const dist = parseFloat(document.getElementById('sdt3-dist').value) || 0;
+            const time = parseFloat(document.getElementById('sdt3-time').value) || 0;
+            if (dist > 0 && time > 0) {
+                const speed = Math.round((dist / time) * 60);
+                document.getElementById('sdt3-result').textContent = speed + ' kts';
+            } else {
+                document.getElementById('sdt3-result').textContent = '--- kts';
+            }
+        }
+
+        function clearAllSDT() {
+            ['sdt1-speed', 'sdt1-time', 'sdt2-dist', 'sdt2-speed', 'sdt3-dist', 'sdt3-time'].forEach(id => {
                 document.getElementById(id).value = '';
                 document.getElementById(id + '-btn').textContent = '---';
             });
-            document.getElementById('sdt-result').textContent = '---';
+            document.getElementById('sdt1-result').textContent = '--- nm';
+            document.getElementById('sdt2-result').textContent = '--- min';
+            document.getElementById('sdt3-result').textContent = '--- kts';
         }
 
         // ============ CATCH-UP CALCULATOR ============
@@ -6622,6 +7359,16 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             });
             document.getElementById('catchup-result').textContent = '---';
             document.getElementById('catchup-result').style.color = '#00ff88';
+        }
+
+        // GPS autofill for speed fields
+        function fillSpeedFromGps(fieldId) {
+            if (currentGpsSpeed !== null && currentGpsSpeed > 0) {
+                document.getElementById(fieldId).value = currentGpsSpeed;
+                document.getElementById(fieldId + '-btn').textContent = currentGpsSpeed;
+            } else {
+                alert('No GPS speed available');
+            }
         }
 
         // ============ NOTES TAB FUNCTIONS ============
@@ -6772,6 +7519,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
         updateUTCClock();
         updateActiveTimersStrip();
+        startGpsPolling(); // Start GPS for info strip display
 
         window.addEventListener('beforeunload', saveState);
 
@@ -8121,123 +8869,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         // ============ LMC CALCULATOR ============
-        // Fleet data (loaded from fleet.json)
-        var fleetData = null;
-
-        function loadFleetData() {
-            fetch('fleet.json')
-                .then(function(response) { return response.json(); })
-                .then(function(data) { fleetData = data; })
-                .catch(function(err) { console.error('Failed to load fleet data:', err); });
-        }
-
-        // Standard pax weights
-        var LMC_PAX_WEIGHTS = { male: 88, female: 70, child: 35 };
-
-        // LMC correction table by aircraft type and config (from OM-B Section 6)
-        // IU values: negative = forward CG shift, positive = aft CG shift
-        var lmcCorrectionTable = {
-            '737-800': {
-                '189Y': {
-                    'OA': { desc: 'Rows 1-5', onload: -1.0, offload: 1.0, unit: 'PAX' },
-                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 17-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
-                    'OD': { desc: 'Rows 28-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
-                    'CPT1': { desc: 'Fwd Hold (742kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
-                    'CPT2': { desc: 'Fwd Hold (2440kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
-                    'CPT3': { desc: 'Aft Hold (3157kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
-                    'CPT4': { desc: 'Bulk (474kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
-                    'WT': { desc: 'Trim Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
-                    'WT+CT': { desc: 'Trim+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
-                },
-                '12J/162Y/174Y': {
-                    'OA': { desc: 'Rows 1-3', onload: -1.0, offload: 1.0, unit: 'PAX' },
-                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 17-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
-                    'OD': { desc: 'Rows 28-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
-                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
-                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
-                    'CPT3': { desc: 'Aft Hold (3157kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
-                    'CPT4': { desc: 'Bulk (474kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
-                    'WT': { desc: 'Trim Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
-                    'WT+CT': { desc: 'Trim+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
-                },
-                '10J/156Y/166Y': {
-                    'OA': { desc: 'Rows 1-3', onload: -1.0, offload: 1.0, unit: 'PAX' },
-                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 17-26', onload: 0.3, offload: -0.3, unit: 'PAX' },
-                    'OD': { desc: 'Rows 27-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
-                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
-                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
-                    'CPT3': { desc: 'Aft Hold (3157kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
-                    'CPT4': { desc: 'Bulk (474kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
-                    'WT': { desc: 'Trim Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
-                    'WT+CT': { desc: 'Trim+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
-                }
-            },
-            '737-8': {
-                '10J/156Y/166Y': {
-                    'OA': { desc: 'Rows 1-3', onload: -1.0, offload: 1.0, unit: 'PAX' },
-                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 17-26', onload: 0.3, offload: -0.3, unit: 'PAX' },
-                    'OD': { desc: 'Rows 27-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
-                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
-                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
-                    'CPT3': { desc: 'Aft Hold (3631kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
-                    'CPT4': { desc: 'Bulk (473kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
-                    'WT': { desc: 'Trim Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
-                    'WT+CT': { desc: 'Trim+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
-                },
-                '12J/162Y/174Y': {
-                    'OA': { desc: 'Rows 1-3', onload: -1.0, offload: 1.0, unit: 'PAX' },
-                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 17-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
-                    'OD': { desc: 'Rows 28-32', onload: 1.0, offload: -1.0, unit: 'PAX' },
-                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
-                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
-                    'CPT3': { desc: 'Aft Hold (3560kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
-                    'CPT4': { desc: 'Bulk (448kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
-                    'WT': { desc: 'Trim Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
-                    'WT+CT': { desc: 'Trim+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
-                },
-                '186Y': {
-                    'OA': { desc: 'Rows 1-5', onload: -0.9, offload: 0.9, unit: 'PAX' },
-                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 17-26', onload: 0.3, offload: -0.3, unit: 'PAX' },
-                    'OD': { desc: 'Rows 27-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
-                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
-                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
-                    'CPT3': { desc: 'Aft Hold (3560kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
-                    'CPT4': { desc: 'Bulk (448kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
-                    'WT': { desc: 'Trim Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
-                    'WT+CT': { desc: 'Trim+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
-                }
-            },
-            '737-9': {
-                'ALL': {
-                    'OA': { desc: 'Rows 1-5', onload: -1.0, offload: 1.0, unit: 'PAX' },
-                    'OB': { desc: 'Rows 6-17', onload: -0.3, offload: 0.3, unit: 'PAX' },
-                    'OC': { desc: 'Rows 18-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
-                    'OD': { desc: 'Rows 28-33', onload: 1.0, offload: -1.0, unit: 'PAX' },
-                    'CPT1': { desc: 'Fwd Hold (675kg)', onload: -1.4, offload: 1.4, unit: '100kg' },
-                    'CPT2': { desc: 'Fwd Hold (2884kg)', onload: -0.8, offload: 0.8, unit: '100kg' },
-                    'CPT3': { desc: 'Aft Hold (4715kg)', onload: 0.7, offload: -0.7, unit: '100kg' },
-                    'CPT4': { desc: 'Bulk (370kg)', onload: 1.3, offload: -1.3, unit: '100kg' },
-                    'WT': { desc: 'Trim Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
-                    'WT+CT': { desc: 'Trim+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
-                }
-            }
-        };
-
-        // Normalize config names from fleet.json to match correction table
-        function normalizeConfig(config) {
-            if (!config) return config;
-            // Fleet uses "12J162Y/174Y", correction table uses "12J/162Y/174Y"
-            // Also handle "10J156Y/166Y" -> "10J/156Y/166Y"
-            return config
-                .replace(/^(\d+J)(\d)/, '$1/$2')  // Add / after J if followed by digit
-                .replace(/^(\d+Y)$/, '$1');       // Keep pure Y configs as-is
-        }
+        // fleetData, lmcCorrectionTable, LMC_PAX_WEIGHTS, normalizeConfig defined at top of script
 
         var lmcChanges = [];
         var lmcChangeCounter = 0;
@@ -8256,21 +8888,60 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             document.getElementById('lmc-tail-btn').textContent = tail || '---';
 
             // Look up aircraft info from fleet
+            var configSelector = document.getElementById('lmc-config-selector');
             if (fleetData && fleetData.aircraft && fleetData.aircraft['A6-' + tail]) {
                 var ac = fleetData.aircraft['A6-' + tail];
                 lmcAircraftType = ac.type;
-                lmcAircraftConfig = ac.config;
-                document.getElementById('lmc-aircraft-info').innerHTML = ac.type + '<br><span style="font-size:0.75rem;color:#888;">' + ac.config + '</span>';
+
+                // Parse the config to see if it's dual (e.g., "10J156Y/166Y")
+                var configs = parseFleetConfig(ac.config);
+
+                if (configs.length > 1) {
+                    // Show config selector buttons
+                    lmcAircraftConfig = configs[0]; // Default to first
+                    document.getElementById('lmc-aircraft-info').innerHTML = ac.type;
+                    configSelector.innerHTML = configs.map(function(cfg) {
+                        var isActive = cfg === lmcAircraftConfig;
+                        return '<button class="lmc-toggle-btn' + (isActive ? ' active' : '') + '" onclick="selectLmcConfig(\'' + cfg + '\')" style="padding:6px 10px;font-size:0.8rem;">' + cfg + '</button>';
+                    }).join('');
+                    configSelector.style.display = 'flex';
+                } else {
+                    // Single config
+                    lmcAircraftConfig = configs[0] || '';
+                    document.getElementById('lmc-aircraft-info').innerHTML = ac.type + '<br><span style="font-size:0.75rem;color:#888;">' + lmcAircraftConfig + '</span>';
+                    configSelector.style.display = 'none';
+                    configSelector.innerHTML = '';
+                }
             } else if (tail) {
                 document.getElementById('lmc-aircraft-info').innerHTML = '<span style="color:#ff5252;">Tail not in fleet</span>';
                 lmcAircraftType = '';
                 lmcAircraftConfig = '';
+                configSelector.style.display = 'none';
+                configSelector.innerHTML = '';
             } else {
                 document.getElementById('lmc-aircraft-info').textContent = '---';
                 lmcAircraftType = '';
                 lmcAircraftConfig = '';
+                configSelector.style.display = 'none';
+                configSelector.innerHTML = '';
             }
 
+            renderLmcChanges();
+            lmcCalculate();
+        }
+
+        function selectLmcConfig(config) {
+            lmcAircraftConfig = config;
+            // Update button states
+            var selector = document.getElementById('lmc-config-selector');
+            selector.querySelectorAll('.lmc-toggle-btn').forEach(function(btn) {
+                if (btn.textContent === config) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            renderLmcChanges();
             lmcCalculate();
         }
 
@@ -8309,10 +8980,10 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
             if (type === 'PAX') {
                 zones = ['OA', 'OB', 'OC', 'OD'];
-            } else if (type === 'CARGO' || type === 'BAGGAGE') {
+            } else if (type === 'CARGO' || type === 'BAGS') {
                 zones = ['CPT1', 'CPT2', 'CPT3', 'CPT4'];
             } else if (type === 'FUEL') {
-                zones = ['WT', 'WT+CT'];
+                zones = ['WING', 'WING+CTR'];
             }
 
             var change = {
@@ -8340,15 +9011,21 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             if (lmcAircraftType === '737-9') {
                 return typeTable['ALL'];
             }
-            // Normalize config name and look up
-            var normConfig = normalizeConfig(lmcAircraftConfig);
-            return typeTable[normConfig] || null;
+            // Config is now already in correct format (e.g., "10J156Y")
+            return typeTable[lmcAircraftConfig] || null;
         }
 
         function removeLmcChange(id) {
             lmcChanges = lmcChanges.filter(function(c) { return c.id !== id; });
             renderLmcChanges();
             lmcCalculate();
+        }
+
+        // Get max weight from zone description (e.g., "Fwd Hold (742kg)" -> 742)
+        function getZoneMaxWeight(zoneInfo) {
+            if (!zoneInfo || !zoneInfo.desc) return null;
+            var match = zoneInfo.desc.match(/\((\d+)kg\)/);
+            return match ? parseInt(match[1]) : null;
         }
 
         function renderLmcChanges() {
@@ -8359,27 +9036,64 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 var zones = [];
                 if (change.type === 'PAX') {
                     zones = ['OA', 'OB', 'OC', 'OD'];
-                } else if (change.type === 'CARGO' || change.type === 'BAGGAGE') {
+                } else if (change.type === 'CARGO' || change.type === 'BAGS') {
                     zones = ['CPT1', 'CPT2', 'CPT3', 'CPT4'];
                 } else if (change.type === 'FUEL') {
-                    zones = ['WT', 'WT+CT'];
+                    zones = ['WING', 'WING+CTR'];
                 }
+
+                // Action buttons (ON/OFF load)
+                var actionBtns = '<div class="lmc-field-group">' +
+                    '<span class="lmc-field-label">Action</span>' +
+                    '<div style="display:flex;gap:4px;">' +
+                        '<button class="lmc-toggle-btn' + (change.action === 'onload' ? ' active' : '') + '" onclick="updateLmcChange(\'' + change.id + '\', \'action\', \'onload\'); renderLmcChanges();" style="flex:1;padding:6px 4px;font-size:0.8rem;">ON</button>' +
+                        '<button class="lmc-toggle-btn' + (change.action === 'offload' ? ' active' : '') + '" onclick="updateLmcChange(\'' + change.id + '\', \'action\', \'offload\'); renderLmcChanges();" style="flex:1;padding:6px 4px;font-size:0.8rem;">OFF</button>' +
+                    '</div>' +
+                '</div>';
+
+                // Zone buttons - for PAX show seat rows, for cargo/fuel show zone name
+                var zoneBtns = '<div class="lmc-field-group">' +
+                    '<span class="lmc-field-label">Zone</span>' +
+                    '<div style="display:flex;gap:4px;flex-wrap:wrap;">' +
+                        zones.map(function(z) {
+                            var isActive = change.zone === z;
+                            var zoneInfo = (table && table[z]) || { desc: z };
+                            var btnLabel = z;
+                            // For PAX zones, extract row numbers from desc (e.g., "Rows 1-5" -> "1-5")
+                            if (change.type === 'PAX' && zoneInfo.desc) {
+                                var rowMatch = zoneInfo.desc.match(/Rows?\s*(\d+[-–]\d+|\d+)/i);
+                                if (rowMatch) {
+                                    btnLabel = '<div style="font-size:0.7rem;opacity:0.7;">' + z + '</div><div style="font-size:0.85rem;font-weight:bold;">' + rowMatch[1] + '</div>';
+                                }
+                            }
+                            return '<button class="lmc-toggle-btn' + (isActive ? ' active' : '') + '" onclick="updateLmcChange(\'' + change.id + '\', \'zone\', \'' + z + '\'); renderLmcChanges();" style="flex:1;min-width:50px;padding:4px 4px;font-size:0.75rem;line-height:1.1;" title="' + zoneInfo.desc + '">' + btnLabel + '</button>';
+                        }).join('') +
+                    '</div>' +
+                '</div>';
 
                 // Different input fields for PAX vs CARGO/FUEL
                 var inputFields = '';
+                var weightWarning = '';
                 if (change.type === 'PAX') {
                     inputFields = '<div class="lmc-field-group" style="grid-column: span 2;">' +
                         '<span class="lmc-field-label">PAX Count (M / F / C)</span>' +
                         '<div style="display: flex; gap: 5px;">' +
-                            '<input type="number" class="lmc-field-input" placeholder="M" value="' + (change.male || '') + '" onchange="updateLmcPax(\'' + change.id + '\', \'male\', this.value)" style="flex:1;text-align:center;">' +
-                            '<input type="number" class="lmc-field-input" placeholder="F" value="' + (change.female || '') + '" onchange="updateLmcPax(\'' + change.id + '\', \'female\', this.value)" style="flex:1;text-align:center;">' +
-                            '<input type="number" class="lmc-field-input" placeholder="C" value="' + (change.child || '') + '" onchange="updateLmcPax(\'' + change.id + '\', \'child\', this.value)" style="flex:1;text-align:center;">' +
+                            '<button class="input-btn lmc-pax-btn" onclick="openLmcPaxPicker(\'' + change.id + '\', \'male\')" style="flex:1;padding:8px 4px;font-size:0.85rem;">' + (change.male || '0') + '</button>' +
+                            '<button class="input-btn lmc-pax-btn" onclick="openLmcPaxPicker(\'' + change.id + '\', \'female\')" style="flex:1;padding:8px 4px;font-size:0.85rem;">' + (change.female || '0') + '</button>' +
+                            '<button class="input-btn lmc-pax-btn" onclick="openLmcPaxPicker(\'' + change.id + '\', \'child\')" style="flex:1;padding:8px 4px;font-size:0.85rem;">' + (change.child || '0') + '</button>' +
                         '</div>' +
                     '</div>';
                 } else {
+                    // Check cargo compartment weight limits
+                    var zoneInfo = (table && table[change.zone]) || null;
+                    var maxWeight = getZoneMaxWeight(zoneInfo);
+                    var enteredWeight = change.quantity || 0;
+                    if (maxWeight && enteredWeight > maxWeight && change.action === 'onload') {
+                        weightWarning = '<div class="lmc-weight-warning" style="grid-column:span 2;background:rgba(255,50,50,0.2);border:1px solid rgba(255,50,50,0.5);padding:6px;border-radius:4px;color:#ff5555;font-size:0.75rem;text-align:center;">Exceeds ' + change.zone + ' max: ' + maxWeight + 'kg</div>';
+                    }
                     inputFields = '<div class="lmc-field-group">' +
                         '<span class="lmc-field-label">Weight (kg)</span>' +
-                        '<input type="number" class="lmc-field-input" value="' + change.quantity + '" onchange="updateLmcChange(\'' + change.id + '\', \'quantity\', this.value)">' +
+                        '<button class="input-btn" onclick="openLmcWeightPicker(\'' + change.id + '\')" style="padding:8px 4px;font-size:0.85rem;">' + (change.quantity || '0') + '</button>' +
                     '</div>';
                 }
 
@@ -8389,23 +9103,10 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                         '<button class="lmc-change-remove" onclick="removeLmcChange(\'' + change.id + '\')">Remove</button>' +
                     '</div>' +
                     '<div class="lmc-change-fields">' +
-                        '<div class="lmc-field-group">' +
-                            '<span class="lmc-field-label">Action</span>' +
-                            '<select class="lmc-field-select" onchange="updateLmcChange(\'' + change.id + '\', \'action\', this.value)">' +
-                                '<option value="onload"' + (change.action === 'onload' ? ' selected' : '') + '>ON Load</option>' +
-                                '<option value="offload"' + (change.action === 'offload' ? ' selected' : '') + '>OFF Load</option>' +
-                            '</select>' +
-                        '</div>' +
-                        '<div class="lmc-field-group">' +
-                            '<span class="lmc-field-label">Zone</span>' +
-                            '<select class="lmc-field-select" onchange="updateLmcChange(\'' + change.id + '\', \'zone\', this.value)">' +
-                                zones.map(function(z) {
-                                    var zoneInfo = (table && table[z]) || { desc: z };
-                                    return '<option value="' + z + '"' + (change.zone === z ? ' selected' : '') + '>' + z + ' - ' + zoneInfo.desc + '</option>';
-                                }).join('') +
-                            '</select>' +
-                        '</div>' +
+                        actionBtns +
+                        zoneBtns +
                         inputFields +
+                        weightWarning +
                         '<div class="lmc-field-group">' +
                             '<span class="lmc-field-label">Result</span>' +
                             '<div class="lmc-result-row">' +
@@ -8436,6 +9137,33 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 change[field] = field === 'quantity' ? parseFloat(value) || 0 : value;
                 lmcCalculate();
             }
+        }
+
+        // Open number picker for LMC PAX count
+        function openLmcPaxPicker(changeId, paxType) {
+            var change = lmcChanges.find(function(c) { return c.id === changeId; });
+            if (!change) return;
+            var labels = { male: 'Male PAX', female: 'Female PAX', child: 'Child PAX' };
+            var currentVal = change[paxType] || 0;
+            openPicker(labels[paxType], '', currentVal.toString(), 3, false, function(val) {
+                var num = parseInt(val) || 0;
+                change[paxType] = num;
+                renderLmcChanges();
+                lmcCalculate();
+            });
+        }
+
+        // Open number picker for LMC cargo/fuel weight
+        function openLmcWeightPicker(changeId) {
+            var change = lmcChanges.find(function(c) { return c.id === changeId; });
+            if (!change) return;
+            var currentVal = change.quantity || 0;
+            openPicker('Weight', 'kg', currentVal.toString(), 5, true, function(val) {
+                var num = parseInt(val) || 0;
+                change.quantity = num;
+                renderLmcChanges();
+                lmcCalculate();
+            });
         }
 
         function lmcCalculate() {
@@ -8473,16 +9201,16 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     units = paxCount;
                 } else if (change.type === 'FUEL') {
                     weight = change.quantity;
-                    // Fuel zones have specific unit divisors: WT=300kg, WT+CT=350kg
-                    if (change.zone === 'WT') {
+                    // Fuel zones have specific unit divisors: WING=300kg, WING+CTR=350kg
+                    if (change.zone === 'WING') {
                         units = change.quantity / 300;
-                    } else if (change.zone === 'WT+CT') {
+                    } else if (change.zone === 'WING+CTR') {
                         units = change.quantity / 350;
                     } else {
                         units = change.quantity / 100;
                     }
                 } else {
-                    // CARGO/BAGGAGE: per 100kg
+                    // CARGO/BAGS: per 100kg
                     weight = change.quantity;
                     units = change.quantity / 100;
                 }
@@ -8649,18 +9377,6 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             lmcCalculate();
         }
 
-        // Weight picker for LMC inputs
-        function openWeightPicker(fieldId, label, unit) {
-            var currentValue = document.getElementById(fieldId).value || '';
-            var newValue = prompt(label + ' (' + unit + '):', currentValue);
-            if (newValue !== null) {
-                var num = parseInt(newValue.replace(/,/g, '')) || 0;
-                document.getElementById(fieldId).value = num;
-                document.getElementById(fieldId + '-btn').textContent = num > 0 ? num.toLocaleString() : '0';
-                lmcCalculate();
-            }
-        }
-
         // ============ EVENT LISTENERS FOR NEW CALCULATORS ============
         ['xwind-rwy', 'xwind-dir', 'xwind-spd', 'xwind-gust'].forEach(id => {
             document.getElementById(id).addEventListener('change', calculateCrosswind);
@@ -8679,21 +9395,19 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         // Load scratchpad history on startup
         loadScratchpadHistory();
 
-        // Load fleet data for LMC calculator
-        loadFleetData();
-
         // ============ QIBLA DIRECTION ============
         // Mecca coordinates (Kaaba)
         var MECCA_LAT = 21.4225;
         var MECCA_LON = 39.8262;
 
         // Qibla state
-        var qiblaSource = 'manual'; // 'gps' or 'manual'
+        var qiblaSource = 'gps'; // 'gps' or 'manual' - default to GPS
         var qiblaGpsConnected = false;
         var qiblaCurrentLat = null;
         var qiblaCurrentLon = null;
         var qiblaCurrentHeading = null;
         var qiblaGpsInterval = null;
+        var currentGpsSpeed = null; // Ground speed in knots for autofill
 
         function openQiblaModal() {
             document.getElementById('qibla-modal').classList.add('active');
@@ -8749,8 +9463,10 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                         qiblaCurrentLat = data.lat;
                         qiblaCurrentLon = data.lon;
                         qiblaCurrentHeading = data.track || 0;
+                        var speed = data.speed ? Math.round(data.speed * 1.94384) : null; // m/s to knots
+                        currentGpsSpeed = speed; // Store globally for autofill
 
-                        updateGpsStatus(true, data.lat, data.lon, data.track);
+                        updateGpsStatus(true, data.lat, data.lon, data.track, speed);
                         calculateAndDisplayQibla(data.lat, data.lon, data.track || 0);
                     } else if (data && data.lat !== undefined) {
                         // Alternative format
@@ -8758,8 +9474,10 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                         qiblaCurrentLat = data.lat;
                         qiblaCurrentLon = data.lon;
                         qiblaCurrentHeading = data.heading || data.track || 0;
+                        var speed = data.speed ? Math.round(data.speed * 1.94384) : null;
+                        currentGpsSpeed = speed; // Store globally for autofill
 
-                        updateGpsStatus(true, data.lat, data.lon, qiblaCurrentHeading);
+                        updateGpsStatus(true, data.lat, data.lon, qiblaCurrentHeading, speed);
                         calculateAndDisplayQibla(data.lat, data.lon, qiblaCurrentHeading);
                     } else {
                         throw new Error('Invalid GPS data');
@@ -8767,14 +9485,21 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 })
                 .catch(function(err) {
                     qiblaGpsConnected = false;
+                    currentGpsSpeed = null;
                     updateGpsStatus(false);
                 });
         }
 
-        function updateGpsStatus(connected, lat, lon, heading) {
+        function updateGpsStatus(connected, lat, lon, heading, speed) {
             var statusEl = document.getElementById('qibla-gps-status');
             var statusTextEl = document.getElementById('qibla-gps-status-text');
             var positionEl = document.getElementById('qibla-gps-position');
+
+            // Update info strip GPS display
+            var stripPosEl = document.getElementById('strip-gps-pos');
+            var stripTrkEl = document.getElementById('strip-gps-trk');
+            var stripGsEl = document.getElementById('strip-gps-gs');
+            var stripGpsEl = document.getElementById('strip-gps');
 
             if (connected) {
                 statusEl.classList.remove('disconnected');
@@ -8784,11 +9509,26 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     'LAT: ' + lat.toFixed(4) + '°<br>' +
                     'LON: ' + lon.toFixed(4) + '°<br>' +
                     'HDG: ' + (heading !== null && heading !== undefined ? Math.round(heading) + '°' : 'N/A');
+
+                // Update info strip
+                if (stripGpsEl) stripGpsEl.style.display = 'flex';
+                if (stripPosEl) {
+                    var latDir = lat >= 0 ? 'N' : 'S';
+                    var lonDir = lon >= 0 ? 'E' : 'W';
+                    stripPosEl.textContent = latDir + Math.abs(lat).toFixed(2) + ' ' + lonDir + Math.abs(lon).toFixed(2);
+                }
+                if (stripTrkEl) stripTrkEl.textContent = (heading !== null && heading !== undefined ? Math.round(heading) : '---') + '°';
+                if (stripGsEl) stripGsEl.textContent = (speed !== null && speed !== undefined ? speed : '---') + 'kt';
             } else {
                 statusEl.classList.remove('connected');
                 statusEl.classList.add('disconnected');
                 statusTextEl.textContent = 'GPS Disconnected';
                 positionEl.innerHTML = 'No GPS data available.<br>Switch to Manual mode.';
+
+                // Update info strip to show no GPS
+                if (stripPosEl) stripPosEl.textContent = '---';
+                if (stripTrkEl) stripTrkEl.textContent = '---°';
+                if (stripGsEl) stripGsEl.textContent = '---kt';
             }
         }
 
@@ -8967,6 +9707,635 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
         // Start GPS polling when page loads
         startCoordGpsPolling();
+
+        // ============================================
+        // MAP TAB - Leaflet Moving Map
+        // ============================================
+        var flightMap = null;
+        var mapMarker = null;
+        var mapTrackLine = null;
+        var mapRouteLine = null;
+        var mapGeoJSONLayer = null;
+        var mapFollowMode = true;
+        var trackLogRecording = false;
+        var trackLogPoints = [];
+        var trackLogStartTime = null;
+        var mapInitialized = false;
+
+        // Aircraft icon for marker
+        var aircraftIcon = L.divIcon({
+            className: 'aircraft-marker',
+            html: '<div style="transform: rotate(0deg); font-size: 24px; color: #FF8200; text-shadow: 0 0 10px rgba(255,130,0,0.8);">✈</div>',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15]
+        });
+
+        function initMap() {
+            if (mapInitialized) return;
+
+            // Default to DXB if no GPS
+            var defaultLat = 25.2532;
+            var defaultLon = 55.3657;
+
+            flightMap = L.map('map-container', {
+                zoomControl: true,
+                attributionControl: true
+            }).setView([defaultLat, defaultLon], 8);
+
+            // OpenStreetMap tiles (free, works offline with caching)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap',
+                maxZoom: 19
+            }).addTo(flightMap);
+
+            // Add aircraft marker
+            mapMarker = L.marker([defaultLat, defaultLon], { icon: aircraftIcon }).addTo(flightMap);
+            mapMarker.bindPopup('Current Position');
+
+            // Track line (for recording)
+            mapTrackLine = L.polyline([], {
+                color: '#00ff88',
+                weight: 3,
+                opacity: 0.8
+            }).addTo(flightMap);
+
+            mapInitialized = true;
+
+            // Force map to recalculate size
+            setTimeout(function() {
+                flightMap.invalidateSize();
+            }, 100);
+        }
+
+        function updateMapPosition(lat, lon, heading, speed, alt) {
+            if (!flightMap || !mapMarker) return;
+
+            var latLng = L.latLng(lat, lon);
+            mapMarker.setLatLng(latLng);
+
+            // Rotate aircraft icon based on heading
+            if (heading !== null && heading !== undefined) {
+                var iconHtml = '<div style="transform: rotate(' + heading + 'deg); font-size: 24px; color: #FF8200; text-shadow: 0 0 10px rgba(255,130,0,0.8);">✈</div>';
+                mapMarker.setIcon(L.divIcon({
+                    className: 'aircraft-marker',
+                    html: iconHtml,
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 15]
+                }));
+            }
+
+            // Follow mode - pan map to keep aircraft centered
+            if (mapFollowMode) {
+                flightMap.panTo(latLng);
+            }
+
+            // Update info display
+            var latDir = lat >= 0 ? 'N' : 'S';
+            var lonDir = lon >= 0 ? 'E' : 'W';
+            var posStr = Math.abs(lat).toFixed(4) + '°' + latDir + ' ' + Math.abs(lon).toFixed(4) + '°' + lonDir;
+            document.getElementById('map-position').textContent = posStr;
+            document.getElementById('map-track').textContent = heading !== null ? Math.round(heading) + '°' : '---°';
+            document.getElementById('map-gs').textContent = speed !== null ? Math.round(speed) + ' kt' : '--- kt';
+            document.getElementById('map-alt').textContent = alt !== null ? Math.round(alt) + ' ft' : '--- ft';
+
+            // Add to track log if recording
+            if (trackLogRecording) {
+                trackLogPoints.push({
+                    lat: lat,
+                    lon: lon,
+                    alt: alt || 0,
+                    time: new Date().toISOString()
+                });
+                mapTrackLine.addLatLng(latLng);
+                updateTrackLogStats();
+            }
+        }
+
+        function centerMapOnPosition() {
+            if (flightMap && mapMarker) {
+                flightMap.setView(mapMarker.getLatLng(), flightMap.getZoom());
+            }
+        }
+
+        function toggleMapFollow() {
+            mapFollowMode = !mapFollowMode;
+            var btn = document.getElementById('map-follow-btn');
+            if (mapFollowMode) {
+                btn.textContent = 'Follow';
+                btn.style.background = 'rgba(0, 255, 136, 0.3)';
+                btn.style.borderColor = '#00ff88';
+            } else {
+                btn.textContent = 'Free';
+                btn.style.background = 'rgba(255, 130, 0, 0.2)';
+                btn.style.borderColor = 'rgba(255, 130, 0, 0.5)';
+            }
+        }
+
+        // Great circle route calculation
+        function drawRoute() {
+            var fromICAO = document.getElementById('route-from').value.toUpperCase().trim();
+            var toICAO = document.getElementById('route-to').value.toUpperCase().trim();
+
+            if (!fromICAO || !toICAO) {
+                alert('Enter both departure and arrival ICAO codes');
+                return;
+            }
+
+            // Comprehensive airport database - flydubai network + major airports
+            var airports = {
+                // === UAE ===
+                'OMDB': [25.2532, 55.3657], // Dubai DXB
+                'OMDW': [24.8962, 55.1614], // Al Maktoum DWC
+                'OMAA': [24.4330, 54.6511], // Abu Dhabi AUH
+                'OMSJ': [25.3286, 55.5172], // Sharjah SHJ
+                'OMRK': [25.6135, 55.9389], // Ras Al Khaimah RKT
+                'OMFJ': [25.1122, 56.3240], // Fujairah FJR
+                'OMAL': [24.2617, 55.6092], // Al Ain AAN
+
+                // === SAUDI ARABIA ===
+                'OERK': [24.9576, 46.6988], // Riyadh RUH
+                'OEJN': [21.6796, 39.1565], // Jeddah JED
+                'OEDF': [26.4712, 49.7979], // Dammam DMM
+                'OEMA': [24.5534, 39.7051], // Medina MED
+                'OEGN': [16.9011, 42.5858], // Gizan GIZ
+                'OEAB': [18.2404, 42.6567], // Abha AHB
+                'OETB': [28.3654, 36.6189], // Tabuk TUU
+                'OEHL': [27.4379, 41.6863], // Hail HAS
+                'OEGS': [26.3027, 43.7744], // Qassim/Gassim ELQ
+                'OENG': [29.7854, 40.1025], // Arar RAE
+                'OESK': [20.1046, 45.6197], // Al-Wajh EJH
+
+                // === GCC ===
+                'OTHH': [25.2731, 51.6081], // Doha DOH
+                'OBBI': [26.2708, 50.6336], // Bahrain BAH
+                'OKBK': [29.2266, 47.9689], // Kuwait KWI
+                'OOMS': [23.5933, 58.2844], // Muscat MCT
+                'OOSA': [17.0387, 54.0913], // Salalah SLL
+
+                // === JORDAN ===
+                'OJAI': [31.7226, 35.9932], // Amman Queen Alia AMM
+                'OJAQ': [29.6116, 35.0181], // Aqaba AQJ
+
+                // === LEBANON ===
+                'OLBA': [33.8209, 35.4884], // Beirut BEY
+
+                // === IRAQ ===
+                'ORBI': [33.2625, 44.2346], // Baghdad BGW
+                'ORER': [36.2376, 43.9632], // Erbil EBL
+                'ORSU': [35.5617, 45.3167], // Sulaymaniyah ISU
+                'ORMM': [30.5491, 47.6621], // Basra BSR
+                'ORNI': [31.9896, 44.4043], // Najaf NJF
+
+                // === IRAN ===
+                'OIIE': [35.4161, 51.1522], // Tehran IKA
+                'OISS': [29.5392, 52.5899], // Shiraz SYZ
+                'OIMM': [36.2352, 59.6410], // Mashhad MHD
+                'OIII': [35.6892, 51.3134], // Tehran Mehrabad THR
+                'OIKB': [27.2183, 56.3778], // Bandar Abbas BND
+
+                // === INDIA ===
+                'VIDP': [28.5562, 77.1000], // Delhi DEL
+                'VABB': [19.0896, 72.8656], // Mumbai BOM
+                'VOBL': [12.9499, 77.6681], // Bangalore BLR
+                'VECC': [22.6547, 88.4467], // Kolkata CCU
+                'VOCL': [11.1368, 75.9553], // Kozhikode/Calicut CCJ
+                'VOCI': [9.9471, 76.2673], // Kochi COK
+                'VOHS': [17.2403, 78.4294], // Hyderabad HYD
+                'VOTV': [8.4821, 76.9201], // Thiruvananthapuram TRV
+                'VOMM': [12.9941, 80.1709], // Chennai MAA
+                'VOGO': [15.3808, 73.8314], // Goa GOI
+                'VAAH': [23.0772, 72.6347], // Ahmedabad AMD
+                'VIAR': [31.7096, 74.7973], // Amritsar ATQ
+                'VILK': [26.7606, 80.8893], // Lucknow LKO
+                'VEPT': [25.5913, 85.0880], // Patna PAT
+                'VEGT': [26.1061, 91.5859], // Guwahati GAU
+                'VIJP': [26.8242, 75.8122], // Jaipur JAI
+                'VEBS': [25.4524, 81.7330], // Varanasi VNS
+                'VEMN': [24.9120, 84.0560], // Gaya GAY
+                'VANP': [21.0922, 79.0472], // Nagpur NAG
+                'VOMD': [9.8345, 78.0934], // Madurai IXM
+                'VOTJ': [10.7224, 79.1015], // Tiruchirappalli TRZ
+                'VOCB': [11.0300, 77.0434], // Coimbatore CJB
+                'VOMG': [12.3052, 74.8910], // Mangalore IXE
+
+                // === PAKISTAN ===
+                'OPKC': [24.9065, 67.1608], // Karachi KHI
+                'OPLA': [31.5216, 74.4036], // Lahore LHE
+                'OPIS': [33.5497, 72.8256], // Islamabad ISB
+                'OPFA': [31.3650, 72.9948], // Faisalabad LYP
+                'OPMT': [30.2032, 71.4191], // Multan MUX
+                'OPST': [32.5356, 74.3639], // Sialkot SKT
+                'OPPS': [33.9939, 71.5146], // Peshawar PEW
+
+                // === SRI LANKA ===
+                'VCBI': [7.1808, 79.8841], // Colombo CMB
+
+                // === MALDIVES ===
+                'VRMM': [4.1918, 73.5290], // Male MLE
+
+                // === BANGLADESH ===
+                'VGHS': [23.8433, 90.3978], // Dhaka DAC
+                'VGCG': [22.2496, 91.8133], // Chittagong CGP
+
+                // === NEPAL ===
+                'VNKT': [27.6966, 85.3591], // Kathmandu KTM
+
+                // === CENTRAL ASIA ===
+                'UAAA': [43.3521, 77.0405], // Almaty ALA
+                'UACC': [51.0222, 71.4669], // Astana NQZ
+                'UTTT': [41.2579, 69.2812], // Tashkent TAS
+                'UTSS': [39.7005, 66.9838], // Samarkand SKD
+                'UTDD': [38.5433, 68.8250], // Dushanbe DYU
+                'UCFM': [43.0613, 74.4776], // Bishkek FRU
+
+                // === CAUCASUS ===
+                'UBBB': [40.4675, 50.0467], // Baku GYD
+                'UGTB': [41.6692, 44.9547], // Tbilisi TBS
+                'UGKO': [42.1767, 42.4826], // Kutaisi KUT
+                'UDYZ': [40.1473, 44.3959], // Yerevan EVN
+
+                // === TURKEY ===
+                'LTFM': [41.2753, 28.7519], // Istanbul IST
+                'LTAI': [36.8987, 30.8005], // Antalya AYT
+                'LTAC': [40.1281, 32.9951], // Ankara ESB
+                'LTBS': [36.7131, 28.7925], // Dalaman DLM
+                'LTBJ': [38.2924, 27.1570], // Izmir ADB
+                'LTCG': [40.9951, 39.7897], // Trabzon TZX
+                'LTFE': [37.0207, 35.2804], // Adana ADA
+                'LTBY': [38.7709, 30.6011], // Denizli DNZ
+
+                // === RUSSIA ===
+                'UUEE': [55.9736, 37.4125], // Moscow SVO
+                'UUWW': [55.5914, 37.2615], // Moscow VKO
+                'UUDD': [55.4088, 37.9063], // Moscow DME
+                'URSS': [43.4499, 39.9566], // Sochi AER
+                'UWWW': [53.5040, 50.1642], // Samara KUF
+                'UWKD': [55.6062, 49.2787], // Kazan KZN
+                'USSS': [56.7431, 60.8027], // Yekaterinburg SVX
+                'URRR': [47.2582, 39.8181], // Rostov ROV
+                'UWUU': [54.5575, 55.8744], // Ufa UFA
+                'UNKL': [56.1730, 92.4933], // Krasnoyarsk KJA
+                'UNNT': [55.0126, 82.6507], // Novosibirsk OVB
+                'USRR': [51.8213, 107.4378], // Ulan-Ude UUD
+                'ULLI': [59.8003, 30.2625], // St Petersburg LED
+                'URMM': [43.0818, 44.2257], // Mineralnye Vody MRV
+
+                // === EUROPE ===
+                'EGLL': [51.4700, -0.4543], // London Heathrow LHR
+                'EGGW': [51.8747, -0.3683], // London Luton LTN
+                'EGSS': [51.8850, 0.2350], // London Stansted STN
+                'EGKK': [51.1481, -0.1903], // London Gatwick LGW
+                'EGCC': [53.3537, -2.2750], // Manchester MAN
+                'EGBB': [52.4539, -1.7480], // Birmingham BHX
+                'LFPG': [49.0097, 2.5479], // Paris CDG
+                'LFPO': [48.7253, 2.3594], // Paris Orly ORY
+                'EDDF': [50.0379, 8.5622], // Frankfurt FRA
+                'EDDM': [48.3538, 11.7861], // Munich MUC
+                'LIMC': [45.6306, 8.7281], // Milan MXP
+                'LIRF': [41.8003, 12.2389], // Rome FCO
+                'LIPE': [44.5354, 11.2887], // Bologna BLQ
+                'LIPZ': [45.5053, 12.3519], // Venice VCE
+                'LICC': [37.4668, 15.0664], // Catania CTA
+                'LICJ': [38.1760, 13.0910], // Palermo PMO
+                'EPWA': [52.1657, 20.9671], // Warsaw WAW
+                'EPKK': [50.0777, 19.7848], // Krakow KRK
+                'LKPR': [50.1008, 14.2600], // Prague PRG
+                'LOWW': [48.1103, 16.5697], // Vienna VIE
+                'LHBP': [47.4369, 19.2556], // Budapest BUD
+                'LYBE': [44.8184, 20.3091], // Belgrade BEG
+                'LQSA': [43.8246, 18.3315], // Sarajevo SJJ
+                'LDZA': [45.7429, 16.0688], // Zagreb ZAG
+                'LDDU': [42.5614, 18.2682], // Dubrovnik DBV
+                'LYPG': [42.3594, 19.2519], // Podgorica TGD
+                'LYTV': [42.4047, 18.7233], // Tivat TIV
+                'LGAV': [37.9364, 23.9445], // Athens ATH
+                'LGTS': [40.5197, 22.9709], // Thessaloniki SKG
+                'LROP': [44.5711, 26.0850], // Bucharest OTP
+                'LBSF': [42.6952, 23.4062], // Sofia SOF
+                'LWSK': [41.9616, 21.6214], // Skopje SKP
+                'BKPR': [42.5728, 21.0358], // Pristina PRN
+                'LATI': [41.4147, 19.7206], // Tirana TIA
+                'EHAM': [52.3086, 4.7639], // Amsterdam AMS
+                'EBBR': [50.9014, 4.4844], // Brussels BRU
+                'LSZH': [47.4647, 8.5492], // Zurich ZRH
+                'LEMD': [40.4936, -3.5668], // Madrid MAD
+                'LEBL': [41.2971, 2.0785], // Barcelona BCN
+
+                // === EGYPT ===
+                'HECA': [30.1219, 31.4056], // Cairo CAI
+                'HEGN': [27.1783, 33.7994], // Hurghada HRG
+                'HESH': [27.9773, 34.3950], // Sharm El Sheikh SSH
+                'HEAL': [31.1839, 29.9489], // Alexandria HBE
+                'HELX': [25.6710, 32.7066], // Luxor LXR
+                'HEAS': [23.9644, 32.8200], // Aswan ASW
+
+                // === AFRICA ===
+                'HAAB': [8.9779, 38.7993], // Addis Ababa ADD
+                'HKJK': [1.3192, 36.9278], // Nairobi NBO
+                'HTZA': [-6.2220, 39.2249], // Zanzibar ZNZ
+                'HTDA': [-6.8781, 39.2026], // Dar es Salaam DAR
+                'HSSS': [15.5895, 32.5532], // Khartoum KRT
+                'HUEN': [0.0424, 32.4435], // Entebbe EBB
+                'GMMN': [33.3675, -7.5900], // Casablanca CMN
+                'DTTA': [36.8510, 10.2272], // Tunis TUN
+                'DAAG': [36.6910, 3.2154], // Algiers ALG
+                'HBBA': [-3.3240, 29.3185], // Bujumbura BJM
+                'HRYR': [-1.9686, 30.1395], // Kigali KGL
+                'FMEE': [-20.4302, 57.6836], // Mauritius MRU
+                'FMMI': [-18.7969, 47.4789], // Antananarivo TNR
+                'FSIA': [-4.6714, 55.5218], // Seychelles SEZ
+
+                // === THAILAND / SE ASIA ===
+                'VTBS': [13.6900, 100.7501], // Bangkok BKK
+                'VTSP': [8.1132, 98.3169], // Phuket HKT
+                'VTCC': [18.7668, 98.9626], // Chiang Mai CNX
+                'VYYY': [16.9073, 96.1332], // Yangon RGN
+                'VVNB': [21.2212, 105.8072], // Hanoi HAN
+                'VVTS': [10.8188, 106.6520], // Ho Chi Minh SGN
+                'WSSS': [1.3644, 103.9915], // Singapore SIN
+                'WMKK': [2.7456, 101.7099], // Kuala Lumpur KUL
+                'WMKP': [5.2971, 103.1033], // Penang PEN
+                'WBKK': [5.9372, 116.0510], // Kota Kinabalu BKI
+                'RPLL': [14.5086, 121.0197], // Manila MNL
+                'WIII': [-6.1256, 106.6558], // Jakarta CGK
+                'WADD': [-8.7482, 115.1672], // Bali DPS
+                'VHHH': [22.3080, 113.9185], // Hong Kong HKG
+
+                // === EAST ASIA ===
+                'ZBAA': [40.0799, 116.6031], // Beijing PEK
+                'ZSPD': [31.1443, 121.8083], // Shanghai PVG
+                'ZGGG': [23.3924, 113.2988], // Guangzhou CAN
+                'VGPH': [23.1835, 113.4267], // Zhuhai ZUH
+                'RJTT': [35.5494, 139.7798], // Tokyo Haneda HND
+                'RJAA': [35.7647, 140.3864], // Tokyo Narita NRT
+                'RKSI': [37.4691, 126.4505], // Seoul Incheon ICN
+                'RCTP': [25.0777, 121.2325], // Taipei TPE
+
+                // === AMERICAS ===
+                'KJFK': [40.6413, -73.7781], // New York JFK
+                'KLAX': [33.9425, -118.4081], // Los Angeles LAX
+                'KORD': [41.9742, -87.9073], // Chicago ORD
+                'KATL': [33.6407, -84.4277], // Atlanta ATL
+                'KMIA': [25.7959, -80.2870], // Miami MIA
+                'CYYZ': [43.6777, -79.6248], // Toronto YYZ
+                'MMMX': [19.4363, -99.0721], // Mexico City MEX
+                'SBGR': [-23.4356, -46.4731], // Sao Paulo GRU
+
+                // === OCEANIA ===
+                'YSSY': [-33.9461, 151.1772], // Sydney SYD
+                'YMML': [-37.6690, 144.8410], // Melbourne MEL
+                'NZAA': [-37.0082, 174.7850], // Auckland AKL
+            };
+
+            var from = airports[fromICAO];
+            var to = airports[toICAO];
+
+            if (!from) {
+                alert('Unknown airport: ' + fromICAO + '\nAdd coordinates or use known ICAO.');
+                return;
+            }
+            if (!to) {
+                alert('Unknown airport: ' + toICAO + '\nAdd coordinates or use known ICAO.');
+                return;
+            }
+
+            // Generate great circle points
+            var points = generateGreatCircle(from[0], from[1], to[0], to[1], 100);
+
+            // Remove old route if exists
+            if (mapRouteLine) {
+                flightMap.removeLayer(mapRouteLine);
+            }
+
+            // Draw new route
+            mapRouteLine = L.polyline(points, {
+                color: '#00d4ff',
+                weight: 2,
+                opacity: 0.8,
+                dashArray: '10, 5'
+            }).addTo(flightMap);
+
+            // Add departure and arrival markers
+            L.circleMarker(from, { radius: 8, color: '#00ff88', fillColor: '#00ff88', fillOpacity: 0.8 })
+                .bindPopup(fromICAO)
+                .addTo(flightMap);
+            L.circleMarker(to, { radius: 8, color: '#ff5252', fillColor: '#ff5252', fillOpacity: 0.8 })
+                .bindPopup(toICAO)
+                .addTo(flightMap);
+
+            // Fit map to route
+            flightMap.fitBounds(mapRouteLine.getBounds(), { padding: [50, 50] });
+        }
+
+        function generateGreatCircle(lat1, lon1, lat2, lon2, numPoints) {
+            var points = [];
+            var toRad = Math.PI / 180;
+            var toDeg = 180 / Math.PI;
+
+            lat1 = lat1 * toRad;
+            lon1 = lon1 * toRad;
+            lat2 = lat2 * toRad;
+            lon2 = lon2 * toRad;
+
+            var d = 2 * Math.asin(Math.sqrt(
+                Math.pow(Math.sin((lat1 - lat2) / 2), 2) +
+                Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin((lon1 - lon2) / 2), 2)
+            ));
+
+            for (var i = 0; i <= numPoints; i++) {
+                var f = i / numPoints;
+                var A = Math.sin((1 - f) * d) / Math.sin(d);
+                var B = Math.sin(f * d) / Math.sin(d);
+                var x = A * Math.cos(lat1) * Math.cos(lon1) + B * Math.cos(lat2) * Math.cos(lon2);
+                var y = A * Math.cos(lat1) * Math.sin(lon1) + B * Math.cos(lat2) * Math.sin(lon2);
+                var z = A * Math.sin(lat1) + B * Math.sin(lat2);
+                var lat = Math.atan2(z, Math.sqrt(x * x + y * y)) * toDeg;
+                var lon = Math.atan2(y, x) * toDeg;
+                points.push([lat, lon]);
+            }
+            return points;
+        }
+
+        function loadGeoJSON() {
+            var input = document.getElementById('geojson-input').value.trim();
+            if (!input) {
+                alert('Paste GeoJSON data first');
+                return;
+            }
+
+            try {
+                var geojson = JSON.parse(input);
+
+                // Remove old layer if exists
+                if (mapGeoJSONLayer) {
+                    flightMap.removeLayer(mapGeoJSONLayer);
+                }
+
+                mapGeoJSONLayer = L.geoJSON(geojson, {
+                    style: function(feature) {
+                        return {
+                            color: '#ffd700',
+                            weight: 3,
+                            opacity: 0.8
+                        };
+                    },
+                    pointToLayer: function(feature, latlng) {
+                        return L.circleMarker(latlng, {
+                            radius: 6,
+                            fillColor: '#ffd700',
+                            color: '#ffd700',
+                            fillOpacity: 0.8
+                        });
+                    }
+                }).addTo(flightMap);
+
+                // Fit to GeoJSON bounds
+                flightMap.fitBounds(mapGeoJSONLayer.getBounds(), { padding: [50, 50] });
+
+            } catch (e) {
+                alert('Invalid GeoJSON: ' + e.message);
+            }
+        }
+
+        // Track log functions
+        function toggleTrackLog() {
+            trackLogRecording = !trackLogRecording;
+            var btn = document.getElementById('track-toggle-btn');
+
+            if (trackLogRecording) {
+                btn.textContent = 'Stop Recording';
+                btn.style.background = 'rgba(255, 82, 82, 0.3)';
+                btn.style.borderColor = '#ff5252';
+                trackLogStartTime = new Date();
+            } else {
+                btn.textContent = 'Start Recording';
+                btn.style.background = '';
+                btn.style.borderColor = '';
+            }
+        }
+
+        function clearTrackLog() {
+            trackLogPoints = [];
+            trackLogStartTime = null;
+            if (mapTrackLine) {
+                mapTrackLine.setLatLngs([]);
+            }
+            updateTrackLogStats();
+        }
+
+        function updateTrackLogStats() {
+            document.getElementById('track-points').textContent = trackLogPoints.length;
+
+            // Calculate distance
+            var totalDist = 0;
+            for (var i = 1; i < trackLogPoints.length; i++) {
+                totalDist += calculateDistance(
+                    trackLogPoints[i-1].lat, trackLogPoints[i-1].lon,
+                    trackLogPoints[i].lat, trackLogPoints[i].lon
+                );
+            }
+            document.getElementById('track-distance').textContent = totalDist.toFixed(1) + ' nm';
+
+            // Duration
+            if (trackLogStartTime) {
+                var dur = Math.floor((new Date() - trackLogStartTime) / 1000);
+                var hrs = Math.floor(dur / 3600);
+                var mins = Math.floor((dur % 3600) / 60);
+                document.getElementById('track-duration').textContent =
+                    (hrs > 0 ? hrs + ':' : '') + String(mins).padStart(2, '0') + ':' + String(dur % 60).padStart(2, '0');
+            }
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            // Haversine formula - returns nautical miles
+            var R = 3440.065; // Earth radius in nm
+            var toRad = Math.PI / 180;
+            var dLat = (lat2 - lat1) * toRad;
+            var dLon = (lon2 - lon1) * toRad;
+            var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(lat1 * toRad) * Math.cos(lat2 * toRad) *
+                    Math.sin(dLon/2) * Math.sin(dLon/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function exportTrackLog() {
+            if (trackLogPoints.length === 0) {
+                alert('No track points recorded');
+                return;
+            }
+
+            // Generate GPX
+            var gpx = '<?xml version="1.0" encoding="UTF-8"?>\n';
+            gpx += '<gpx version="1.1" creator="Flight Ops Dashboard">\n';
+            gpx += '  <trk>\n';
+            gpx += '    <name>Flight Track ' + new Date().toISOString().split('T')[0] + '</name>\n';
+            gpx += '    <trkseg>\n';
+
+            for (var i = 0; i < trackLogPoints.length; i++) {
+                var pt = trackLogPoints[i];
+                gpx += '      <trkpt lat="' + pt.lat + '" lon="' + pt.lon + '">\n';
+                gpx += '        <ele>' + (pt.alt * 0.3048) + '</ele>\n'; // Convert ft to meters
+                gpx += '        <time>' + pt.time + '</time>\n';
+                gpx += '      </trkpt>\n';
+            }
+
+            gpx += '    </trkseg>\n';
+            gpx += '  </trk>\n';
+            gpx += '</gpx>';
+
+            // Download
+            var blob = new Blob([gpx], { type: 'application/gpx+xml' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'flight-track-' + new Date().toISOString().split('T')[0] + '.gpx';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Hook into existing GPS polling to update map
+        var originalUpdateGpsStrip = typeof updateGpsStrip === 'function' ? updateGpsStrip : null;
+
+        function mapGpsHook() {
+            // Check if we have GPS data available from the strip
+            if (typeof gpsData !== 'undefined' && gpsData && gpsData.lat !== null) {
+                updateMapPosition(
+                    gpsData.lat,
+                    gpsData.lon,
+                    gpsData.heading || null,
+                    gpsData.speed || null,
+                    gpsData.altitude || null
+                );
+            }
+        }
+
+        // Initialize map when tab is shown
+        var originalSwitchTab = switchTab;
+        switchTab = function(tabId) {
+            originalSwitchTab(tabId);
+            if (tabId === 'map') {
+                initMap();
+                // Force resize after tab animation
+                setTimeout(function() {
+                    if (flightMap) flightMap.invalidateSize();
+                }, 300);
+            }
+        };
+
+        // Poll GPS for map updates (every 2 seconds)
+        setInterval(function() {
+            if (mapInitialized && typeof gpsData !== 'undefined' && gpsData && gpsData.lat !== null) {
+                updateMapPosition(
+                    gpsData.lat,
+                    gpsData.lon,
+                    gpsData.heading || null,
+                    gpsData.speed || null,
+                    gpsData.altitude || null
+                );
+            }
+        }, 2000);
+
     </script>
 </body>
 </html>
