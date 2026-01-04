@@ -4359,6 +4359,80 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Pantry Selector Calculator -->
+                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
+                    <div class="section-title">Pantry Selector (DXB)</div>
+                    <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px; text-align: center;">
+                        Calculate pantry code, weight and index for DOW/DOI
+                    </p>
+                    <div class="input-grid-2" style="gap: 15px;">
+                        <div class="input-group">
+                            <label class="input-label">Aircraft Type</label>
+                            <select id="pantry-aircraft" class="fdp-input" style="height: 44px; font-size: 1rem;" onchange="updatePantryConfigOptions(); calculatePantry();">
+                                <option value="">Select Aircraft</option>
+                                <option value="B737-800">B737-800</option>
+                                <option value="B737-8">B737-8</option>
+                                <option value="B737-9">B737-9</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Cabin Config</label>
+                            <select id="pantry-config" class="fdp-input" style="height: 44px; font-size: 1rem;" onchange="calculatePantry();">
+                                <option value="">Select Config</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Direction</label>
+                            <select id="pantry-direction" class="fdp-input" style="height: 44px; font-size: 1rem;" onchange="calculatePantry();">
+                                <option value="">Select Direction</option>
+                                <option value="OUTBOUND_DXB">From DXB (Outbound)</option>
+                                <option value="INBOUND_DXB">To DXB (Inbound)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Flight Type</label>
+                            <select id="pantry-flight-type" class="fdp-input" style="height: 44px; font-size: 1rem;" onchange="calculatePantry();">
+                                <option value="NORMAL">Normal</option>
+                                <option value="TRAINING">Training</option>
+                                <option value="DELIVERY">Delivery</option>
+                                <option value="FERRY">Ferry</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Destination (IATA)</label>
+                            <input type="text" class="fdp-input" id="pantry-destination" placeholder="e.g. TBS, CMB"
+                                   oninput="calculatePantry()" style="text-transform: uppercase; font-size: 1rem; text-align: center;" maxlength="3">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Route Pair (Optional)</label>
+                            <input type="text" class="fdp-input" id="pantry-route-pair" placeholder="e.g. MLE-CMB"
+                                   oninput="calculatePantry()" style="text-transform: uppercase; font-size: 1rem; text-align: center;" maxlength="7">
+                        </div>
+                    </div>
+                    <div class="fdp-results" style="margin-top: 20px;">
+                        <div class="fdp-result-grid" style="grid-template-columns: repeat(3, 1fr);">
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Pantry Code</div>
+                                <div class="fdp-result-value" id="pantry-code-result" style="font-size: 2rem; color: #00d4ff;">---</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Weight</div>
+                                <div class="fdp-result-value" id="pantry-weight-result" style="font-size: 1.5rem;">--- kg</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Index</div>
+                                <div class="fdp-result-value" id="pantry-index-result" style="font-size: 1.5rem;">--- IU</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; text-align: center; font-size: 0.85rem; color: #888;" id="pantry-match-reason">
+                        Enter aircraft, config, direction and destination
+                    </div>
+                    <div style="margin-top: 15px; text-align: center;">
+                        <button class="clear-btn" onclick="clearPantryCalculator()">Clear</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -8339,6 +8413,312 @@
                 resultEl.style.color = '#ff5252';
                 codeEl.textContent = 'Unknown prefix';
             }
+        }
+
+        // ============ PANTRY SELECTOR CALCULATOR ============
+        var pantryDatabase = {
+            "B737-800": {
+                "TWO_CLASS_10J156Y_OR_12J162Y_OR_SINGLE_166Y174Y": {
+                    label: "Two Class (10J156Y/12J162Y) / Single (166Y/174Y)",
+                    specialRouteOverrides: [
+                        { routePair: "MLE-CMB", direction: "OUTBOUND_DXB", pantryCode: "E" },
+                        { routePair: "CMB-MLE", direction: "INBOUND_DXB", pantryCode: "F" },
+                        { routePair: "PEN-LGK", direction: "OUTBOUND_DXB", pantryCode: "G" },
+                        { routePair: "LGK-PEN", direction: "INBOUND_DXB", pantryCode: "H" }
+                    ],
+                    pantryByDirection: {
+                        OUTBOUND_DXB: {
+                            A: { weightKg: 780, indexIU: 4.8 },
+                            C: { weightKg: 838, indexIU: 6.4 },
+                            E: { weightKg: 670, indexIU: 2.9 },
+                            G: { weightKg: 604, indexIU: 2.0 },
+                            T: { weightKg: 25, indexIU: -0.4 }
+                        },
+                        INBOUND_DXB: {
+                            B: { weightKg: 658, indexIU: 3.7 },
+                            D: { weightKg: 721, indexIU: 5.3 },
+                            F: { weightKg: 569, indexIU: 2.3 },
+                            H: { weightKg: 509, indexIU: 1.4 },
+                            T: { weightKg: 25, indexIU: -0.4 }
+                        }
+                    },
+                    destinationGroups: {
+                        OUTBOUND_DXB: [
+                            { pantryCode: "A", destinations: ["AER","AHB","AJF","ALA","AMD","AMM","ASB","ASM","AQI","BEG","BEY","BGW","BOM","BSZ","BUS","BWA","CFU","CGP","CIT","DAC","DAM","DBB","DBV","DEL","DYU","EAM","EBL","ELQ","EVN","GIZ","GYD","HAS","HBE","HGA","HYD","IAS","IFN","IKA","ISB","ISU","JED","JIB","JMK","JTR","JUB","KBL","KHI","KUF","KWI","KZN","LED","LHE","LJU","LKO","LYP","MCX","MED","MHD","MRV","MSQ","MUX","NJF","NQZ","NUM","OLB","OVB","PEW","RMO","RSI","RUH","SJJ","SKD","SKT","SLL","SPX","SVX","SZG","TAS","TBS","TBZ","TIF","TIV","TLV","TUU","TZX","UET","UFA","ULH","VKO","VOG","YNB","ZAG"] },
+                            { pantryCode: "C", destinations: ["ADD","AYT","BGY","BJV","BSL","BUD","CCJ","CCU","CMB","COK","CTA","DAR","EBB","ESB","IST","KBV","KRK","KTM","MLE","OTP","PEN","POZ","PRG","PSA","RIX","SAW","SOF","MBA","NAP","NBO","TIA","VNO","WAW","ZNZ"] },
+                            { pantryCode: "E", destinations: ["BAH","BSR","BUZ","DMM","DOH","HOF","KER","LRR","MCT","SYZ"] },
+                            { pantryCode: "G", destinations: ["BND","GSM","KIH"] }
+                        ],
+                        INBOUND_DXB: [
+                            { pantryCode: "B", destinations: ["AER","AHB","AJF","ALA","AMD","AMM","ASB","ASM","AQI","BEG","BEY","BGW","BOM","BSZ","BUS","BWA","CFU","CGP","CIT","DAC","DAM","DBB","DBV","DEL","DYU","EAM","EBL","ELQ","EVN","GIZ","GYD","HAS","HBE","HGA","HYD","IAS","IFN","IKA","ISB","ISU","JED","JIB","JMK","JTR","JUB","KBL","KHI","KUF","KWI","KZN","LED","LHE","LJU","LKO","LYP","MCX","MED","MHD","MRV","MSQ","MUX","NJF","NQZ","NUM","OLB","OVB","PEW","RMO","RSI","RUH","SJJ","SKD","SKT","SLL","SPX","SVX","SZG","TAS","TBS","TBZ","TIF","TIV","TLV","TUU","TZX","UET","UFA","ULH","VKO","VOG","YNB","ZAG"] },
+                            { pantryCode: "D", destinations: ["ADD","AYT","BGY","BJV","BSL","BUD","CCJ","CCU","CMB","COK","CTA","DAR","EBB","ESB","IST","KBV","KRK","KTM","MLE","OTP","PEN","POZ","PRG","PSA","RIX","SAW","SOF","MBA","NAP","NBO","TIA","VNO","WAW","ZNZ"] },
+                            { pantryCode: "F", destinations: ["BAH","BSR","BUZ","DMM","DOH","HOF","KER","LRR","MCT","SYZ"] },
+                            { pantryCode: "H", destinations: ["BND","GSM","KIH"] }
+                        ]
+                    }
+                }
+            },
+            "B737-8": {
+                "TWO_CLASS_10J156Y_OR_12J162Y_OR_SINGLE_166Y174Y": {
+                    label: "Two Class (10J156Y/12J162Y) / Single (166Y/174Y)",
+                    specialRouteOverrides: [
+                        { routePair: "MLE-CMB", direction: "OUTBOUND_DXB", pantryCode: "E" },
+                        { routePair: "CMB-MLE", direction: "INBOUND_DXB", pantryCode: "F" },
+                        { routePair: "PEN-LGK", direction: "OUTBOUND_DXB", pantryCode: "E" },
+                        { routePair: "LGK-PEN", direction: "INBOUND_DXB", pantryCode: "F" }
+                    ],
+                    pantryByDirection: {
+                        OUTBOUND_DXB: {
+                            A: { weightKg: 783, indexIU: 4.7 },
+                            C: { weightKg: 851, indexIU: 6.2 },
+                            E: { weightKg: 659, indexIU: 3.0 },
+                            G: { weightKg: 600, indexIU: 1.6 },
+                            T: { weightKg: 25, indexIU: -0.4 }
+                        },
+                        INBOUND_DXB: {
+                            B: { weightKg: 649, indexIU: 3.4 },
+                            D: { weightKg: 735, indexIU: 5.0 },
+                            F: { weightKg: 560, indexIU: 2.4 },
+                            H: { weightKg: 502, indexIU: 1.0 },
+                            T: { weightKg: 25, indexIU: -0.4 }
+                        }
+                    },
+                    destinationGroups: "SAME_AS_B737_800"
+                },
+                "ONE_CLASS_186Y": {
+                    label: "One Class (186Y)",
+                    specialRouteOverrides: [
+                        { routePair: "ZNZ-DAR", direction: "OUTBOUND_DXB", pantryCode: "K" },
+                        { routePair: "DAR-ZNZ", direction: "INBOUND_DXB", pantryCode: "L" },
+                        { routePair: "MLE-CMB", direction: "OUTBOUND_DXB", pantryCode: "O" },
+                        { routePair: "CMB-MLE", direction: "INBOUND_DXB", pantryCode: "P" },
+                        { routePair: "PEN-LGK", direction: "OUTBOUND_DXB", pantryCode: "Q" },
+                        { routePair: "LGK-PEN", direction: "INBOUND_DXB", pantryCode: "R" }
+                    ],
+                    pantryByDirection: {
+                        OUTBOUND_DXB: {
+                            I: { weightKg: 672, indexIU: 7.3 },
+                            K: { weightKg: 718, indexIU: 7.9 },
+                            M: { weightKg: 586, indexIU: 6.7 },
+                            O: { weightKg: 520, indexIU: 5.4 },
+                            Q: { weightKg: 414, indexIU: 3.7 },
+                            T: { weightKg: 25, indexIU: -0.4 }
+                        },
+                        INBOUND_DXB: {
+                            J: { weightKg: 528, indexIU: 5.7 },
+                            L: { weightKg: 611, indexIU: 7.1 },
+                            N: { weightKg: 446, indexIU: 5.2 },
+                            P: { weightKg: 425, indexIU: 4.7 },
+                            R: { weightKg: 335, indexIU: 3.2 },
+                            T: { weightKg: 25, indexIU: -0.4 }
+                        }
+                    },
+                    destinationGroups: {
+                        OUTBOUND_DXB: [
+                            { pantryCode: "I", destinations: ["AER","AHB","ALA","AMM","ASB","ASM","BEG","BEY","BSZ","BUS","BWA","CFU","CGP","CIT","DAC","DAM","DBB","DBV","DYU","EAM","EBL","EVN","GIZ","GYD","HBE","HGA","IAS","ISB","JED","JIB","JMK","JTR","JUB","KBL","KUF","KZN","LED","LHE","LJU","LKO","LYP","MCX","MRV","MSQ","MUX","NQZ","NUM","OLB","OVB","PEW","RMO","RSI","SJJ","SKD","SKT","SPX","SVX","SZG","TAS","TBS","TBZ","TIF","TIV","TUU","TZX","UFA","ULH","VKO","VOG","YNB","ZAG"] },
+                            { pantryCode: "K", destinations: ["ADD","AYT","BGY","BJV","BSL","BUD","CCJ","CCU","CMB","COK","CTA","DAR","EBB","ESB","IST","KBV","KRK","KTM","MBA","MLE","NAP","NBO","OTP","PEN","POZ","PRG","PSA","RIX","SAW","SOF","TIA","VNO","WAW","ZNZ"] },
+                            { pantryCode: "M", destinations: ["AIF","AQI","BGW","ELQ","HAS","IFN","IKA","ISU","KHI","KWI","MED","MHD","NJF","RUH","SLL","UET"] },
+                            { pantryCode: "O", destinations: ["AMD","BAH","BOM","BSR","BUZ","DEL","DMM","DOH","HOF","HYD","KER","LRR","MCT","SYZ","TLV"] },
+                            { pantryCode: "Q", destinations: ["BND","GSM","KIH"] }
+                        ],
+                        INBOUND_DXB: [
+                            { pantryCode: "J", destinations: ["AER","AHB","ALA","AMM","ASB","ASM","BEG","BEY","BSZ","BUS","BWA","CFU","CGP","CIT","DAC","DAM","DBB","DBV","DYU","EAM","EBL","EVN","GIZ","GYD","HBE","HGA","IAS","ISB","JED","JIB","JMK","JTR","JUB","KBL","KUF","KZN","LED","LHE","LJU","LKO","LYP","MCX","MRV","MSQ","MUX","NQZ","NUM","OLB","OVB","PEW","RMO","RSI","SJJ","SKD","SKT","SPX","SVX","SZG","TAS","TBS","TBZ","TIF","TIV","TUU","TZX","UFA","ULH","VKO","VOG","YNB","ZAG"] },
+                            { pantryCode: "L", destinations: ["ADD","AYT","BGY","BJV","BSL","BUD","CCJ","CCU","CMB","COK","CTA","DAR","EBB","ESB","IST","KBV","KRK","KTM","MBA","MLE","NAP","NBO","OTP","PEN","POZ","PRG","PSA","RIX","SAW","SOF","TIA","VNO","WAW","ZNZ"] },
+                            { pantryCode: "N", destinations: ["AIF","AQI","BGW","ELQ","HAS","IFN","IKA","ISU","KHI","KWI","MED","MHD","NJF","RUH","SLL","UET"] },
+                            { pantryCode: "P", destinations: ["AMD","BAH","BOM","BSR","BUZ","DEL","DMM","DOH","HOF","HYD","KER","LRR","MCT","SYZ","TLV"] },
+                            { pantryCode: "R", destinations: ["BND","GSM","KIH"] }
+                        ]
+                    }
+                }
+            },
+            "B737-9": {
+                "TWO_CLASS_16J156Y_OR_SINGLE_172Y": {
+                    label: "Two Class (16J156Y) / Single (172Y)",
+                    specialRouteOverrides: [
+                        { routePair: "MLE-CMB", direction: "OUTBOUND_DXB", pantryCode: "E" },
+                        { routePair: "CMB-MLE", direction: "INBOUND_DXB", pantryCode: "F" },
+                        { routePair: "PEN-LGK", direction: "OUTBOUND_DXB", pantryCode: "G" },
+                        { routePair: "LGK-PEN", direction: "INBOUND_DXB", pantryCode: "H" }
+                    ],
+                    pantryByDirection: {
+                        OUTBOUND_DXB: {
+                            A: { weightKg: 926, indexIU: 6.9 },
+                            C: { weightKg: 864, indexIU: 5.9 },
+                            E: { weightKg: 803, indexIU: 4.8 },
+                            G: { weightKg: 625, indexIU: 2.4 },
+                            T: { weightKg: 25, indexIU: -0.5 }
+                        },
+                        INBOUND_DXB: {
+                            B: { weightKg: 777, indexIU: 5.5 },
+                            D: { weightKg: 724, indexIU: 4.7 },
+                            F: { weightKg: 692, indexIU: 4.1 },
+                            H: { weightKg: 546, indexIU: 2.2 },
+                            T: { weightKg: 25, indexIU: -0.5 }
+                        }
+                    },
+                    destinationGroups: {
+                        OUTBOUND_DXB: [
+                            { pantryCode: "A", destinations: ["AER","AHB","ALA","AMM","ASB","ASM","BEG","BEY","BSZ","BUS","BWA","CFU","CGP","CIT","DAC","DAM","DBB","DBV","DYU","EAM","EBL","EVN","GIZ","GYD","HBE","HGA","IAS","ISB","JED","JIB","JMK","JTR","JUB","KBL","KUF","KZN","LHE","LJU","LKO","LYP","MCX","MRV","MSQ","MUX","NQZ","NUM","OLB","OVB","PEW","RMO","RSI","SJJ","SKD","SKT","SPX","SVX","SZG","TAS","TBS","TBZ","TIF","TIV","TUU","TZX","UFA","ULH","VKO","VOG","YNB","ZAG"] },
+                            { pantryCode: "C", destinations: ["ADD","AIF","AQI","AYT","BGY","BGW","BJV","BSL","BUD","CCJ","CCU","CMB","COK","CTA","DAR","EBB","ELQ","ESB","HAS","IFN","IKA","IST","ISU","KBV","KHI","KRK","KTM","KWI","LED","MBA","MED","MHD","MLE","NAP","NBO","OTP","PEN","POZ","PRG","PSA","RUH","RIX","SAW","SLL","SOF","TIA","UET","VNO","WAW","ZNZ"] },
+                            { pantryCode: "E", destinations: ["AMD","BAH","BOM","BSR","BUZ","DEL","DMM","DOH","HOF","KER","LRR","HYD","MCT","SYZ","TLV"] },
+                            { pantryCode: "G", destinations: ["BND","GSM","KIH"] }
+                        ],
+                        INBOUND_DXB: [
+                            { pantryCode: "B", destinations: ["AER","AHB","ALA","AMM","ASB","ASM","BEG","BEY","BSZ","BUS","BWA","CFU","CGP","CIT","DAC","DAM","DBB","DBV","DYU","EAM","EBL","EVN","GIZ","GYD","HBE","HGA","IAS","ISB","JED","JIB","JMK","JTR","JUB","KBL","KUF","KZN","LHE","LJU","LKO","LYP","MCX","MRV","MSQ","MUX","NQZ","NUM","OLB","OVB","PEW","RMO","RSI","SJJ","SKD","SKT","SPX","SVX","SZG","TAS","TBS","TBZ","TIF","TIV","TUU","TZX","UFA","ULH","VKO","VOG","YNB","ZAG"] },
+                            { pantryCode: "D", destinations: ["ADD","AIF","AQI","AYT","BGY","BGW","BJV","BSL","BUD","CCJ","CCU","CMB","COK","CTA","DAR","EBB","ELQ","ESB","HAS","IFN","IKA","IST","ISU","KBV","KHI","KRK","KTM","KWI","LED","MBA","MED","MHD","MLE","NAP","NBO","OTP","PEN","POZ","PRG","PSA","RUH","RIX","SAW","SLL","SOF","TIA","UET","VNO","WAW","ZNZ"] },
+                            { pantryCode: "F", destinations: ["AMD","BAH","BOM","BSR","BUZ","DEL","DMM","DOH","HOF","KER","LRR","HYD","MCT","SYZ","TLV"] },
+                            { pantryCode: "H", destinations: ["BND","GSM","KIH"] }
+                        ]
+                    }
+                }
+            }
+        };
+
+        var pantryConfigLabels = {
+            "TWO_CLASS_10J156Y_OR_12J162Y_OR_SINGLE_166Y174Y": "Two Class / Single Class",
+            "ONE_CLASS_186Y": "One Class (186Y)",
+            "TWO_CLASS_16J156Y_OR_SINGLE_172Y": "Two Class / Single Class"
+        };
+
+        function updatePantryConfigOptions() {
+            var aircraft = document.getElementById('pantry-aircraft').value;
+            var configSelect = document.getElementById('pantry-config');
+            configSelect.innerHTML = '<option value="">Select Config</option>';
+
+            if (aircraft && pantryDatabase[aircraft]) {
+                var configs = Object.keys(pantryDatabase[aircraft]);
+                configs.forEach(function(cfg) {
+                    var opt = document.createElement('option');
+                    opt.value = cfg;
+                    opt.textContent = pantryDatabase[aircraft][cfg].label || pantryConfigLabels[cfg] || cfg;
+                    configSelect.appendChild(opt);
+                });
+                // Auto-select if only one config
+                if (configs.length === 1) {
+                    configSelect.value = configs[0];
+                }
+            }
+        }
+
+        function getDestinationGroups(aircraft, config, direction) {
+            var acData = pantryDatabase[aircraft];
+            if (!acData) return null;
+            var cfg = acData[config];
+            if (!cfg) return null;
+
+            var groups = cfg.destinationGroups;
+            if (groups === "SAME_AS_B737_800") {
+                // Use B737-800 destination groups
+                groups = pantryDatabase["B737-800"]["TWO_CLASS_10J156Y_OR_12J162Y_OR_SINGLE_166Y174Y"].destinationGroups;
+            }
+            return groups && groups[direction] ? groups[direction] : null;
+        }
+
+        function calculatePantry() {
+            var aircraft = document.getElementById('pantry-aircraft').value;
+            var config = document.getElementById('pantry-config').value;
+            var direction = document.getElementById('pantry-direction').value;
+            var flightType = document.getElementById('pantry-flight-type').value;
+            var destination = document.getElementById('pantry-destination').value.toUpperCase().trim();
+            var routePair = document.getElementById('pantry-route-pair').value.toUpperCase().trim().replace(/\s/g, '');
+
+            var codeEl = document.getElementById('pantry-code-result');
+            var weightEl = document.getElementById('pantry-weight-result');
+            var indexEl = document.getElementById('pantry-index-result');
+            var reasonEl = document.getElementById('pantry-match-reason');
+
+            // Reset display
+            function showResult(code, weight, index, reason, isError) {
+                codeEl.textContent = code || '---';
+                codeEl.style.color = isError ? '#ff5252' : '#00d4ff';
+                weightEl.textContent = weight !== null ? weight + ' kg' : '--- kg';
+                indexEl.textContent = index !== null ? index + ' IU' : '--- IU';
+                reasonEl.textContent = reason;
+                reasonEl.style.color = isError ? '#ff5252' : '#888';
+            }
+
+            // Check required inputs
+            if (!aircraft || !config || !direction) {
+                showResult(null, null, null, 'Enter aircraft, config, direction and destination', false);
+                return;
+            }
+
+            var acData = pantryDatabase[aircraft];
+            var cfg = acData ? acData[config] : null;
+            if (!cfg) {
+                showResult('ERR', null, null, 'Invalid aircraft/config combination', true);
+                return;
+            }
+
+            var pantryData = cfg.pantryByDirection[direction];
+            if (!pantryData) {
+                showResult('ERR', null, null, 'Invalid direction for this config', true);
+                return;
+            }
+
+            // Special flights use pantry T
+            if (flightType === 'TRAINING' || flightType === 'DELIVERY' || flightType === 'FERRY') {
+                var tData = pantryData['T'];
+                if (tData) {
+                    showResult('T', tData.weightKg, tData.indexIU, flightType + ' flight - Pantry T', false);
+                    return;
+                }
+            }
+
+            if (!destination && !routePair) {
+                showResult(null, null, null, 'Enter destination or route pair', false);
+                return;
+            }
+
+            // Check route pair overrides first
+            if (routePair && cfg.specialRouteOverrides) {
+                var override = cfg.specialRouteOverrides.find(function(o) {
+                    return o.routePair === routePair && o.direction === direction;
+                });
+                if (override) {
+                    var data = pantryData[override.pantryCode];
+                    if (data) {
+                        showResult(override.pantryCode, data.weightKg, data.indexIU, 'Route override: ' + routePair, false);
+                        return;
+                    }
+                }
+            }
+
+            // Destination group lookup
+            if (destination) {
+                var destGroups = getDestinationGroups(aircraft, config, direction);
+                if (destGroups) {
+                    for (var i = 0; i < destGroups.length; i++) {
+                        var group = destGroups[i];
+                        if (group.destinations && group.destinations.indexOf(destination) !== -1) {
+                            var data = pantryData[group.pantryCode];
+                            if (data) {
+                                showResult(group.pantryCode, data.weightKg, data.indexIU, 'Destination: ' + destination + ' (Group ' + group.pantryCode + ')', false);
+                                return;
+                            }
+                        }
+                    }
+                }
+                showResult('?', null, null, 'Destination ' + destination + ' not found - select pantry manually', true);
+                return;
+            }
+
+            showResult(null, null, null, 'Enter destination IATA code', false);
+        }
+
+        function clearPantryCalculator() {
+            document.getElementById('pantry-aircraft').value = '';
+            document.getElementById('pantry-config').innerHTML = '<option value="">Select Config</option>';
+            document.getElementById('pantry-direction').value = '';
+            document.getElementById('pantry-flight-type').value = 'NORMAL';
+            document.getElementById('pantry-destination').value = '';
+            document.getElementById('pantry-route-pair').value = '';
+            document.getElementById('pantry-code-result').textContent = '---';
+            document.getElementById('pantry-code-result').style.color = '#00d4ff';
+            document.getElementById('pantry-weight-result').textContent = '--- kg';
+            document.getElementById('pantry-index-result').textContent = '--- IU';
+            document.getElementById('pantry-match-reason').textContent = 'Enter aircraft, config, direction and destination';
+            document.getElementById('pantry-match-reason').style.color = '#888';
         }
 
         function exportAllData() {
