@@ -7527,76 +7527,110 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         // Standard pax weights
         var LMC_PAX_WEIGHTS = { male: 88, female: 70, child: 35 };
 
-        // LMC correction table by aircraft type and config
+        // LMC correction table by aircraft type and config (from OM-B Section 6)
         // IU values: negative = forward CG shift, positive = aft CG shift
         var lmcCorrectionTable = {
             '737-800': {
-                '10J156Y/166Y': {
-                    'OA': { desc: 'Rows 1-5 (J+Y)', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                '189Y': {
+                    'OA': { desc: 'Rows 1-5', onload: -1.0, offload: 1.0, unit: 'PAX' },
                     'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 17-31', onload: 0.6, offload: -0.6, unit: 'PAX' },
-                    'FH': { desc: 'Forward Hold', onload: -0.8, offload: 0.8, unit: '100kg' },
-                    'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
-                    'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
-                    'CTR': { desc: 'Center Tank', onload: -0.1, offload: 0.1, unit: '1000kg' },
-                    'WING': { desc: 'Wing Tanks', onload: -0.05, offload: 0.05, unit: '1000kg' }
+                    'OC': { desc: 'Rows 17-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
+                    'OD': { desc: 'Rows 28-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (742kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2440kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3157kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (474kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WT': { desc: 'Trim Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WT+CT': { desc: 'Trim+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
                 },
-                '12J162Y/174Y': {
-                    'OA': { desc: 'Rows 1-6 (J+Y)', onload: -1.0, offload: 1.0, unit: 'PAX' },
-                    'OB': { desc: 'Rows 7-17', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 18-33', onload: 0.6, offload: -0.6, unit: 'PAX' },
-                    'FH': { desc: 'Forward Hold', onload: -0.8, offload: 0.8, unit: '100kg' },
-                    'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
-                    'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
-                    'CTR': { desc: 'Center Tank', onload: -0.1, offload: 0.1, unit: '1000kg' },
-                    'WING': { desc: 'Wing Tanks', onload: -0.05, offload: 0.05, unit: '1000kg' }
+                '12J/162Y/174Y': {
+                    'OA': { desc: 'Rows 1-3', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
+                    'OD': { desc: 'Rows 28-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3157kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (474kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WT': { desc: 'Trim Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WT+CT': { desc: 'Trim+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
+                },
+                '10J/156Y/166Y': {
+                    'OA': { desc: 'Rows 1-3', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-26', onload: 0.3, offload: -0.3, unit: 'PAX' },
+                    'OD': { desc: 'Rows 27-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3157kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (474kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WT': { desc: 'Trim Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WT+CT': { desc: 'Trim+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
                 }
             },
             '737-8': {
-                '10J156Y/166Y': {
-                    'OA': { desc: 'Rows 1-5 (J+Y)', onload: -1.1, offload: 1.1, unit: 'PAX' },
+                '10J/156Y/166Y': {
+                    'OA': { desc: 'Rows 1-3', onload: -1.0, offload: 1.0, unit: 'PAX' },
                     'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 17-31', onload: 0.6, offload: -0.6, unit: 'PAX' },
-                    'FH': { desc: 'Forward Hold', onload: -0.9, offload: 0.9, unit: '100kg' },
-                    'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
-                    'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
-                    'CTR': { desc: 'Center Tank', onload: -0.1, offload: 0.1, unit: '1000kg' },
-                    'WING': { desc: 'Wing Tanks', onload: -0.05, offload: 0.05, unit: '1000kg' }
+                    'OC': { desc: 'Rows 17-26', onload: 0.3, offload: -0.3, unit: 'PAX' },
+                    'OD': { desc: 'Rows 27-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3631kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (473kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WT': { desc: 'Trim Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WT+CT': { desc: 'Trim+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
                 },
-                '12J162Y/174Y': {
-                    'OA': { desc: 'Rows 1-6 (J+Y)', onload: -1.1, offload: 1.1, unit: 'PAX' },
-                    'OB': { desc: 'Rows 7-17', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 18-33', onload: 0.6, offload: -0.6, unit: 'PAX' },
-                    'FH': { desc: 'Forward Hold', onload: -0.9, offload: 0.9, unit: '100kg' },
-                    'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
-                    'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
-                    'CTR': { desc: 'Center Tank', onload: -0.1, offload: 0.1, unit: '1000kg' },
-                    'WING': { desc: 'Wing Tanks', onload: -0.05, offload: 0.05, unit: '1000kg' }
+                '12J/162Y/174Y': {
+                    'OA': { desc: 'Rows 1-3', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
+                    'OD': { desc: 'Rows 28-32', onload: 1.0, offload: -1.0, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3560kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (448kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WT': { desc: 'Trim Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WT+CT': { desc: 'Trim+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
                 },
                 '186Y': {
-                    'OA': { desc: 'Rows 1-5', onload: -1.1, offload: 1.1, unit: 'PAX' },
-                    'OB': { desc: 'Rows 6-17', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 18-33', onload: 0.6, offload: -0.6, unit: 'PAX' },
-                    'FH': { desc: 'Forward Hold', onload: -0.9, offload: 0.9, unit: '100kg' },
-                    'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
-                    'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
-                    'CTR': { desc: 'Center Tank', onload: -0.1, offload: 0.1, unit: '1000kg' },
-                    'WING': { desc: 'Wing Tanks', onload: -0.05, offload: 0.05, unit: '1000kg' }
+                    'OA': { desc: 'Rows 1-5', onload: -0.9, offload: 0.9, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-16', onload: -0.4, offload: 0.4, unit: 'PAX' },
+                    'OC': { desc: 'Rows 17-26', onload: 0.3, offload: -0.3, unit: 'PAX' },
+                    'OD': { desc: 'Rows 27-32', onload: 0.9, offload: -0.9, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (809kg)', onload: -1.2, offload: 1.2, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2670kg)', onload: -0.7, offload: 0.7, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (3560kg)', onload: 0.6, offload: -0.6, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (448kg)', onload: 1.2, offload: -1.2, unit: '100kg' },
+                    'WT': { desc: 'Trim Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WT+CT': { desc: 'Trim+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
                 }
             },
             '737-9': {
-                '16J156Y/172Y': {
-                    'OA': { desc: 'Rows 1-7 (J+Y)', onload: -1.2, offload: 1.2, unit: 'PAX' },
-                    'OB': { desc: 'Rows 8-19', onload: -0.4, offload: 0.4, unit: 'PAX' },
-                    'OC': { desc: 'Rows 20-36', onload: 0.6, offload: -0.6, unit: 'PAX' },
-                    'FH': { desc: 'Forward Hold', onload: -0.9, offload: 0.9, unit: '100kg' },
-                    'AH': { desc: 'Aft Hold', onload: 0.7, offload: -0.7, unit: '100kg' },
-                    'BLK': { desc: 'Bulk Cargo', onload: 1.0, offload: -1.0, unit: '100kg' },
-                    'CTR': { desc: 'Center Tank', onload: -0.1, offload: 0.1, unit: '1000kg' },
-                    'WING': { desc: 'Wing Tanks', onload: -0.05, offload: 0.05, unit: '1000kg' }
+                'ALL': {
+                    'OA': { desc: 'Rows 1-5', onload: -1.0, offload: 1.0, unit: 'PAX' },
+                    'OB': { desc: 'Rows 6-17', onload: -0.3, offload: 0.3, unit: 'PAX' },
+                    'OC': { desc: 'Rows 18-27', onload: 0.4, offload: -0.4, unit: 'PAX' },
+                    'OD': { desc: 'Rows 28-33', onload: 1.0, offload: -1.0, unit: 'PAX' },
+                    'CPT1': { desc: 'Fwd Hold (675kg)', onload: -1.4, offload: 1.4, unit: '100kg' },
+                    'CPT2': { desc: 'Fwd Hold (2884kg)', onload: -0.8, offload: 0.8, unit: '100kg' },
+                    'CPT3': { desc: 'Aft Hold (4715kg)', onload: 0.7, offload: -0.7, unit: '100kg' },
+                    'CPT4': { desc: 'Bulk (370kg)', onload: 1.3, offload: -1.3, unit: '100kg' },
+                    'WT': { desc: 'Trim Tank', onload: 1.0, offload: -1.0, unit: '300kg' },
+                    'WT+CT': { desc: 'Trim+Center', onload: -0.5, offload: 0.5, unit: '350kg' }
                 }
             }
         };
+
+        // Normalize config names from fleet.json to match correction table
+        function normalizeConfig(config) {
+            if (!config) return config;
+            // Fleet uses "12J162Y/174Y", correction table uses "12J/162Y/174Y"
+            // Also handle "10J156Y/166Y" -> "10J/156Y/166Y"
+            return config
+                .replace(/^(\d+J)(\d)/, '$1/$2')  // Add / after J if followed by digit
+                .replace(/^(\d+Y)$/, '$1');       // Keep pure Y configs as-is
+        }
 
         var lmcChanges = [];
         var lmcChangeCounter = 0;
@@ -7656,11 +7690,11 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             var zones = [];
 
             if (type === 'PAX') {
-                zones = ['OA', 'OB', 'OC'];
+                zones = ['OA', 'OB', 'OC', 'OD'];
             } else if (type === 'CARGO' || type === 'BAGGAGE') {
-                zones = ['FH', 'AH', 'BLK'];
+                zones = ['CPT1', 'CPT2', 'CPT3', 'CPT4'];
             } else if (type === 'FUEL') {
-                zones = ['CTR', 'WING'];
+                zones = ['WT', 'WT+CT'];
             }
 
             var change = {
@@ -7682,7 +7716,15 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
         function getLmcTable() {
             if (!lmcAircraftType || !lmcAircraftConfig) return null;
-            return lmcCorrectionTable[lmcAircraftType] && lmcCorrectionTable[lmcAircraftType][lmcAircraftConfig];
+            var typeTable = lmcCorrectionTable[lmcAircraftType];
+            if (!typeTable) return null;
+            // For 737-9, use 'ALL' config
+            if (lmcAircraftType === '737-9') {
+                return typeTable['ALL'];
+            }
+            // Normalize config name and look up
+            var normConfig = normalizeConfig(lmcAircraftConfig);
+            return typeTable[normConfig] || null;
         }
 
         function removeLmcChange(id) {
@@ -7698,11 +7740,11 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             container.innerHTML = lmcChanges.map(function(change) {
                 var zones = [];
                 if (change.type === 'PAX') {
-                    zones = ['OA', 'OB', 'OC'];
+                    zones = ['OA', 'OB', 'OC', 'OD'];
                 } else if (change.type === 'CARGO' || change.type === 'BAGGAGE') {
-                    zones = ['FH', 'AH', 'BLK'];
+                    zones = ['CPT1', 'CPT2', 'CPT3', 'CPT4'];
                 } else if (change.type === 'FUEL') {
-                    zones = ['CTR', 'WING'];
+                    zones = ['WT', 'WT+CT'];
                 }
 
                 // Different input fields for PAX vs CARGO/FUEL
@@ -7813,10 +7855,18 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     units = paxCount;
                 } else if (change.type === 'FUEL') {
                     weight = change.quantity;
-                    units = change.quantity / 1000; // Convert to 1000kg units
+                    // Fuel zones have specific unit divisors: WT=300kg, WT+CT=350kg
+                    if (change.zone === 'WT') {
+                        units = change.quantity / 300;
+                    } else if (change.zone === 'WT+CT') {
+                        units = change.quantity / 350;
+                    } else {
+                        units = change.quantity / 100;
+                    }
                 } else {
+                    // CARGO/BAGGAGE: per 100kg
                     weight = change.quantity;
-                    units = change.quantity / 100; // Convert to 100kg units
+                    units = change.quantity / 100;
                 }
 
                 var iuRate = zoneData ? (change.action === 'onload' ? zoneData.onload : zoneData.offload) : 0;
