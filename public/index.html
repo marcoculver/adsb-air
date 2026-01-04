@@ -4118,7 +4118,6 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 <button class="picker-btn" onclick="pickerBackspace()">&larr;</button>
                 <button class="picker-btn" onclick="pickerAppend('00')" style="font-size:1rem">00</button>
                 <button class="picker-btn" onclick="pickerAppend('000')" style="font-size:0.9rem">000</button>
-                <button class="picker-btn" onclick="pickerAppend('0000')" style="font-size:0.8rem">0000</button>
             </div>
             <div class="picker-actions">
                 <button class="picker-cancel" onclick="closePicker()">Cancel</button>
@@ -4340,6 +4339,59 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         // ============ GLOBAL VARIABLES ============
         var currentSectorCount = 1;
         var fleetData = null;
+        var airportDB = null;  // Global airport database
+
+        // Load airport database
+        function loadAirportDB() {
+            var path = window.location.pathname;
+            if (path === '/dashboard') path = '/dashboard/';
+            path = path.replace(/index\.html$/, '');
+            if (!path.endsWith('/')) path += '/';
+            var url = path + 'airports.json';
+            fetch(url)
+                .then(function(response) {
+                    if (!response.ok) throw new Error('HTTP ' + response.status);
+                    return response.json();
+                })
+                .then(function(data) {
+                    airportDB = data;
+                    console.log('Loaded ' + Object.keys(data).length + ' airports');
+                })
+                .catch(function(err) { console.error('Failed to load airport database:', err.message || err); });
+        }
+        loadAirportDB(); // Load immediately
+
+        // Airport lookup functions
+        function getAirport(icao) {
+            if (!airportDB || !icao) return null;
+            return airportDB[icao.toUpperCase()] || null;
+        }
+
+        function getAirportByIATA(iata) {
+            if (!airportDB || !iata) return null;
+            iata = iata.toUpperCase();
+            for (var icao in airportDB) {
+                if (airportDB[icao].i === iata) {
+                    return { icao: icao, ...airportDB[icao] };
+                }
+            }
+            return null;
+        }
+
+        function getAirportName(icao) {
+            var apt = getAirport(icao);
+            return apt ? apt.n : icao;
+        }
+
+        function getAirportCity(icao) {
+            var apt = getAirport(icao);
+            return apt ? (apt.m || apt.n) : icao;
+        }
+
+        function getAirportCoords(icao) {
+            var apt = getAirport(icao);
+            return apt ? apt.c : null;
+        }
 
         // Load fleet data immediately on page load
         function loadFleetData() {
@@ -9841,263 +9893,26 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 return;
             }
 
-            // Comprehensive airport database - flydubai network + major airports
-            var airports = {
-                // === UAE ===
-                'OMDB': [25.2532, 55.3657], // Dubai DXB
-                'OMDW': [24.8962, 55.1614], // Al Maktoum DWC
-                'OMAA': [24.4330, 54.6511], // Abu Dhabi AUH
-                'OMSJ': [25.3286, 55.5172], // Sharjah SHJ
-                'OMRK': [25.6135, 55.9389], // Ras Al Khaimah RKT
-                'OMFJ': [25.1122, 56.3240], // Fujairah FJR
-                'OMAL': [24.2617, 55.6092], // Al Ain AAN
-
-                // === SAUDI ARABIA ===
-                'OERK': [24.9576, 46.6988], // Riyadh RUH
-                'OEJN': [21.6796, 39.1565], // Jeddah JED
-                'OEDF': [26.4712, 49.7979], // Dammam DMM
-                'OEMA': [24.5534, 39.7051], // Medina MED
-                'OEGN': [16.9011, 42.5858], // Gizan GIZ
-                'OEAB': [18.2404, 42.6567], // Abha AHB
-                'OETB': [28.3654, 36.6189], // Tabuk TUU
-                'OEHL': [27.4379, 41.6863], // Hail HAS
-                'OEGS': [26.3027, 43.7744], // Qassim/Gassim ELQ
-                'OENG': [29.7854, 40.1025], // Arar RAE
-                'OESK': [20.1046, 45.6197], // Al-Wajh EJH
-
-                // === GCC ===
-                'OTHH': [25.2731, 51.6081], // Doha DOH
-                'OBBI': [26.2708, 50.6336], // Bahrain BAH
-                'OKBK': [29.2266, 47.9689], // Kuwait KWI
-                'OOMS': [23.5933, 58.2844], // Muscat MCT
-                'OOSA': [17.0387, 54.0913], // Salalah SLL
-
-                // === JORDAN ===
-                'OJAI': [31.7226, 35.9932], // Amman Queen Alia AMM
-                'OJAQ': [29.6116, 35.0181], // Aqaba AQJ
-
-                // === LEBANON ===
-                'OLBA': [33.8209, 35.4884], // Beirut BEY
-
-                // === IRAQ ===
-                'ORBI': [33.2625, 44.2346], // Baghdad BGW
-                'ORER': [36.2376, 43.9632], // Erbil EBL
-                'ORSU': [35.5617, 45.3167], // Sulaymaniyah ISU
-                'ORMM': [30.5491, 47.6621], // Basra BSR
-                'ORNI': [31.9896, 44.4043], // Najaf NJF
-
-                // === IRAN ===
-                'OIIE': [35.4161, 51.1522], // Tehran IKA
-                'OISS': [29.5392, 52.5899], // Shiraz SYZ
-                'OIMM': [36.2352, 59.6410], // Mashhad MHD
-                'OIII': [35.6892, 51.3134], // Tehran Mehrabad THR
-                'OIKB': [27.2183, 56.3778], // Bandar Abbas BND
-
-                // === INDIA ===
-                'VIDP': [28.5562, 77.1000], // Delhi DEL
-                'VABB': [19.0896, 72.8656], // Mumbai BOM
-                'VOBL': [12.9499, 77.6681], // Bangalore BLR
-                'VECC': [22.6547, 88.4467], // Kolkata CCU
-                'VOCL': [11.1368, 75.9553], // Kozhikode/Calicut CCJ
-                'VOCI': [9.9471, 76.2673], // Kochi COK
-                'VOHS': [17.2403, 78.4294], // Hyderabad HYD
-                'VOTV': [8.4821, 76.9201], // Thiruvananthapuram TRV
-                'VOMM': [12.9941, 80.1709], // Chennai MAA
-                'VOGO': [15.3808, 73.8314], // Goa GOI
-                'VAAH': [23.0772, 72.6347], // Ahmedabad AMD
-                'VIAR': [31.7096, 74.7973], // Amritsar ATQ
-                'VILK': [26.7606, 80.8893], // Lucknow LKO
-                'VEPT': [25.5913, 85.0880], // Patna PAT
-                'VEGT': [26.1061, 91.5859], // Guwahati GAU
-                'VIJP': [26.8242, 75.8122], // Jaipur JAI
-                'VEBS': [25.4524, 81.7330], // Varanasi VNS
-                'VEMN': [24.9120, 84.0560], // Gaya GAY
-                'VANP': [21.0922, 79.0472], // Nagpur NAG
-                'VOMD': [9.8345, 78.0934], // Madurai IXM
-                'VOTJ': [10.7224, 79.1015], // Tiruchirappalli TRZ
-                'VOCB': [11.0300, 77.0434], // Coimbatore CJB
-                'VOMG': [12.3052, 74.8910], // Mangalore IXE
-
-                // === PAKISTAN ===
-                'OPKC': [24.9065, 67.1608], // Karachi KHI
-                'OPLA': [31.5216, 74.4036], // Lahore LHE
-                'OPIS': [33.5497, 72.8256], // Islamabad ISB
-                'OPFA': [31.3650, 72.9948], // Faisalabad LYP
-                'OPMT': [30.2032, 71.4191], // Multan MUX
-                'OPST': [32.5356, 74.3639], // Sialkot SKT
-                'OPPS': [33.9939, 71.5146], // Peshawar PEW
-
-                // === SRI LANKA ===
-                'VCBI': [7.1808, 79.8841], // Colombo CMB
-
-                // === MALDIVES ===
-                'VRMM': [4.1918, 73.5290], // Male MLE
-
-                // === BANGLADESH ===
-                'VGHS': [23.8433, 90.3978], // Dhaka DAC
-                'VGCG': [22.2496, 91.8133], // Chittagong CGP
-
-                // === NEPAL ===
-                'VNKT': [27.6966, 85.3591], // Kathmandu KTM
-
-                // === CENTRAL ASIA ===
-                'UAAA': [43.3521, 77.0405], // Almaty ALA
-                'UACC': [51.0222, 71.4669], // Astana NQZ
-                'UTTT': [41.2579, 69.2812], // Tashkent TAS
-                'UTSS': [39.7005, 66.9838], // Samarkand SKD
-                'UTDD': [38.5433, 68.8250], // Dushanbe DYU
-                'UCFM': [43.0613, 74.4776], // Bishkek FRU
-
-                // === CAUCASUS ===
-                'UBBB': [40.4675, 50.0467], // Baku GYD
-                'UGTB': [41.6692, 44.9547], // Tbilisi TBS
-                'UGKO': [42.1767, 42.4826], // Kutaisi KUT
-                'UDYZ': [40.1473, 44.3959], // Yerevan EVN
-
-                // === TURKEY ===
-                'LTFM': [41.2753, 28.7519], // Istanbul IST
-                'LTAI': [36.8987, 30.8005], // Antalya AYT
-                'LTAC': [40.1281, 32.9951], // Ankara ESB
-                'LTBS': [36.7131, 28.7925], // Dalaman DLM
-                'LTBJ': [38.2924, 27.1570], // Izmir ADB
-                'LTCG': [40.9951, 39.7897], // Trabzon TZX
-                'LTFE': [37.0207, 35.2804], // Adana ADA
-                'LTBY': [38.7709, 30.6011], // Denizli DNZ
-
-                // === RUSSIA ===
-                'UUEE': [55.9736, 37.4125], // Moscow SVO
-                'UUWW': [55.5914, 37.2615], // Moscow VKO
-                'UUDD': [55.4088, 37.9063], // Moscow DME
-                'URSS': [43.4499, 39.9566], // Sochi AER
-                'UWWW': [53.5040, 50.1642], // Samara KUF
-                'UWKD': [55.6062, 49.2787], // Kazan KZN
-                'USSS': [56.7431, 60.8027], // Yekaterinburg SVX
-                'URRR': [47.2582, 39.8181], // Rostov ROV
-                'UWUU': [54.5575, 55.8744], // Ufa UFA
-                'UNKL': [56.1730, 92.4933], // Krasnoyarsk KJA
-                'UNNT': [55.0126, 82.6507], // Novosibirsk OVB
-                'USRR': [51.8213, 107.4378], // Ulan-Ude UUD
-                'ULLI': [59.8003, 30.2625], // St Petersburg LED
-                'URMM': [43.0818, 44.2257], // Mineralnye Vody MRV
-
-                // === EUROPE ===
-                'EGLL': [51.4700, -0.4543], // London Heathrow LHR
-                'EGGW': [51.8747, -0.3683], // London Luton LTN
-                'EGSS': [51.8850, 0.2350], // London Stansted STN
-                'EGKK': [51.1481, -0.1903], // London Gatwick LGW
-                'EGCC': [53.3537, -2.2750], // Manchester MAN
-                'EGBB': [52.4539, -1.7480], // Birmingham BHX
-                'LFPG': [49.0097, 2.5479], // Paris CDG
-                'LFPO': [48.7253, 2.3594], // Paris Orly ORY
-                'EDDF': [50.0379, 8.5622], // Frankfurt FRA
-                'EDDM': [48.3538, 11.7861], // Munich MUC
-                'LIMC': [45.6306, 8.7281], // Milan MXP
-                'LIRF': [41.8003, 12.2389], // Rome FCO
-                'LIPE': [44.5354, 11.2887], // Bologna BLQ
-                'LIPZ': [45.5053, 12.3519], // Venice VCE
-                'LICC': [37.4668, 15.0664], // Catania CTA
-                'LICJ': [38.1760, 13.0910], // Palermo PMO
-                'EPWA': [52.1657, 20.9671], // Warsaw WAW
-                'EPKK': [50.0777, 19.7848], // Krakow KRK
-                'LKPR': [50.1008, 14.2600], // Prague PRG
-                'LOWW': [48.1103, 16.5697], // Vienna VIE
-                'LHBP': [47.4369, 19.2556], // Budapest BUD
-                'LYBE': [44.8184, 20.3091], // Belgrade BEG
-                'LQSA': [43.8246, 18.3315], // Sarajevo SJJ
-                'LDZA': [45.7429, 16.0688], // Zagreb ZAG
-                'LDDU': [42.5614, 18.2682], // Dubrovnik DBV
-                'LYPG': [42.3594, 19.2519], // Podgorica TGD
-                'LYTV': [42.4047, 18.7233], // Tivat TIV
-                'LGAV': [37.9364, 23.9445], // Athens ATH
-                'LGTS': [40.5197, 22.9709], // Thessaloniki SKG
-                'LROP': [44.5711, 26.0850], // Bucharest OTP
-                'LBSF': [42.6952, 23.4062], // Sofia SOF
-                'LWSK': [41.9616, 21.6214], // Skopje SKP
-                'BKPR': [42.5728, 21.0358], // Pristina PRN
-                'LATI': [41.4147, 19.7206], // Tirana TIA
-                'EHAM': [52.3086, 4.7639], // Amsterdam AMS
-                'EBBR': [50.9014, 4.4844], // Brussels BRU
-                'LSZH': [47.4647, 8.5492], // Zurich ZRH
-                'LEMD': [40.4936, -3.5668], // Madrid MAD
-                'LEBL': [41.2971, 2.0785], // Barcelona BCN
-
-                // === EGYPT ===
-                'HECA': [30.1219, 31.4056], // Cairo CAI
-                'HEGN': [27.1783, 33.7994], // Hurghada HRG
-                'HESH': [27.9773, 34.3950], // Sharm El Sheikh SSH
-                'HEAL': [31.1839, 29.9489], // Alexandria HBE
-                'HELX': [25.6710, 32.7066], // Luxor LXR
-                'HEAS': [23.9644, 32.8200], // Aswan ASW
-
-                // === AFRICA ===
-                'HAAB': [8.9779, 38.7993], // Addis Ababa ADD
-                'HKJK': [1.3192, 36.9278], // Nairobi NBO
-                'HTZA': [-6.2220, 39.2249], // Zanzibar ZNZ
-                'HTDA': [-6.8781, 39.2026], // Dar es Salaam DAR
-                'HSSS': [15.5895, 32.5532], // Khartoum KRT
-                'HUEN': [0.0424, 32.4435], // Entebbe EBB
-                'GMMN': [33.3675, -7.5900], // Casablanca CMN
-                'DTTA': [36.8510, 10.2272], // Tunis TUN
-                'DAAG': [36.6910, 3.2154], // Algiers ALG
-                'HBBA': [-3.3240, 29.3185], // Bujumbura BJM
-                'HRYR': [-1.9686, 30.1395], // Kigali KGL
-                'FMEE': [-20.4302, 57.6836], // Mauritius MRU
-                'FMMI': [-18.7969, 47.4789], // Antananarivo TNR
-                'FSIA': [-4.6714, 55.5218], // Seychelles SEZ
-
-                // === THAILAND / SE ASIA ===
-                'VTBS': [13.6900, 100.7501], // Bangkok BKK
-                'VTSP': [8.1132, 98.3169], // Phuket HKT
-                'VTCC': [18.7668, 98.9626], // Chiang Mai CNX
-                'VYYY': [16.9073, 96.1332], // Yangon RGN
-                'VVNB': [21.2212, 105.8072], // Hanoi HAN
-                'VVTS': [10.8188, 106.6520], // Ho Chi Minh SGN
-                'WSSS': [1.3644, 103.9915], // Singapore SIN
-                'WMKK': [2.7456, 101.7099], // Kuala Lumpur KUL
-                'WMKP': [5.2971, 103.1033], // Penang PEN
-                'WBKK': [5.9372, 116.0510], // Kota Kinabalu BKI
-                'RPLL': [14.5086, 121.0197], // Manila MNL
-                'WIII': [-6.1256, 106.6558], // Jakarta CGK
-                'WADD': [-8.7482, 115.1672], // Bali DPS
-                'VHHH': [22.3080, 113.9185], // Hong Kong HKG
-
-                // === EAST ASIA ===
-                'ZBAA': [40.0799, 116.6031], // Beijing PEK
-                'ZSPD': [31.1443, 121.8083], // Shanghai PVG
-                'ZGGG': [23.3924, 113.2988], // Guangzhou CAN
-                'VGPH': [23.1835, 113.4267], // Zhuhai ZUH
-                'RJTT': [35.5494, 139.7798], // Tokyo Haneda HND
-                'RJAA': [35.7647, 140.3864], // Tokyo Narita NRT
-                'RKSI': [37.4691, 126.4505], // Seoul Incheon ICN
-                'RCTP': [25.0777, 121.2325], // Taipei TPE
-
-                // === AMERICAS ===
-                'KJFK': [40.6413, -73.7781], // New York JFK
-                'KLAX': [33.9425, -118.4081], // Los Angeles LAX
-                'KORD': [41.9742, -87.9073], // Chicago ORD
-                'KATL': [33.6407, -84.4277], // Atlanta ATL
-                'KMIA': [25.7959, -80.2870], // Miami MIA
-                'CYYZ': [43.6777, -79.6248], // Toronto YYZ
-                'MMMX': [19.4363, -99.0721], // Mexico City MEX
-                'SBGR': [-23.4356, -46.4731], // Sao Paulo GRU
-
-                // === OCEANIA ===
-                'YSSY': [-33.9461, 151.1772], // Sydney SYD
-                'YMML': [-37.6690, 144.8410], // Melbourne MEL
-                'NZAA': [-37.0082, 174.7850], // Auckland AKL
-            };
-
-            var from = airports[fromICAO];
-            var to = airports[toICAO];
-
-            if (!from) {
-                alert('Unknown airport: ' + fromICAO + '\nAdd coordinates or use known ICAO.');
+            // Use global airport database
+            if (!airportDB) {
+                alert('Airport database not loaded yet. Please wait and try again.');
                 return;
             }
-            if (!to) {
-                alert('Unknown airport: ' + toICAO + '\nAdd coordinates or use known ICAO.');
+
+            var fromApt = getAirport(fromICAO);
+            var toApt = getAirport(toICAO);
+
+            if (!fromApt) {
+                alert('Unknown airport: ' + fromICAO + '\nNot found in database (8,800+ airports)');
                 return;
             }
+            if (!toApt) {
+                alert('Unknown airport: ' + toICAO + '\nNot found in database (8,800+ airports)');
+                return;
+            }
+
+            var from = fromApt.c;  // [lat, lon]
+            var to = toApt.c;
 
             // Generate great circle points
             var points = generateGreatCircle(from[0], from[1], to[0], to[1], 100);
@@ -10115,12 +9930,15 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 dashArray: '10, 5'
             }).addTo(flightMap);
 
-            // Add departure and arrival markers
+            // Add departure and arrival markers with airport info
+            var fromLabel = fromICAO + (fromApt.i ? '/' + fromApt.i : '') + '<br>' + (fromApt.m || fromApt.n);
+            var toLabel = toICAO + (toApt.i ? '/' + toApt.i : '') + '<br>' + (toApt.m || toApt.n);
+
             L.circleMarker(from, { radius: 8, color: '#00ff88', fillColor: '#00ff88', fillOpacity: 0.8 })
-                .bindPopup(fromICAO)
+                .bindPopup('<b>' + fromLabel + '</b>')
                 .addTo(flightMap);
             L.circleMarker(to, { radius: 8, color: '#ff5252', fillColor: '#ff5252', fillOpacity: 0.8 })
-                .bindPopup(toICAO)
+                .bindPopup('<b>' + toLabel + '</b>')
                 .addTo(flightMap);
 
             // Fit map to route
