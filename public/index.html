@@ -905,6 +905,28 @@
             white-space: pre-wrap;
         }
 
+        /* Coordinates Converter */
+        .coord-result-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid rgba(255, 130, 0, 0.2);
+        }
+
+        .coord-label {
+            font-size: 0.65rem;
+            color: #888;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .coord-value {
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            color: #00ff88;
+            word-break: break-all;
+        }
+
         /* SNOWTAM Decoder */
         .snowtam-input {
             width: 100%;
@@ -1532,7 +1554,6 @@
                 <!-- Schedule Header -->
                 <div class="fdp-section" style="text-align: center; padding: 15px;">
                     <h2 style="color: #FF8200; margin-bottom: 10px;">Flight Schedule</h2>
-                    <p style="color: #888; font-size: 0.85rem;">Enter your flight roster below. Data will auto-populate to FDP, OOOI, and other tabs.</p>
                 </div>
 
                 <!-- Duty Information -->
@@ -1586,48 +1607,54 @@
                             <input type="hidden" id="s1-stand" value="">
                         </div>
                     </div>
-                    <!-- Times Grid: STD/OUT | OFF | ON | STA/IN | RESULTS -->
-                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
-                        <!-- Departure Times -->
-                        <div class="fdp-field">
-                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
-                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STD</label>
-                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">OUT</label>
+                    <!-- Times Grid: 2-row layout -->
+                    <div style="padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
+                        <!-- Row 1: STD | OUT | OFF | Delay -->
+                        <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 0.8fr; gap: 8px; margin-bottom: 8px;">
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #888;">STD</label>
+                                <button class="input-btn" id="s1-std-btn" onclick="openTimePicker('s1-std')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s1-std" value="">
                             </div>
-                            <div style="display: flex; gap: 4px;">
-                                <button class="input-btn" id="s1-std-btn" onclick="openTimePicker('s1-std')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
-                                <button class="input-btn" id="s1-out-btn" onclick="openTimePicker('s1-out')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">OUT</label>
+                                <button class="input-btn" id="s1-out-btn" onclick="openTimePicker('s1-out')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s1-out" value="">
                             </div>
-                            <input type="hidden" id="s1-std" value="">
-                            <input type="hidden" id="s1-out" value="">
-                        </div>
-                        <!-- OFF Time -->
-                        <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">OFF</label>
-                            <button class="input-btn" id="s1-off-btn" onclick="openTimePicker('s1-off')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s1-off" value="">
-                        </div>
-                        <!-- ON Time -->
-                        <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">ON</label>
-                            <button class="input-btn" id="s1-on-btn" onclick="openTimePicker('s1-on')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s1-on" value="">
-                        </div>
-                        <!-- Arrival Times -->
-                        <div class="fdp-field">
-                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
-                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STA</label>
-                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">IN</label>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">OFF</label>
+                                <button class="input-btn" id="s1-off-btn" onclick="openTimePicker('s1-off')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s1-off" value="">
                             </div>
-                            <div style="display: flex; gap: 4px;">
-                                <button class="input-btn" id="s1-sta-btn" onclick="openTimePicker('s1-sta')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
-                                <button class="input-btn" id="s1-in-btn" onclick="openTimePicker('s1-in')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            <div class="fdp-field" style="display: flex; flex-direction: column; justify-content: flex-end;">
+                                <label class="fdp-label" style="color: #888; font-size: 0.6rem;">DEP Δ</label>
+                                <div class="fdp-result-value" id="s1-dep-delay" style="font-size: 0.85rem; padding: 6px 0;">--</div>
                             </div>
-                            <input type="hidden" id="s1-sta" value="">
-                            <input type="hidden" id="s1-in" value="">
                         </div>
-                        <!-- Results -->
-                        <div class="fdp-field" style="display: flex; gap: 15px; align-items: center; justify-content: center;">
+                        <!-- Row 2: STA | ON | IN | Delay -->
+                        <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 0.8fr; gap: 8px; margin-bottom: 8px;">
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #888;">STA</label>
+                                <button class="input-btn" id="s1-sta-btn" onclick="openTimePicker('s1-sta')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s1-sta" value="">
+                            </div>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">ON</label>
+                                <button class="input-btn" id="s1-on-btn" onclick="openTimePicker('s1-on')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s1-on" value="">
+                            </div>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">IN</label>
+                                <button class="input-btn" id="s1-in-btn" onclick="openTimePicker('s1-in')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s1-in" value="">
+                            </div>
+                            <div class="fdp-field" style="display: flex; flex-direction: column; justify-content: flex-end;">
+                                <label class="fdp-label" style="color: #888; font-size: 0.6rem;">ARR Δ</label>
+                                <div class="fdp-result-value" id="s1-arr-delay" style="font-size: 0.85rem; padding: 6px 0;">--</div>
+                            </div>
+                        </div>
+                        <!-- Row 3: Block & Flight Results -->
+                        <div class="fdp-row" style="display: flex; justify-content: center; gap: 30px; padding-top: 8px; border-top: 1px solid rgba(255, 130, 0, 0.1);">
                             <div style="text-align: center;">
                                 <div class="fdp-label">BLOCK</div>
                                 <div class="fdp-result-value" id="s1-block" style="color: #ffd700;">--:--</div>
@@ -1674,43 +1701,54 @@
                             <input type="hidden" id="s2-stand" value="">
                         </div>
                     </div>
-                    <!-- Times Grid -->
-                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
-                        <div class="fdp-field">
-                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
-                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STD</label>
-                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">OUT</label>
+                    <!-- Times Grid: 2-row layout -->
+                    <div style="padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
+                        <!-- Row 1: STD | OUT | OFF | Delay -->
+                        <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 0.8fr; gap: 8px; margin-bottom: 8px;">
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #888;">STD</label>
+                                <button class="input-btn" id="s2-std-btn" onclick="openTimePicker('s2-std')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s2-std" value="">
                             </div>
-                            <div style="display: flex; gap: 4px;">
-                                <button class="input-btn" id="s2-std-btn" onclick="openTimePicker('s2-std')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
-                                <button class="input-btn" id="s2-out-btn" onclick="openTimePicker('s2-out')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">OUT</label>
+                                <button class="input-btn" id="s2-out-btn" onclick="openTimePicker('s2-out')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s2-out" value="">
                             </div>
-                            <input type="hidden" id="s2-std" value="">
-                            <input type="hidden" id="s2-out" value="">
-                        </div>
-                        <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">OFF</label>
-                            <button class="input-btn" id="s2-off-btn" onclick="openTimePicker('s2-off')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s2-off" value="">
-                        </div>
-                        <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">ON</label>
-                            <button class="input-btn" id="s2-on-btn" onclick="openTimePicker('s2-on')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s2-on" value="">
-                        </div>
-                        <div class="fdp-field">
-                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
-                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STA</label>
-                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">IN</label>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">OFF</label>
+                                <button class="input-btn" id="s2-off-btn" onclick="openTimePicker('s2-off')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s2-off" value="">
                             </div>
-                            <div style="display: flex; gap: 4px;">
-                                <button class="input-btn" id="s2-sta-btn" onclick="openTimePicker('s2-sta')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
-                                <button class="input-btn" id="s2-in-btn" onclick="openTimePicker('s2-in')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            <div class="fdp-field" style="display: flex; flex-direction: column; justify-content: flex-end;">
+                                <label class="fdp-label" style="color: #888; font-size: 0.6rem;">DEP Δ</label>
+                                <div class="fdp-result-value" id="s2-dep-delay" style="font-size: 0.85rem; padding: 6px 0;">--</div>
                             </div>
-                            <input type="hidden" id="s2-sta" value="">
-                            <input type="hidden" id="s2-in" value="">
                         </div>
-                        <div class="fdp-field" style="display: flex; gap: 15px; align-items: center; justify-content: center;">
+                        <!-- Row 2: STA | ON | IN | Delay -->
+                        <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 0.8fr; gap: 8px; margin-bottom: 8px;">
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #888;">STA</label>
+                                <button class="input-btn" id="s2-sta-btn" onclick="openTimePicker('s2-sta')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s2-sta" value="">
+                            </div>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">ON</label>
+                                <button class="input-btn" id="s2-on-btn" onclick="openTimePicker('s2-on')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s2-on" value="">
+                            </div>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">IN</label>
+                                <button class="input-btn" id="s2-in-btn" onclick="openTimePicker('s2-in')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s2-in" value="">
+                            </div>
+                            <div class="fdp-field" style="display: flex; flex-direction: column; justify-content: flex-end;">
+                                <label class="fdp-label" style="color: #888; font-size: 0.6rem;">ARR Δ</label>
+                                <div class="fdp-result-value" id="s2-arr-delay" style="font-size: 0.85rem; padding: 6px 0;">--</div>
+                            </div>
+                        </div>
+                        <!-- Row 3: Block & Flight Results -->
+                        <div class="fdp-row" style="display: flex; justify-content: center; gap: 30px; padding-top: 8px; border-top: 1px solid rgba(255, 130, 0, 0.1);">
                             <div style="text-align: center;">
                                 <div class="fdp-label">BLOCK</div>
                                 <div class="fdp-result-value" id="s2-block" style="color: #ffd700;">--:--</div>
@@ -1757,43 +1795,54 @@
                             <input type="hidden" id="s3-stand" value="">
                         </div>
                     </div>
-                    <!-- Times Grid -->
-                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
-                        <div class="fdp-field">
-                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
-                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STD</label>
-                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">OUT</label>
+                    <!-- Times Grid: 2-row layout -->
+                    <div style="padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
+                        <!-- Row 1: STD | OUT | OFF | Delay -->
+                        <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 0.8fr; gap: 8px; margin-bottom: 8px;">
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #888;">STD</label>
+                                <button class="input-btn" id="s3-std-btn" onclick="openTimePicker('s3-std')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s3-std" value="">
                             </div>
-                            <div style="display: flex; gap: 4px;">
-                                <button class="input-btn" id="s3-std-btn" onclick="openTimePicker('s3-std')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
-                                <button class="input-btn" id="s3-out-btn" onclick="openTimePicker('s3-out')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">OUT</label>
+                                <button class="input-btn" id="s3-out-btn" onclick="openTimePicker('s3-out')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s3-out" value="">
                             </div>
-                            <input type="hidden" id="s3-std" value="">
-                            <input type="hidden" id="s3-out" value="">
-                        </div>
-                        <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">OFF</label>
-                            <button class="input-btn" id="s3-off-btn" onclick="openTimePicker('s3-off')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s3-off" value="">
-                        </div>
-                        <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">ON</label>
-                            <button class="input-btn" id="s3-on-btn" onclick="openTimePicker('s3-on')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s3-on" value="">
-                        </div>
-                        <div class="fdp-field">
-                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
-                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STA</label>
-                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">IN</label>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">OFF</label>
+                                <button class="input-btn" id="s3-off-btn" onclick="openTimePicker('s3-off')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s3-off" value="">
                             </div>
-                            <div style="display: flex; gap: 4px;">
-                                <button class="input-btn" id="s3-sta-btn" onclick="openTimePicker('s3-sta')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
-                                <button class="input-btn" id="s3-in-btn" onclick="openTimePicker('s3-in')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            <div class="fdp-field" style="display: flex; flex-direction: column; justify-content: flex-end;">
+                                <label class="fdp-label" style="color: #888; font-size: 0.6rem;">DEP Δ</label>
+                                <div class="fdp-result-value" id="s3-dep-delay" style="font-size: 0.85rem; padding: 6px 0;">--</div>
                             </div>
-                            <input type="hidden" id="s3-sta" value="">
-                            <input type="hidden" id="s3-in" value="">
                         </div>
-                        <div class="fdp-field" style="display: flex; gap: 15px; align-items: center; justify-content: center;">
+                        <!-- Row 2: STA | ON | IN | Delay -->
+                        <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 0.8fr; gap: 8px; margin-bottom: 8px;">
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #888;">STA</label>
+                                <button class="input-btn" id="s3-sta-btn" onclick="openTimePicker('s3-sta')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s3-sta" value="">
+                            </div>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">ON</label>
+                                <button class="input-btn" id="s3-on-btn" onclick="openTimePicker('s3-on')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s3-on" value="">
+                            </div>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">IN</label>
+                                <button class="input-btn" id="s3-in-btn" onclick="openTimePicker('s3-in')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s3-in" value="">
+                            </div>
+                            <div class="fdp-field" style="display: flex; flex-direction: column; justify-content: flex-end;">
+                                <label class="fdp-label" style="color: #888; font-size: 0.6rem;">ARR Δ</label>
+                                <div class="fdp-result-value" id="s3-arr-delay" style="font-size: 0.85rem; padding: 6px 0;">--</div>
+                            </div>
+                        </div>
+                        <!-- Row 3: Block & Flight Results -->
+                        <div class="fdp-row" style="display: flex; justify-content: center; gap: 30px; padding-top: 8px; border-top: 1px solid rgba(255, 130, 0, 0.1);">
                             <div style="text-align: center;">
                                 <div class="fdp-label">BLOCK</div>
                                 <div class="fdp-result-value" id="s3-block" style="color: #ffd700;">--:--</div>
@@ -1840,43 +1889,54 @@
                             <input type="hidden" id="s4-stand" value="">
                         </div>
                     </div>
-                    <!-- Times Grid -->
-                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr; gap: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
-                        <div class="fdp-field">
-                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
-                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STD</label>
-                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">OUT</label>
+                    <!-- Times Grid: 2-row layout -->
+                    <div style="padding-top: 10px; border-top: 1px solid rgba(255, 130, 0, 0.2);">
+                        <!-- Row 1: STD | OUT | OFF | Delay -->
+                        <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 0.8fr; gap: 8px; margin-bottom: 8px;">
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #888;">STD</label>
+                                <button class="input-btn" id="s4-std-btn" onclick="openTimePicker('s4-std')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s4-std" value="">
                             </div>
-                            <div style="display: flex; gap: 4px;">
-                                <button class="input-btn" id="s4-std-btn" onclick="openTimePicker('s4-std')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
-                                <button class="input-btn" id="s4-out-btn" onclick="openTimePicker('s4-out')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">OUT</label>
+                                <button class="input-btn" id="s4-out-btn" onclick="openTimePicker('s4-out')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s4-out" value="">
                             </div>
-                            <input type="hidden" id="s4-std" value="">
-                            <input type="hidden" id="s4-out" value="">
-                        </div>
-                        <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">OFF</label>
-                            <button class="input-btn" id="s4-off-btn" onclick="openTimePicker('s4-off')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s4-off" value="">
-                        </div>
-                        <div class="fdp-field">
-                            <label class="fdp-label" style="color: #00d4ff;">ON</label>
-                            <button class="input-btn" id="s4-on-btn" onclick="openTimePicker('s4-on')" style="max-width: 100%">----</button>
-                            <input type="hidden" id="s4-on" value="">
-                        </div>
-                        <div class="fdp-field">
-                            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
-                                <label class="fdp-label" style="flex:1; color: #888; font-size: 0.65rem;">STA</label>
-                                <label class="fdp-label" style="flex:1; color: #00d4ff; font-size: 0.65rem;">IN</label>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">OFF</label>
+                                <button class="input-btn" id="s4-off-btn" onclick="openTimePicker('s4-off')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s4-off" value="">
                             </div>
-                            <div style="display: flex; gap: 4px;">
-                                <button class="input-btn" id="s4-sta-btn" onclick="openTimePicker('s4-sta')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
-                                <button class="input-btn" id="s4-in-btn" onclick="openTimePicker('s4-in')" style="flex:1; font-size: 0.9rem; padding: 8px 4px;">----</button>
+                            <div class="fdp-field" style="display: flex; flex-direction: column; justify-content: flex-end;">
+                                <label class="fdp-label" style="color: #888; font-size: 0.6rem;">DEP Δ</label>
+                                <div class="fdp-result-value" id="s4-dep-delay" style="font-size: 0.85rem; padding: 6px 0;">--</div>
                             </div>
-                            <input type="hidden" id="s4-sta" value="">
-                            <input type="hidden" id="s4-in" value="">
                         </div>
-                        <div class="fdp-field" style="display: flex; gap: 15px; align-items: center; justify-content: center;">
+                        <!-- Row 2: STA | ON | IN | Delay -->
+                        <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr 0.8fr; gap: 8px; margin-bottom: 8px;">
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #888;">STA</label>
+                                <button class="input-btn" id="s4-sta-btn" onclick="openTimePicker('s4-sta')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s4-sta" value="">
+                            </div>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">ON</label>
+                                <button class="input-btn" id="s4-on-btn" onclick="openTimePicker('s4-on')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s4-on" value="">
+                            </div>
+                            <div class="fdp-field">
+                                <label class="fdp-label" style="color: #00d4ff;">IN</label>
+                                <button class="input-btn" id="s4-in-btn" onclick="openTimePicker('s4-in')" style="max-width: 100%; font-size: 0.9rem;">----</button>
+                                <input type="hidden" id="s4-in" value="">
+                            </div>
+                            <div class="fdp-field" style="display: flex; flex-direction: column; justify-content: flex-end;">
+                                <label class="fdp-label" style="color: #888; font-size: 0.6rem;">ARR Δ</label>
+                                <div class="fdp-result-value" id="s4-arr-delay" style="font-size: 0.85rem; padding: 6px 0;">--</div>
+                            </div>
+                        </div>
+                        <!-- Row 3: Block & Flight Results -->
+                        <div class="fdp-row" style="display: flex; justify-content: center; gap: 30px; padding-top: 8px; border-top: 1px solid rgba(255, 130, 0, 0.1);">
                             <div style="text-align: center;">
                                 <div class="fdp-label">BLOCK</div>
                                 <div class="fdp-result-value" id="s4-block" style="color: #ffd700;">--:--</div>
@@ -2641,6 +2701,74 @@
                         <button class="clear-btn" onclick="clearISA()">Clear</button>
                     </div>
                 </div>
+
+                <!-- Second row: Coordinates Converter -->
+                <div class="top-sections" style="grid-template-columns: 1fr; margin-top: 20px;">
+                    <div class="section">
+                        <div class="section-title">Coordinates / LIDO Converter</div>
+                        <div class="input-grid-2">
+                            <div class="input-group">
+                                <label class="input-label">Input Coordinates</label>
+                                <input type="text" class="fdp-input" id="coord-input" placeholder="e.g., N25-15/E055-30 or 2515N05530E" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase(); convertCoordinates()">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Detected Format</label>
+                                <div class="fdp-result-value" id="coord-format-detected" style="font-size: 0.8rem; min-height: 24px;">---</div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
+                            <div style="color: #888; font-size: 0.75rem; margin-bottom: 10px; text-align: center;">Converted Formats</div>
+                            <div class="coord-results-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                                <div class="coord-result-item">
+                                    <div class="coord-label">Decimal Degrees (DD)</div>
+                                    <div class="coord-value" id="coord-decimal">---</div>
+                                </div>
+                                <div class="coord-result-item">
+                                    <div class="coord-label">DMS (Degrees Minutes Seconds)</div>
+                                    <div class="coord-value" id="coord-dms">---</div>
+                                </div>
+                                <div class="coord-result-item">
+                                    <div class="coord-label">DMM (Degrees Decimal Minutes)</div>
+                                    <div class="coord-value" id="coord-dmm">---</div>
+                                </div>
+                                <div class="coord-result-item">
+                                    <div class="coord-label">DMM Compact (N25151E055218)</div>
+                                    <div class="coord-value" id="coord-dmm-compact">---</div>
+                                </div>
+                                <div class="coord-result-item">
+                                    <div class="coord-label">LIDO 1: Simple (N25-15/E055-18)</div>
+                                    <div class="coord-value" id="coord-lido1">---</div>
+                                </div>
+                                <div class="coord-result-item">
+                                    <div class="coord-label">LIDO 2: Deg/Min (N2515E05518)</div>
+                                    <div class="coord-value" id="coord-lido2">---</div>
+                                </div>
+                                <div class="coord-result-item">
+                                    <div class="coord-label">LIDO 3: ICAO FPL (2515N05518E)</div>
+                                    <div class="coord-value" id="coord-lido3">---</div>
+                                </div>
+                                <div class="coord-result-item">
+                                    <div class="coord-label">ARINC 424 (5-Letter)</div>
+                                    <div class="coord-value" id="coord-arinc">---</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 15px; padding: 10px; background: rgba(255,130,0,0.1); border-radius: 8px; border: 1px solid rgba(255,130,0,0.3);">
+                            <div style="color: #FF8200; font-size: 0.75rem; font-weight: bold; margin-bottom: 5px;">Supported Input Formats:</div>
+                            <div style="color: #888; font-size: 0.65rem; line-height: 1.6;">
+                                • Decimal: 25.2583, 55.3000 or 25.2583N 55.3000E<br>
+                                • DMS: N25°15'30" E055°18'00"<br>
+                                • DMM Compact: N25151E055218 (deg + min with tenths)<br>
+                                • LIDO 1: N25-15/E055-18<br>
+                                • LIDO 2: N2515E05518<br>
+                                • LIDO 3: 2515N05518E (ICAO FPL)
+                            </div>
+                        </div>
+                        <button class="clear-btn" onclick="clearCoordConverter()">Clear</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -3066,48 +3194,52 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
     <!-- Tail Number Picker Modal -->
     <div class="modal-overlay" id="tail-picker-modal">
-        <div class="number-picker" style="max-width: 320px;">
+        <div class="number-picker" style="max-width: 340px; width: 90%;">
             <div class="picker-title">Tail Number</div>
             <div class="picker-display">
                 <span style="color: #888; font-size: 1.4rem;">A6-</span>
                 <span class="picker-value" id="tail-picker-value" style="font-size: 1.8rem;">___</span>
             </div>
-            <div class="picker-buttons" style="grid-template-columns: repeat(5, 1fr);">
-                <button class="picker-btn" onclick="tailPickerAppend('F')">F</button>
-                <button class="picker-btn" onclick="tailPickerAppend('E')">E</button>
-                <button class="picker-btn" onclick="tailPickerAppend('M')">M</button>
-                <button class="picker-btn" onclick="tailPickerAppend('N')">N</button>
-                <button class="picker-btn" onclick="tailPickerAppend('1')">1</button>
-                <button class="picker-btn" onclick="tailPickerAppend('A')">A</button>
-                <button class="picker-btn" onclick="tailPickerAppend('B')">B</button>
-                <button class="picker-btn" onclick="tailPickerAppend('C')">C</button>
-                <button class="picker-btn" onclick="tailPickerAppend('D')">D</button>
-                <button class="picker-btn" onclick="tailPickerAppend('2')">2</button>
-                <button class="picker-btn" onclick="tailPickerAppend('G')">G</button>
-                <button class="picker-btn" onclick="tailPickerAppend('H')">H</button>
-                <button class="picker-btn" onclick="tailPickerAppend('I')">I</button>
-                <button class="picker-btn" onclick="tailPickerAppend('J')">J</button>
-                <button class="picker-btn" onclick="tailPickerAppend('3')">3</button>
-                <button class="picker-btn" onclick="tailPickerAppend('K')">K</button>
-                <button class="picker-btn" onclick="tailPickerAppend('L')">L</button>
-                <button class="picker-btn" onclick="tailPickerAppend('O')">O</button>
-                <button class="picker-btn" onclick="tailPickerAppend('P')">P</button>
-                <button class="picker-btn" onclick="tailPickerAppend('4')">4</button>
-                <button class="picker-btn" onclick="tailPickerAppend('Q')">Q</button>
-                <button class="picker-btn" onclick="tailPickerAppend('R')">R</button>
-                <button class="picker-btn" onclick="tailPickerAppend('S')">S</button>
-                <button class="picker-btn" onclick="tailPickerAppend('T')">T</button>
-                <button class="picker-btn" onclick="tailPickerAppend('5')">5</button>
-                <button class="picker-btn" onclick="tailPickerAppend('U')">U</button>
-                <button class="picker-btn" onclick="tailPickerAppend('V')">V</button>
-                <button class="picker-btn" onclick="tailPickerAppend('W')">W</button>
-                <button class="picker-btn" onclick="tailPickerAppend('X')">X</button>
-                <button class="picker-btn" onclick="tailPickerAppend('6')">6</button>
-                <button class="picker-btn" onclick="tailPickerAppend('Y')">Y</button>
-                <button class="picker-btn" onclick="tailPickerAppend('Z')">Z</button>
-                <button class="picker-btn clear" onclick="tailPickerClear()">C</button>
-                <button class="picker-btn" onclick="tailPickerBackspace()">&larr;</button>
-                <button class="picker-btn" onclick="tailPickerAppend('7')">7</button>
+            <!-- Fleet prefixes -->
+            <div class="picker-buttons" style="grid-template-columns: repeat(7, 1fr); margin-bottom: 8px; gap: 4px;">
+                <button class="picker-btn" onclick="tailPickerSetPrefix('FE')" style="background: rgba(255,130,0,0.3); min-width: 0; padding: 12px 0; font-size: 0.9rem;">FE</button>
+                <button class="picker-btn" onclick="tailPickerSetPrefix('FG')" style="background: rgba(255,130,0,0.3); min-width: 0; padding: 12px 0; font-size: 0.9rem;">FG</button>
+                <button class="picker-btn" onclick="tailPickerSetPrefix('FK')" style="background: rgba(255,130,0,0.3); min-width: 0; padding: 12px 0; font-size: 0.9rem;">FK</button>
+                <button class="picker-btn" onclick="tailPickerSetPrefix('FM')" style="background: rgba(255,130,0,0.3); min-width: 0; padding: 12px 0; font-size: 0.9rem;">FM</button>
+                <button class="picker-btn" onclick="tailPickerSetPrefix('FN')" style="background: rgba(255,130,0,0.3); min-width: 0; padding: 12px 0; font-size: 0.9rem;">FN</button>
+                <button class="picker-btn" onclick="tailPickerSetPrefix('FP')" style="background: rgba(255,130,0,0.3); min-width: 0; padding: 12px 0; font-size: 0.9rem;">FP</button>
+                <button class="picker-btn" onclick="tailPickerSetPrefix('FQ')" style="background: rgba(255,130,0,0.3); min-width: 0; padding: 12px 0; font-size: 0.9rem;">FQ</button>
+            </div>
+            <!-- Last letter (dynamic based on prefix) -->
+            <div class="picker-buttons" id="tail-letters-grid" style="grid-template-columns: repeat(7, 1fr); gap: 4px;">
+                <button class="picker-btn" onclick="tailPickerAppend('A')" style="min-width: 0; padding: 12px 0;">A</button>
+                <button class="picker-btn" onclick="tailPickerAppend('B')" style="min-width: 0; padding: 12px 0;">B</button>
+                <button class="picker-btn" onclick="tailPickerAppend('C')" style="min-width: 0; padding: 12px 0;">C</button>
+                <button class="picker-btn" onclick="tailPickerAppend('D')" style="min-width: 0; padding: 12px 0;">D</button>
+                <button class="picker-btn" onclick="tailPickerAppend('E')" style="min-width: 0; padding: 12px 0;">E</button>
+                <button class="picker-btn" onclick="tailPickerAppend('F')" style="min-width: 0; padding: 12px 0;">F</button>
+                <button class="picker-btn" onclick="tailPickerAppend('G')" style="min-width: 0; padding: 12px 0;">G</button>
+                <button class="picker-btn" onclick="tailPickerAppend('H')" style="min-width: 0; padding: 12px 0;">H</button>
+                <button class="picker-btn" onclick="tailPickerAppend('I')" style="min-width: 0; padding: 12px 0;">I</button>
+                <button class="picker-btn" onclick="tailPickerAppend('J')" style="min-width: 0; padding: 12px 0;">J</button>
+                <button class="picker-btn" onclick="tailPickerAppend('K')" style="min-width: 0; padding: 12px 0;">K</button>
+                <button class="picker-btn" onclick="tailPickerAppend('L')" style="min-width: 0; padding: 12px 0;">L</button>
+                <button class="picker-btn" onclick="tailPickerAppend('M')" style="min-width: 0; padding: 12px 0;">M</button>
+                <button class="picker-btn" onclick="tailPickerAppend('N')" style="min-width: 0; padding: 12px 0;">N</button>
+                <button class="picker-btn" onclick="tailPickerAppend('O')" style="min-width: 0; padding: 12px 0;">O</button>
+                <button class="picker-btn" onclick="tailPickerAppend('P')" style="min-width: 0; padding: 12px 0;">P</button>
+                <button class="picker-btn" onclick="tailPickerAppend('Q')" style="min-width: 0; padding: 12px 0;">Q</button>
+                <button class="picker-btn" onclick="tailPickerAppend('R')" style="min-width: 0; padding: 12px 0;">R</button>
+                <button class="picker-btn" onclick="tailPickerAppend('S')" style="min-width: 0; padding: 12px 0;">S</button>
+                <button class="picker-btn" onclick="tailPickerAppend('T')" style="min-width: 0; padding: 12px 0;">T</button>
+                <button class="picker-btn" onclick="tailPickerAppend('U')" style="min-width: 0; padding: 12px 0;">U</button>
+                <button class="picker-btn" onclick="tailPickerAppend('V')" style="min-width: 0; padding: 12px 0;">V</button>
+                <button class="picker-btn" onclick="tailPickerAppend('W')" style="min-width: 0; padding: 12px 0;">W</button>
+                <button class="picker-btn" onclick="tailPickerAppend('X')" style="min-width: 0; padding: 12px 0;">X</button>
+                <button class="picker-btn" onclick="tailPickerAppend('Y')" style="min-width: 0; padding: 12px 0;">Y</button>
+                <button class="picker-btn" onclick="tailPickerAppend('Z')" style="min-width: 0; padding: 12px 0;">Z</button>
+                <button class="picker-btn clear" onclick="tailPickerClear()" style="min-width: 0; padding: 12px 0;">C</button>
+                <button class="picker-btn" onclick="tailPickerBackspace()" style="min-width: 0; padding: 12px 0;">←</button>
             </div>
             <div class="picker-actions">
                 <button class="picker-cancel" onclick="closeTailPicker()">Cancel</button>
@@ -3117,6 +3249,9 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
     </div>
 
     <script>
+        // ============ GLOBAL VARIABLES ============
+        var currentSectorCount = 1;
+
         // ============ TAB SWITCHING ============
         function switchTab(tab) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -3126,11 +3261,11 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         // ============ NUMBER PICKER ============
-        let pickerCallback = null;
-        let pickerValue = '';
-        let pickerMaxLength = 6;
-        let pickerFormatCommas = false;
-        let pickerFirstInput = true; // Track if this is first input since opening
+        var pickerCallback = null;
+        var pickerValue = '';
+        var pickerMaxLength = 6;
+        var pickerFormatCommas = false;
+        var pickerFirstInput = true; // Track if this is first input since opening
 
         function openPicker(title, unit, currentValue, maxLength, formatCommas, callback) {
             pickerCallback = callback;
@@ -3190,8 +3325,12 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         function confirmPicker() {
-            if (pickerCallback) {
-                pickerCallback(pickerValue);
+            try {
+                if (pickerCallback) {
+                    pickerCallback(pickerValue);
+                }
+            } catch (e) {
+                console.error('Picker callback error:', e);
             }
             closePicker();
         }
@@ -3217,6 +3356,12 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     }
                     saveSchedule();
                 }
+                // Handle sector STD/STA for delay calculations
+                else if (fieldId.match(/^s(\d)-(std|sta)$/)) {
+                    const schedMatch = fieldId.match(/^s(\d)-(std|sta)$/);
+                    calculateSectorTimes(parseInt(schedMatch[1]));
+                    saveSchedule();
+                }
                 else if (fieldId.startsWith('oooi-')) calculateOOOI();
                 else if (fieldId === 'eta-time') { etaManualStartTime = null; calculateETA(); }
                 else if (fieldId === 'utc-manual') { etaManualStartTime = val ? Date.now() : null; saveETA(); calculateETA(); }
@@ -3226,10 +3371,6 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     estimateDutyEnd();
                 }
                 else if (fieldId.startsWith('layover-')) calculateLayover();
-                else if (fieldId.startsWith('s') && fieldId.includes('-std')) {
-                    // STD changed - update schedule
-                    saveSchedule();
-                }
                 else if (fieldId.startsWith('time-tz-')) calculateTimeTabTimezones();
             });
         }
@@ -3286,7 +3427,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 sfp: 'SFP2'
             }
         };
-        let selectedAircraft = 'B738';
+        var selectedAircraft = 'B738';
 
         function selectAircraft(type) {
             selectedAircraft = type;
@@ -3315,14 +3456,18 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         function calculateMLF() {
-            const zfw = parseInt(document.getElementById('calc-zfw').value, 10) || 0;
+            const zfwEl = document.getElementById('calc-zfw');
+            const resultEl = document.getElementById('mlf-result');
+            if (!zfwEl || !resultEl) return;
+
+            const zfw = parseInt(zfwEl.value, 10) || 0;
             const mlw = aircraftLimits[selectedAircraft].mlw;
 
             if (zfw === 0) {
-                document.getElementById('mlf-result').textContent = '---';
+                resultEl.textContent = '---';
             } else {
                 const maxFuel = mlw - zfw;
-                document.getElementById('mlf-result').textContent = maxFuel.toLocaleString() + ' kg';
+                resultEl.textContent = maxFuel.toLocaleString() + ' kg';
             }
         }
 
@@ -3719,9 +3864,9 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             { name: 'Timer 5', type: 'stopwatch', hours: 0, minutes: 0 }
         ];
 
-        let timers = [];
-        let animationFrameId = null;
-        let etaManualStartTime = null;
+        var timers = [];
+        var animationFrameId = null;
+        var etaManualStartTime = null;
 
         // ============ TIMER STATE ============
         function loadState() {
@@ -3841,6 +3986,8 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         function calculateSectorTimes(sectorNum) {
+            const std = parseTime(document.getElementById(`s${sectorNum}-std`)?.value);
+            const sta = parseTime(document.getElementById(`s${sectorNum}-sta`)?.value);
             const out = parseTime(document.getElementById(`s${sectorNum}-out`)?.value);
             const off = parseTime(document.getElementById(`s${sectorNum}-off`)?.value);
             const on = parseTime(document.getElementById(`s${sectorNum}-on`)?.value);
@@ -3848,9 +3995,61 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
 
             const blockEl = document.getElementById(`s${sectorNum}-block`);
             const flightEl = document.getElementById(`s${sectorNum}-flight`);
+            const depDelayEl = document.getElementById(`s${sectorNum}-dep-delay`);
+            const arrDelayEl = document.getElementById(`s${sectorNum}-arr-delay`);
 
             if (blockEl) blockEl.textContent = formatMinutes(timeDiff(out, inn));
             if (flightEl) flightEl.textContent = formatMinutes(timeDiff(off, on));
+
+            // Calculate departure delay (OUT - STD)
+            if (depDelayEl) {
+                if (std && out) {
+                    const delayMins = timeDiff(std, out);
+                    if (delayMins !== null) {
+                        if (delayMins === 0) {
+                            depDelayEl.textContent = 'OT';
+                            depDelayEl.style.color = '#00ff88';
+                        } else if (delayMins > 0) {
+                            depDelayEl.textContent = '+' + delayMins;
+                            depDelayEl.style.color = delayMins > 15 ? '#ff5252' : '#ffd700';
+                        } else {
+                            depDelayEl.textContent = delayMins.toString();
+                            depDelayEl.style.color = '#00d4ff';
+                        }
+                    } else {
+                        depDelayEl.textContent = '--';
+                        depDelayEl.style.color = '#888';
+                    }
+                } else {
+                    depDelayEl.textContent = '--';
+                    depDelayEl.style.color = '#888';
+                }
+            }
+
+            // Calculate arrival delay (IN - STA)
+            if (arrDelayEl) {
+                if (sta && inn) {
+                    const delayMins = timeDiff(sta, inn);
+                    if (delayMins !== null) {
+                        if (delayMins === 0) {
+                            arrDelayEl.textContent = 'OT';
+                            arrDelayEl.style.color = '#00ff88';
+                        } else if (delayMins > 0) {
+                            arrDelayEl.textContent = '+' + delayMins;
+                            arrDelayEl.style.color = delayMins > 15 ? '#ff5252' : '#ffd700';
+                        } else {
+                            arrDelayEl.textContent = delayMins.toString();
+                            arrDelayEl.style.color = '#00d4ff';
+                        }
+                    } else {
+                        arrDelayEl.textContent = '--';
+                        arrDelayEl.style.color = '#888';
+                    }
+                } else {
+                    arrDelayEl.textContent = '--';
+                    arrDelayEl.style.color = '#888';
+                }
+            }
 
             // Calculate turnaround from previous sector
             if (sectorNum > 1) {
@@ -3909,13 +4108,16 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         function updateUTCClock() {
             const now = new Date();
             const utcTime = now.toISOString().substring(11, 19);
-            document.getElementById('utc-clock').textContent = utcTime;
-            document.getElementById('strip-utc-clock').textContent = utcTime;
+            const utcEl = document.getElementById('utc-clock');
+            const stripUtcEl = document.getElementById('strip-utc-clock');
+            if (utcEl) utcEl.textContent = utcTime;
+            if (stripUtcEl) stripUtcEl.textContent = utcTime;
 
             // DXB time (UTC+4)
             const dxbTime = new Date(now.getTime() + 4 * 60 * 60 * 1000);
             const dxbTimeStr = dxbTime.toISOString().substring(11, 19);
-            document.getElementById('strip-dxb-clock').textContent = dxbTimeStr;
+            const stripDxbEl = document.getElementById('strip-dxb-clock');
+            if (stripDxbEl) stripDxbEl.textContent = dxbTimeStr;
         }
 
         function updateActiveTimersStrip() {
@@ -4677,7 +4879,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             updateStripTimerDisplay(index);
         }
 
-        let lastFrameTime = 0;
+        var lastFrameTime = 0;
         function tick(currentTime) {
             if (lastFrameTime === 0) lastFrameTime = currentTime;
             const delta = currentTime - lastFrameTime;
@@ -4815,19 +5017,18 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         // ============ CLEAR HANDLERS ============
-        document.getElementById('oooi-clear').addEventListener('click', () => {
+        document.getElementById('oooi-clear')?.addEventListener('click', () => {
             ['out', 'off', 'on', 'in'].forEach(field => {
                 document.getElementById('oooi-' + field).value = '';
                 const btn = document.getElementById('oooi-' + field + '-btn');
-                btn.textContent = '0000';
-                btn.classList.add('placeholder');
+                if (btn) { btn.textContent = '0000'; btn.classList.add('placeholder'); }
             });
-            document.getElementById('block-time').textContent = '--:--';
-            document.getElementById('flight-time').textContent = '--:--';
+            const bt = document.getElementById('block-time'); if (bt) bt.textContent = '--:--';
+            const ft = document.getElementById('flight-time'); if (ft) ft.textContent = '--:--';
             localStorage.removeItem('flightOOOI');
         });
 
-        document.getElementById('eta-clear').addEventListener('click', () => {
+        document.getElementById('eta-clear')?.addEventListener('click', () => {
             document.getElementById('eta-time').value = '';
             document.getElementById('utc-manual').value = '';
             document.getElementById('eta-time-btn').textContent = '0000';
@@ -4840,12 +5041,11 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             localStorage.removeItem('flightETA');
         });
 
-        document.getElementById('calc-clear').addEventListener('click', () => {
+        document.getElementById('calc-clear')?.addEventListener('click', () => {
             ['zfw', 'fob', 'taxi', 'trip'].forEach(field => {
                 document.getElementById('calc-' + field).value = '';
                 const btn = document.getElementById('calc-' + field + '-btn');
-                btn.textContent = '0';
-                btn.classList.add('placeholder');
+                if (btn) { btn.textContent = '0'; btn.classList.add('placeholder'); }
             });
             document.getElementById('tow-result').textContent = '---';
             document.getElementById('tow-result').style.color = '#FF8200';
@@ -4861,18 +5061,17 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             localStorage.removeItem('flightTOW');
         });
 
-        document.getElementById('acc-clear').addEventListener('click', () => {
+        document.getElementById('acc-clear')?.addEventListener('click', () => {
             ['opt-acc', 'airfield-elev'].forEach(field => {
                 document.getElementById(field).value = '';
                 const btn = document.getElementById(field + '-btn');
-                btn.textContent = '0';
-                btn.classList.add('placeholder');
+                if (btn) { btn.textContent = '0'; btn.classList.add('placeholder'); }
             });
             document.getElementById('acc-result').textContent = '--- ft';
             localStorage.removeItem('flightACC');
         });
 
-        document.getElementById('dxb-elev-btn').addEventListener('click', () => {
+        document.getElementById('dxb-elev-btn')?.addEventListener('click', () => {
             document.getElementById('airfield-elev').value = '62';
             document.getElementById('airfield-elev-btn').textContent = '62';
             document.getElementById('airfield-elev-btn').classList.remove('placeholder');
@@ -4880,12 +5079,11 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         });
 
         // ============ FUEL CLEAR HANDLER ============
-        document.getElementById('fuel-clear').addEventListener('click', () => {
+        document.getElementById('fuel-clear')?.addEventListener('click', () => {
             ['fuel-req', 'fuel-pre', 'fuel-actual'].forEach(field => {
                 document.getElementById(field).value = '';
                 const btn = document.getElementById(field + '-btn');
-                btn.textContent = '0';
-                btn.classList.add('placeholder');
+                if (btn) { btn.textContent = '0'; btn.classList.add('placeholder'); }
             });
             document.getElementById('fuel-sg').value = '800';
             document.getElementById('fuel-sg-btn').textContent = '0.800';
@@ -4900,15 +5098,16 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         });
 
         // ============ CONVERTER CLEAR HANDLER ============
-        document.getElementById('conv-clear').addEventListener('click', () => {
+        document.getElementById('conv-clear')?.addEventListener('click', () => {
             ['conv-litres', 'conv-gallons', 'conv-lbs'].forEach(field => {
                 document.getElementById(field).value = '';
-                document.getElementById(field + '-btn').textContent = '0';
+                const btn = document.getElementById(field + '-btn');
+                if (btn) btn.textContent = '0';
             });
         });
 
         // ============ LAYOVER CLEAR HANDLER ============
-        document.getElementById('layover-clear').addEventListener('click', () => {
+        document.getElementById('layover-clear')?.addEventListener('click', () => {
             document.getElementById('layover-std').value = '';
             document.getElementById('layover-std-btn').textContent = '----';
             document.getElementById('layover-pickup').value = '0130';
@@ -4919,7 +5118,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         });
 
         // ============ FDP SYNC FUNCTIONS ============
-        let fdpSetupCollapsed = false;
+        var fdpSetupCollapsed = false;
 
         function toggleFDPSetup() {
             const content = document.getElementById('fdp-setup-content');
@@ -5000,16 +5199,14 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             }
 
             calculateFDP();
-            alert('Synced ' + currentSectorCount + ' sector(s) from Schedule');
         }
 
         // ============ SCHEDULE TAB FUNCTIONS ============
-        let currentSectorCount = 1;
 
         function addSector() {
             if (currentSectorCount < 4) {
                 currentSectorCount++;
-                document.getElementById(`sector-${currentSectorCount}-block`).style.display = 'block';
+                document.getElementById('sector-' + currentSectorCount + '-block').style.display = 'block';
                 document.getElementById('sched-total-sectors').textContent = currentSectorCount;
                 saveSchedule();
             }
@@ -5035,6 +5232,11 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                     });
                     document.getElementById(`s${s}-block`).textContent = '--:--';
                     document.getElementById(`s${s}-flight`).textContent = '--:--';
+                    // Clear delay displays
+                    const depDelay = document.getElementById(`s${s}-dep-delay`);
+                    const arrDelay = document.getElementById(`s${s}-arr-delay`);
+                    if (depDelay) { depDelay.textContent = '--'; depDelay.style.color = '#888'; }
+                    if (arrDelay) { arrDelay.textContent = '--'; arrDelay.style.color = '#888'; }
                 }
                 document.getElementById('sched-tail').value = '';
                 document.getElementById('sched-tail-btn').textContent = 'A6-___';
@@ -5124,8 +5326,10 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             const currentValue = document.getElementById(fieldId).value || '';
             const newValue = prompt(title + ':', currentValue);
             if (newValue !== null) {
-                document.getElementById(fieldId).value = newValue;
-                document.getElementById(fieldId + '-btn').textContent = newValue || (fieldId.includes('flt') ? 'FZ___' : (fieldId.includes('tail') ? 'A6-___' : '---'));
+                // Auto-capitalize the input
+                const upperValue = newValue.toUpperCase();
+                document.getElementById(fieldId).value = upperValue;
+                document.getElementById(fieldId + '-btn').textContent = upperValue || (fieldId.includes('flt') ? 'FZ___' : (fieldId.includes('tail') ? 'A6-___' : '---'));
                 saveSchedule();
             }
         }
@@ -5157,9 +5361,9 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         // ============ FLIGHT NUMBER PICKER ============
-        let flightPickerFieldId = '';
-        let flightPickerValue = '';
-        let flightPickerSuffix = '';
+        var flightPickerFieldId = '';
+        var flightPickerValue = '';
+        var flightPickerSuffix = '';
 
         function openFlightPicker(fieldId) {
             flightPickerFieldId = fieldId;
@@ -5230,13 +5434,26 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         // ============ TAIL NUMBER PICKER ============
-        let tailPickerValue = '';
+        var tailPickerValue = '';
+        var tailSelectedPrefix = '';
+
+        // Valid last letters for each fleet prefix (from fleet database)
+        var fleetValidLetters = {
+            'FE': ['B', 'C', 'D', 'E', 'G', 'K', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X'],
+            'FG': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+            'FK': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T'],
+            'FM': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+            'FN': ['A', 'B', 'C'],
+            'FP': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+            'FQ': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
+        };
 
         function openTailPicker() {
             const currentValue = document.getElementById('sched-tail').value || '';
-            // Remove A6- prefix if present
             tailPickerValue = currentValue.replace(/^A6-/i, '');
+            tailSelectedPrefix = '';
             updateTailPickerDisplay();
+            updateTailLettersGrid(null); // Show full alphabet initially
             document.getElementById('tail-picker-modal').classList.add('active');
         }
 
@@ -5244,21 +5461,63 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             document.getElementById('tail-picker-value').textContent = tailPickerValue || '___';
         }
 
+        function tailPickerSetPrefix(prefix) {
+            tailPickerValue = prefix;
+            tailSelectedPrefix = prefix;
+            updateTailPickerDisplay();
+            updateTailLettersGrid(prefix);
+        }
+
+        function updateTailLettersGrid(prefix) {
+            var grid = document.getElementById('tail-letters-grid');
+            var validLetters = prefix ? fleetValidLetters[prefix] : null;
+            var html = '';
+            var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+            alphabet.forEach(function(letter) {
+                var isValid = !validLetters || validLetters.includes(letter);
+                if (isValid) {
+                    html += '<button class="picker-btn" onclick="tailPickerAppend(\'' + letter + '\')" style="min-width: 0; padding: 12px 0;">' + letter + '</button>';
+                } else {
+                    html += '<button class="picker-btn" style="min-width: 0; padding: 12px 0; opacity: 0.2; pointer-events: none;"> </button>';
+                }
+            });
+
+            // Add Clear and Backspace buttons
+            html += '<button class="picker-btn clear" onclick="tailPickerClear()" style="min-width: 0; padding: 12px 0;">C</button>';
+            html += '<button class="picker-btn" onclick="tailPickerBackspace()" style="min-width: 0; padding: 12px 0;">←</button>';
+
+            grid.innerHTML = html;
+        }
+
         function tailPickerAppend(char) {
             if (tailPickerValue.length < 3) {
                 tailPickerValue += char;
                 updateTailPickerDisplay();
+                // Auto-confirm if we have 3 characters
+                if (tailPickerValue.length === 3) {
+                    confirmTailPicker();
+                }
             }
         }
 
         function tailPickerBackspace() {
             tailPickerValue = tailPickerValue.slice(0, -1);
+            // If we delete back to just the prefix, keep the grid filtered
+            if (tailPickerValue.length === 2 && fleetValidLetters[tailPickerValue]) {
+                tailSelectedPrefix = tailPickerValue;
+            } else if (tailPickerValue.length < 2) {
+                tailSelectedPrefix = '';
+                updateTailLettersGrid(null);
+            }
             updateTailPickerDisplay();
         }
 
         function tailPickerClear() {
             tailPickerValue = '';
+            tailSelectedPrefix = '';
             updateTailPickerDisplay();
+            updateTailLettersGrid(null);
         }
 
         function closeTailPicker() {
@@ -5560,7 +5819,6 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         calculateFuel();
         calculateLayover();
         startAnimationLoop();
-
         setInterval(() => {
             updateUTCClock();
             calculateETA();
@@ -5954,7 +6212,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             }
         }
 
-        let isaTempNegative = false;
+        var isaTempNegative = false;
 
         function openISAPicker() {
             const currentVal = document.getElementById('isa-oat').value || '15';
@@ -6064,6 +6322,411 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             document.getElementById('isa-dev').className = 'isa-deviation neutral';
         }
 
+        // ============ COORDINATES / LIDO CONVERTER ============
+        function parseCoordinates(input) {
+            if (!input || input.trim() === '') return null;
+            input = input.trim().toUpperCase();
+
+            var lat = null, lon = null, formatName = '';
+
+            // Pattern 1: Decimal degrees with optional direction suffix/prefix
+            // Examples: 25.2583, 55.3000 or 25.2583N 55.3000E or N25.2583 E55.3000
+            var decimalMatch = input.match(/^([NS])?(-?\d+\.?\d*)\s*([NS])?\s*[,\/\s]+\s*([EW])?(-?\d+\.?\d*)\s*([EW])?$/i);
+            if (decimalMatch) {
+                var latDir = decimalMatch[1] || decimalMatch[3] || 'N';
+                var lonDir = decimalMatch[4] || decimalMatch[6] || 'E';
+                lat = parseFloat(decimalMatch[2]);
+                lon = parseFloat(decimalMatch[5]);
+                if (latDir === 'S') lat = -Math.abs(lat);
+                if (lonDir === 'W') lon = -Math.abs(lon);
+                formatName = 'Decimal Degrees';
+                return { lat, lon, format: formatName };
+            }
+
+            // Pattern 2: DMS format - N25°15'30" E055°18'00" or 25°15'30"N 55°18'00"E
+            var dmsMatch = input.match(/([NS])?\s*(\d+)[°º]\s*(\d+)[''′]\s*(\d+\.?\d*)[""″]?\s*([NS])?\s*[,\/\s]*\s*([EW])?\s*(\d+)[°º]\s*(\d+)[''′]\s*(\d+\.?\d*)[""″]?\s*([EW])?/i);
+            if (dmsMatch) {
+                var latDir = dmsMatch[1] || dmsMatch[5] || 'N';
+                var lonDir = dmsMatch[6] || dmsMatch[10] || 'E';
+                var latDeg = parseInt(dmsMatch[2]);
+                var latMin = parseInt(dmsMatch[3]);
+                var latSec = parseFloat(dmsMatch[4]);
+                var lonDeg = parseInt(dmsMatch[7]);
+                var lonMin = parseInt(dmsMatch[8]);
+                var lonSec = parseFloat(dmsMatch[9]);
+                lat = latDeg + latMin / 60 + latSec / 3600;
+                lon = lonDeg + lonMin / 60 + lonSec / 3600;
+                if (latDir === 'S') lat = -lat;
+                if (lonDir === 'W') lon = -lon;
+                formatName = 'DMS (Degrees Minutes Seconds)';
+                return { lat, lon, format: formatName };
+            }
+
+            // Pattern 3: LIDO Format 1 - Simple Degrees: N25-15/E055-18 or N25-15E055-18
+            var lido1Match = input.match(/([NS])(\d{1,2})-(\d{2})\s*[\/\s]*([EW])(\d{1,3})-(\d{2})/i);
+            if (lido1Match) {
+                var latDir = lido1Match[1];
+                var latDeg = parseInt(lido1Match[2]);
+                var latMin = parseInt(lido1Match[3]);
+                var lonDir = lido1Match[4];
+                var lonDeg = parseInt(lido1Match[5]);
+                var lonMin = parseInt(lido1Match[6]);
+                lat = latDeg + latMin / 60;
+                lon = lonDeg + lonMin / 60;
+                if (latDir === 'S') lat = -lat;
+                if (lonDir === 'W') lon = -lon;
+                formatName = 'LIDO Format 1 (Simple Degrees)';
+                return { lat, lon, format: formatName };
+            }
+
+            // Pattern 4: LIDO Format 2 - N2515E05518 or NS2515EW05518
+            var lido2Match = input.match(/^([NS])[S]?(\d{2})(\d{2})([EW])[W]?(\d{2,3})(\d{2})$/i);
+            if (lido2Match) {
+                var latDir = lido2Match[1];
+                var latDeg = parseInt(lido2Match[2]);
+                var latMin = parseInt(lido2Match[3]);
+                var lonDir = lido2Match[4];
+                var lonDeg = parseInt(lido2Match[5]);
+                var lonMin = parseInt(lido2Match[6]);
+                lat = latDeg + latMin / 60;
+                lon = lonDeg + lonMin / 60;
+                if (latDir === 'S') lat = -lat;
+                if (lonDir === 'W') lon = -lon;
+                formatName = 'LIDO Format 2 (Deg/Min)';
+                return { lat, lon, format: formatName };
+            }
+
+            // Pattern 4b: Decimal Minutes format - N25151E055218 (DD MM.M / DDD MM.M)
+            // N25151 = N 25° 15.1', E055218 = E 055° 21.8'
+            var decMinMatch = input.match(/^([NS])(\d{2})(\d{2})(\d)([EW])(\d{3})(\d{2})(\d)$/i);
+            if (decMinMatch) {
+                var latDir = decMinMatch[1];
+                var latDeg = parseInt(decMinMatch[2]);
+                var latMinWhole = parseInt(decMinMatch[3]);
+                var latMinDec = parseInt(decMinMatch[4]);
+                var lonDir = decMinMatch[5];
+                var lonDeg = parseInt(decMinMatch[6]);
+                var lonMinWhole = parseInt(decMinMatch[7]);
+                var lonMinDec = parseInt(decMinMatch[8]);
+                var latMinTotal = latMinWhole + latMinDec / 10;
+                var lonMinTotal = lonMinWhole + lonMinDec / 10;
+                lat = latDeg + latMinTotal / 60;
+                lon = lonDeg + lonMinTotal / 60;
+                if (latDir === 'S') lat = -lat;
+                if (lonDir === 'W') lon = -lon;
+                formatName = 'Decimal Minutes (DDM)';
+                return { lat, lon, format: formatName };
+            }
+
+            // Pattern 5: LIDO Format 3 - ICAO FPL: 2515N05518E or 251530N0551800E
+            var lido3Match = input.match(/^(\d{2})(\d{2})(\d{2})?([NS])(\d{2,3})(\d{2})(\d{2})?([EW])$/i);
+            if (lido3Match) {
+                var latDeg = parseInt(lido3Match[1]);
+                var latMin = parseInt(lido3Match[2]);
+                var latSec = lido3Match[3] ? parseInt(lido3Match[3]) : 0;
+                var latDir = lido3Match[4];
+                var lonDeg = parseInt(lido3Match[5]);
+                var lonMin = parseInt(lido3Match[6]);
+                var lonSec = lido3Match[7] ? parseInt(lido3Match[7]) : 0;
+                var lonDir = lido3Match[8];
+                lat = latDeg + latMin / 60 + latSec / 3600;
+                lon = lonDeg + lonMin / 60 + lonSec / 3600;
+                if (latDir === 'S') lat = -lat;
+                if (lonDir === 'W') lon = -lon;
+                formatName = 'LIDO Format 3 (ICAO FPL)';
+                return { lat, lon, format: formatName };
+            }
+
+            // Pattern 6: ARINC 424 Five-Letter format
+            // Examples: 5530N or N5530 (for latitudes in northern half, like 55N30)
+            // H = NH (NE hemisphere), N = NH/NH (NE), E = SH/EH (SE), S = SH/SH (SW), W = NH/WH (NW)
+            var arincMatch = input.match(/^([HNESW])?(\d)(\d)([HNESW])(\d)(\d)$/i);
+            if (arincMatch) {
+                var result = parseArinc424(input);
+                if (result) {
+                    return { lat: result.lat, lon: result.lon, format: 'ARINC 424 (5-Letter)' };
+                }
+            }
+
+            // Simple ARINC: 25N55 or N2555
+            var simpleArincMatch = input.match(/^(\d{2})([NSEW])(\d{2,3})$/i);
+            if (simpleArincMatch) {
+                var latDeg = parseInt(simpleArincMatch[1]);
+                var lonDeg = parseInt(simpleArincMatch[3]);
+                var dir = simpleArincMatch[2];
+                if (dir === 'N' || dir === 'S') {
+                    lat = latDeg;
+                    lon = lonDeg;
+                    if (dir === 'S') lat = -lat;
+                } else {
+                    lat = latDeg;
+                    lon = lonDeg;
+                    if (dir === 'W') lon = -lon;
+                }
+                formatName = 'ARINC 424 Simple';
+                return { lat, lon, format: formatName };
+            }
+
+            return null;
+        }
+
+        function parseArinc424(code) {
+            // ARINC 424 uses identifier letter to encode hemisphere
+            // H = N lat, E lon (NE)
+            // N = N lat, E lon (NE, lat < 10)
+            // E = S lat, E lon (SE)
+            // S = S lat, W lon (SW)
+            // W = N lat, W lon (NW)
+            code = code.toUpperCase();
+            if (code.length !== 5) return null;
+
+            var firstChar = code.charAt(0);
+            var lastChar = code.charAt(4);
+            var identifier = null;
+            var digits = null;
+
+            // Check if identifier is first or last character
+            if (/[HNESW]/.test(firstChar)) {
+                identifier = firstChar;
+                digits = code.substring(1);
+            } else if (/[HNESW]/.test(lastChar)) {
+                identifier = lastChar;
+                digits = code.substring(0, 4);
+            } else {
+                return null;
+            }
+
+            if (!/^\d{4}$/.test(digits)) return null;
+
+            var latDeg = parseInt(digits.substring(0, 2));
+            var lonTens = parseInt(digits.substring(2, 4));
+
+            var lat = latDeg;
+            var lon = lonTens * 10; // Only tens of degrees encoded
+
+            switch (identifier) {
+                case 'H': // NE hemisphere
+                    lon = 100 + lonTens; // For E100+
+                    break;
+                case 'N': // NE, standard
+                    // lat and lon are positive, lon < 100
+                    break;
+                case 'E': // SE hemisphere
+                    lat = -lat;
+                    break;
+                case 'S': // SW hemisphere
+                    lat = -lat;
+                    lon = -lon;
+                    break;
+                case 'W': // NW hemisphere
+                    lon = -lon;
+                    break;
+            }
+
+            return { lat, lon };
+        }
+
+        function formatToDecimal(lat, lon) {
+            var latDir = lat >= 0 ? 'N' : 'S';
+            var lonDir = lon >= 0 ? 'E' : 'W';
+            return Math.abs(lat).toFixed(4) + '° ' + latDir + ', ' + Math.abs(lon).toFixed(4) + '° ' + lonDir;
+        }
+
+        function formatToDMS(lat, lon) {
+            function toDMS(deg, isLat) {
+                var dir = isLat ? (deg >= 0 ? 'N' : 'S') : (deg >= 0 ? 'E' : 'W');
+                deg = Math.abs(deg);
+                var d = Math.floor(deg);
+                var m = Math.floor((deg - d) * 60);
+                var s = ((deg - d) * 60 - m) * 60;
+                var dStr = isLat ? String(d).padStart(2, '0') : String(d).padStart(3, '0');
+                return dir + dStr + '°' + String(m).padStart(2, '0') + "'" + s.toFixed(1).padStart(4, '0') + '"';
+            }
+            return toDMS(lat, true) + ' ' + toDMS(lon, false);
+        }
+
+        function formatToDMM(lat, lon) {
+            // DMM: N25° 15.25' E055° 21.80'
+            var latDir = lat >= 0 ? 'N' : 'S';
+            var lonDir = lon >= 0 ? 'E' : 'W';
+            lat = Math.abs(lat);
+            lon = Math.abs(lon);
+            var latDeg = Math.floor(lat);
+            var latMin = (lat - latDeg) * 60;
+            var lonDeg = Math.floor(lon);
+            var lonMin = (lon - lonDeg) * 60;
+            return latDir + String(latDeg).padStart(2, '0') + '° ' + latMin.toFixed(2).padStart(5, '0') + "' " +
+                   lonDir + String(lonDeg).padStart(3, '0') + '° ' + lonMin.toFixed(2).padStart(5, '0') + "'";
+        }
+
+        function formatToDMMCompact(lat, lon) {
+            // DMM Compact: N25151E055218 (2 deg + 2 min + 1 tenth for lat, 3 deg + 2 min + 1 tenth for lon)
+            var latDir = lat >= 0 ? 'N' : 'S';
+            var lonDir = lon >= 0 ? 'E' : 'W';
+            lat = Math.abs(lat);
+            lon = Math.abs(lon);
+            var latDeg = Math.floor(lat);
+            var latMinTotal = (lat - latDeg) * 60;
+            var latMinWhole = Math.floor(latMinTotal);
+            var latMinTenth = Math.round((latMinTotal - latMinWhole) * 10);
+            if (latMinTenth >= 10) { latMinWhole++; latMinTenth = 0; }
+            var lonDeg = Math.floor(lon);
+            var lonMinTotal = (lon - lonDeg) * 60;
+            var lonMinWhole = Math.floor(lonMinTotal);
+            var lonMinTenth = Math.round((lonMinTotal - lonMinWhole) * 10);
+            if (lonMinTenth >= 10) { lonMinWhole++; lonMinTenth = 0; }
+            return latDir + String(latDeg).padStart(2, '0') + String(latMinWhole).padStart(2, '0') + latMinTenth +
+                   lonDir + String(lonDeg).padStart(3, '0') + String(lonMinWhole).padStart(2, '0') + lonMinTenth;
+        }
+
+        function formatToLido1(lat, lon) {
+            // Format 1: N25-15/E055-18
+            var latDir = lat >= 0 ? 'N' : 'S';
+            var lonDir = lon >= 0 ? 'E' : 'W';
+            lat = Math.abs(lat);
+            lon = Math.abs(lon);
+            var latDeg = Math.floor(lat);
+            var latMin = Math.round((lat - latDeg) * 60);
+            var lonDeg = Math.floor(lon);
+            var lonMin = Math.round((lon - lonDeg) * 60);
+            return latDir + String(latDeg).padStart(2, '0') + '-' + String(latMin).padStart(2, '0') + '/' +
+                   lonDir + String(lonDeg).padStart(3, '0') + '-' + String(lonMin).padStart(2, '0');
+        }
+
+        function formatToLido2(lat, lon) {
+            // Format 2: N2515E05518 or NS2515EW05518
+            var latDir = lat >= 0 ? 'N' : 'S';
+            var lonDir = lon >= 0 ? 'E' : 'W';
+            lat = Math.abs(lat);
+            lon = Math.abs(lon);
+            var latDeg = Math.floor(lat);
+            var latMin = Math.round((lat - latDeg) * 60);
+            var lonDeg = Math.floor(lon);
+            var lonMin = Math.round((lon - lonDeg) * 60);
+            return latDir + String(latDeg).padStart(2, '0') + String(latMin).padStart(2, '0') +
+                   lonDir + String(lonDeg).padStart(3, '0') + String(lonMin).padStart(2, '0');
+        }
+
+        function formatToLido3(lat, lon) {
+            // Format 3: 2515N05518E (ICAO FPL)
+            var latDir = lat >= 0 ? 'N' : 'S';
+            var lonDir = lon >= 0 ? 'E' : 'W';
+            lat = Math.abs(lat);
+            lon = Math.abs(lon);
+            var latDeg = Math.floor(lat);
+            var latMin = Math.round((lat - latDeg) * 60);
+            var lonDeg = Math.floor(lon);
+            var lonMin = Math.round((lon - lonDeg) * 60);
+            return String(latDeg).padStart(2, '0') + String(latMin).padStart(2, '0') + latDir +
+                   String(lonDeg).padStart(3, '0') + String(lonMin).padStart(2, '0') + lonDir;
+        }
+
+        function formatToArinc424(lat, lon) {
+            // ARINC 424 Five-Letter Format
+            // This creates a simplified version based on whole degrees
+            var latDeg = Math.abs(Math.round(lat));
+            var lonDeg = Math.abs(Math.round(lon));
+            var identifier = '';
+
+            if (lat >= 0 && lon >= 0) {
+                if (lonDeg >= 100) {
+                    identifier = 'H';
+                    lonDeg = lonDeg - 100;
+                } else {
+                    identifier = 'N';
+                }
+            } else if (lat < 0 && lon >= 0) {
+                identifier = 'E';
+            } else if (lat < 0 && lon < 0) {
+                identifier = 'S';
+            } else {
+                identifier = 'W';
+            }
+
+            var latStr = String(latDeg).padStart(2, '0');
+            var lonStr = String(Math.floor(lonDeg / 10)).padStart(2, '0'); // Tens of degrees
+
+            return latStr + identifier + lonStr + ' (approx)';
+        }
+
+        function convertCoordinates() {
+            var input = document.getElementById('coord-input').value;
+            var formatEl = document.getElementById('coord-format-detected');
+            var decimalEl = document.getElementById('coord-decimal');
+            var dmsEl = document.getElementById('coord-dms');
+            var dmmEl = document.getElementById('coord-dmm');
+            var dmmCompactEl = document.getElementById('coord-dmm-compact');
+            var lido1El = document.getElementById('coord-lido1');
+            var lido2El = document.getElementById('coord-lido2');
+            var lido3El = document.getElementById('coord-lido3');
+            var arincEl = document.getElementById('coord-arinc');
+
+            if (!input || input.trim() === '') {
+                formatEl.textContent = '---';
+                decimalEl.textContent = '---';
+                dmsEl.textContent = '---';
+                dmmEl.textContent = '---';
+                dmmCompactEl.textContent = '---';
+                lido1El.textContent = '---';
+                lido2El.textContent = '---';
+                lido3El.textContent = '---';
+                arincEl.textContent = '---';
+                return;
+            }
+
+            var parsed = parseCoordinates(input);
+
+            if (!parsed) {
+                formatEl.textContent = 'Invalid format';
+                formatEl.style.color = '#ff4444';
+                decimalEl.textContent = '---';
+                dmsEl.textContent = '---';
+                dmmEl.textContent = '---';
+                dmmCompactEl.textContent = '---';
+                lido1El.textContent = '---';
+                lido2El.textContent = '---';
+                lido3El.textContent = '---';
+                arincEl.textContent = '---';
+                return;
+            }
+
+            formatEl.textContent = parsed.format;
+            formatEl.style.color = '#00ff88';
+
+            var lat = parsed.lat;
+            var lon = parsed.lon;
+
+            // Validate ranges
+            if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+                formatEl.textContent = 'Out of range';
+                formatEl.style.color = '#ff4444';
+                return;
+            }
+
+            decimalEl.textContent = formatToDecimal(lat, lon);
+            dmsEl.textContent = formatToDMS(lat, lon);
+            dmmEl.textContent = formatToDMM(lat, lon);
+            dmmCompactEl.textContent = formatToDMMCompact(lat, lon);
+            lido1El.textContent = formatToLido1(lat, lon);
+            lido2El.textContent = formatToLido2(lat, lon);
+            lido3El.textContent = formatToLido3(lat, lon);
+            arincEl.textContent = formatToArinc424(lat, lon);
+        }
+
+        function clearCoordConverter() {
+            document.getElementById('coord-input').value = '';
+            document.getElementById('coord-format-detected').textContent = '---';
+            document.getElementById('coord-format-detected').style.color = '#888';
+            document.getElementById('coord-decimal').textContent = '---';
+            document.getElementById('coord-dms').textContent = '---';
+            document.getElementById('coord-dmm').textContent = '---';
+            document.getElementById('coord-dmm-compact').textContent = '---';
+            document.getElementById('coord-lido1').textContent = '---';
+            document.getElementById('coord-lido2').textContent = '---';
+            document.getElementById('coord-lido3').textContent = '---';
+            document.getElementById('coord-arinc').textContent = '---';
+        }
+
         // ============ TIMEZONE CONVERTER ============
         function calculateTimezones() {
             const inputTime = document.getElementById('tz-input').value;
@@ -6120,7 +6783,7 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
         }
 
         // ============ SCRATCHPAD ============
-        let scratchpadHistory = [];
+        var scratchpadHistory = [];
 
         function loadScratchpadHistory() {
             const saved = localStorage.getItem('scratchpadHistory');
