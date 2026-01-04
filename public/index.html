@@ -1870,16 +1870,22 @@
                 <!-- Duty Information -->
                 <div class="fdp-section">
                     <div class="section-title">Duty Information</div>
-                    <div class="fdp-row" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
-                        <div class="fdp-field">
-                            <label class="fdp-label">Aircraft</label>
-                            <button class="input-btn" id="sched-aircraft-btn" onclick="openAircraftPicker()" style="max-width: 100%;">B738</button>
-                            <input type="hidden" id="sched-aircraft" value="B738">
-                        </div>
+                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
                         <div class="fdp-field">
                             <label class="fdp-label">Tail Number</label>
                             <button class="input-btn" id="sched-tail-btn" onclick="openTailPicker()" style="max-width: 100%;">A6-___</button>
                             <input type="hidden" id="sched-tail" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Aircraft Type</label>
+                            <div class="fdp-result-value" id="sched-aircraft-display" style="font-size: 1rem; color: #00d4ff; min-height: 38px; display: flex; align-items: center; justify-content: center;">---</div>
+                            <input type="hidden" id="sched-aircraft" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Config</label>
+                            <select class="fdp-select" id="sched-config" onchange="onConfigChange()" style="max-width: 100%;">
+                                <option value="">Select tail first</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -6352,8 +6358,105 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 document.getElementById('sched-tail').value = fullValue;
                 document.getElementById('sched-tail-btn').textContent = fullValue || 'A6-___';
                 closeTailPicker();
+
+                // Auto-fill aircraft type and config from fleet database
+                updateAircraftFromTail(fullValue);
                 saveSchedule();
             }
+        }
+
+        // Global selected config for use across tabs
+        var selectedConfig = '';
+        var selectedAircraftType = '';
+
+        function updateAircraftFromTail(tailNumber) {
+            var aircraftDisplay = document.getElementById('sched-aircraft-display');
+            var aircraftInput = document.getElementById('sched-aircraft');
+            var configSelect = document.getElementById('sched-config');
+
+            if (!tailNumber || !fleetData || !fleetData.aircraft) {
+                aircraftDisplay.textContent = '---';
+                aircraftDisplay.style.color = '#888';
+                aircraftInput.value = '';
+                configSelect.innerHTML = '<option value="">Select tail first</option>';
+                selectedConfig = '';
+                selectedAircraftType = '';
+                return;
+            }
+
+            var ac = fleetData.aircraft[tailNumber];
+            if (ac) {
+                // Set aircraft type
+                selectedAircraftType = ac.type;
+                aircraftDisplay.textContent = ac.type;
+                aircraftDisplay.style.color = '#00d4ff';
+                aircraftInput.value = ac.type;
+
+                // Populate config dropdown based on aircraft type
+                populateConfigDropdown(ac.type, ac.config);
+            } else {
+                aircraftDisplay.textContent = '---';
+                aircraftDisplay.style.color = '#888';
+                aircraftInput.value = '';
+                configSelect.innerHTML = '<option value="">Tail not in fleet</option>';
+                selectedConfig = '';
+                selectedAircraftType = '';
+            }
+        }
+
+        function populateConfigDropdown(aircraftType, defaultConfig) {
+            var configSelect = document.getElementById('sched-config');
+            configSelect.innerHTML = '';
+
+            // Get available configs for this aircraft type from lmcCorrectionTable
+            var configs = [];
+            if (lmcCorrectionTable[aircraftType]) {
+                configs = Object.keys(lmcCorrectionTable[aircraftType]);
+            }
+
+            // If no configs found in table, use the default from fleet
+            if (configs.length === 0) {
+                configs = [defaultConfig];
+            }
+
+            // Normalize default config for matching
+            var normalizedDefault = normalizeConfig(defaultConfig);
+
+            // Add options
+            configs.forEach(function(cfg) {
+                var option = document.createElement('option');
+                option.value = cfg;
+                option.textContent = cfg;
+                // Select the matching config
+                if (cfg === normalizedDefault || cfg === defaultConfig) {
+                    option.selected = true;
+                    selectedConfig = cfg;
+                }
+                configSelect.appendChild(option);
+            });
+
+            // If nothing matched, select first option
+            if (!selectedConfig && configs.length > 0) {
+                configSelect.value = configs[0];
+                selectedConfig = configs[0];
+            }
+
+            // Trigger config change to update other tabs
+            onConfigChange();
+        }
+
+        function onConfigChange() {
+            var configSelect = document.getElementById('sched-config');
+            selectedConfig = configSelect.value;
+
+            // Update LMC calculator config if it exists
+            var lmcConfigEl = document.getElementById('lmc-config');
+            if (lmcConfigEl && selectedConfig) {
+                lmcConfigEl.value = selectedConfig;
+            }
+
+            // Update any other tabs that need config
+            saveSchedule();
         }
 
         // ============ TIME TAB FUNCTIONS ============
@@ -8129,6 +8232,17 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
                 // Strip A6- prefix if present
                 var tail = tailEl.value.replace(/^A6-/i, '');
                 setLmcTail(tail);
+
+                // Override config with the one selected in schedule tab
+                if (selectedConfig) {
+                    lmcAircraftConfig = selectedConfig;
+                    // Update the display to show the selected config
+                    var infoEl = document.getElementById('lmc-aircraft-info');
+                    if (infoEl && selectedAircraftType) {
+                        infoEl.innerHTML = selectedAircraftType + '<br><span style="font-size:0.75rem;color:#00ff88;">' + selectedConfig + '</span>';
+                    }
+                    lmcCalculate();
+                }
             } else {
                 alert('No tail number set in Schedule tab');
             }
