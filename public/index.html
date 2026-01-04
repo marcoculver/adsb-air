@@ -7568,9 +7568,64 @@
                 const fullValue = 'FZ' + flightPickerValue + flightPickerSuffix;
                 document.getElementById(flightPickerFieldId).value = fullValue;
                 document.getElementById(flightPickerFieldId + '-btn').textContent = fullValue;
+
+                // Auto-fill route from database
+                autoFillRouteFromFlight(flightPickerFieldId, fullValue);
+
                 saveSchedule();
             }
             closeFlightPicker();
+        }
+
+        function autoFillRouteFromFlight(fieldId, flightNumber) {
+            if (!routeDatabase) return;
+
+            // Extract sector number from field ID (e.g., "s1-flt" -> 1)
+            var sectorMatch = fieldId.match(/^s(\d+)-flt$/);
+            if (!sectorMatch) return;
+            var sectorNum = sectorMatch[1];
+
+            // Parse flight number
+            var fltMatch = flightNumber.match(/^([A-Z]{2,3})(\d+[A-Z]?)$/i);
+            if (!fltMatch) return;
+
+            var airlineCode = fltMatch[1].toUpperCase();
+            var flightNum = fltMatch[2].toUpperCase();
+
+            // Convert IATA to ICAO
+            var icaoCode = airlineIataToIcao[airlineCode] || airlineCode;
+
+            // Look up route
+            if (routeDatabase[icaoCode] && routeDatabase[icaoCode][flightNum]) {
+                var routeIcao = routeDatabase[icaoCode][flightNum];
+                var airports = routeIcao.split('-');
+
+                if (airports.length >= 2) {
+                    // Get IATA codes
+                    var depIcao = airports[0];
+                    var arrIcao = airports[airports.length - 1]; // Last airport for multi-stop
+
+                    var depIata = (airportsDatabase && airportsDatabase[depIcao] && airportsDatabase[depIcao].i)
+                                  ? airportsDatabase[depIcao].i : depIcao;
+                    var arrIata = (airportsDatabase && airportsDatabase[arrIcao] && airportsDatabase[arrIcao].i)
+                                  ? airportsDatabase[arrIcao].i : arrIcao;
+
+                    // Fill DEP and ARR fields
+                    var depInput = document.getElementById('s' + sectorNum + '-dep');
+                    var depBtn = document.getElementById('s' + sectorNum + '-dep-btn');
+                    var arrInput = document.getElementById('s' + sectorNum + '-arr');
+                    var arrBtn = document.getElementById('s' + sectorNum + '-arr-btn');
+
+                    if (depInput && depBtn) {
+                        depInput.value = depIata;
+                        depBtn.textContent = depIata;
+                    }
+                    if (arrInput && arrBtn) {
+                        arrInput.value = arrIata;
+                        arrBtn.textContent = arrIata;
+                    }
+                }
+            }
         }
 
         // ============ TAIL NUMBER PICKER ============
