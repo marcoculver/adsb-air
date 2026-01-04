@@ -3017,6 +3017,18 @@
                 <div class="top-sections" style="grid-template-columns: 1fr; margin-top: 20px;">
                     <div class="section">
                         <div class="section-title">Coordinates / LIDO Converter</div>
+
+                        <!-- GPS Status Box -->
+                        <div id="coord-gps-box" class="coord-gps-box" style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,20,40,0.8); border: 1px solid rgba(0,212,255,0.3); border-radius: 8px; padding: 8px 12px; margin-bottom: 15px; font-family: 'Courier New', monospace; font-size: 0.8rem;">
+                            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                                <div><span style="color: #888;">LAT:</span> <span id="coord-gps-lat" style="color: #00d4ff;">---</span></div>
+                                <div><span style="color: #888;">LON:</span> <span id="coord-gps-lon" style="color: #00d4ff;">---</span></div>
+                                <div><span style="color: #888;">TRK:</span> <span id="coord-gps-trk" style="color: #00ff88;">---</span></div>
+                                <div><span style="color: #888;">GS:</span> <span id="coord-gps-spd" style="color: #00ff88;">---</span></div>
+                            </div>
+                            <button class="preset-btn" onclick="fillCoordsFromGps()" id="coord-gps-fill-btn" style="padding: 5px 12px; font-size: 0.75rem;" disabled>Fill from GPS</button>
+                        </div>
+
                         <div class="input-grid-2">
                             <div class="input-group">
                                 <label class="input-label">Input Coordinates</label>
@@ -8411,6 +8423,85 @@ Example: A) UUEE B) 06L C) 5/5/5 D) 100/100/100 F) 5/5/5 G) XX/XX/XX"></textarea
             valueEl.textContent = '---°';
             arrowEl.style.transform = 'rotate(0deg)';
         }
+
+        // ============ GPS FOR COORDINATE CONVERTER ============
+        var coordGpsData = { lat: null, lon: null, track: null, speed: null, available: false };
+        var coordGpsInterval = null;
+
+        function startCoordGpsPolling() {
+            if (coordGpsInterval) return;
+            fetchCoordGpsData();
+            coordGpsInterval = setInterval(fetchCoordGpsData, 3000); // Poll every 3 seconds
+        }
+
+        function fetchCoordGpsData() {
+            fetch('/gps')
+                .then(function(response) {
+                    if (!response.ok) throw new Error('GPS not available');
+                    return response.json();
+                })
+                .then(function(data) {
+                    if (data && data.lat !== undefined && data.lon !== undefined) {
+                        coordGpsData.lat = data.lat;
+                        coordGpsData.lon = data.lon;
+                        coordGpsData.track = data.track;
+                        // Convert m/s to knots (1 m/s = 1.94384 knots)
+                        coordGpsData.speed = data.speed !== undefined ? data.speed * 1.94384 : null;
+                        coordGpsData.available = true;
+                        updateCoordGpsDisplay();
+                    } else {
+                        throw new Error('Invalid GPS data');
+                    }
+                })
+                .catch(function(err) {
+                    coordGpsData.available = false;
+                    updateCoordGpsDisplay();
+                });
+        }
+
+        function updateCoordGpsDisplay() {
+            var latEl = document.getElementById('coord-gps-lat');
+            var lonEl = document.getElementById('coord-gps-lon');
+            var trkEl = document.getElementById('coord-gps-trk');
+            var spdEl = document.getElementById('coord-gps-spd');
+            var fillBtn = document.getElementById('coord-gps-fill-btn');
+            var boxEl = document.getElementById('coord-gps-box');
+
+            if (coordGpsData.available) {
+                latEl.textContent = coordGpsData.lat.toFixed(4) + '°';
+                lonEl.textContent = coordGpsData.lon.toFixed(4) + '°';
+                trkEl.textContent = coordGpsData.track !== null ? Math.round(coordGpsData.track) + '°' : '---';
+                spdEl.textContent = coordGpsData.speed !== null ? Math.round(coordGpsData.speed) + ' kt' : '---';
+                fillBtn.disabled = false;
+                fillBtn.textContent = 'Fill from GPS';
+                boxEl.style.borderColor = 'rgba(0,212,255,0.5)';
+            } else {
+                latEl.textContent = '---';
+                lonEl.textContent = '---';
+                trkEl.textContent = '---';
+                spdEl.textContent = '---';
+                fillBtn.disabled = true;
+                fillBtn.textContent = 'GPS Not Available';
+                boxEl.style.borderColor = 'rgba(255,82,82,0.5)';
+            }
+        }
+
+        function fillCoordsFromGps() {
+            if (!coordGpsData.available) return;
+
+            // Format as decimal degrees with direction letters (e.g., "25.2532N 55.3657E")
+            var latDir = coordGpsData.lat >= 0 ? 'N' : 'S';
+            var lonDir = coordGpsData.lon >= 0 ? 'E' : 'W';
+            var latVal = Math.abs(coordGpsData.lat).toFixed(4);
+            var lonVal = Math.abs(coordGpsData.lon).toFixed(4);
+
+            var coordString = latVal + latDir + ' ' + lonVal + lonDir;
+            document.getElementById('coord-input').value = coordString.toUpperCase();
+            convertCoordinates();
+        }
+
+        // Start GPS polling when page loads
+        startCoordGpsPolling();
     </script>
 </body>
 </html>
