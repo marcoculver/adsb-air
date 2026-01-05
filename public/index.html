@@ -13634,9 +13634,14 @@
         };
 
         function loadAirspaceOverlay() {
+            console.log('Loading airspace overlay...');
             fetch('uae-airspace.geojson')
-                .then(function(response) { return response.json(); })
+                .then(function(response) {
+                    console.log('Airspace fetch response:', response.status);
+                    return response.json();
+                })
                 .then(function(data) {
+                    console.log('Airspace data loaded, features:', data.features ? data.features.length : 0);
                     mapAirspaceLayer = L.geoJSON(data, {
                         style: function(feature) {
                             var type = feature.properties.type || 0;
@@ -13663,9 +13668,10 @@
                             );
                         }
                     }).addTo(flightMap);
+                    console.log('Airspace layer added to map');
                 })
                 .catch(function(err) {
-                    console.log('Could not load airspace overlay:', err);
+                    console.error('Could not load airspace overlay:', err);
                 });
         }
 
@@ -13692,9 +13698,14 @@
         };
 
         function loadNavaidsOverlay() {
+            console.log('Loading navaids overlay...');
             fetch('uae-navaids.geojson')
-                .then(function(response) { return response.json(); })
+                .then(function(response) {
+                    console.log('Navaids fetch response:', response.status);
+                    return response.json();
+                })
                 .then(function(data) {
+                    console.log('Navaids data loaded, features:', data.features ? data.features.length : 0);
                     mapNavaidsLayer = L.geoJSON(data, {
                         pointToLayer: function(feature, latlng) {
                             var props = feature.properties;
