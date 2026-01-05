@@ -12395,15 +12395,18 @@
 
         // ============ EVENT LISTENERS FOR NEW CALCULATORS ============
         ['xwind-rwy', 'xwind-dir', 'xwind-spd', 'xwind-gust'].forEach(id => {
-            document.getElementById(id).addEventListener('change', calculateCrosswind);
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('change', calculateCrosswind);
         });
 
         ['hold-inbound', 'hold-hdg'].forEach(id => {
-            document.getElementById(id).addEventListener('change', calculateHoldEntry);
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('change', calculateHoldEntry);
         });
 
         ['isa-alt'].forEach(id => {
-            document.getElementById(id).addEventListener('change', calculateISA);
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('change', calculateISA);
         });
 
         // Auto-sync airfield elevation when 4 chars entered
@@ -12416,15 +12419,19 @@
             }
         } catch(e) { console.error('isa-airfield listener error:', e); }
 
-        document.getElementById('tz-input').addEventListener('change', calculateTimezones);
+        var tzInput = document.getElementById('tz-input');
+        if (tzInput) tzInput.addEventListener('change', calculateTimezones);
 
         // Load notes scratchpad on startup
         loadNotesScratchpad();
 
         // Auto-save notes as user types
-        document.getElementById('notes-scratchpad').addEventListener('input', function(e) {
-            localStorage.setItem('notesScratchpadCurrent', e.target.value);
-        });
+        var notesPad = document.getElementById('notes-scratchpad');
+        if (notesPad) {
+            notesPad.addEventListener('input', function(e) {
+                localStorage.setItem('notesScratchpadCurrent', e.target.value);
+            });
+        }
 
         // ============ QIBLA DIRECTION ============
         // Mecca coordinates (Kaaba)
