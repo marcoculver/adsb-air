@@ -57,7 +57,22 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+        }
+
+        .strip-left-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .strip-right-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-left: auto;
+            flex-shrink: 0;
         }
 
         .strip-timers-row {
@@ -1302,8 +1317,17 @@
             /* Top strip mobile */
             .active-timers-strip {
                 padding: 8px 10px;
-                gap: 10px;
+                gap: 6px;
                 border-radius: 8px 8px 0 0;
+            }
+            .strip-top-row {
+                gap: 10px;
+            }
+            .strip-left-group {
+                gap: 10px;
+            }
+            .strip-right-group {
+                gap: 8px;
             }
             .strip-clock-time {
                 font-size: 1rem;
@@ -1316,6 +1340,24 @@
             }
             .strip-qibla-arrow {
                 font-size: 1rem;
+            }
+            .strip-timers-row {
+                gap: 6px;
+            }
+            .strip-timer {
+                flex: 1 1 30%;
+                min-width: 0;
+                padding: 4px 8px;
+            }
+            .strip-timer-icon {
+                width: 22px;
+                height: 22px;
+            }
+            .strip-timer-name {
+                font-size: 0.6rem;
+            }
+            .strip-timer-value {
+                font-size: 0.85rem;
             }
             .tab-nav {
                 padding: 6px 10px;
@@ -2151,34 +2193,38 @@
         <div class="active-timers-strip" id="active-timers-strip">
             <!-- Top Row: Clocks, ETA, GPS, Qibla -->
             <div class="strip-top-row">
-                <div class="strip-clock">
-                    <div class="strip-clock-time" id="strip-utc-clock">--:--:--</div>
-                    <div class="strip-clock-label">UTC</div>
-                </div>
-                <div class="strip-clock" style="border-right: 1px solid rgba(255, 130, 0, 0.3); padding-right: 15px;">
-                    <div class="strip-clock-time" id="strip-dxb-clock" style="color: #FF8200;">--:--:--</div>
-                    <div class="strip-clock-label">DXB</div>
-                </div>
-                <div class="strip-eta" id="strip-eta" style="display:none" onclick="switchTab('sched')">
-                    <div class="strip-eta-time" id="strip-eta-time">--:--</div>
-                    <div class="strip-eta-label">ETA</div>
-                </div>
-                <div class="strip-gps" id="strip-gps" style="margin-left: auto;">
-                    <div class="strip-gps-row">
-                        <span class="strip-gps-label">POS</span>
-                        <span class="strip-gps-value" id="strip-gps-pos">---</span>
+                <div class="strip-left-group">
+                    <div class="strip-clock">
+                        <div class="strip-clock-time" id="strip-utc-clock">--:--:--</div>
+                        <div class="strip-clock-label">UTC</div>
                     </div>
-                    <div class="strip-gps-row">
-                        <span class="strip-gps-label">TRK</span>
-                        <span class="strip-gps-value" id="strip-gps-trk">---°</span>
-                        <span class="strip-gps-label" style="margin-left: 8px;">GS</span>
-                        <span class="strip-gps-value" id="strip-gps-gs">---kt</span>
+                    <div class="strip-clock" style="border-right: 1px solid rgba(255, 130, 0, 0.3); padding-right: 15px;">
+                        <div class="strip-clock-time" id="strip-dxb-clock" style="color: #FF8200;">--:--</div>
+                        <div class="strip-clock-label">DXB</div>
+                    </div>
+                    <div class="strip-eta" id="strip-eta" style="display:none" onclick="switchTab('sched')">
+                        <div class="strip-eta-time" id="strip-eta-time">--:--</div>
+                        <div class="strip-eta-label">ETA</div>
                     </div>
                 </div>
-                <div class="strip-qibla" id="strip-qibla" onclick="openQiblaModal()" style="cursor: pointer;">
-                    <div class="strip-qibla-arrow" id="strip-qibla-arrow">&#10148;</div>
-                    <div class="strip-qibla-value" id="strip-qibla-value">---°</div>
-                    <div class="strip-qibla-label">QIBLA</div>
+                <div class="strip-right-group">
+                    <div class="strip-gps" id="strip-gps">
+                        <div class="strip-gps-row">
+                            <span class="strip-gps-label">POS</span>
+                            <span class="strip-gps-value" id="strip-gps-pos">---</span>
+                        </div>
+                        <div class="strip-gps-row">
+                            <span class="strip-gps-label">TRK</span>
+                            <span class="strip-gps-value" id="strip-gps-trk">---°</span>
+                            <span class="strip-gps-label" style="margin-left: 8px;">GS</span>
+                            <span class="strip-gps-value" id="strip-gps-gs">---kt</span>
+                        </div>
+                    </div>
+                    <div class="strip-qibla" id="strip-qibla" onclick="openQiblaModal()" style="cursor: pointer;">
+                        <div class="strip-qibla-arrow" id="strip-qibla-arrow">&#10148;</div>
+                        <div class="strip-qibla-value" id="strip-qibla-value">---°</div>
+                        <div class="strip-qibla-label">QIBLA</div>
+                    </div>
                 </div>
             </div>
             <!-- Bottom Row: Active Timers -->
@@ -6421,7 +6467,7 @@
 
             // DXB time (UTC+4)
             const dxbTime = new Date(now.getTime() + 4 * 60 * 60 * 1000);
-            const dxbTimeStr = dxbTime.toISOString().substring(11, 19);
+            const dxbTimeStr = dxbTime.toISOString().substring(11, 16);  // HH:MM only
             const stripDxbEl = document.getElementById('strip-dxb-clock');
             if (stripDxbEl) stripDxbEl.textContent = dxbTimeStr;
         }
