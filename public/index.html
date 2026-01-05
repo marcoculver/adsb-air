@@ -13953,14 +13953,14 @@
         var originalUpdateGpsStrip = typeof updateGpsStrip === 'function' ? updateGpsStrip : null;
 
         function mapGpsHook() {
-            // Check if we have GPS data available from the strip
-            if (typeof gpsData !== 'undefined' && gpsData && gpsData.lat !== null) {
+            // Check if we have GPS data available from coordGpsData
+            if (typeof coordGpsData !== 'undefined' && coordGpsData && coordGpsData.available && coordGpsData.lat !== null) {
                 updateMapPosition(
-                    gpsData.lat,
-                    gpsData.lon,
-                    gpsData.heading || null,
-                    gpsData.speed || null,
-                    gpsData.altitude || null
+                    coordGpsData.lat,
+                    coordGpsData.lon,
+                    coordGpsData.track || null,
+                    coordGpsData.speed || null,
+                    null // altitude not available in coordGpsData
                 );
             }
         }
@@ -13995,13 +13995,13 @@
 
         // Poll GPS for map updates (every 2 seconds)
         setInterval(function() {
-            if (mapInitialized && typeof gpsData !== 'undefined' && gpsData && gpsData.lat !== null) {
+            if (mapInitialized && typeof coordGpsData !== 'undefined' && coordGpsData && coordGpsData.available && coordGpsData.lat !== null) {
                 updateMapPosition(
-                    gpsData.lat,
-                    gpsData.lon,
-                    gpsData.heading || null,
-                    gpsData.speed || null,
-                    gpsData.altitude || null
+                    coordGpsData.lat,
+                    coordGpsData.lon,
+                    coordGpsData.track || null,
+                    coordGpsData.speed || null,
+                    null
                 );
             }
         }, 2000);
