@@ -4746,33 +4746,19 @@
                     </div>
                 </div>
 
-                <!-- Sun Glare Calculator -->
-                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
-                    <div class="section-title">Runway Sun Glare</div>
-                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end;">
-                        <div class="fdp-field">
-                            <label>Runway Heading</label>
-                            <input type="number" id="sun-runway-hdg" class="fdp-input" placeholder="e.g. 120" min="1" max="360">
-                        </div>
-                        <button class="preset-btn" onclick="checkSunGlare()" style="padding: 10px 20px; font-size: 0.9rem;">Check Glare</button>
-                    </div>
-                    <div id="sun-glare-result" style="margin-top: 15px; padding: 15px; border-radius: 8px; text-align: center; display: none;">
-                    </div>
-                </div>
-
-                <!-- Arrival Daylight Check -->
+                <!-- Arrival Daylight & Glare Check -->
                 <div class="section" style="max-width: 800px; margin: 20px auto 0;">
                     <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
-                        <span>Arrival Daylight Check</span>
+                        <span>Arrival Conditions</span>
                         <button class="preset-btn" onclick="autofillArrivalDaylight()" style="padding: 4px 10px; font-size: 0.75rem;">From Sched</button>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px;">
                         <div class="fdp-field">
                             <label>Destination</label>
                             <input type="text" id="sun-arr-airport" class="fdp-input" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase;" oninput="this.value=this.value.toUpperCase()">
                         </div>
                         <div class="fdp-field">
-                            <label>Arrival Date</label>
+                            <label>Date</label>
                             <input type="date" id="sun-arr-date" class="fdp-input">
                         </div>
                         <div class="fdp-field">
@@ -4780,9 +4766,13 @@
                             <input type="hidden" id="sun-arr-eta">
                             <button id="sun-arr-eta-btn" class="picker-btn placeholder" onclick="openTimePicker('sun-arr-eta')">----</button>
                         </div>
+                        <div class="fdp-field">
+                            <label>Rwy Hdg</label>
+                            <input type="number" id="sun-arr-rwy" class="fdp-input" placeholder="e.g. 120" min="1" max="360" style="text-align: center;">
+                        </div>
                     </div>
                     <div style="text-align: center; margin-top: 10px;">
-                        <button class="preset-btn" onclick="checkArrivalDaylight()" style="padding: 10px 20px; font-size: 0.9rem;">Check Daylight</button>
+                        <button class="preset-btn" onclick="checkArrivalConditions()" style="padding: 10px 20px; font-size: 0.9rem;">Check Conditions</button>
                     </div>
                     <div id="sun-arrival-result" style="margin-top: 15px; padding: 15px; border-radius: 8px; text-align: center; display: none;">
                     </div>
@@ -9911,11 +9901,12 @@
             }
         }
 
-        // Check if arrival will be in daylight
-        function checkArrivalDaylight() {
+        // Check arrival conditions (daylight + glare)
+        function checkArrivalConditions() {
             var code = document.getElementById('sun-arr-airport').value.trim();
             var dateStr = document.getElementById('sun-arr-date').value;
             var eta = document.getElementById('sun-arr-eta').value;
+            var rwyHdg = parseInt(document.getElementById('sun-arr-rwy').value);
 
             var resultEl = document.getElementById('sun-arrival-result');
             resultEl.style.display = 'block';
@@ -9933,33 +9924,69 @@
 
             var date = new Date(dateStr + 'T12:00:00Z');
             var sunRiseSet = calculateSunEvent(airport.lat, airport.lon, date, 90.833);
-
             var etaMins = parseInt(eta.substring(0, 2)) * 60 + parseInt(eta.substring(2, 4));
 
+            // Calculate sun position at ETA time
+            var etaDate = new Date(dateStr + 'T00:00:00Z');
+            etaDate.setUTCMinutes(etaMins);
+            var sunPos = calculateSunPosition(airport.lat, airport.lon, etaDate);
+
+            var html = '';
+            var bgColor = '';
+
+            // Daylight check
             if (sunRiseSet.alwaysDay) {
-                resultEl.style.background = 'rgba(76, 175, 80, 0.2)';
-                resultEl.innerHTML = '<div style="color: #4CAF50; font-weight: bold; font-size: 1.3rem;">DAYLIGHT</div>' +
-                    '<div style="color: #888; margin-top: 8px;">Polar day - 24hr daylight</div>';
+                bgColor = 'rgba(76, 175, 80, 0.2)';
+                html = '<div style="color: #4CAF50; font-weight: bold; font-size: 1.2rem;">DAYLIGHT</div>' +
+                    '<div style="color: #888; font-size: 0.85rem;">Polar day - 24hr daylight</div>';
             } else if (sunRiseSet.alwaysNight) {
-                resultEl.style.background = 'rgba(136, 136, 136, 0.3)';
-                resultEl.innerHTML = '<div style="color: #888; font-weight: bold; font-size: 1.3rem;">DARKNESS</div>' +
-                    '<div style="color: #888; margin-top: 8px;">Polar night - 24hr darkness</div>';
+                bgColor = 'rgba(136, 136, 136, 0.3)';
+                html = '<div style="color: #888; font-weight: bold; font-size: 1.2rem;">DARKNESS</div>' +
+                    '<div style="color: #888; font-size: 0.85rem;">Polar night</div>';
             } else {
                 var isDay = (etaMins >= sunRiseSet.rise && etaMins <= sunRiseSet.set) ||
                             (sunRiseSet.rise > sunRiseSet.set && (etaMins >= sunRiseSet.rise || etaMins <= sunRiseSet.set));
 
                 if (isDay) {
-                    resultEl.style.background = 'rgba(76, 175, 80, 0.2)';
-                    resultEl.innerHTML = '<div style="color: #4CAF50; font-weight: bold; font-size: 1.3rem;">DAYLIGHT ARRIVAL</div>' +
-                        '<div style="margin-top: 8px;">' + airport.name + '</div>' +
-                        '<div style="color: #888;">Sunrise: ' + minsToTime(sunRiseSet.rise) + ' UTC | Sunset: ' + minsToTime(sunRiseSet.set) + ' UTC</div>';
+                    bgColor = 'rgba(76, 175, 80, 0.2)';
+                    html = '<div style="color: #4CAF50; font-weight: bold; font-size: 1.2rem;">DAYLIGHT ARRIVAL</div>';
                 } else {
-                    resultEl.style.background = 'rgba(136, 136, 136, 0.3)';
-                    resultEl.innerHTML = '<div style="color: #888; font-weight: bold; font-size: 1.3rem;">NIGHT ARRIVAL</div>' +
-                        '<div style="margin-top: 8px;">' + airport.name + '</div>' +
-                        '<div style="color: #888;">Sunrise: ' + minsToTime(sunRiseSet.rise) + ' UTC | Sunset: ' + minsToTime(sunRiseSet.set) + ' UTC</div>';
+                    bgColor = 'rgba(136, 136, 136, 0.3)';
+                    html = '<div style="color: #888; font-weight: bold; font-size: 1.2rem;">NIGHT ARRIVAL</div>';
                 }
+                html += '<div style="color: #888; font-size: 0.85rem;">' + airport.name + '</div>';
+                html += '<div style="color: #666; font-size: 0.8rem;">Sunrise: ' + minsToTime(sunRiseSet.rise) + ' | Sunset: ' + minsToTime(sunRiseSet.set) + ' UTC</div>';
             }
+
+            // Glare check (only if runway heading provided and sun is up)
+            if (!isNaN(rwyHdg) && rwyHdg >= 1 && rwyHdg <= 360 && sunPos.elevation > 0) {
+                var diff = Math.abs(sunPos.azimuth - rwyHdg);
+                if (diff > 180) diff = 360 - diff;
+
+                html += '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">';
+
+                if (diff <= 30 && sunPos.elevation < 15) {
+                    html += '<div style="color: #ff5252; font-weight: bold;">⚠️ HIGH GLARE RISK</div>';
+                    bgColor = 'rgba(255, 82, 82, 0.25)';
+                } else if (diff <= 45 && sunPos.elevation < 25) {
+                    html += '<div style="color: #FFC107; font-weight: bold;">⚠️ MODERATE GLARE</div>';
+                    if (bgColor === 'rgba(76, 175, 80, 0.2)') bgColor = 'rgba(255, 193, 7, 0.2)';
+                } else {
+                    html += '<div style="color: #4CAF50;">LOW GLARE RISK</div>';
+                }
+                html += '<div style="color: #888; font-size: 0.8rem;">Sun: ' + sunPos.azimuth.toFixed(0) + '° az, ' + sunPos.elevation.toFixed(0) + '° el | ' + diff.toFixed(0) + '° off rwy</div>';
+                html += '</div>';
+            } else if (!isNaN(rwyHdg) && sunPos.elevation <= 0) {
+                html += '<div style="margin-top: 10px; color: #666; font-size: 0.8rem;">Sun below horizon - no glare</div>';
+            }
+
+            resultEl.style.background = bgColor;
+            resultEl.innerHTML = html;
+        }
+
+        // Keep old function name for backwards compatibility
+        function checkArrivalDaylight() {
+            checkArrivalConditions();
         }
 
         // Calculate night flight time
