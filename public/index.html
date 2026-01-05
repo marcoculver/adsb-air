@@ -13635,7 +13635,7 @@
 
         function loadAirspaceOverlay() {
             console.log('Loading airspace overlay...');
-            fetch('uae-airspace.geojson')
+            fetch('/dashboard/uae-airspace.geojson')
                 .then(function(response) {
                     console.log('Airspace fetch response:', response.status);
                     return response.json();
@@ -13699,7 +13699,7 @@
 
         function loadNavaidsOverlay() {
             console.log('Loading navaids overlay...');
-            fetch('uae-navaids.geojson')
+            fetch('/dashboard/uae-navaids.geojson')
                 .then(function(response) {
                     console.log('Navaids fetch response:', response.status);
                     return response.json();
