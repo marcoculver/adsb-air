@@ -7830,16 +7830,18 @@
             const sectorsDisplay = document.getElementById('fdp-sectors-display');
             if (sectorsDisplay) sectorsDisplay.textContent = visibleSectors;
 
-            // Auto-calculate report time: 1 hour before first sector STD
+            // Auto-calculate report time: 1 hour before first sector STD (in local time)
             const firstStd = document.getElementById('s1-std')?.value;
             if (firstStd) {
                 const stdTime = parseTime(firstStd);
                 if (stdTime) {
-                    // Subtract 60 minutes for report time
-                    let reportMins = (stdTime.hours * 60 + stdTime.minutes) - 60;
-                    if (reportMins < 0) reportMins += 1440; // Handle day wrap
-                    const reportHours = Math.floor(reportMins / 60);
-                    const reportMinutes = reportMins % 60;
+                    // Convert STD from UTC to local time, then subtract 60 minutes for report
+                    const offset = getLocalOffset();
+                    let localMins = (stdTime.hours * 60 + stdTime.minutes) + (offset * 60) - 60;
+                    if (localMins < 0) localMins += 1440; // Handle day wrap
+                    if (localMins >= 1440) localMins -= 1440;
+                    const reportHours = Math.floor(localMins / 60);
+                    const reportMinutes = localMins % 60;
                     const reportTime = String(reportHours).padStart(2, '0') + String(reportMinutes).padStart(2, '0');
                     document.getElementById('fdp-report').value = reportTime;
                     document.getElementById('fdp-report-btn').textContent = reportTime;
