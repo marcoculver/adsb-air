@@ -10075,9 +10075,9 @@
                 // Sun on outer edge
                 var sunX = 60 + 48 * Math.cos(sunAngle * Math.PI / 180);
                 var sunY = 60 + 48 * Math.sin(sunAngle * Math.PI / 180);
-                // Aircraft on short final (inside, near runway threshold)
-                var acX = 60 + 36 * Math.cos(rwyAngle * Math.PI / 180);
-                var acY = 60 + 36 * Math.sin(rwyAngle * Math.PI / 180);
+                // Aircraft over the runway
+                var acX = 60 + 15 * Math.cos(rwyAngle * Math.PI / 180);
+                var acY = 60 + 15 * Math.sin(rwyAngle * Math.PI / 180);
 
                 html += '<svg width="120" height="120" viewBox="0 0 120 120" style="flex-shrink: 0;">';
                 // Outer circle
@@ -10101,8 +10101,8 @@
                 html += '<line x1="60" y1="68" x2="60" y2="76" stroke="#fff" stroke-width="1"/>';
                 html += '<line x1="60" y1="80" x2="60" y2="88" stroke="#fff" stroke-width="1"/>';
                 html += '</g>';
-                // Aircraft icon (approaching)
-                html += '<g transform="translate(' + acX + ',' + acY + ') rotate(' + (rwyHdg + 180) + ')">';
+                // Aircraft icon (over runway, bigger)
+                html += '<g transform="translate(' + acX + ',' + acY + ') rotate(' + (rwyHdg + 180) + ') scale(1.4)">';
                 html += '<path d="M0,-6 L2,-2 L2,2 L6,4 L6,6 L2,5 L2,7 L4,8 L4,10 L0,9 L-4,10 L-4,8 L-2,7 L-2,5 L-6,6 L-6,4 L-2,2 L-2,-2 Z" fill="#fff" stroke="#333" stroke-width="0.5"/>';
                 html += '</g>';
                 // Sun icon (outer edge, smaller)
