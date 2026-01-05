@@ -10066,23 +10066,65 @@
                     html += '<div style="color: #4CAF50; font-weight: bold; font-size: 1.1rem;">✓ LOW GLARE RISK</div>';
                 }
 
-                // Sun position details
-                html += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; text-align: left;">';
-                html += '<div style="background: rgba(0,0,0,0.2); padding: 8px; border-radius: 6px;">';
-                html += '<div style="color: #888; font-size: 0.75rem;">SUN AZIMUTH</div>';
-                html += '<div style="color: #fff; font-size: 1rem; font-weight: bold;">' + sunPos.azimuth.toFixed(1) + '° <span style="color: #FF8300;">(' + sunDir + ')</span></div>';
+                // Compass rose and sun position details
+                html += '<div style="display: flex; align-items: center; gap: 15px; margin-top: 12px;">';
+
+                // Compass rose SVG
+                var sunAngle = sunPos.azimuth - 90; // SVG starts at 3 o'clock, adjust to start at 12
+                var rwyAngle = rwyHdg - 90;
+                var sunX = 60 + 38 * Math.cos(sunAngle * Math.PI / 180);
+                var sunY = 60 + 38 * Math.sin(sunAngle * Math.PI / 180);
+                var rwyX1 = 60 + 45 * Math.cos(rwyAngle * Math.PI / 180);
+                var rwyY1 = 60 + 45 * Math.sin(rwyAngle * Math.PI / 180);
+                var rwyX2 = 60 - 45 * Math.cos(rwyAngle * Math.PI / 180);
+                var rwyY2 = 60 - 45 * Math.sin(rwyAngle * Math.PI / 180);
+
+                html += '<svg width="120" height="120" viewBox="0 0 120 120" style="flex-shrink: 0;">';
+                // Outer circle
+                html += '<circle cx="60" cy="60" r="50" fill="rgba(0,0,0,0.3)" stroke="#555" stroke-width="1"/>';
+                // Inner circle
+                html += '<circle cx="60" cy="60" r="35" fill="none" stroke="#444" stroke-width="1" stroke-dasharray="2,2"/>';
+                // Cardinal directions
+                html += '<text x="60" y="18" text-anchor="middle" fill="#888" font-size="10" font-weight="bold">N</text>';
+                html += '<text x="102" y="64" text-anchor="middle" fill="#666" font-size="9">E</text>';
+                html += '<text x="60" y="108" text-anchor="middle" fill="#666" font-size="9">S</text>';
+                html += '<text x="18" y="64" text-anchor="middle" fill="#666" font-size="9">W</text>';
+                // Runway line
+                html += '<line x1="' + rwyX1 + '" y1="' + rwyY1 + '" x2="' + rwyX2 + '" y2="' + rwyY2 + '" stroke="#4CAF50" stroke-width="4" stroke-linecap="round"/>';
+                // Runway direction arrow
+                html += '<polygon points="' + rwyX1 + ',' + rwyY1 + ' ' + (rwyX1 - 6 * Math.cos((rwyAngle - 150) * Math.PI / 180)) + ',' + (rwyY1 - 6 * Math.sin((rwyAngle - 150) * Math.PI / 180)) + ' ' + (rwyX1 - 6 * Math.cos((rwyAngle + 150) * Math.PI / 180)) + ',' + (rwyY1 - 6 * Math.sin((rwyAngle + 150) * Math.PI / 180)) + '" fill="#4CAF50"/>';
+                // Sun icon
+                html += '<circle cx="' + sunX + '" cy="' + sunY + '" r="10" fill="#FFB300"/>';
+                html += '<circle cx="' + sunX + '" cy="' + sunY + '" r="6" fill="#FF8300"/>';
+                // Sun rays
+                for (var i = 0; i < 8; i++) {
+                    var rayAngle = i * 45 * Math.PI / 180;
+                    var rx1 = sunX + 12 * Math.cos(rayAngle);
+                    var ry1 = sunY + 12 * Math.sin(rayAngle);
+                    var rx2 = sunX + 16 * Math.cos(rayAngle);
+                    var ry2 = sunY + 16 * Math.sin(rayAngle);
+                    html += '<line x1="' + rx1 + '" y1="' + ry1 + '" x2="' + rx2 + '" y2="' + ry2 + '" stroke="#FFB300" stroke-width="2" stroke-linecap="round"/>';
+                }
+                html += '</svg>';
+
+                // Details grid
+                html += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; flex: 1; text-align: left;">';
+                html += '<div style="background: rgba(0,0,0,0.2); padding: 6px 8px; border-radius: 6px;">';
+                html += '<div style="color: #888; font-size: 0.7rem;">SUN AZIMUTH</div>';
+                html += '<div style="color: #fff; font-size: 0.9rem; font-weight: bold;">' + sunPos.azimuth.toFixed(0) + '° <span style="color: #FF8300;">(' + sunDir + ')</span></div>';
                 html += '</div>';
-                html += '<div style="background: rgba(0,0,0,0.2); padding: 8px; border-radius: 6px;">';
-                html += '<div style="color: #888; font-size: 0.75rem;">SUN ELEVATION</div>';
-                html += '<div style="color: #fff; font-size: 1rem; font-weight: bold;">' + sunPos.elevation.toFixed(1) + '°</div>';
+                html += '<div style="background: rgba(0,0,0,0.2); padding: 6px 8px; border-radius: 6px;">';
+                html += '<div style="color: #888; font-size: 0.7rem;">SUN ELEVATION</div>';
+                html += '<div style="color: #fff; font-size: 0.9rem; font-weight: bold;">' + sunPos.elevation.toFixed(1) + '°</div>';
                 html += '</div>';
-                html += '<div style="background: rgba(0,0,0,0.2); padding: 8px; border-radius: 6px;">';
-                html += '<div style="color: #888; font-size: 0.75rem;">RUNWAY HDG</div>';
-                html += '<div style="color: #fff; font-size: 1rem; font-weight: bold;">' + rwyHdg + '°</div>';
+                html += '<div style="background: rgba(0,0,0,0.2); padding: 6px 8px; border-radius: 6px;">';
+                html += '<div style="color: #4CAF50; font-size: 0.7rem;">RUNWAY HDG</div>';
+                html += '<div style="color: #fff; font-size: 0.9rem; font-weight: bold;">' + rwyHdg + '°</div>';
                 html += '</div>';
-                html += '<div style="background: rgba(0,0,0,0.2); padding: 8px; border-radius: 6px;">';
-                html += '<div style="color: #888; font-size: 0.75rem;">OFFSET</div>';
-                html += '<div style="color: #fff; font-size: 1rem; font-weight: bold;">' + diff.toFixed(0) + '°</div>';
+                html += '<div style="background: rgba(0,0,0,0.2); padding: 6px 8px; border-radius: 6px;">';
+                html += '<div style="color: #888; font-size: 0.7rem;">OFFSET</div>';
+                html += '<div style="color: #fff; font-size: 0.9rem; font-weight: bold;">' + diff.toFixed(0) + '°</div>';
+                html += '</div>';
                 html += '</div>';
                 html += '</div>';
                 html += '</div>';
