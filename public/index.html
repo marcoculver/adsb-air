@@ -5247,8 +5247,16 @@
                 }
                 else if (fieldId.match(/^s(\d)-(std|sta)$/)) {
                     const schedMatch = fieldId.match(/^s(\d)-(std|sta)$/);
-                    calculateSectorTimes(parseInt(schedMatch[1]));
-                    saveSchedule();
+                    const sectorNum = parseInt(schedMatch[1]);
+                    const fieldType = schedMatch[2];
+                    calculateSectorTimes(sectorNum);
+                    // Dynamic update: If STA changed, update subsequent sectors
+                    if (fieldType === 'sta') {
+                        updateAllSubsequentSectors(sectorNum);
+                    } else {
+                        updateTurnaroundTimes();
+                        saveSchedule();
+                    }
                 }
                 else if (fieldId.startsWith('oooi-')) calculateOOOI();
                 else if (fieldId === 'eta-time') { etaManualStartTime = null; calculateETA(); }
@@ -7382,53 +7390,136 @@
 
         function addSector() {
             if (currentSectorCount < 4) {
-                var prevSector = currentSectorCount;
                 currentSectorCount++;
                 document.getElementById('sector-' + currentSectorCount + '-block').style.display = 'block';
                 document.getElementById('sched-total-sectors').textContent = currentSectorCount;
 
-                // Copy ARR from previous sector to DEP of new sector
-                var prevArr = document.getElementById('s' + prevSector + '-arr').value;
-                if (prevArr) {
-                    document.getElementById('s' + currentSectorCount + '-dep').value = prevArr;
-                    document.getElementById('s' + currentSectorCount + '-dep-btn').textContent = prevArr;
-                }
-
-                // Increment flight number from previous sector
-                var prevFlt = document.getElementById('s' + prevSector + '-flt').value;
-                if (prevFlt) {
-                    // Extract numeric part and increment (format: FZ1712 or FZ1712A)
-                    var match = prevFlt.match(/^FZ(\d+)([A-Z]?)$/i);
-                    if (match) {
-                        var num = parseInt(match[1], 10) + 1;
-                        var suffix = match[2] || '';
-                        var newFlt = 'FZ' + num.toString() + suffix;
-                        document.getElementById('s' + currentSectorCount + '-flt').value = newFlt;
-                        document.getElementById('s' + currentSectorCount + '-flt-btn').textContent = newFlt;
-                    }
-                }
-
-                // Default STD of new sector to STA of previous sector + 1 hour
-                var prevSta = document.getElementById('s' + prevSector + '-sta').value;
-                if (prevSta && prevSta.length === 4) {
-                    var hours = parseInt(prevSta.substring(0, 2), 10);
-                    var mins = parseInt(prevSta.substring(2, 4), 10);
-                    hours = (hours + 1) % 24;
-                    var newStd = hours.toString().padStart(2, '0') + mins.toString().padStart(2, '0');
-                    document.getElementById('s' + currentSectorCount + '-std').value = newStd;
-                    document.getElementById('s' + currentSectorCount + '-std-btn').textContent = newStd;
-                }
-
+                // Update the new sector based on previous sector's current values
+                updateSectorFromPrevious(currentSectorCount);
+                updateTurnaroundTimes();
                 saveSchedule();
             }
         }
 
         function removeSector() {
             if (currentSectorCount > 1) {
+                // Clear the sector data before hiding
+                clearSectorData(currentSectorCount);
                 document.getElementById(`sector-${currentSectorCount}-block`).style.display = 'none';
                 currentSectorCount--;
                 document.getElementById('sched-total-sectors').textContent = currentSectorCount;
+                updateTurnaroundTimes();
                 saveSchedule();
+            }
+        }
+
+        function clearSectorData(sectorNum) {
+            ['flt', 'dep', 'arr', 'std', 'sta', 'pax', 'stand', 'out', 'off', 'on', 'in'].forEach(function(field) {
+                var input = document.getElementById('s' + sectorNum + '-' + field);
+                var btn = document.getElementById('s' + sectorNum + '-' + field + '-btn');
+                if (input) input.value = '';
+                if (btn) {
+                    if (field === 'pax') btn.textContent = '---';
+                    else if (field === 'flt') btn.textContent = 'FZ___';
+                    else if (field === 'dep' || field === 'arr') btn.textContent = field.toUpperCase();
+                    else if (field === 'stand') btn.textContent = '---';
+                    else btn.textContent = '----';
+                }
+            });
+            var blockEl = document.getElementById('s' + sectorNum + '-block');
+            var flightEl = document.getElementById('s' + sectorNum + '-flight');
+            if (blockEl) blockEl.textContent = '--:--';
+            if (flightEl) flightEl.textContent = '--:--';
+            var taEl = document.getElementById('sector-' + sectorNum + '-turnaround');
+            if (taEl) {
+                taEl.textContent = 'T/A: --:--';
+                taEl.style.display = 'none';
+            }
+        }
+
+        function updateSectorFromPrevious(sectorNum) {
+            if (sectorNum <= 1) return;
+            var prevSector = sectorNum - 1;
+
+            // Copy ARR from previous sector to DEP
+            var prevArr = document.getElementById('s' + prevSector + '-arr').value;
+            if (prevArr) {
+                document.getElementById('s' + sectorNum + '-dep').value = prevArr;
+                document.getElementById('s' + sectorNum + '-dep-btn').textContent = prevArr;
+            }
+
+            // Increment flight number
+            var prevFlt = document.getElementById('s' + prevSector + '-flt').value;
+            if (prevFlt) {
+                var match = prevFlt.match(/^([A-Z]{2})(\d+)([A-Z]?)$/i);
+                if (match) {
+                    var prefix = match[1].toUpperCase();
+                    var num = parseInt(match[2], 10) + 1;
+                    var suffix = match[3] || '';
+                    var newFlt = prefix + num.toString() + suffix;
+                    document.getElementById('s' + sectorNum + '-flt').value = newFlt;
+                    document.getElementById('s' + sectorNum + '-flt-btn').textContent = newFlt;
+                }
+            }
+
+            // STD = STA of previous sector + turnaround (default 1 hour)
+            var prevSta = document.getElementById('s' + prevSector + '-sta').value;
+            if (prevSta && prevSta.length === 4) {
+                var hours = parseInt(prevSta.substring(0, 2), 10);
+                var mins = parseInt(prevSta.substring(2, 4), 10);
+                hours = (hours + 1) % 24; // Add 1 hour turnaround
+                var newStd = hours.toString().padStart(2, '0') + mins.toString().padStart(2, '0');
+                document.getElementById('s' + sectorNum + '-std').value = newStd;
+                document.getElementById('s' + sectorNum + '-std-btn').textContent = newStd;
+            }
+        }
+
+        function updateAllSubsequentSectors(changedSector) {
+            // Update all sectors after the changed one
+            for (var s = changedSector + 1; s <= currentSectorCount; s++) {
+                updateSectorFromPrevious(s);
+            }
+            updateTurnaroundTimes();
+            saveSchedule();
+        }
+
+        function updateTurnaroundTimes() {
+            for (var s = 2; s <= 4; s++) {
+                var taEl = document.getElementById('sector-' + s + '-turnaround');
+                if (!taEl) continue;
+
+                if (s > currentSectorCount) {
+                    taEl.style.display = 'none';
+                    continue;
+                }
+
+                var prevSta = document.getElementById('s' + (s - 1) + '-sta').value;
+                var currStd = document.getElementById('s' + s + '-std').value;
+
+                if (prevSta && prevSta.length === 4 && currStd && currStd.length === 4) {
+                    var prevMins = parseInt(prevSta.substring(0, 2), 10) * 60 + parseInt(prevSta.substring(2, 4), 10);
+                    var currMins = parseInt(currStd.substring(0, 2), 10) * 60 + parseInt(currStd.substring(2, 4), 10);
+                    var diff = currMins - prevMins;
+                    if (diff < 0) diff += 1440; // Handle day wrap
+                    var h = Math.floor(diff / 60);
+                    var m = diff % 60;
+                    taEl.textContent = 'T/A: ' + h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0');
+                    taEl.style.display = 'inline';
+
+                    // Color based on turnaround time
+                    if (diff < 45) {
+                        taEl.classList.add('behind');
+                        taEl.classList.remove('ahead');
+                    } else if (diff >= 60) {
+                        taEl.classList.add('ahead');
+                        taEl.classList.remove('behind');
+                    } else {
+                        taEl.classList.remove('ahead', 'behind');
+                    }
+                } else {
+                    taEl.textContent = 'T/A: --:--';
+                    taEl.style.display = s <= currentSectorCount ? 'inline' : 'none';
+                }
             }
         }
 
@@ -7558,7 +7649,14 @@
                 const upperValue = newValue.toUpperCase();
                 document.getElementById(fieldId).value = upperValue;
                 document.getElementById(fieldId + '-btn').textContent = upperValue || (fieldId.includes('flt') ? 'FZ___' : (fieldId.includes('tail') ? 'A6-___' : '---'));
-                saveSchedule();
+
+                // Dynamic update: If ARR changed, update subsequent sectors
+                var arrMatch = fieldId.match(/^s(\d)-arr$/);
+                if (arrMatch) {
+                    updateAllSubsequentSectors(parseInt(arrMatch[1]));
+                } else {
+                    saveSchedule();
+                }
             }
         }
 
@@ -7664,7 +7762,13 @@
                 // Auto-fill route from database
                 autoFillRouteFromFlight(flightPickerFieldId, fullValue);
 
-                saveSchedule();
+                // Dynamic update: Update subsequent sectors with new flight number
+                var sectorMatch = flightPickerFieldId.match(/^s(\d)-flt$/);
+                if (sectorMatch) {
+                    updateAllSubsequentSectors(parseInt(sectorMatch[1]));
+                } else {
+                    saveSchedule();
+                }
             }
             closeFlightPicker();
         }
