@@ -2849,7 +2849,7 @@
                     <div class="input-grid-2" style="gap:12px">
                         <div class="input-group">
                             <label class="input-label">Airport</label>
-                            <input type="text" class="fdp-input" id="acc-airport" placeholder="OMDB" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value = this.value.toUpperCase(); autofillAccElevation()">
+                            <input type="text" class="fdp-input" id="acc-airport" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value = this.value.toUpperCase(); autofillAccElevation()">
                         </div>
                         <div class="input-group">
                             <label class="input-label">ELEV (ft)</label>
@@ -3253,12 +3253,12 @@
                     <div class="section-title">Route / GeoJSON</div>
                     <div class="input-grid-2">
                         <div class="input-group">
-                            <label class="input-label">From (ICAO)</label>
-                            <input type="text" class="fdp-input" id="route-from" placeholder="OMDB" maxlength="4" style="text-transform: uppercase; text-align: center;">
+                            <label class="input-label">From</label>
+                            <input type="text" class="fdp-input" id="route-from" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase; text-align: center;">
                         </div>
                         <div class="input-group">
-                            <label class="input-label">To (ICAO)</label>
-                            <input type="text" class="fdp-input" id="route-to" placeholder="EGLL" maxlength="4" style="text-transform: uppercase; text-align: center;">
+                            <label class="input-label">To</label>
+                            <input type="text" class="fdp-input" id="route-to" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase; text-align: center;">
                         </div>
                     </div>
                     <button class="preset-btn" style="width: 100%; margin-top: 10px;" onclick="drawRoute()">Draw Great Circle</button>
@@ -4868,11 +4868,11 @@
                     <div class="night-time-grid" style="display: grid; grid-template-columns: 0.6fr 0.6fr 1fr 1fr 1fr; gap: 10px;">
                         <div class="fdp-field">
                             <label>Dep</label>
-                            <input type="text" id="sun-night-dep" class="fdp-input" placeholder="ICAO" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value=this.value.toUpperCase()">
+                            <input type="text" id="sun-night-dep" class="fdp-input" placeholder="CODE" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value=this.value.toUpperCase()">
                         </div>
                         <div class="fdp-field">
                             <label>Arr</label>
-                            <input type="text" id="sun-night-arr" class="fdp-input" placeholder="ICAO" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value=this.value.toUpperCase()">
+                            <input type="text" id="sun-night-arr" class="fdp-input" placeholder="CODE" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value=this.value.toUpperCase()">
                         </div>
                         <div class="fdp-field">
                             <label>Date</label>
@@ -13719,11 +13719,11 @@
 
         // Great circle route calculation
         function drawRoute() {
-            var fromICAO = document.getElementById('route-from').value.toUpperCase().trim();
-            var toICAO = document.getElementById('route-to').value.toUpperCase().trim();
+            var fromCode = document.getElementById('route-from').value.toUpperCase().trim();
+            var toCode = document.getElementById('route-to').value.toUpperCase().trim();
 
-            if (!fromICAO || !toICAO) {
-                alert('Enter both departure and arrival ICAO codes');
+            if (!fromCode || !toCode) {
+                alert('Enter both departure and arrival airport codes');
                 return;
             }
 
@@ -13733,15 +13733,18 @@
                 return;
             }
 
-            var fromApt = getAirport(fromICAO);
-            var toApt = getAirport(toICAO);
+            // Try ICAO first, then IATA
+            var fromApt = getAirport(fromCode) || getAirportByIATA(fromCode);
+            var toApt = getAirport(toCode) || getAirportByIATA(toCode);
+            var fromICAO = fromApt ? (fromApt.icao || fromCode) : fromCode;
+            var toICAO = toApt ? (toApt.icao || toCode) : toCode;
 
             if (!fromApt) {
-                alert('Unknown airport: ' + fromICAO + '\nNot found in database (8,800+ airports)');
+                alert('Unknown airport: ' + fromCode + '\nNot found in database (8,800+ airports)');
                 return;
             }
             if (!toApt) {
-                alert('Unknown airport: ' + toICAO + '\nNot found in database (8,800+ airports)');
+                alert('Unknown airport: ' + toCode + '\nNot found in database (8,800+ airports)');
                 return;
             }
 
