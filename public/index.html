@@ -1852,6 +1852,26 @@
                 font-size: 0.85rem;
             }
 
+            /* Coordinate Converter Manual Entry Mobile */
+            .coord-manual-entry-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* Sun & Moon Direction Mobile */
+            .sun-moon-direction-grid {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+
+            .moon-position-container {
+                justify-content: flex-start;
+            }
+
+            .moon-info-container {
+                flex-wrap: wrap;
+                gap: 10px !important;
+            }
+
             /* Airport Distance Calc Mobile */
             #tab-nav .input-grid-2 {
                 grid-template-columns: 1fr 1fr;
@@ -3835,7 +3855,7 @@
                         <!-- Manual Entry: Split Lat/Lon -->
                         <div style="margin-bottom: 15px;">
                             <div style="color: #888; font-size: 0.7rem; margin-bottom: 8px;">Manual Entry</div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="coord-manual-entry-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                                 <div style="display: flex; gap: 5px; align-items: center;">
                                     <button class="preset-btn" id="coord-ns-btn" onclick="toggleCoordNS()" style="width: 35px; padding: 8px 0; font-weight: bold; background: rgba(0,212,255,0.3); border-color: #00d4ff;">N</button>
                                     <input type="text" class="fdp-input" id="coord-lat-input" placeholder="25.2583 or 25°15'30&quot;" style="flex: 1; text-align: center;" oninput="convertFromManual()">
@@ -4681,7 +4701,7 @@
                 <!-- Current Sun & Moon Position -->
                 <div class="section" style="max-width: 800px; margin: 20px auto 0;">
                     <div class="section-title">Sun & Moon Direction</div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div class="sun-moon-direction-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
                         <!-- Sun Position -->
                         <div style="display: flex; align-items: center; gap: 15px;">
                             <div style="position: relative; width: 80px; height: 80px; flex-shrink: 0;">
@@ -4714,7 +4734,7 @@
                             </div>
                         </div>
                         <!-- Moon Position -->
-                        <div style="display: flex; align-items: center; gap: 15px;">
+                        <div class="moon-position-container" style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
                             <div style="position: relative; width: 80px; height: 80px; flex-shrink: 0;">
                                 <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
                                     <circle cx="50" cy="50" r="40" fill="rgba(0,20,40,0.8)" stroke="rgba(100,149,237,0.4)" stroke-width="2"/>
@@ -4729,7 +4749,7 @@
                                     <circle cx="50" cy="50" r="3" fill="#6495ED"/>
                                 </svg>
                             </div>
-                            <div style="display: flex; align-items: center; gap: 15px;">
+                            <div class="moon-info-container" style="display: flex; align-items: center; gap: 15px;">
                                 <div style="position: relative; width: 50px; height: 50px;">
                                     <svg viewBox="0 0 100 100" id="moon-phase-svg" style="width: 100%; height: 100%;">
                                         <circle cx="50" cy="50" r="40" fill="#1a1a1a" stroke="#333" stroke-width="2"/>
