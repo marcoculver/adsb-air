@@ -3876,12 +3876,12 @@
                         <div class="section-title">Airport Distance Calculator</div>
                         <div class="input-grid-2">
                             <div class="input-group">
-                                <label class="input-label">From (ICAO)</label>
-                                <input type="text" class="fdp-input" id="dist-from" placeholder="OMDB" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value = this.value.toUpperCase(); calculateAirportDistance()">
+                                <label class="input-label">From (ICAO/IATA)</label>
+                                <input type="text" class="fdp-input" id="dist-from" placeholder="OMDB or DXB" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value = this.value.toUpperCase(); calculateAirportDistance()">
                             </div>
                             <div class="input-group">
-                                <label class="input-label">To (ICAO)</label>
-                                <input type="text" class="fdp-input" id="dist-to" placeholder="EGLL" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value = this.value.toUpperCase(); calculateAirportDistance()">
+                                <label class="input-label">To (ICAO/IATA)</label>
+                                <input type="text" class="fdp-input" id="dist-to" placeholder="EGLL or LHR" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value = this.value.toUpperCase(); calculateAirportDistance()">
                             </div>
                         </div>
                         <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
@@ -11339,15 +11339,41 @@
             }
 
             // Try to find airports (ICAO first, then IATA)
-            var fromApt = getAirport(fromCode) || getAirportByIATA(fromCode);
-            var toApt = getAirport(toCode) || getAirportByIATA(toCode);
+            var fromApt = null, fromIcao = null;
+            var toApt = null, toIcao = null;
+
+            // Try ICAO lookup first
+            if (airportDB && airportDB[fromCode]) {
+                fromApt = airportDB[fromCode];
+                fromIcao = fromCode;
+            } else {
+                // Try IATA lookup
+                var iataResult = getAirportByIATA(fromCode);
+                if (iataResult) {
+                    fromApt = iataResult;
+                    fromIcao = iataResult.icao;
+                }
+            }
+
+            if (airportDB && airportDB[toCode]) {
+                toApt = airportDB[toCode];
+                toIcao = toCode;
+            } else {
+                var iataResult = getAirportByIATA(toCode);
+                if (iataResult) {
+                    toApt = iataResult;
+                    toIcao = iataResult.icao;
+                }
+            }
 
             if (!fromApt) {
                 document.getElementById('dist-from-name').textContent = 'Not found';
                 document.getElementById('dist-from-name').style.color = '#ff5252';
                 return;
             } else {
-                document.getElementById('dist-from-name').textContent = (fromApt.m || fromApt.n) + (fromApt.i ? ' (' + fromApt.i + ')' : '');
+                var displayName = fromApt.m || fromApt.n;
+                var codes = fromIcao + (fromApt.i ? '/' + fromApt.i : '');
+                document.getElementById('dist-from-name').textContent = displayName + ' (' + codes + ')';
                 document.getElementById('dist-from-name').style.color = '#00ff88';
             }
 
@@ -11356,8 +11382,10 @@
                 document.getElementById('dist-to-name').style.color = '#ff5252';
                 return;
             } else {
-                document.getElementById('dist-to-name').textContent = (toApt.m || toApt.n) + (toApt.i ? ' (' + toApt.i + ')' : '');
-                document.getElementById('dist-to-name').style.color = '#ff5252';
+                var displayName = toApt.m || toApt.n;
+                var codes = toIcao + (toApt.i ? '/' + toApt.i : '');
+                document.getElementById('dist-to-name').textContent = displayName + ' (' + codes + ')';
+                document.getElementById('dist-to-name').style.color = '#00ff88';
             }
 
             // Calculate great circle distance
