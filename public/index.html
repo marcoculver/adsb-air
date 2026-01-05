@@ -3806,8 +3806,8 @@
                         <div class="section-title">Glide Path / Rate of Descent</div>
                         <div class="input-grid-2">
                             <div class="input-group">
-                                <label class="input-label">Airport (ICAO)</label>
-                                <input type="text" class="fdp-input" id="gp-airport" placeholder="OMDB" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value = this.value.toUpperCase(); autofillGpElevation()">
+                                <label class="input-label">Airport</label>
+                                <input type="text" class="fdp-input" id="gp-airport" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value = this.value.toUpperCase(); autofillGpElevation()">
                             </div>
                             <div class="input-group">
                                 <label class="input-label">Elevation (ft)</label>
@@ -13962,7 +13962,7 @@
             }
         }
 
-        // Initialize map when tab is shown
+        // Initialize map when tab is shown, autofill NAV fields
         var originalSwitchTab = switchTab;
         switchTab = function(tabId) {
             originalSwitchTab(tabId);
@@ -13972,6 +13972,21 @@
                 setTimeout(function() {
                     if (flightMap) flightMap.invalidateSize();
                 }, 300);
+            }
+            if (tabId === 'nav') {
+                // Autofill glide path airport from schedule arrival (last sector)
+                var gpAirport = document.getElementById('gp-airport');
+                if (gpAirport && !gpAirport.value) {
+                    // Find the last visible sector's arrival airport
+                    for (var i = 4; i >= 1; i--) {
+                        var arrEl = document.getElementById('s' + i + '-arr');
+                        if (arrEl && arrEl.value) {
+                            gpAirport.value = arrEl.value;
+                            autofillGpElevation();
+                            break;
+                        }
+                    }
+                }
             }
         };
 
