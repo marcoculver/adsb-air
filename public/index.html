@@ -4640,18 +4640,41 @@
                 <!-- Current Sun Position -->
                 <div class="section" style="max-width: 800px; margin: 20px auto 0;">
                     <div class="section-title">Current Sun Position</div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; text-align: center;">
-                        <div>
-                            <div style="color: #888; font-size: 0.85rem;">Elevation</div>
-                            <div id="sun-elevation" style="font-size: 1.4rem; color: #FF8200;">--°</div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 30px;">
+                        <!-- Sun Compass -->
+                        <div style="position: relative; width: 100px; height: 100px;">
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
+                                <!-- Compass background -->
+                                <circle cx="50" cy="50" r="45" fill="rgba(0,20,40,0.8)" stroke="rgba(255,130,0,0.4)" stroke-width="2"/>
+                                <!-- Cardinal directions -->
+                                <text x="50" y="15" text-anchor="middle" fill="#888" font-size="10">N</text>
+                                <text x="90" y="53" text-anchor="middle" fill="#888" font-size="10">E</text>
+                                <text x="50" y="93" text-anchor="middle" fill="#888" font-size="10">S</text>
+                                <text x="10" y="53" text-anchor="middle" fill="#888" font-size="10">W</text>
+                                <!-- Sun arrow (will be rotated via JS) -->
+                                <g id="sun-compass-arrow" transform="rotate(0, 50, 50)">
+                                    <line x1="50" y1="50" x2="50" y2="22" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+                                    <circle cx="50" cy="22" r="8" fill="#FFD700"/>
+                                    <circle cx="50" cy="22" r="4" fill="#FF8200"/>
+                                </g>
+                                <!-- Center dot -->
+                                <circle cx="50" cy="50" r="4" fill="#FF8200"/>
+                            </svg>
                         </div>
-                        <div>
-                            <div style="color: #888; font-size: 0.85rem;">Azimuth</div>
-                            <div id="sun-azimuth" style="font-size: 1.4rem; color: #FF8200;">--°</div>
-                        </div>
-                        <div>
-                            <div style="color: #888; font-size: 0.85rem;">Status</div>
-                            <div id="sun-status" style="font-size: 1.1rem; color: #4CAF50;">--</div>
+                        <!-- Sun data -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; text-align: center;">
+                            <div>
+                                <div style="color: #888; font-size: 0.85rem;">Elevation</div>
+                                <div id="sun-elevation" style="font-size: 1.4rem; color: #FF8200;">--°</div>
+                            </div>
+                            <div>
+                                <div style="color: #888; font-size: 0.85rem;">Azimuth</div>
+                                <div id="sun-azimuth" style="font-size: 1.4rem; color: #FF8200;">--°</div>
+                            </div>
+                            <div>
+                                <div style="color: #888; font-size: 0.85rem;">Status</div>
+                                <div id="sun-status" style="font-size: 1.1rem; color: #4CAF50;">--</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -4747,6 +4770,67 @@
                         <span id="sun-longest-day" style="color: #4CAF50;">--</span>
                         <span style="color: #888; margin-left: 15px;">Shortest: </span>
                         <span id="sun-shortest-day" style="color: #FF6B35;">--</span>
+                    </div>
+                </div>
+
+                <!-- Moon Information -->
+                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
+                    <div class="section-title">Moon Information</div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 30px;">
+                        <!-- Moon Phase Visual -->
+                        <div style="position: relative; width: 80px; height: 80px;">
+                            <svg viewBox="0 0 100 100" id="moon-phase-svg" style="width: 100%; height: 100%;">
+                                <!-- Moon background (dark side) -->
+                                <circle cx="50" cy="50" r="40" fill="#1a1a1a" stroke="#333" stroke-width="2"/>
+                                <!-- Illuminated portion (will be updated by JS) -->
+                                <path id="moon-illumination" d="" fill="#e8e8e8"/>
+                            </svg>
+                        </div>
+                        <!-- Moon compass -->
+                        <div style="position: relative; width: 80px; height: 80px;">
+                            <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
+                                <circle cx="50" cy="50" r="40" fill="rgba(0,20,40,0.8)" stroke="rgba(100,149,237,0.4)" stroke-width="2"/>
+                                <text x="50" y="18" text-anchor="middle" fill="#666" font-size="9">N</text>
+                                <text x="85" y="53" text-anchor="middle" fill="#666" font-size="9">E</text>
+                                <text x="50" y="90" text-anchor="middle" fill="#666" font-size="9">S</text>
+                                <text x="15" y="53" text-anchor="middle" fill="#666" font-size="9">W</text>
+                                <g id="moon-compass-arrow" transform="rotate(0, 50, 50)">
+                                    <line x1="50" y1="50" x2="50" y2="25" stroke="#6495ED" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="50" cy="25" r="6" fill="#6495ED"/>
+                                </g>
+                                <circle cx="50" cy="50" r="3" fill="#6495ED"/>
+                            </svg>
+                        </div>
+                        <!-- Moon data -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: center;">
+                            <div>
+                                <div style="color: #888; font-size: 0.75rem;">Phase</div>
+                                <div id="moon-phase" style="font-size: 1rem; color: #6495ED;">--</div>
+                            </div>
+                            <div>
+                                <div style="color: #888; font-size: 0.75rem;">Illumination</div>
+                                <div id="moon-illumination-pct" style="font-size: 1rem; color: #e8e8e8;">--%</div>
+                            </div>
+                            <div>
+                                <div style="color: #888; font-size: 0.75rem;">Elevation</div>
+                                <div id="moon-elevation" style="font-size: 1rem; color: #6495ED;">--°</div>
+                            </div>
+                            <div>
+                                <div style="color: #888; font-size: 0.75rem;">Azimuth</div>
+                                <div id="moon-azimuth" style="font-size: 1rem; color: #6495ED;">--°</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Moonrise/Moonset times -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; text-align: center; border-top: 1px solid #333; padding-top: 15px;">
+                        <div>
+                            <div style="color: #888; font-size: 0.8rem;">Moonrise</div>
+                            <div id="moon-rise" style="font-size: 1.2rem; color: #6495ED; font-family: 'Courier New', monospace;">--:--</div>
+                        </div>
+                        <div>
+                            <div style="color: #888; font-size: 0.8rem;">Moonset</div>
+                            <div id="moon-set" style="font-size: 1.2rem; color: #6495ED; font-family: 'Courier New', monospace;">--:--</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -9586,6 +9670,12 @@
             document.getElementById('sun-elevation').textContent = sunPos.elevation.toFixed(1) + '°';
             document.getElementById('sun-azimuth').textContent = sunPos.azimuth.toFixed(0) + '°';
 
+            // Update sun compass arrow rotation
+            var sunCompassArrow = document.getElementById('sun-compass-arrow');
+            if (sunCompassArrow) {
+                sunCompassArrow.setAttribute('transform', 'rotate(' + sunPos.azimuth.toFixed(0) + ', 50, 50)');
+            }
+
             // Status based on elevation
             var statusEl = document.getElementById('sun-status');
             if (sunPos.elevation > 0) {
@@ -9618,6 +9708,9 @@
 
             // Generate daylight trend
             generateDaylightTrend(lat, lon, tz, date);
+
+            // Update moon display
+            updateMoonDisplay(lat, lon, date);
         }
 
         // Check sun glare on runway heading
@@ -9861,6 +9954,206 @@
             // Display longest/shortest day
             document.getElementById('sun-longest-day').textContent = longestDay + ' ' + monthNames[month] + ' (' + minsToTime(maxDaylight) + ')';
             document.getElementById('sun-shortest-day').textContent = shortestDay + ' ' + monthNames[month] + ' (' + minsToTime(minDaylight) + ')';
+        }
+
+        // ============ MOON CALCULATIONS ============
+
+        // Calculate moon phase and illumination
+        function calculateMoonPhase(date) {
+            // Based on simplified algorithm - synodic month is ~29.53 days
+            var year = date.getUTCFullYear();
+            var month = date.getUTCMonth() + 1;
+            var day = date.getUTCDate();
+
+            if (month < 3) {
+                year--;
+                month += 12;
+            }
+
+            // Julian date calculation
+            var A = Math.floor(year / 100);
+            var B = 2 - A + Math.floor(A / 4);
+            var JD = Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day + B - 1524.5;
+
+            // Days since known new moon (Jan 6, 2000)
+            var daysSinceNew = JD - 2451550.1;
+            var synodicMonth = 29.530588853;
+            var phase = (daysSinceNew % synodicMonth) / synodicMonth;
+            if (phase < 0) phase += 1;
+
+            // Illumination: 0 at new, 1 at full
+            var illumination = (1 - Math.cos(phase * 2 * Math.PI)) / 2;
+
+            // Phase name
+            var phaseName;
+            if (phase < 0.0625) phaseName = 'New Moon';
+            else if (phase < 0.1875) phaseName = 'Waxing Crescent';
+            else if (phase < 0.3125) phaseName = 'First Quarter';
+            else if (phase < 0.4375) phaseName = 'Waxing Gibbous';
+            else if (phase < 0.5625) phaseName = 'Full Moon';
+            else if (phase < 0.6875) phaseName = 'Waning Gibbous';
+            else if (phase < 0.8125) phaseName = 'Last Quarter';
+            else if (phase < 0.9375) phaseName = 'Waning Crescent';
+            else phaseName = 'New Moon';
+
+            return {
+                phase: phase,
+                illumination: illumination * 100,
+                name: phaseName
+            };
+        }
+
+        // Calculate moon position (elevation, azimuth)
+        function calculateMoonPosition(lat, lon, date) {
+            var toRad = Math.PI / 180;
+            var toDeg = 180 / Math.PI;
+
+            // Calculate Julian Date
+            var JD = date.getTime() / 86400000 + 2440587.5;
+            var T = (JD - 2451545) / 36525;
+
+            // Moon's geocentric ecliptic coordinates (simplified)
+            var L0 = 218.316 + 13.176396 * (JD - 2451545); // Mean longitude
+            var M = 134.963 + 13.064993 * (JD - 2451545);   // Mean anomaly
+            var F = 93.272 + 13.229350 * (JD - 2451545);    // Latitude argument
+
+            L0 = (L0 % 360 + 360) % 360;
+            M = ((M % 360 + 360) % 360) * toRad;
+            F = ((F % 360 + 360) % 360) * toRad;
+
+            // Ecliptic longitude
+            var longitude = L0 + 6.289 * Math.sin(M);
+            longitude = (longitude % 360 + 360) % 360;
+
+            // Ecliptic latitude
+            var latitude = 5.128 * Math.sin(F);
+
+            // Convert to equatorial coordinates
+            var obliquity = 23.439 - 0.0000004 * (JD - 2451545);
+            obliquity *= toRad;
+
+            var lonRad = longitude * toRad;
+            var latRad = latitude * toRad;
+
+            // Right ascension and declination
+            var RA = Math.atan2(Math.sin(lonRad) * Math.cos(obliquity) - Math.tan(latRad) * Math.sin(obliquity), Math.cos(lonRad));
+            var dec = Math.asin(Math.sin(latRad) * Math.cos(obliquity) + Math.cos(latRad) * Math.sin(obliquity) * Math.sin(lonRad));
+
+            // Local sidereal time
+            var JD0 = Math.floor(JD - 0.5) + 0.5;
+            var S = JD0 - 2451545;
+            var T0 = S / 36525;
+            var theta0 = 100.46061837 + 36000.770053608 * T0 + 0.000387933 * T0 * T0;
+            theta0 = (theta0 % 360 + 360) % 360;
+
+            var UT = (JD - JD0) * 24;
+            var theta = theta0 + 360.98564736629 * UT / 24 + lon;
+            theta = (theta % 360 + 360) % 360;
+
+            // Hour angle
+            var HA = (theta * toRad) - RA;
+
+            // Altitude and azimuth
+            var latRad2 = lat * toRad;
+            var sinAlt = Math.sin(latRad2) * Math.sin(dec) + Math.cos(latRad2) * Math.cos(dec) * Math.cos(HA);
+            var altitude = Math.asin(sinAlt) * toDeg;
+
+            var cosAz = (Math.sin(dec) - Math.sin(latRad2) * sinAlt) / (Math.cos(latRad2) * Math.cos(Math.asin(sinAlt)));
+            cosAz = Math.max(-1, Math.min(1, cosAz));
+            var azimuth = Math.acos(cosAz) * toDeg;
+            if (Math.sin(HA) > 0) azimuth = 360 - azimuth;
+
+            return {
+                elevation: altitude,
+                azimuth: azimuth
+            };
+        }
+
+        // Calculate moonrise/moonset times (simplified approach)
+        function calculateMoonRiseSet(lat, lon, date) {
+            var rise = null, set = null;
+
+            // Check moon position every 15 minutes to find rise/set
+            var prevAboveHorizon = null;
+            for (var mins = 0; mins <= 1440; mins += 15) {
+                var checkDate = new Date(date.getTime());
+                checkDate.setUTCHours(0, mins, 0, 0);
+                var pos = calculateMoonPosition(lat, lon, checkDate);
+                var aboveHorizon = pos.elevation > 0;
+
+                if (prevAboveHorizon !== null) {
+                    if (!prevAboveHorizon && aboveHorizon && rise === null) {
+                        rise = mins - 7; // Approximate
+                    } else if (prevAboveHorizon && !aboveHorizon && set === null) {
+                        set = mins - 7;
+                    }
+                }
+                prevAboveHorizon = aboveHorizon;
+            }
+
+            return { rise: rise, set: set };
+        }
+
+        // Update moon display
+        function updateMoonDisplay(lat, lon, date) {
+            var now = new Date();
+            var moonPhase = calculateMoonPhase(now);
+            var moonPos = calculateMoonPosition(lat, lon, now);
+            var moonRiseSet = calculateMoonRiseSet(lat, lon, date);
+
+            // Update phase and illumination
+            document.getElementById('moon-phase').textContent = moonPhase.name;
+            document.getElementById('moon-illumination-pct').textContent = moonPhase.illumination.toFixed(0) + '%';
+
+            // Update position
+            document.getElementById('moon-elevation').textContent = moonPos.elevation.toFixed(1) + '°';
+            document.getElementById('moon-azimuth').textContent = moonPos.azimuth.toFixed(0) + '°';
+
+            // Update compass arrow
+            var moonCompassArrow = document.getElementById('moon-compass-arrow');
+            if (moonCompassArrow) {
+                moonCompassArrow.setAttribute('transform', 'rotate(' + moonPos.azimuth.toFixed(0) + ', 50, 50)');
+            }
+
+            // Update rise/set times
+            document.getElementById('moon-rise').textContent = moonRiseSet.rise !== null ? minsToTime(moonRiseSet.rise) : '--:--';
+            document.getElementById('moon-set').textContent = moonRiseSet.set !== null ? minsToTime(moonRiseSet.set) : '--:--';
+
+            // Draw moon phase SVG
+            drawMoonPhase(moonPhase.phase);
+        }
+
+        // Draw moon phase on SVG
+        function drawMoonPhase(phase) {
+            var path = document.getElementById('moon-illumination');
+            if (!path) return;
+
+            var cx = 50, cy = 50, r = 40;
+
+            // Determine which side is lit based on phase
+            // phase 0 = new (dark), 0.5 = full (bright)
+            var illumAngle = phase * 2 * Math.PI;
+
+            // Calculate inner curve radius for crescent/gibbous effect
+            var k = Math.cos(illumAngle);
+
+            var d = '';
+            if (phase < 0.01 || phase > 0.99) {
+                // New moon - no illumination
+                d = '';
+            } else if (phase < 0.5) {
+                // Waxing - right side lit
+                d = 'M ' + cx + ' ' + (cy - r) +
+                    ' A ' + r + ' ' + r + ' 0 0 1 ' + cx + ' ' + (cy + r) +
+                    ' A ' + (r * Math.abs(k)) + ' ' + r + ' 0 0 ' + (k > 0 ? '1' : '0') + ' ' + cx + ' ' + (cy - r);
+            } else {
+                // Waning - left side lit
+                d = 'M ' + cx + ' ' + (cy - r) +
+                    ' A ' + r + ' ' + r + ' 0 0 0 ' + cx + ' ' + (cy + r) +
+                    ' A ' + (r * Math.abs(k)) + ' ' + r + ' 0 0 ' + (k > 0 ? '0' : '1') + ' ' + cx + ' ' + (cy - r);
+            }
+
+            path.setAttribute('d', d);
         }
 
         // Add sun-arr-eta to time picker callback
