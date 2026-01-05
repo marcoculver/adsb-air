@@ -34,18 +34,19 @@
 
         /* Active Timers Strip */
         .active-timers-strip {
-            background: rgba(0, 20, 40, 0.95);
-            border-radius: 12px;
+            background: rgba(0, 20, 40, 0.98);
+            border-radius: 12px 12px 0 0;
             padding: 10px 15px;
-            margin-bottom: 15px;
+            margin-bottom: 0;
             border: 1px solid rgba(255, 130, 0, 0.2);
+            border-bottom: none;
             display: flex;
             align-items: center;
             gap: 15px;
             flex-wrap: wrap;
             position: sticky;
-            top: 10px;
-            z-index: 100;
+            top: 0;
+            z-index: 101;
             backdrop-filter: blur(10px);
         }
 
@@ -204,21 +205,21 @@
             justify-content: flex-start;
             position: -webkit-sticky;
             position: sticky;
-            top: 80px;
+            top: 55px;
             z-index: 100;
-            background: rgba(0, 15, 30, 0.98);
-            padding: 10px 15px;
+            background: rgba(0, 20, 40, 0.98);
+            padding: 8px 15px;
             backdrop-filter: blur(10px);
             overflow-x: auto;
             flex-wrap: nowrap;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none; /* IE/Edge */
-            border-bottom: 1px solid rgba(255, 130, 0, 0.2);
-            margin-left: -15px;
-            margin-right: -15px;
-            padding-left: 15px;
-            padding-right: 15px;
+            border: 1px solid rgba(255, 130, 0, 0.2);
+            border-top: 1px solid rgba(255, 130, 0, 0.15);
+            border-radius: 0 0 12px 12px;
+            margin-left: 0;
+            margin-right: 0;
         }
 
         .tab-nav::-webkit-scrollbar {
@@ -1290,6 +1291,7 @@
             .active-timers-strip {
                 padding: 8px 10px;
                 gap: 10px;
+                border-radius: 8px 8px 0 0;
             }
             .strip-clock-time {
                 font-size: 1rem;
@@ -1302,6 +1304,11 @@
             }
             .strip-qibla-arrow {
                 font-size: 1rem;
+            }
+            .tab-nav {
+                top: 42px;
+                padding: 6px 10px;
+                border-radius: 0 0 8px 8px;
             }
             /* MAP tab mobile */
             #tab-map .map-info-row {
