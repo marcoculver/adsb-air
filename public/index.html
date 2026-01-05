@@ -9617,26 +9617,33 @@
             document.getElementById('sun-airport').value = '';
         }
 
-        // Use GPS location for solar calculations
+        // Use GPS location for solar calculations (from existing GPS feed)
         function useSunGps() {
             clearSunAirport();
 
-            if (navigator.geolocation) {
-                document.getElementById('sun-location-info').textContent = 'Getting GPS location...';
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        document.getElementById('sun-lat').value = position.coords.latitude.toFixed(4);
-                        document.getElementById('sun-lon').value = position.coords.longitude.toFixed(4);
-                        document.getElementById('sun-location-info').textContent = 'GPS location acquired';
-                    },
-                    function(error) {
-                        document.getElementById('sun-location-info').innerHTML = '<span style="color: #ff5252;">GPS error: ' + error.message + '</span>';
-                    },
-                    { enableHighAccuracy: true, timeout: 10000 }
-                );
-            } else {
-                document.getElementById('sun-location-info').innerHTML = '<span style="color: #ff5252;">GPS not available</span>';
+            // Use GPS data from the Qibla/GPS feed if available
+            if (qiblaCurrentLat !== null && qiblaCurrentLon !== null) {
+                document.getElementById('sun-lat').value = qiblaCurrentLat.toFixed(4);
+                document.getElementById('sun-lon').value = qiblaCurrentLon.toFixed(4);
+                document.getElementById('sun-location-info').textContent = 'GPS location loaded';
+                return;
             }
+
+            // Try to fetch from GPS endpoint directly
+            fetch('/gps.json')
+                .then(function(response) { return response.json(); })
+                .then(function(data) {
+                    if (data && data.lat && data.lon) {
+                        document.getElementById('sun-lat').value = data.lat.toFixed(4);
+                        document.getElementById('sun-lon').value = data.lon.toFixed(4);
+                        document.getElementById('sun-location-info').textContent = 'GPS location loaded';
+                    } else {
+                        document.getElementById('sun-location-info').innerHTML = '<span style="color: #ff5252;">No GPS fix available</span>';
+                    }
+                })
+                .catch(function() {
+                    document.getElementById('sun-location-info').innerHTML = '<span style="color: #ff5252;">GPS not available</span>';
+                });
         }
 
         // Main function to calculate all sun times for an airport or coordinates
