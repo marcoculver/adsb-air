@@ -1867,6 +1867,26 @@
             #tab-nav .input-grid-2 {
                 grid-template-columns: 1fr 1fr;
             }
+
+            .dist-track-grid {
+                grid-template-columns: 1fr 1fr 1fr !important;
+                gap: 8px !important;
+            }
+
+            .dist-track-grid input {
+                font-size: 0.8rem !important;
+                padding: 4px !important;
+            }
+
+            /* SUN tab mobile grids */
+            .arrival-conditions-grid {
+                grid-template-columns: 1fr 1fr !important;
+            }
+
+            .night-time-grid {
+                grid-template-columns: 1fr 1fr 1fr !important;
+                gap: 8px !important;
+            }
         }
 
         button {
@@ -3929,7 +3949,7 @@
                                 <div class="fdp-result-value" id="dist-result-nm" style="font-size: 2rem; color: #FF8200;">--- nm</div>
                                 <div class="fdp-result-value" id="dist-result-km" style="font-size: 1rem; color: #00d4ff; margin-top: 5px;">--- km</div>
                             </div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; text-align: center;">
+                            <div class="dist-names-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; text-align: center;">
                                 <div>
                                     <div style="font-size: 0.7rem; color: #888;">From</div>
                                     <div id="dist-from-name" style="font-size: 0.85rem; color: #00ff88;">---</div>
@@ -3939,7 +3959,7 @@
                                     <div id="dist-to-name" style="font-size: 0.85rem; color: #ff5252;">---</div>
                                 </div>
                             </div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px; text-align: center; align-items: end;">
+                            <div class="dist-track-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px; text-align: center; align-items: end;">
                                 <div>
                                     <div style="font-size: 0.7rem; color: #888;">Initial Track</div>
                                     <div id="dist-track" style="font-size: 1.1rem; color: #00d4ff;">---°</div>
@@ -4798,7 +4818,7 @@
                         <span>Arrival Conditions</span>
                         <button class="preset-btn" onclick="autofillArrivalDaylight()" style="padding: 4px 10px; font-size: 0.75rem;">From Sched</button>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px;">
+                    <div class="arrival-conditions-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px;">
                         <div class="fdp-field">
                             <label>Destination</label>
                             <input type="text" id="sun-arr-airport" class="fdp-input" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase;" oninput="this.value=this.value.toUpperCase()">
@@ -4840,7 +4860,7 @@
                             <input type="text" id="sun-night-arr" class="fdp-input" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase;" oninput="this.value=this.value.toUpperCase()">
                         </div>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px;">
+                    <div class="night-time-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px;">
                         <div class="fdp-field">
                             <label>Date</label>
                             <input type="date" id="sun-night-date" class="fdp-input">
