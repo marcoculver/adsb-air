@@ -33,6 +33,14 @@
         }
 
         /* Active Timers Strip */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            margin-bottom: 15px;
+        }
+
         .active-timers-strip {
             background: rgba(0, 20, 40, 0.98);
             border-radius: 12px 12px 0 0;
@@ -44,10 +52,6 @@
             align-items: center;
             gap: 15px;
             flex-wrap: wrap;
-            position: sticky;
-            top: 0;
-            z-index: 101;
-            backdrop-filter: blur(10px);
         }
 
         .strip-clock {
@@ -201,15 +205,10 @@
         .tab-nav {
             display: flex;
             gap: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 0;
             justify-content: flex-start;
-            position: -webkit-sticky;
-            position: sticky;
-            top: 55px;
-            z-index: 100;
             background: rgba(0, 20, 40, 0.98);
             padding: 8px 15px;
-            backdrop-filter: blur(10px);
             overflow-x: auto;
             flex-wrap: nowrap;
             -webkit-overflow-scrolling: touch;
@@ -218,8 +217,6 @@
             border: 1px solid rgba(255, 130, 0, 0.2);
             border-top: 1px solid rgba(255, 130, 0, 0.15);
             border-radius: 0 0 12px 12px;
-            margin-left: 0;
-            margin-right: 0;
         }
 
         .tab-nav::-webkit-scrollbar {
@@ -1306,9 +1303,11 @@
                 font-size: 1rem;
             }
             .tab-nav {
-                top: 42px;
                 padding: 6px 10px;
                 border-radius: 0 0 8px 8px;
+            }
+            .sticky-header {
+                margin-bottom: 10px;
             }
             /* MAP tab mobile */
             #tab-map .map-info-row {
@@ -2131,6 +2130,8 @@
 </head>
 <body>
     <div class="container">
+        <!-- Sticky Header (Info Strip + Tab Bar) -->
+        <div class="sticky-header">
         <!-- Active Timers Strip -->
         <div class="active-timers-strip" id="active-timers-strip">
             <div class="strip-clock">
@@ -2185,6 +2186,7 @@
             <button class="tab-btn" onclick="switchTab('sun')">SUN</button>
             <button class="tab-btn" onclick="switchTab('set')">SET</button>
         </div>
+        </div><!-- End sticky-header -->
 
         <!-- SCHED Tab (Schedule Entry - Primary Tab) -->
         <div class="tab-content active" id="tab-sched">
