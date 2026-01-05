@@ -9374,23 +9374,25 @@
             code = code.toUpperCase().trim();
 
             // Try ICAO first
-            if (airportsDatabase[code]) {
+            if (airportsDatabase[code] && airportsDatabase[code].c) {
+                var coords = airportsDatabase[code].c;
                 return {
-                    lat: airportsDatabase[code].a,
-                    lon: airportsDatabase[code].o,
-                    name: airportsDatabase[code].n,
-                    tz: airportsDatabase[code].t || 0
+                    lat: coords[0],
+                    lon: coords[1],
+                    name: airportsDatabase[code].n || code,
+                    tz: Math.round(coords[1] / 15)  // Approximate timezone from longitude
                 };
             }
 
             // Try IATA
             for (var icao in airportsDatabase) {
-                if (airportsDatabase[icao].i === code) {
+                if (airportsDatabase[icao].i === code && airportsDatabase[icao].c) {
+                    var coords = airportsDatabase[icao].c;
                     return {
-                        lat: airportsDatabase[icao].a,
-                        lon: airportsDatabase[icao].o,
-                        name: airportsDatabase[icao].n,
-                        tz: airportsDatabase[icao].t || 0
+                        lat: coords[0],
+                        lon: coords[1],
+                        name: airportsDatabase[icao].n || code,
+                        tz: Math.round(coords[1] / 15)  // Approximate timezone from longitude
                     };
                 }
             }
