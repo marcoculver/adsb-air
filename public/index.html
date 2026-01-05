@@ -1828,6 +1828,34 @@
                 padding: 8px 10px;
                 gap: 6px;
             }
+
+            /* Coordinates Converter Mobile */
+            #coord-gps-box {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            #coord-gps-box > div:first-child {
+                justify-content: center;
+            }
+
+            .coord-results-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .coord-result-item {
+                padding: 8px;
+            }
+
+            .coord-value {
+                font-size: 0.85rem;
+            }
+
+            /* Airport Distance Calc Mobile */
+            #tab-nav .input-grid-2 {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
         button {
@@ -3900,15 +3928,18 @@
                                     <div id="dist-to-name" style="font-size: 0.85rem; color: #ff5252;">---</div>
                                 </div>
                             </div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; text-align: center;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px; text-align: center; align-items: end;">
                                 <div>
                                     <div style="font-size: 0.7rem; color: #888;">Initial Track</div>
                                     <div id="dist-track" style="font-size: 1.1rem; color: #00d4ff;">---°</div>
                                 </div>
                                 <div>
+                                    <div style="font-size: 0.7rem; color: #888;">GS (kt)</div>
+                                    <input type="number" id="dist-gs" class="fdp-input" placeholder="450" min="50" max="999" style="text-align: center; padding: 5px; font-size: 0.9rem;" oninput="calculateAirportDistance()">
+                                </div>
+                                <div>
                                     <div style="font-size: 0.7rem; color: #888;">Est. Flight Time</div>
                                     <div id="dist-time" style="font-size: 1.1rem; color: #ffd700;">--:--</div>
-                                    <div style="font-size: 0.65rem; color: #666;">@ 450 kt GS</div>
                                 </div>
                             </div>
                         </div>
@@ -11872,8 +11903,10 @@
             var track = calculateInitialBearing(lat1, lon1, lat2, lon2);
             document.getElementById('dist-track').textContent = Math.round(track) + '°';
 
-            // Estimated flight time at 450 kt
-            var timeHrs = distNm / 450;
+            // Estimated flight time - use custom GS or default to 450 kt
+            var gsInput = document.getElementById('dist-gs').value;
+            var gs = gsInput && parseInt(gsInput) > 0 ? parseInt(gsInput) : 450;
+            var timeHrs = distNm / gs;
             var hrs = Math.floor(timeHrs);
             var mins = Math.round((timeHrs - hrs) * 60);
             document.getElementById('dist-time').textContent = hrs + ':' + String(mins).padStart(2, '0');
@@ -11906,6 +11939,7 @@
         function clearDistanceCalc() {
             document.getElementById('dist-from').value = '';
             document.getElementById('dist-to').value = '';
+            document.getElementById('dist-gs').value = '';
             document.getElementById('dist-result-nm').textContent = '--- nm';
             document.getElementById('dist-result-km').textContent = '--- km';
             document.getElementById('dist-from-name').textContent = '---';
