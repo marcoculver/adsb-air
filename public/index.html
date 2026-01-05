@@ -13781,10 +13781,11 @@
                 attributionControl: true
             }).setView([defaultLat, defaultLon], 8);
 
-            // OpenStreetMap tiles (free, works offline with caching)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            // Offline map tiles from tar1090 (falls back to online if not available)
+            L.tileLayer('/osm_tiles_offline/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap',
-                maxZoom: 19
+                maxZoom: 10,
+                errorTileUrl: ''
             }).addTo(flightMap);
 
             // Load UAE airspace overlay
