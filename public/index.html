@@ -1900,8 +1900,7 @@
             }
 
             .night-time-grid {
-                grid-template-columns: 1fr !important;
-                gap: 10px !important;
+                grid-template-columns: 1fr 1fr !important;
             }
         }
 
@@ -4866,7 +4865,7 @@
                         <span>Night Flight Time</span>
                         <button class="preset-btn" onclick="autofillNightTime()" style="padding: 4px 10px; font-size: 0.75rem;">From Sched</button>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="night-time-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px;">
                         <div class="fdp-field">
                             <label>Departure</label>
                             <input type="text" id="sun-night-dep" class="fdp-input" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase;" oninput="this.value=this.value.toUpperCase()">
@@ -4875,8 +4874,6 @@
                             <label>Arrival</label>
                             <input type="text" id="sun-night-arr" class="fdp-input" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase;" oninput="this.value=this.value.toUpperCase()">
                         </div>
-                    </div>
-                    <div class="night-time-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px;">
                         <div class="fdp-field">
                             <label>Date</label>
                             <input type="date" id="sun-night-date" class="fdp-input">
@@ -4886,7 +4883,7 @@
                             <input type="hidden" id="sun-night-off">
                             <button id="sun-night-off-btn" class="picker-btn placeholder" onclick="openTimePicker('sun-night-off')">----</button>
                         </div>
-                        <div class="fdp-field">
+                        <div class="fdp-field" style="grid-column: 2 / 4;">
                             <label>ON (UTC)</label>
                             <input type="hidden" id="sun-night-on">
                             <button id="sun-night-on-btn" class="picker-btn placeholder" onclick="openTimePicker('sun-night-on')">----</button>
