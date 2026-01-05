@@ -1235,6 +1235,42 @@
             #tab-notes .top-sections {
                 grid-template-columns: 1fr !important;
             }
+            /* SUN tab mobile */
+            #tab-sun .section {
+                margin: 10px auto 0 !important;
+                padding: 12px !important;
+            }
+            #tab-sun .section > div[style*="grid-template-columns: 1fr 1fr auto"] {
+                grid-template-columns: 1fr 1fr !important;
+            }
+            #tab-sun .section > div[style*="grid-template-columns: 1fr 1fr auto"] > button {
+                grid-column: span 2;
+                margin-top: 5px;
+            }
+            #tab-sun .section > div[style*="grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr 1fr !important;
+            }
+            #tab-sun .section > div[style*="grid-template-columns: 1fr 1fr 1fr"] {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 8px !important;
+            }
+            #tab-sun .section > div[style*="grid-template-columns: 1fr auto"] {
+                grid-template-columns: 1fr !important;
+            }
+            #tab-sun .section > div[style*="grid-template-columns: 1fr auto"] > button {
+                margin-top: 5px;
+            }
+            #tab-sun #sun-sunrise-utc,
+            #tab-sun #sun-sunset-utc {
+                font-size: 1.4rem !important;
+            }
+            #tab-sun #sun-elevation,
+            #tab-sun #sun-azimuth {
+                font-size: 1.1rem !important;
+            }
+            #tab-sun #sun-daylight-trend {
+                height: 70px !important;
+            }
             /* General mobile adjustments */
             .section {
                 min-width: auto !important;
