@@ -49,9 +49,30 @@
             border: 1px solid rgba(255, 130, 0, 0.2);
             border-bottom: none;
             display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .strip-top-row {
+            display: flex;
             align-items: center;
             gap: 15px;
             flex-wrap: wrap;
+        }
+
+        .strip-timers-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 130, 0, 0.15);
+        }
+
+        .strip-timers-row:empty,
+        .strip-timers-row.hidden {
+            display: none;
+            padding: 0;
+            border: none;
         }
 
         .strip-clock {
@@ -113,12 +134,6 @@
             text-transform: uppercase;
         }
 
-        .strip-timers {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            flex: 1;
-        }
 
         .strip-timer {
             display: flex;
@@ -2134,38 +2149,40 @@
         <div class="sticky-header">
         <!-- Active Timers Strip -->
         <div class="active-timers-strip" id="active-timers-strip">
-            <div class="strip-clock">
-                <div class="strip-clock-time" id="strip-utc-clock">--:--:--</div>
-                <div class="strip-clock-label">UTC</div>
-            </div>
-            <div class="strip-clock" style="border-right: 1px solid rgba(255, 130, 0, 0.3); padding-right: 15px;">
-                <div class="strip-clock-time" id="strip-dxb-clock" style="color: #FF8200;">--:--:--</div>
-                <div class="strip-clock-label">DXB</div>
-            </div>
-            <div class="strip-eta" id="strip-eta" style="display:none" onclick="switchTab('sched')">
-                <div class="strip-eta-time" id="strip-eta-time">--:--</div>
-                <div class="strip-eta-label">ETA</div>
-            </div>
-            <div class="strip-timers" id="strip-timers">
-                <span class="strip-no-active">No active timers</span>
-            </div>
-            <div class="strip-gps" id="strip-gps" style="margin-left: auto;">
-                <div class="strip-gps-row">
-                    <span class="strip-gps-label">POS</span>
-                    <span class="strip-gps-value" id="strip-gps-pos">---</span>
+            <!-- Top Row: Clocks, ETA, GPS, Qibla -->
+            <div class="strip-top-row">
+                <div class="strip-clock">
+                    <div class="strip-clock-time" id="strip-utc-clock">--:--:--</div>
+                    <div class="strip-clock-label">UTC</div>
                 </div>
-                <div class="strip-gps-row">
-                    <span class="strip-gps-label">TRK</span>
-                    <span class="strip-gps-value" id="strip-gps-trk">---°</span>
-                    <span class="strip-gps-label" style="margin-left: 8px;">GS</span>
-                    <span class="strip-gps-value" id="strip-gps-gs">---kt</span>
+                <div class="strip-clock" style="border-right: 1px solid rgba(255, 130, 0, 0.3); padding-right: 15px;">
+                    <div class="strip-clock-time" id="strip-dxb-clock" style="color: #FF8200;">--:--:--</div>
+                    <div class="strip-clock-label">DXB</div>
+                </div>
+                <div class="strip-eta" id="strip-eta" style="display:none" onclick="switchTab('sched')">
+                    <div class="strip-eta-time" id="strip-eta-time">--:--</div>
+                    <div class="strip-eta-label">ETA</div>
+                </div>
+                <div class="strip-gps" id="strip-gps" style="margin-left: auto;">
+                    <div class="strip-gps-row">
+                        <span class="strip-gps-label">POS</span>
+                        <span class="strip-gps-value" id="strip-gps-pos">---</span>
+                    </div>
+                    <div class="strip-gps-row">
+                        <span class="strip-gps-label">TRK</span>
+                        <span class="strip-gps-value" id="strip-gps-trk">---°</span>
+                        <span class="strip-gps-label" style="margin-left: 8px;">GS</span>
+                        <span class="strip-gps-value" id="strip-gps-gs">---kt</span>
+                    </div>
+                </div>
+                <div class="strip-qibla" id="strip-qibla" onclick="openQiblaModal()" style="cursor: pointer;">
+                    <div class="strip-qibla-arrow" id="strip-qibla-arrow">&#10148;</div>
+                    <div class="strip-qibla-value" id="strip-qibla-value">---°</div>
+                    <div class="strip-qibla-label">QIBLA</div>
                 </div>
             </div>
-            <div class="strip-qibla" id="strip-qibla" onclick="openQiblaModal()" style="cursor: pointer;">
-                <div class="strip-qibla-arrow" id="strip-qibla-arrow">&#10148;</div>
-                <div class="strip-qibla-value" id="strip-qibla-value">---°</div>
-                <div class="strip-qibla-label">QIBLA</div>
-            </div>
+            <!-- Bottom Row: Active Timers -->
+            <div class="strip-timers-row" id="strip-timers"></div>
         </div>
 
         <!-- Tab Navigation -->
@@ -6414,10 +6431,12 @@
             const activeTimers = timers.filter(t => t.running || t.expired || (t.type === 'countdown' && t.remaining > 0 && t.remaining < t.initialTime));
 
             if (activeTimers.length === 0) {
-                stripContainer.innerHTML = '<span class="strip-no-active">No active timers</span>';
+                stripContainer.innerHTML = '';
+                stripContainer.classList.add('hidden');
                 return;
             }
 
+            stripContainer.classList.remove('hidden');
             stripContainer.innerHTML = timers.map((timer, index) => {
                 if (!timer.running && !timer.expired && !(timer.type === 'countdown' && timer.remaining > 0 && timer.remaining < timer.initialTime)) {
                     return '';
