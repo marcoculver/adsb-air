@@ -3247,6 +3247,15 @@
                             <div id="map-alt" style="color: #ffd700; font-family: monospace;">--- ft</div>
                         </div>
                     </div>
+                    <!-- Layer Toggles -->
+                    <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+                        <button class="preset-btn" id="toggle-airspace-btn" onclick="toggleAirspaceLayer()" style="background: rgba(68, 68, 136, 0.4); border-color: #444488; font-size: 0.8rem; padding: 6px 12px;">
+                            ✓ Airspace
+                        </button>
+                        <button class="preset-btn" id="toggle-navaids-btn" onclick="toggleNavaidsLayer()" style="background: rgba(0, 200, 255, 0.3); border-color: #00c8ff; font-size: 0.8rem; padding: 6px 12px;">
+                            ✓ Navaids
+                        </button>
+                    </div>
                 </div>
                 <!-- Route Entry -->
                 <div class="fdp-section">
@@ -13603,6 +13612,9 @@
         var mapRouteLine = null;
         var mapGeoJSONLayer = null;
         var mapAirspaceLayer = null;
+        var mapNavaidsLayer = null;
+        var airspaceVisible = true;
+        var navaidsVisible = true;
         var mapFollowMode = true;
         var trackLogRecording = false;
         var trackLogPoints = [];
@@ -13669,6 +13681,86 @@
             return val + ' ft';
         }
 
+        // Navaid type mapping
+        var navaidTypes = {
+            2: { symbol: '◈', color: '#00ff00', name: 'NDB' },
+            4: { symbol: '⬡', color: '#00c8ff', name: 'VOR' },
+            5: { symbol: '⬢', color: '#00ffff', name: 'VOR-DME' },
+            6: { symbol: '◇', color: '#ffaa00', name: 'VOR' },
+            7: { symbol: '⬢', color: '#00ffff', name: 'VORTAC' },
+            8: { symbol: '◈', color: '#ff00ff', name: 'TACAN' }
+        };
+
+        function loadNavaidsOverlay() {
+            fetch('uae-navaids.geojson')
+                .then(function(response) { return response.json(); })
+                .then(function(data) {
+                    mapNavaidsLayer = L.geoJSON(data, {
+                        pointToLayer: function(feature, latlng) {
+                            var props = feature.properties;
+                            var type = props.type || 0;
+                            var info = navaidTypes[type] || { symbol: '●', color: '#888888', name: 'Unknown' };
+
+                            var icon = L.divIcon({
+                                className: 'navaid-marker',
+                                html: '<div style="font-size: 16px; color: ' + info.color + '; text-shadow: 0 0 6px ' + info.color + ';">' + info.symbol + '</div>' +
+                                      '<div style="font-size: 9px; color: #fff; text-align: center; margin-top: -2px; text-shadow: 1px 1px 2px #000;">' + (props.identifier || '') + '</div>',
+                                iconSize: [40, 30],
+                                iconAnchor: [20, 15]
+                            });
+                            return L.marker(latlng, { icon: icon });
+                        },
+                        onEachFeature: function(feature, layer) {
+                            var props = feature.properties;
+                            var type = props.type || 0;
+                            var info = navaidTypes[type] || { name: 'Navaid' };
+                            var freq = props.frequency ? props.frequency.value + ' MHz' : '';
+                            if (props.frequency && props.frequency.unit === 1) freq = props.frequency.value + ' kHz';
+
+                            layer.bindPopup(
+                                '<b>' + (props.name || 'Unknown') + '</b><br>' +
+                                '<span style="color: ' + (navaidTypes[type] || {color:'#888'}).color + ';">' + info.name + '</span> ' + (props.identifier || '') + '<br>' +
+                                (freq ? 'Freq: ' + freq + '<br>' : '') +
+                                (props.channel ? 'Ch: ' + props.channel : '')
+                            );
+                        }
+                    }).addTo(flightMap);
+                })
+                .catch(function(err) {
+                    console.log('Could not load navaids overlay:', err);
+                });
+        }
+
+        function toggleAirspaceLayer() {
+            var btn = document.getElementById('toggle-airspace-btn');
+            if (airspaceVisible) {
+                if (mapAirspaceLayer) flightMap.removeLayer(mapAirspaceLayer);
+                airspaceVisible = false;
+                btn.innerHTML = 'Airspace';
+                btn.style.background = 'rgba(68, 68, 136, 0.15)';
+            } else {
+                if (mapAirspaceLayer) mapAirspaceLayer.addTo(flightMap);
+                airspaceVisible = true;
+                btn.innerHTML = '✓ Airspace';
+                btn.style.background = 'rgba(68, 68, 136, 0.4)';
+            }
+        }
+
+        function toggleNavaidsLayer() {
+            var btn = document.getElementById('toggle-navaids-btn');
+            if (navaidsVisible) {
+                if (mapNavaidsLayer) flightMap.removeLayer(mapNavaidsLayer);
+                navaidsVisible = false;
+                btn.innerHTML = 'Navaids';
+                btn.style.background = 'rgba(0, 200, 255, 0.1)';
+            } else {
+                if (mapNavaidsLayer) mapNavaidsLayer.addTo(flightMap);
+                navaidsVisible = true;
+                btn.innerHTML = '✓ Navaids';
+                btn.style.background = 'rgba(0, 200, 255, 0.3)';
+            }
+        }
+
         // Aircraft icon for marker
         var aircraftIcon = L.divIcon({
             className: 'aircraft-marker',
@@ -13697,6 +13789,9 @@
 
             // Load UAE airspace overlay
             loadAirspaceOverlay();
+
+            // Load UAE navaids overlay
+            loadNavaidsOverlay();
 
             // Add aircraft marker
             mapMarker = L.marker([defaultLat, defaultLon], { icon: aircraftIcon }).addTo(flightMap);
