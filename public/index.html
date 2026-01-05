@@ -9266,15 +9266,24 @@
             var haRad = toRad(hourAngle);
 
             var cosZenith = Math.sin(latRad) * Math.sin(decRad) + Math.cos(latRad) * Math.cos(decRad) * Math.cos(haRad);
+            // Clamp to avoid NaN from floating point errors
+            cosZenith = Math.max(-1, Math.min(1, cosZenith));
             var zenith = toDeg(Math.acos(cosZenith));
             var elevation = 90 - zenith;
 
-            // Solar azimuth
+            // Solar azimuth using atan2 for robustness
+            var sinZenith = Math.sin(toRad(zenith));
             var azimuth;
-            if (hourAngle > 0) {
-                azimuth = toDeg(Math.acos((Math.sin(latRad) * cosZenith - Math.sin(decRad)) / (Math.cos(latRad) * Math.sin(toRad(zenith))))) + 180;
+            if (sinZenith === 0) {
+                azimuth = 0;
             } else {
-                azimuth = 540 - toDeg(Math.acos((Math.sin(latRad) * cosZenith - Math.sin(decRad)) / (Math.cos(latRad) * Math.sin(toRad(zenith)))));
+                var cosAz = (Math.sin(latRad) * cosZenith - Math.sin(decRad)) / (Math.cos(latRad) * sinZenith);
+                cosAz = Math.max(-1, Math.min(1, cosAz));
+                if (hourAngle > 0) {
+                    azimuth = toDeg(Math.acos(cosAz)) + 180;
+                } else {
+                    azimuth = 540 - toDeg(Math.acos(cosAz));
+                }
             }
             azimuth = azimuth % 360;
 
@@ -9321,7 +9330,15 @@
             var decRad = toRad(dec);
             var zenithRad = toRad(zenithAngle);
 
-            var cosHA = (Math.cos(zenithRad) - Math.sin(latRad) * Math.sin(decRad)) / (Math.cos(latRad) * Math.cos(decRad));
+            // Avoid division by zero at poles
+            var cosLat = Math.cos(latRad);
+            var cosDec = Math.cos(decRad);
+            if (Math.abs(cosLat) < 0.0001 || Math.abs(cosDec) < 0.0001) {
+                // At or very near poles - approximate
+                return { rise: null, set: null, alwaysDay: dec * lat > 0 };
+            }
+
+            var cosHA = (Math.cos(zenithRad) - Math.sin(latRad) * Math.sin(decRad)) / (cosLat * cosDec);
 
             if (cosHA > 1) return { rise: null, set: null, alwaysNight: true };
             if (cosHA < -1) return { rise: null, set: null, alwaysDay: true };
