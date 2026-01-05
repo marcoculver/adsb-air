@@ -2139,6 +2139,7 @@
             <button class="tab-btn" onclick="switchTab('lmc')">LMC</button>
             <button class="tab-btn" onclick="switchTab('notes')">NOTES</button>
             <button class="tab-btn" onclick="switchTab('misc')">MISC</button>
+            <button class="tab-btn" onclick="switchTab('sun')">SUN</button>
             <button class="tab-btn" onclick="switchTab('set')">SET</button>
         </div>
 
@@ -4449,6 +4450,195 @@
                     </div>
                     <div style="margin-top: 15px; text-align: center;">
                         <button class="clear-btn" onclick="clearPantryCalculator()">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUN Tab (Solar Calculations) -->
+        <div class="tab-content" id="tab-sun">
+            <div class="fdp-container">
+                <div class="fdp-section" style="text-align: center; padding: 15px;">
+                    <h2 style="color: #FF8200; margin-bottom: 5px;">Solar Calculator</h2>
+                    <div id="sun-current-utc" style="color: #888; font-size: 0.9rem;"></div>
+                </div>
+
+                <!-- Airport Input -->
+                <div class="section" style="max-width: 800px; margin: 0 auto;">
+                    <div class="section-title">Location</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end;">
+                        <div class="fdp-field">
+                            <label>Airport</label>
+                            <input type="text" id="sun-airport" class="fdp-input" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase;" oninput="this.value=this.value.toUpperCase()">
+                        </div>
+                        <div class="fdp-field">
+                            <label>Date</label>
+                            <input type="date" id="sun-date" class="fdp-input">
+                        </div>
+                        <button class="action-btn" onclick="calculateSunTimes()" style="height: 44px;">Calculate</button>
+                    </div>
+                    <div id="sun-location-info" style="color: #888; font-size: 0.85rem; margin-top: 5px; text-align: center;"></div>
+                </div>
+
+                <!-- Sunrise/Sunset Results -->
+                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
+                    <div class="section-title">Sunrise / Sunset</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div style="text-align: center; padding: 15px; background: rgba(255,200,0,0.1); border-radius: 8px;">
+                            <div style="font-size: 0.9rem; color: #FFD700;">SUNRISE</div>
+                            <div id="sun-sunrise-utc" style="font-size: 1.8rem; color: #FFD700; font-weight: bold;">--:--</div>
+                            <div id="sun-sunrise-local" style="font-size: 0.9rem; color: #888;">Local: --:--</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: rgba(255,100,0,0.1); border-radius: 8px;">
+                            <div style="font-size: 0.9rem; color: #FF6B35;">SUNSET</div>
+                            <div id="sun-sunset-utc" style="font-size: 1.8rem; color: #FF6B35; font-weight: bold;">--:--</div>
+                            <div id="sun-sunset-local" style="font-size: 0.9rem; color: #888;">Local: --:--</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <span style="color: #888;">Daylight: </span>
+                        <span id="sun-daylight-hours" style="color: #4CAF50; font-weight: bold;">--:--</span>
+                    </div>
+                </div>
+
+                <!-- Twilight Times -->
+                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
+                    <div class="section-title">Twilight Times (UTC)</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; font-size: 0.9rem;">
+                        <div style="text-align: center; padding: 10px; background: rgba(100,149,237,0.15); border-radius: 8px;">
+                            <div style="color: #6495ED; margin-bottom: 5px;">Civil</div>
+                            <div style="color: #888; font-size: 0.8rem;">Sun 6° below</div>
+                            <div id="sun-civil-dawn" style="color: #fff;">--:--</div>
+                            <div id="sun-civil-dusk" style="color: #fff;">--:--</div>
+                        </div>
+                        <div style="text-align: center; padding: 10px; background: rgba(65,105,225,0.15); border-radius: 8px;">
+                            <div style="color: #4169E1; margin-bottom: 5px;">Nautical</div>
+                            <div style="color: #888; font-size: 0.8rem;">Sun 12° below</div>
+                            <div id="sun-nautical-dawn" style="color: #fff;">--:--</div>
+                            <div id="sun-nautical-dusk" style="color: #fff;">--:--</div>
+                        </div>
+                        <div style="text-align: center; padding: 10px; background: rgba(25,25,112,0.3); border-radius: 8px;">
+                            <div style="color: #7B68EE; margin-bottom: 5px;">Astronomical</div>
+                            <div style="color: #888; font-size: 0.8rem;">Sun 18° below</div>
+                            <div id="sun-astro-dawn" style="color: #fff;">--:--</div>
+                            <div id="sun-astro-dusk" style="color: #fff;">--:--</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 10px; color: #888; font-size: 0.8rem;">
+                        Position lights required: Sunset to Sunrise (or Civil Twilight)
+                    </div>
+                </div>
+
+                <!-- Current Sun Position -->
+                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
+                    <div class="section-title">Current Sun Position</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; text-align: center;">
+                        <div>
+                            <div style="color: #888; font-size: 0.85rem;">Elevation</div>
+                            <div id="sun-elevation" style="font-size: 1.4rem; color: #FF8200;">--°</div>
+                        </div>
+                        <div>
+                            <div style="color: #888; font-size: 0.85rem;">Azimuth</div>
+                            <div id="sun-azimuth" style="font-size: 1.4rem; color: #FF8200;">--°</div>
+                        </div>
+                        <div>
+                            <div style="color: #888; font-size: 0.85rem;">Status</div>
+                            <div id="sun-status" style="font-size: 1.1rem; color: #4CAF50;">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sun Glare Calculator -->
+                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
+                    <div class="section-title">Runway Sun Glare</div>
+                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end;">
+                        <div class="fdp-field">
+                            <label>Runway Heading</label>
+                            <input type="number" id="sun-runway-hdg" class="fdp-input" placeholder="e.g. 120" min="1" max="360">
+                        </div>
+                        <button class="action-btn" onclick="checkSunGlare()" style="height: 44px;">Check Glare</button>
+                    </div>
+                    <div id="sun-glare-result" style="margin-top: 15px; padding: 15px; border-radius: 8px; text-align: center; display: none;">
+                    </div>
+                </div>
+
+                <!-- Arrival Daylight Check -->
+                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
+                    <div class="section-title">Arrival Daylight Check</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                        <div class="fdp-field">
+                            <label>Destination</label>
+                            <input type="text" id="sun-arr-airport" class="fdp-input" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase;" oninput="this.value=this.value.toUpperCase()">
+                        </div>
+                        <div class="fdp-field">
+                            <label>Arrival Date</label>
+                            <input type="date" id="sun-arr-date" class="fdp-input">
+                        </div>
+                        <div class="fdp-field">
+                            <label>ETA (UTC)</label>
+                            <input type="hidden" id="sun-arr-eta">
+                            <button id="sun-arr-eta-btn" class="picker-btn placeholder" onclick="openTimePicker('sun-arr-eta')">----</button>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 10px;">
+                        <button class="action-btn" onclick="checkArrivalDaylight()">Check Daylight</button>
+                    </div>
+                    <div id="sun-arrival-result" style="margin-top: 15px; padding: 15px; border-radius: 8px; text-align: center; display: none;">
+                    </div>
+                </div>
+
+                <!-- Night Flight Time Calculator -->
+                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
+                    <div class="section-title">Night Flight Time</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div class="fdp-field">
+                            <label>Departure</label>
+                            <input type="text" id="sun-night-dep" class="fdp-input" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase;" oninput="this.value=this.value.toUpperCase()">
+                        </div>
+                        <div class="fdp-field">
+                            <label>Arrival</label>
+                            <input type="text" id="sun-night-arr" class="fdp-input" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase;" oninput="this.value=this.value.toUpperCase()">
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px;">
+                        <div class="fdp-field">
+                            <label>Date</label>
+                            <input type="date" id="sun-night-date" class="fdp-input">
+                        </div>
+                        <div class="fdp-field">
+                            <label>OFF (UTC)</label>
+                            <input type="hidden" id="sun-night-off">
+                            <button id="sun-night-off-btn" class="picker-btn placeholder" onclick="openTimePicker('sun-night-off')">----</button>
+                        </div>
+                        <div class="fdp-field">
+                            <label>ON (UTC)</label>
+                            <input type="hidden" id="sun-night-on">
+                            <button id="sun-night-on-btn" class="picker-btn placeholder" onclick="openTimePicker('sun-night-on')">----</button>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 10px;">
+                        <button class="action-btn" onclick="calculateNightTime()">Calculate Night Time</button>
+                    </div>
+                    <div id="sun-night-result" style="margin-top: 15px; padding: 15px; border-radius: 8px; text-align: center; display: none;">
+                    </div>
+                </div>
+
+                <!-- Daylight Hours Trend -->
+                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
+                    <div class="section-title">Daylight Hours This Month</div>
+                    <div id="sun-daylight-trend" style="display: flex; justify-content: space-between; align-items: flex-end; height: 100px; padding: 10px 0; border-bottom: 1px solid #333;">
+                        <!-- Bars will be generated here -->
+                    </div>
+                    <div style="display: flex; justify-content: space-between; color: #888; font-size: 0.75rem; margin-top: 5px;">
+                        <span>1</span>
+                        <span id="sun-trend-month">--</span>
+                        <span id="sun-trend-last-day">31</span>
+                    </div>
+                    <div style="text-align: center; margin-top: 10px;">
+                        <span style="color: #888;">Longest day: </span>
+                        <span id="sun-longest-day" style="color: #4CAF50;">--</span>
+                        <span style="color: #888; margin-left: 15px;">Shortest: </span>
+                        <span id="sun-shortest-day" style="color: #FF6B35;">--</span>
                     </div>
                 </div>
             </div>
@@ -8973,6 +9163,580 @@
             document.getElementById('pantry-match-reason').style.color = '#888';
         }
 
+        // ============ SUN TAB FUNCTIONS ============
+        // Solar calculation algorithms based on NOAA formulas
+
+        var sunCalcCache = {};  // Cache for calculated sun times
+
+        // Initialize sun tab with today's date
+        function initSunTab() {
+            var today = new Date();
+            var dateStr = today.toISOString().split('T')[0];
+            document.getElementById('sun-date').value = dateStr;
+            document.getElementById('sun-arr-date').value = dateStr;
+            document.getElementById('sun-night-date').value = dateStr;
+            updateSunCurrentTime();
+            setInterval(updateSunCurrentTime, 1000);
+        }
+
+        function updateSunCurrentTime() {
+            var now = new Date();
+            var utc = now.toISOString().substring(11, 19) + ' UTC';
+            var el = document.getElementById('sun-current-utc');
+            if (el) el.textContent = utc;
+        }
+
+        // Convert degrees to radians
+        function toRad(deg) { return deg * Math.PI / 180; }
+        function toDeg(rad) { return rad * 180 / Math.PI; }
+
+        // Julian date calculation
+        function getJulianDate(year, month, day, hour) {
+            if (month <= 2) { year--; month += 12; }
+            var A = Math.floor(year / 100);
+            var B = 2 - A + Math.floor(A / 4);
+            var JD = Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day + B - 1524.5;
+            return JD + hour / 24.0;
+        }
+
+        // Calculate sun position for a given date/time and location
+        function calculateSunPosition(lat, lon, date) {
+            var year = date.getUTCFullYear();
+            var month = date.getUTCMonth() + 1;
+            var day = date.getUTCDate();
+            var hour = date.getUTCHours() + date.getUTCMinutes() / 60 + date.getUTCSeconds() / 3600;
+
+            var JD = getJulianDate(year, month, day, hour);
+            var T = (JD - 2451545.0) / 36525.0;
+
+            // Mean longitude of the sun
+            var L0 = (280.46646 + 36000.76983 * T + 0.0003032 * T * T) % 360;
+
+            // Mean anomaly of the sun
+            var M = (357.52911 + 35999.05029 * T - 0.0001537 * T * T) % 360;
+            var Mrad = toRad(M);
+
+            // Eccentricity of Earth's orbit
+            var e = 0.016708634 - 0.000042037 * T - 0.0000001267 * T * T;
+
+            // Sun's equation of center
+            var C = (1.914602 - 0.004817 * T - 0.000014 * T * T) * Math.sin(Mrad)
+                  + (0.019993 - 0.000101 * T) * Math.sin(2 * Mrad)
+                  + 0.000289 * Math.sin(3 * Mrad);
+
+            // Sun's true longitude
+            var sunLon = L0 + C;
+
+            // Sun's apparent longitude
+            var omega = 125.04 - 1934.136 * T;
+            var lambda = sunLon - 0.00569 - 0.00478 * Math.sin(toRad(omega));
+            var lambdaRad = toRad(lambda);
+
+            // Obliquity of the ecliptic
+            var epsilon0 = 23.439291 - 0.013004 * T;
+            var epsilon = epsilon0 + 0.00256 * Math.cos(toRad(omega));
+            var epsilonRad = toRad(epsilon);
+
+            // Sun's right ascension and declination
+            var sinLambda = Math.sin(lambdaRad);
+            var cosLambda = Math.cos(lambdaRad);
+            var sinEpsilon = Math.sin(epsilonRad);
+            var cosEpsilon = Math.cos(epsilonRad);
+
+            var RA = toDeg(Math.atan2(cosEpsilon * sinLambda, cosLambda));
+            var dec = toDeg(Math.asin(sinEpsilon * sinLambda));
+
+            // Equation of time (in minutes)
+            var y = Math.tan(epsilonRad / 2) * Math.tan(epsilonRad / 2);
+            var L0rad = toRad(L0);
+            var EoT = 4 * toDeg(y * Math.sin(2 * L0rad) - 2 * e * Math.sin(Mrad) + 4 * e * y * Math.sin(Mrad) * Math.cos(2 * L0rad)
+                      - 0.5 * y * y * Math.sin(4 * L0rad) - 1.25 * e * e * Math.sin(2 * Mrad));
+
+            // Solar noon (in minutes from midnight UTC)
+            var solarNoon = 720 - 4 * lon - EoT;
+
+            // Hour angle
+            var trueSolarTime = (hour * 60 + 4 * lon + EoT) % 1440;
+            var hourAngle = trueSolarTime / 4 - 180;
+            if (hourAngle < -180) hourAngle += 360;
+
+            // Solar zenith and elevation
+            var latRad = toRad(lat);
+            var decRad = toRad(dec);
+            var haRad = toRad(hourAngle);
+
+            var cosZenith = Math.sin(latRad) * Math.sin(decRad) + Math.cos(latRad) * Math.cos(decRad) * Math.cos(haRad);
+            var zenith = toDeg(Math.acos(cosZenith));
+            var elevation = 90 - zenith;
+
+            // Solar azimuth
+            var azimuth;
+            if (hourAngle > 0) {
+                azimuth = toDeg(Math.acos((Math.sin(latRad) * cosZenith - Math.sin(decRad)) / (Math.cos(latRad) * Math.sin(toRad(zenith))))) + 180;
+            } else {
+                azimuth = 540 - toDeg(Math.acos((Math.sin(latRad) * cosZenith - Math.sin(decRad)) / (Math.cos(latRad) * Math.sin(toRad(zenith)))));
+            }
+            azimuth = azimuth % 360;
+
+            return {
+                elevation: elevation,
+                azimuth: azimuth,
+                declination: dec,
+                solarNoon: solarNoon,
+                EoT: EoT
+            };
+        }
+
+        // Calculate sunrise/sunset for a given zenith angle
+        function calculateSunEvent(lat, lon, date, zenithAngle) {
+            var year = date.getUTCFullYear();
+            var month = date.getUTCMonth() + 1;
+            var day = date.getUTCDate();
+
+            var JD = getJulianDate(year, month, day, 12);
+            var T = (JD - 2451545.0) / 36525.0;
+
+            // Mean longitude and anomaly
+            var L0 = (280.46646 + 36000.76983 * T) % 360;
+            var M = (357.52911 + 35999.05029 * T) % 360;
+            var Mrad = toRad(M);
+
+            // Eccentricity and equation of center
+            var e = 0.016708634 - 0.000042037 * T;
+            var C = (1.914602 - 0.004817 * T) * Math.sin(Mrad) + 0.019993 * Math.sin(2 * Mrad);
+
+            var sunLon = L0 + C;
+            var omega = 125.04 - 1934.136 * T;
+            var lambda = sunLon - 0.00569 - 0.00478 * Math.sin(toRad(omega));
+
+            var epsilon = 23.439291 - 0.013004 * T + 0.00256 * Math.cos(toRad(omega));
+            var dec = toDeg(Math.asin(Math.sin(toRad(epsilon)) * Math.sin(toRad(lambda))));
+
+            // Equation of time
+            var y = Math.tan(toRad(epsilon) / 2) * Math.tan(toRad(epsilon) / 2);
+            var EoT = 4 * toDeg(y * Math.sin(2 * toRad(L0)) - 2 * e * Math.sin(Mrad));
+
+            // Hour angle for the given zenith
+            var latRad = toRad(lat);
+            var decRad = toRad(dec);
+            var zenithRad = toRad(zenithAngle);
+
+            var cosHA = (Math.cos(zenithRad) - Math.sin(latRad) * Math.sin(decRad)) / (Math.cos(latRad) * Math.cos(decRad));
+
+            if (cosHA > 1) return { rise: null, set: null, alwaysNight: true };
+            if (cosHA < -1) return { rise: null, set: null, alwaysDay: true };
+
+            var HA = toDeg(Math.acos(cosHA));
+
+            // Sunrise and sunset in minutes from midnight UTC
+            var solarNoon = 720 - 4 * lon - EoT;
+            var riseMin = solarNoon - HA * 4;
+            var setMin = solarNoon + HA * 4;
+
+            // Handle day wrap
+            if (riseMin < 0) riseMin += 1440;
+            if (riseMin >= 1440) riseMin -= 1440;
+            if (setMin < 0) setMin += 1440;
+            if (setMin >= 1440) setMin -= 1440;
+
+            return { rise: riseMin, set: setMin };
+        }
+
+        // Format minutes to HH:MM
+        function minsToTime(mins) {
+            if (mins === null || mins === undefined) return '--:--';
+            var h = Math.floor(mins / 60) % 24;
+            var m = Math.round(mins % 60);
+            if (m === 60) { h++; m = 0; }
+            return h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0');
+        }
+
+        // Get airport coordinates from ICAO/IATA
+        function getAirportCoords(code) {
+            if (!airportsDatabase) return null;
+            code = code.toUpperCase().trim();
+
+            // Try ICAO first
+            if (airportsDatabase[code]) {
+                return {
+                    lat: airportsDatabase[code].a,
+                    lon: airportsDatabase[code].o,
+                    name: airportsDatabase[code].n,
+                    tz: airportsDatabase[code].t || 0
+                };
+            }
+
+            // Try IATA
+            for (var icao in airportsDatabase) {
+                if (airportsDatabase[icao].i === code) {
+                    return {
+                        lat: airportsDatabase[icao].a,
+                        lon: airportsDatabase[icao].o,
+                        name: airportsDatabase[icao].n,
+                        tz: airportsDatabase[icao].t || 0
+                    };
+                }
+            }
+
+            return null;
+        }
+
+        // Main function to calculate all sun times for an airport
+        function calculateSunTimes() {
+            var code = document.getElementById('sun-airport').value.trim();
+            var dateStr = document.getElementById('sun-date').value;
+
+            if (!code) {
+                document.getElementById('sun-location-info').textContent = 'Enter airport code';
+                return;
+            }
+
+            var airport = getAirportCoords(code);
+            if (!airport) {
+                document.getElementById('sun-location-info').innerHTML = '<span style="color: #ff5252;">Airport not found</span>';
+                return;
+            }
+
+            var date = dateStr ? new Date(dateStr + 'T12:00:00Z') : new Date();
+            var lat = airport.lat;
+            var lon = airport.lon;
+            var tz = airport.tz;
+
+            document.getElementById('sun-location-info').textContent = airport.name + ' (' + lat.toFixed(2) + '°, ' + lon.toFixed(2) + '°) UTC' + (tz >= 0 ? '+' : '') + tz;
+
+            // Calculate sunrise/sunset (zenith 90.833° accounts for refraction)
+            var sunRiseSet = calculateSunEvent(lat, lon, date, 90.833);
+
+            // Display sunrise/sunset
+            if (sunRiseSet.alwaysDay) {
+                document.getElementById('sun-sunrise-utc').textContent = 'Polar Day';
+                document.getElementById('sun-sunset-utc').textContent = 'No Sunset';
+                document.getElementById('sun-sunrise-local').textContent = '24hr daylight';
+                document.getElementById('sun-sunset-local').textContent = '';
+                document.getElementById('sun-daylight-hours').textContent = '24:00';
+            } else if (sunRiseSet.alwaysNight) {
+                document.getElementById('sun-sunrise-utc').textContent = 'Polar Night';
+                document.getElementById('sun-sunset-utc').textContent = 'No Sunrise';
+                document.getElementById('sun-sunrise-local').textContent = '24hr darkness';
+                document.getElementById('sun-sunset-local').textContent = '';
+                document.getElementById('sun-daylight-hours').textContent = '00:00';
+            } else {
+                document.getElementById('sun-sunrise-utc').textContent = minsToTime(sunRiseSet.rise);
+                document.getElementById('sun-sunset-utc').textContent = minsToTime(sunRiseSet.set);
+
+                // Local times
+                var riseLocal = (sunRiseSet.rise + tz * 60) % 1440;
+                var setLocal = (sunRiseSet.set + tz * 60) % 1440;
+                if (riseLocal < 0) riseLocal += 1440;
+                if (setLocal < 0) setLocal += 1440;
+                document.getElementById('sun-sunrise-local').textContent = 'Local: ' + minsToTime(riseLocal);
+                document.getElementById('sun-sunset-local').textContent = 'Local: ' + minsToTime(setLocal);
+
+                // Daylight hours
+                var daylight = sunRiseSet.set - sunRiseSet.rise;
+                if (daylight < 0) daylight += 1440;
+                document.getElementById('sun-daylight-hours').textContent = minsToTime(daylight);
+            }
+
+            // Calculate twilight times
+            var civil = calculateSunEvent(lat, lon, date, 96);     // 6° below
+            var nautical = calculateSunEvent(lat, lon, date, 102); // 12° below
+            var astro = calculateSunEvent(lat, lon, date, 108);    // 18° below
+
+            document.getElementById('sun-civil-dawn').textContent = civil.alwaysDay ? 'N/A' : minsToTime(civil.rise);
+            document.getElementById('sun-civil-dusk').textContent = civil.alwaysDay ? 'N/A' : minsToTime(civil.set);
+            document.getElementById('sun-nautical-dawn').textContent = nautical.alwaysDay ? 'N/A' : minsToTime(nautical.rise);
+            document.getElementById('sun-nautical-dusk').textContent = nautical.alwaysDay ? 'N/A' : minsToTime(nautical.set);
+            document.getElementById('sun-astro-dawn').textContent = astro.alwaysDay ? 'N/A' : minsToTime(astro.rise);
+            document.getElementById('sun-astro-dusk').textContent = astro.alwaysDay ? 'N/A' : minsToTime(astro.set);
+
+            // Calculate current sun position
+            var now = new Date();
+            var sunPos = calculateSunPosition(lat, lon, now);
+
+            document.getElementById('sun-elevation').textContent = sunPos.elevation.toFixed(1) + '°';
+            document.getElementById('sun-azimuth').textContent = sunPos.azimuth.toFixed(0) + '°';
+
+            // Status based on elevation
+            var statusEl = document.getElementById('sun-status');
+            if (sunPos.elevation > 0) {
+                statusEl.textContent = 'Day';
+                statusEl.style.color = '#FFD700';
+            } else if (sunPos.elevation > -6) {
+                statusEl.textContent = 'Civil Twilight';
+                statusEl.style.color = '#6495ED';
+            } else if (sunPos.elevation > -12) {
+                statusEl.textContent = 'Nautical Twilight';
+                statusEl.style.color = '#4169E1';
+            } else if (sunPos.elevation > -18) {
+                statusEl.textContent = 'Astro Twilight';
+                statusEl.style.color = '#7B68EE';
+            } else {
+                statusEl.textContent = 'Night';
+                statusEl.style.color = '#888';
+            }
+
+            // Cache for other functions
+            sunCalcCache = {
+                lat: lat,
+                lon: lon,
+                tz: tz,
+                date: date,
+                sunrise: sunRiseSet.rise,
+                sunset: sunRiseSet.set,
+                sunPos: sunPos
+            };
+
+            // Generate daylight trend
+            generateDaylightTrend(lat, lon, tz, date);
+        }
+
+        // Check sun glare on runway heading
+        function checkSunGlare() {
+            if (!sunCalcCache.lat) {
+                document.getElementById('sun-glare-result').style.display = 'block';
+                document.getElementById('sun-glare-result').innerHTML = '<span style="color: #ff5252;">Calculate sun times first</span>';
+                return;
+            }
+
+            var rwyHdg = parseInt(document.getElementById('sun-runway-hdg').value);
+            if (isNaN(rwyHdg) || rwyHdg < 1 || rwyHdg > 360) {
+                document.getElementById('sun-glare-result').style.display = 'block';
+                document.getElementById('sun-glare-result').innerHTML = '<span style="color: #ff5252;">Enter valid runway heading (1-360)</span>';
+                return;
+            }
+
+            var sunAz = sunCalcCache.sunPos.azimuth;
+            var sunEl = sunCalcCache.sunPos.elevation;
+
+            // Calculate angle difference
+            var diff = Math.abs(sunAz - rwyHdg);
+            if (diff > 180) diff = 360 - diff;
+
+            var resultEl = document.getElementById('sun-glare-result');
+            resultEl.style.display = 'block';
+
+            // Sun glare is an issue when sun is in front (within ~30°) and low (0-15°)
+            if (sunEl < 0) {
+                resultEl.style.background = 'rgba(136, 136, 136, 0.2)';
+                resultEl.innerHTML = '<div style="color: #888;">Sun is below horizon</div>' +
+                    '<div style="font-size: 0.85rem; color: #888;">Elevation: ' + sunEl.toFixed(1) + '°</div>';
+            } else if (diff <= 30 && sunEl > 0 && sunEl < 15) {
+                resultEl.style.background = 'rgba(255, 82, 82, 0.3)';
+                resultEl.innerHTML = '<div style="color: #ff5252; font-weight: bold; font-size: 1.2rem;">HIGH GLARE RISK</div>' +
+                    '<div style="margin-top: 8px;">Sun: ' + sunAz.toFixed(0) + '° azimuth, ' + sunEl.toFixed(1) + '° elevation</div>' +
+                    '<div style="color: #ff5252;">Sun is ' + diff.toFixed(0) + '° off runway heading</div>';
+            } else if (diff <= 45 && sunEl > 0 && sunEl < 25) {
+                resultEl.style.background = 'rgba(255, 193, 7, 0.3)';
+                resultEl.innerHTML = '<div style="color: #FFC107; font-weight: bold; font-size: 1.2rem;">MODERATE GLARE</div>' +
+                    '<div style="margin-top: 8px;">Sun: ' + sunAz.toFixed(0) + '° azimuth, ' + sunEl.toFixed(1) + '° elevation</div>' +
+                    '<div style="color: #FFC107;">Sun is ' + diff.toFixed(0) + '° off runway heading</div>';
+            } else {
+                resultEl.style.background = 'rgba(76, 175, 80, 0.2)';
+                resultEl.innerHTML = '<div style="color: #4CAF50; font-weight: bold;">LOW GLARE RISK</div>' +
+                    '<div style="margin-top: 8px;">Sun: ' + sunAz.toFixed(0) + '° azimuth, ' + sunEl.toFixed(1) + '° elevation</div>' +
+                    '<div style="color: #888;">Sun is ' + diff.toFixed(0) + '° off runway heading</div>';
+            }
+        }
+
+        // Check if arrival will be in daylight
+        function checkArrivalDaylight() {
+            var code = document.getElementById('sun-arr-airport').value.trim();
+            var dateStr = document.getElementById('sun-arr-date').value;
+            var eta = document.getElementById('sun-arr-eta').value;
+
+            var resultEl = document.getElementById('sun-arrival-result');
+            resultEl.style.display = 'block';
+
+            if (!code || !dateStr || !eta || eta.length !== 4) {
+                resultEl.innerHTML = '<span style="color: #ff5252;">Enter destination, date, and ETA</span>';
+                return;
+            }
+
+            var airport = getAirportCoords(code);
+            if (!airport) {
+                resultEl.innerHTML = '<span style="color: #ff5252;">Airport not found</span>';
+                return;
+            }
+
+            var date = new Date(dateStr + 'T12:00:00Z');
+            var sunRiseSet = calculateSunEvent(airport.lat, airport.lon, date, 90.833);
+
+            var etaMins = parseInt(eta.substring(0, 2)) * 60 + parseInt(eta.substring(2, 4));
+
+            if (sunRiseSet.alwaysDay) {
+                resultEl.style.background = 'rgba(76, 175, 80, 0.2)';
+                resultEl.innerHTML = '<div style="color: #4CAF50; font-weight: bold; font-size: 1.3rem;">DAYLIGHT</div>' +
+                    '<div style="color: #888; margin-top: 8px;">Polar day - 24hr daylight</div>';
+            } else if (sunRiseSet.alwaysNight) {
+                resultEl.style.background = 'rgba(136, 136, 136, 0.3)';
+                resultEl.innerHTML = '<div style="color: #888; font-weight: bold; font-size: 1.3rem;">DARKNESS</div>' +
+                    '<div style="color: #888; margin-top: 8px;">Polar night - 24hr darkness</div>';
+            } else {
+                var isDay = (etaMins >= sunRiseSet.rise && etaMins <= sunRiseSet.set) ||
+                            (sunRiseSet.rise > sunRiseSet.set && (etaMins >= sunRiseSet.rise || etaMins <= sunRiseSet.set));
+
+                if (isDay) {
+                    resultEl.style.background = 'rgba(76, 175, 80, 0.2)';
+                    resultEl.innerHTML = '<div style="color: #4CAF50; font-weight: bold; font-size: 1.3rem;">DAYLIGHT ARRIVAL</div>' +
+                        '<div style="margin-top: 8px;">' + airport.name + '</div>' +
+                        '<div style="color: #888;">Sunrise: ' + minsToTime(sunRiseSet.rise) + ' UTC | Sunset: ' + minsToTime(sunRiseSet.set) + ' UTC</div>';
+                } else {
+                    resultEl.style.background = 'rgba(136, 136, 136, 0.3)';
+                    resultEl.innerHTML = '<div style="color: #888; font-weight: bold; font-size: 1.3rem;">NIGHT ARRIVAL</div>' +
+                        '<div style="margin-top: 8px;">' + airport.name + '</div>' +
+                        '<div style="color: #888;">Sunrise: ' + minsToTime(sunRiseSet.rise) + ' UTC | Sunset: ' + minsToTime(sunRiseSet.set) + ' UTC</div>';
+                }
+            }
+        }
+
+        // Calculate night flight time
+        function calculateNightTime() {
+            var depCode = document.getElementById('sun-night-dep').value.trim();
+            var arrCode = document.getElementById('sun-night-arr').value.trim();
+            var dateStr = document.getElementById('sun-night-date').value;
+            var offTime = document.getElementById('sun-night-off').value;
+            var onTime = document.getElementById('sun-night-on').value;
+
+            var resultEl = document.getElementById('sun-night-result');
+            resultEl.style.display = 'block';
+
+            if (!depCode || !arrCode || !dateStr || !offTime || !onTime) {
+                resultEl.innerHTML = '<span style="color: #ff5252;">Fill in all fields</span>';
+                return;
+            }
+
+            var depAirport = getAirportCoords(depCode);
+            var arrAirport = getAirportCoords(arrCode);
+
+            if (!depAirport || !arrAirport) {
+                resultEl.innerHTML = '<span style="color: #ff5252;">Airport not found</span>';
+                return;
+            }
+
+            var date = new Date(dateStr + 'T12:00:00Z');
+            var offMins = parseInt(offTime.substring(0, 2)) * 60 + parseInt(offTime.substring(2, 4));
+            var onMins = parseInt(onTime.substring(0, 2)) * 60 + parseInt(onTime.substring(2, 4));
+            if (onMins < offMins) onMins += 1440; // Next day
+
+            var totalFlight = onMins - offMins;
+
+            // Get sunset/sunrise at departure and arrival
+            var depSun = calculateSunEvent(depAirport.lat, depAirport.lon, date, 90.833);
+            var arrSun = calculateSunEvent(arrAirport.lat, arrAirport.lon, date, 90.833);
+
+            // Simplify: use midpoint sunset/sunrise for approximation
+            var midLat = (depAirport.lat + arrAirport.lat) / 2;
+            var midLon = (depAirport.lon + arrAirport.lon) / 2;
+            var midSun = calculateSunEvent(midLat, midLon, date, 90.833);
+
+            // Calculate night portion
+            var nightMins = 0;
+
+            if (midSun.alwaysNight) {
+                nightMins = totalFlight;
+            } else if (!midSun.alwaysDay) {
+                // Check each minute of flight (simplified)
+                var sunrise = midSun.rise;
+                var sunset = midSun.set;
+
+                for (var m = offMins; m < onMins; m++) {
+                    var checkMins = m % 1440;
+                    var isNight = false;
+
+                    if (sunrise < sunset) {
+                        // Normal day (sunrise before sunset)
+                        isNight = (checkMins < sunrise || checkMins > sunset);
+                    } else {
+                        // Polar region edge case
+                        isNight = (checkMins > sunset && checkMins < sunrise);
+                    }
+
+                    if (isNight) nightMins++;
+                }
+            }
+
+            var nightHrs = Math.floor(nightMins / 60);
+            var nightRem = nightMins % 60;
+            var totalHrs = Math.floor(totalFlight / 60);
+            var totalRem = totalFlight % 60;
+
+            var pct = totalFlight > 0 ? Math.round((nightMins / totalFlight) * 100) : 0;
+
+            resultEl.style.background = nightMins > 0 ? 'rgba(100, 149, 237, 0.2)' : 'rgba(76, 175, 80, 0.2)';
+            resultEl.innerHTML = '<div style="font-size: 1.3rem; font-weight: bold;">' +
+                '<span style="color: #6495ED;">' + nightHrs.toString().padStart(2, '0') + ':' + nightRem.toString().padStart(2, '0') + '</span>' +
+                '<span style="color: #888; font-size: 1rem;"> night time</span></div>' +
+                '<div style="margin-top: 8px; color: #888;">Total flight: ' + totalHrs.toString().padStart(2, '0') + ':' + totalRem.toString().padStart(2, '0') +
+                ' (' + pct + '% night)</div>' +
+                '<div style="color: #888; font-size: 0.85rem; margin-top: 5px;">Based on midpoint sunset at ' + minsToTime(midSun.set) + ' UTC</div>';
+        }
+
+        // Generate daylight hours trend for the month
+        function generateDaylightTrend(lat, lon, tz, currentDate) {
+            var container = document.getElementById('sun-daylight-trend');
+            container.innerHTML = '';
+
+            var year = currentDate.getUTCFullYear();
+            var month = currentDate.getUTCMonth();
+            var daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            var monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            document.getElementById('sun-trend-month').textContent = monthNames[month] + ' ' + year;
+            document.getElementById('sun-trend-last-day').textContent = daysInMonth;
+
+            var maxDaylight = 0;
+            var minDaylight = 1440;
+            var longestDay = 1;
+            var shortestDay = 1;
+            var daylightMins = [];
+
+            // Calculate daylight for each day
+            for (var d = 1; d <= daysInMonth; d++) {
+                var date = new Date(year, month, d, 12, 0, 0);
+                var sun = calculateSunEvent(lat, lon, date, 90.833);
+
+                var daylight = 0;
+                if (sun.alwaysDay) {
+                    daylight = 1440;
+                } else if (!sun.alwaysNight) {
+                    daylight = sun.set - sun.rise;
+                    if (daylight < 0) daylight += 1440;
+                }
+
+                daylightMins.push(daylight);
+
+                if (daylight > maxDaylight) {
+                    maxDaylight = daylight;
+                    longestDay = d;
+                }
+                if (daylight < minDaylight) {
+                    minDaylight = daylight;
+                    shortestDay = d;
+                }
+            }
+
+            // Create bars
+            var barWidth = 100 / daysInMonth;
+            for (var i = 0; i < daysInMonth; i++) {
+                var height = (daylightMins[i] / 1440) * 100;
+                var bar = document.createElement('div');
+                bar.style.width = (barWidth - 0.5) + '%';
+                bar.style.height = height + '%';
+                bar.style.background = 'linear-gradient(to top, #FF6B35, #FFD700)';
+                bar.style.borderRadius = '2px 2px 0 0';
+                bar.title = 'Day ' + (i + 1) + ': ' + minsToTime(daylightMins[i]) + ' daylight';
+                container.appendChild(bar);
+            }
+
+            // Display longest/shortest day
+            document.getElementById('sun-longest-day').textContent = longestDay + ' ' + monthNames[month] + ' (' + minsToTime(maxDaylight) + ')';
+            document.getElementById('sun-shortest-day').textContent = shortestDay + ' ' + monthNames[month] + ' (' + minsToTime(minDaylight) + ')';
+        }
+
+        // Add sun-arr-eta to time picker callback
+        var originalTimePickerCallback = null;
+
         function exportAllData() {
             const now = new Date();
             let md = `# Flight Ops Export\n\n`;
@@ -9005,6 +9769,7 @@
         loadOOOI();
         loadETA();
         loadTOW();
+        initSunTab();
         loadACC();
         loadFuel();
         loadLayover();
