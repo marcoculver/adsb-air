@@ -13602,11 +13602,72 @@
         var mapTrackLine = null;
         var mapRouteLine = null;
         var mapGeoJSONLayer = null;
+        var mapAirspaceLayer = null;
         var mapFollowMode = true;
         var trackLogRecording = false;
         var trackLogPoints = [];
         var trackLogStartTime = null;
         var mapInitialized = false;
+
+        // Airspace type colors
+        var airspaceColors = {
+            1: { color: '#ff0000', name: 'Prohibited' },      // P - Prohibited
+            2: { color: '#ff4444', name: 'Restricted' },      // R - Restricted
+            3: { color: '#ff8800', name: 'Danger' },          // D - Danger
+            4: { color: '#0088ff', name: 'CTR' },             // CTR
+            5: { color: '#00aaff', name: 'TMA' },             // TMA
+            6: { color: '#8800ff', name: 'ATZ' },             // ATZ
+            10: { color: '#444488', name: 'FIR' },            // FIR
+            14: { color: '#ff00ff', name: 'Military' }        // Military
+        };
+
+        function loadAirspaceOverlay() {
+            fetch('uae-airspace.geojson')
+                .then(function(response) { return response.json(); })
+                .then(function(data) {
+                    mapAirspaceLayer = L.geoJSON(data, {
+                        style: function(feature) {
+                            var type = feature.properties.type || 0;
+                            var colorInfo = airspaceColors[type] || { color: '#888888', name: 'Unknown' };
+                            return {
+                                color: colorInfo.color,
+                                weight: 1.5,
+                                opacity: 0.7,
+                                fillColor: colorInfo.color,
+                                fillOpacity: 0.15
+                            };
+                        },
+                        onEachFeature: function(feature, layer) {
+                            var props = feature.properties;
+                            var type = props.type || 0;
+                            var typeName = airspaceColors[type] ? airspaceColors[type].name : 'Airspace';
+                            var upper = props.upperLimit ? formatAltLimit(props.upperLimit) : '---';
+                            var lower = props.lowerLimit ? formatAltLimit(props.lowerLimit) : '---';
+                            layer.bindPopup(
+                                '<b>' + (props.name || 'Unknown') + '</b><br>' +
+                                '<span style="color: ' + (airspaceColors[type] || {color:'#888'}).color + ';">' + typeName + '</span><br>' +
+                                'Upper: ' + upper + '<br>' +
+                                'Lower: ' + lower
+                            );
+                        }
+                    }).addTo(flightMap);
+                })
+                .catch(function(err) {
+                    console.log('Could not load airspace overlay:', err);
+                });
+        }
+
+        function formatAltLimit(limit) {
+            if (!limit) return '---';
+            var val = limit.value;
+            var unit = limit.unit;
+            var ref = limit.referenceDatum;
+            // unit: 1=ft, 6=FL
+            // ref: 1=MSL, 2=STD
+            if (unit === 6) return 'FL' + val;
+            if (ref === 2) return 'FL' + Math.round(val / 100);
+            return val + ' ft';
+        }
 
         // Aircraft icon for marker
         var aircraftIcon = L.divIcon({
@@ -13633,6 +13694,9 @@
                 attribution: '© OpenStreetMap',
                 maxZoom: 19
             }).addTo(flightMap);
+
+            // Load UAE airspace overlay
+            loadAirspaceOverlay();
 
             // Add aircraft marker
             mapMarker = L.marker([defaultLat, defaultLon], { icon: aircraftIcon }).addTo(flightMap);
