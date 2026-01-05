@@ -13781,8 +13781,8 @@
                 attributionControl: true
             }).setView([defaultLat, defaultLon], 8);
 
-            // Offline map tiles from tar1090 (falls back to online if not available)
-            L.tileLayer('/osm_tiles_offline/{z}/{x}/{y}.png', {
+            // Offline map tiles from tar1090
+            L.tileLayer('/tar1090/osm_tiles_offline/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap',
                 maxZoom: 10,
                 errorTileUrl: ''
