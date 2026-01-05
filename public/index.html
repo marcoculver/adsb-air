@@ -9571,6 +9571,13 @@
             };
         }
 
+        // Get compass direction from azimuth
+        function getCompassDirection(azimuth) {
+            var dirs = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+            var index = Math.round(azimuth / 22.5) % 16;
+            return dirs[index];
+        }
+
         // Calculate sunrise/sunset for a given zenith angle
         function calculateSunEvent(lat, lon, date, zenithAngle) {
             var year = date.getUTCFullYear();
@@ -10042,21 +10049,48 @@
                 var diff = Math.abs(sunPos.azimuth - rwyHdg);
                 if (diff > 180) diff = 360 - diff;
 
+                // Get compass direction for sun
+                var sunDir = getCompassDirection(sunPos.azimuth);
+
                 html += '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">';
 
                 if (diff <= 30 && sunPos.elevation < 15) {
-                    html += '<div style="color: #ff5252; font-weight: bold;">⚠️ HIGH GLARE RISK</div>';
+                    html += '<div style="color: #ff5252; font-weight: bold; font-size: 1.1rem;">⚠️ HIGH GLARE RISK</div>';
+                    html += '<div style="color: #ff8a80; font-size: 0.95rem; margin-top: 4px;">Sun aligned with runway at low angle</div>';
                     bgColor = 'rgba(255, 82, 82, 0.25)';
                 } else if (diff <= 45 && sunPos.elevation < 25) {
-                    html += '<div style="color: #FFC107; font-weight: bold;">⚠️ MODERATE GLARE</div>';
+                    html += '<div style="color: #FFC107; font-weight: bold; font-size: 1.1rem;">⚠️ MODERATE GLARE</div>';
+                    html += '<div style="color: #FFE082; font-size: 0.95rem; margin-top: 4px;">Sun near runway heading</div>';
                     if (bgColor === 'rgba(76, 175, 80, 0.2)') bgColor = 'rgba(255, 193, 7, 0.2)';
                 } else {
-                    html += '<div style="color: #4CAF50;">LOW GLARE RISK</div>';
+                    html += '<div style="color: #4CAF50; font-weight: bold; font-size: 1.1rem;">✓ LOW GLARE RISK</div>';
                 }
-                html += '<div style="color: #888; font-size: 0.8rem;">Sun: ' + sunPos.azimuth.toFixed(0) + '° az, ' + sunPos.elevation.toFixed(0) + '° el | ' + diff.toFixed(0) + '° off rwy</div>';
+
+                // Sun position details
+                html += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; text-align: left;">';
+                html += '<div style="background: rgba(0,0,0,0.2); padding: 8px; border-radius: 6px;">';
+                html += '<div style="color: #888; font-size: 0.75rem;">SUN AZIMUTH</div>';
+                html += '<div style="color: #fff; font-size: 1rem; font-weight: bold;">' + sunPos.azimuth.toFixed(1) + '° <span style="color: #FF8300;">(' + sunDir + ')</span></div>';
+                html += '</div>';
+                html += '<div style="background: rgba(0,0,0,0.2); padding: 8px; border-radius: 6px;">';
+                html += '<div style="color: #888; font-size: 0.75rem;">SUN ELEVATION</div>';
+                html += '<div style="color: #fff; font-size: 1rem; font-weight: bold;">' + sunPos.elevation.toFixed(1) + '°</div>';
+                html += '</div>';
+                html += '<div style="background: rgba(0,0,0,0.2); padding: 8px; border-radius: 6px;">';
+                html += '<div style="color: #888; font-size: 0.75rem;">RUNWAY HDG</div>';
+                html += '<div style="color: #fff; font-size: 1rem; font-weight: bold;">' + rwyHdg + '°</div>';
+                html += '</div>';
+                html += '<div style="background: rgba(0,0,0,0.2); padding: 8px; border-radius: 6px;">';
+                html += '<div style="color: #888; font-size: 0.75rem;">OFFSET</div>';
+                html += '<div style="color: #fff; font-size: 1rem; font-weight: bold;">' + diff.toFixed(0) + '°</div>';
+                html += '</div>';
+                html += '</div>';
                 html += '</div>';
             } else if (!isNaN(rwyHdg) && sunPos.elevation <= 0) {
-                html += '<div style="margin-top: 10px; color: #666; font-size: 0.8rem;">Sun below horizon - no glare</div>';
+                html += '<div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">';
+                html += '<div style="color: #888; font-size: 0.95rem;">☾ Sun below horizon - no glare concern</div>';
+                html += '<div style="color: #666; font-size: 0.85rem; margin-top: 4px;">Sun elevation: ' + sunPos.elevation.toFixed(1) + '°</div>';
+                html += '</div>';
             }
 
             resultEl.style.background = bgColor;
