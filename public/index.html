@@ -1407,12 +1407,34 @@
                 grid-template-columns: 1fr 1fr !important;
                 gap: 10px !important;
             }
+            .pantry-grid .input-group {
+                min-width: 0 !important;
+                overflow: hidden !important;
+            }
+            .pantry-grid select,
+            .pantry-grid input {
+                width: 100% !important;
+                min-width: 0 !important;
+                box-sizing: border-box !important;
+            }
             #tab-misc .fdp-result-grid {
                 grid-template-columns: 1fr !important;
                 gap: 10px !important;
             }
 
-            /* MAP Track Log mobile */
+            /* MAP mobile */
+            #tab-map .fdp-section {
+                max-width: 100% !important;
+                overflow: hidden !important;
+            }
+            #tab-map .fdp-section * {
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            #tab-map #geojson-input {
+                width: 100% !important;
+                min-width: 0 !important;
+            }
             #tab-map .fdp-section > div[style*="display: flex; gap: 15px"] {
                 flex-wrap: wrap !important;
                 justify-content: space-around !important;
