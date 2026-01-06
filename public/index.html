@@ -10041,8 +10041,11 @@
             var switcher = document.getElementById('map-route-switcher');
             var display = document.getElementById('map-route-display');
 
+            console.log('MAP Route Switcher - sectors found:', sectors.length, sectors);
+
             if (sectors.length > 0) {
                 switcher.style.display = 'flex';
+                switcher.style.alignItems = 'center';
                 if (mapRouteSectorIndex >= sectors.length) mapRouteSectorIndex = 0;
                 var sector = sectors[mapRouteSectorIndex];
                 display.innerHTML = '<span style="color: #FF8200; font-weight: bold;">' + sector.dep + '→' + sector.arr + '</span> <span style="color: #888;">(' + (mapRouteSectorIndex + 1) + '/' + sectors.length + ')</span>';
