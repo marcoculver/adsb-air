@@ -1652,6 +1652,30 @@
             margin-bottom: 15px;
         }
 
+        /* Tank Split Grid - airplane layout */
+        .tank-split-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-areas: "left center right";
+            gap: 15px;
+        }
+        .tank-split-grid .tank-left { grid-area: left; }
+        .tank-split-grid .tank-center { grid-area: center; }
+        .tank-split-grid .tank-right { grid-area: right; }
+
+        @media (max-width: 480px) {
+            .tank-split-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-template-areas:
+                    "left right"
+                    "center center";
+            }
+            .tank-split-grid .tank-center {
+                max-width: 50%;
+                margin: 0 auto;
+            }
+        }
+
         .fdp-field {
             display: flex;
             flex-direction: column;
@@ -3524,17 +3548,17 @@
                 <!-- Tank Split Block -->
                 <div class="fdp-section">
                     <div class="section-title">Tank Split</div>
-                    <div class="fdp-row" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
-                        <div class="fdp-field" style="text-align:center">
+                    <div class="tank-split-grid">
+                        <div class="fdp-field tank-left" style="text-align:center">
                             <label class="fdp-label">Left Wing (kg)</label>
                             <button class="input-btn" id="tank-left-btn" onclick="openFuelPicker('tank-left', 'Left Wing', 'kg')" style="max-width:100%; margin:0 auto">3,700</button>
                             <input type="hidden" id="tank-left" value="3700">
                         </div>
-                        <div class="fdp-field" style="text-align:center">
+                        <div class="fdp-field tank-center" style="text-align:center">
                             <label class="fdp-label">Center (kg)</label>
                             <div class="fdp-result-value green" id="tank-center" style="padding-top:8px; text-align:center">---</div>
                         </div>
-                        <div class="fdp-field" style="text-align:center">
+                        <div class="fdp-field tank-right" style="text-align:center">
                             <label class="fdp-label">Right Wing (kg)</label>
                             <button class="input-btn" id="tank-right-btn" onclick="openFuelPicker('tank-right', 'Right Wing', 'kg')" style="max-width:100%; margin:0 auto">3,700</button>
                             <input type="hidden" id="tank-right" value="3700">
