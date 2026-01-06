@@ -8359,6 +8359,7 @@
                 config: document.getElementById('sched-config').value,
                 sectors: []
             };
+            console.log('SAVE: Saving schedule...', schedule);
             for (let s = 1; s <= 4; s++) {
                 schedule.sectors.push({
                     flt: document.getElementById(`s${s}-flt`)?.value || '',
@@ -8380,8 +8381,10 @@
         function loadSchedule() {
             try {
                 const saved = localStorage.getItem('flightSchedule');
+                console.log('LOAD: Raw localStorage data:', saved);
                 if (saved) {
                     const schedule = JSON.parse(saved);
+                    console.log('LOAD: Parsed schedule:', schedule);
                     currentSectorCount = schedule.sectorCount || 1;
                     if (schedule.aircraft) {
                         // Migrate old aircraft names to ICAO codes
