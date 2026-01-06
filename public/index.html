@@ -8048,24 +8048,44 @@
         // ============ SCHEDULE TAB FUNCTIONS ============
 
         function addSector() {
-            if (currentSectorCount < 4) {
-                currentSectorCount++;
-                document.getElementById('sector-' + currentSectorCount + '-block').style.display = 'block';
+            // Find the last visible sector and the first hidden one after it
+            var lastVisible = 0;
+            for (var s = 1; s <= 4; s++) {
+                var block = document.getElementById('sector-' + s + '-block');
+                if (block && block.style.display !== 'none') {
+                    lastVisible = s;
+                }
+            }
+
+            // Add the next sector after the last visible one
+            var nextSector = lastVisible + 1;
+            if (nextSector <= 4) {
+                document.getElementById('sector-' + nextSector + '-block').style.display = 'block';
+                currentSectorCount = nextSector;
                 document.getElementById('sched-total-sectors').textContent = currentSectorCount;
 
                 // Update the new sector based on previous sector's current values
-                updateSectorFromPrevious(currentSectorCount);
+                updateSectorFromPrevious(nextSector);
                 updateTurnaroundTimes();
                 saveSchedule();
             }
         }
 
         function removeSector() {
-            if (currentSectorCount > 1) {
+            // Find the last visible sector
+            var lastVisible = 0;
+            for (var s = 1; s <= 4; s++) {
+                var block = document.getElementById('sector-' + s + '-block');
+                if (block && block.style.display !== 'none') {
+                    lastVisible = s;
+                }
+            }
+
+            if (lastVisible > 1) {
                 // Clear the sector data before hiding
-                clearSectorData(currentSectorCount);
-                document.getElementById(`sector-${currentSectorCount}-block`).style.display = 'none';
-                currentSectorCount--;
+                clearSectorData(lastVisible);
+                document.getElementById('sector-' + lastVisible + '-block').style.display = 'none';
+                currentSectorCount = lastVisible - 1;
                 document.getElementById('sched-total-sectors').textContent = currentSectorCount;
                 updateTurnaroundTimes();
                 saveSchedule();
