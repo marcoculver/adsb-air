@@ -1246,20 +1246,20 @@
             #tab-set .top-sections {
                 grid-template-columns: 1fr !important;
             }
-            /* FDP tab mobile */
-            #tab-fdp .fdp-row {
+            /* DUTY tab mobile */
+            #tab-duty .fdp-row {
                 display: grid !important;
                 grid-template-columns: 1fr !important;
                 gap: 10px !important;
             }
-            #tab-fdp .sector-inputs {
+            #tab-duty .sector-inputs {
                 grid-template-columns: 1fr !important;
             }
-            #tab-fdp .local-offset-selector {
+            #tab-duty .local-offset-selector {
                 flex-direction: column;
                 gap: 8px;
             }
-            #tab-fdp .fdp-results-grid {
+            #tab-duty .fdp-results-grid {
                 grid-template-columns: 1fr 1fr !important;
             }
             /* FUEL tab mobile */
@@ -1291,18 +1291,6 @@
             }
             #tab-sched .fdp-result-grid[style*="repeat(4, 1fr)"] {
                 grid-template-columns: repeat(2, 1fr) !important;
-            }
-            /* TMR tab mobile */
-            #tab-tmr .top-sections {
-                grid-template-columns: 1fr !important;
-            }
-            /* LAY tab mobile */
-            #tab-lay .top-sections {
-                grid-template-columns: 1fr !important;
-            }
-            /* NOTES tab mobile */
-            #tab-notes .top-sections {
-                grid-template-columns: 1fr !important;
             }
             /* SUN tab mobile */
             #tab-sun .section {
@@ -1411,12 +1399,12 @@
             .sticky-header {
                 margin-bottom: 10px;
             }
-            /* MAP tab mobile */
-            #tab-map .map-info-row {
+            /* MAP section in NAV tab mobile */
+            #tab-nav .map-info-row {
                 flex-wrap: wrap;
                 gap: 10px;
             }
-            #tab-map .map-info-row > div {
+            #tab-nav .map-info-row > div {
                 flex: 1 1 45%;
             }
             #map-container {
@@ -1427,8 +1415,8 @@
                 gap: 8px !important;
             }
 
-            /* MISC tab mobile */
-            #tab-misc .top-sections {
+            /* REF tab (includes merged MISC) mobile */
+            #tab-ref .top-sections {
                 grid-template-columns: 1fr !important;
             }
             .pantry-grid {
@@ -1445,42 +1433,42 @@
                 min-width: 0 !important;
                 box-sizing: border-box !important;
             }
-            #tab-misc .fdp-result-grid {
+            #tab-ref .fdp-result-grid {
                 grid-template-columns: 1fr !important;
                 gap: 10px !important;
             }
 
-            /* MAP mobile */
-            #tab-map .fdp-section {
+            /* MAP section in NAV tab mobile */
+            #tab-nav #nav-map-section {
                 max-width: 100% !important;
                 overflow: hidden !important;
             }
-            #tab-map .fdp-section * {
+            #tab-nav #nav-map-section * {
                 max-width: 100% !important;
                 box-sizing: border-box !important;
             }
-            #tab-map #geojson-input {
+            #tab-nav #geojson-input {
                 width: 100% !important;
                 min-width: 0 !important;
             }
-            #tab-map .map-route-grid {
+            #tab-nav .map-route-grid {
                 grid-template-columns: 1fr 1fr !important;
                 gap: 8px !important;
             }
-            #tab-map .map-route-grid .input-group {
+            #tab-nav .map-route-grid .input-group {
                 min-width: 0 !important;
                 overflow: hidden !important;
             }
-            #tab-map .map-route-grid .fdp-input {
+            #tab-nav .map-route-grid .fdp-input {
                 width: 100% !important;
                 min-width: 0 !important;
                 box-sizing: border-box !important;
             }
-            #tab-map .fdp-section > div[style*="display: flex; gap: 15px"] {
+            #tab-nav .section > div[style*="display: flex; gap: 15px"] {
                 flex-wrap: wrap !important;
                 justify-content: space-around !important;
             }
-            #tab-map .fdp-section > div[style*="display: flex; gap: 15px"] > div {
+            #tab-nav .section > div[style*="display: flex; gap: 15px"] > div {
                 flex: 1 1 30% !important;
                 min-width: 70px !important;
             }
@@ -2493,18 +2481,13 @@
         <!-- Tab Navigation -->
         <div class="tab-nav">
             <button class="tab-btn active" onclick="switchTab('sched')">SCHED</button>
-            <button class="tab-btn" onclick="switchTab('fdp')">FDP</button>
+            <button class="tab-btn" onclick="switchTab('duty')">DUTY</button>
             <button class="tab-btn" onclick="switchTab('fuel')">FUEL</button>
             <button class="tab-btn" onclick="switchTab('perf')">PERF</button>
             <button class="tab-btn" onclick="switchTab('time')">TIME</button>
             <button class="tab-btn" onclick="switchTab('nav')">NAV</button>
             <button class="tab-btn" onclick="switchTab('wx')">WX</button>
-            <button class="tab-btn" onclick="switchTab('map')">MAP</button>
-            <button class="tab-btn" onclick="switchTab('tmr')">TMR</button>
-            <button class="tab-btn" onclick="switchTab('lay')">LAY</button>
             <button class="tab-btn" onclick="switchTab('lmc')">LMC</button>
-            <button class="tab-btn" onclick="switchTab('notes')">NOTES</button>
-            <button class="tab-btn" onclick="switchTab('misc')">MISC</button>
             <button class="tab-btn" onclick="switchTab('sun')">SUN</button>
             <button class="tab-btn" onclick="switchTab('set')">SET</button>
             <button class="tab-btn" onclick="switchTab('ref')">REF</button>
@@ -3508,105 +3491,6 @@
             </div>
         </div>
 
-        <div class="tab-content" id="tab-map">
-            <div class="fdp-container">
-                <div class="fdp-section">
-                    <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
-                        <span>Moving Map</span>
-                        <div style="display: flex; gap: 8px;">
-                            <button class="preset-btn" id="map-center-btn" onclick="centerMapOnPosition()">Center</button>
-                            <button class="preset-btn" id="map-follow-btn" onclick="toggleMapFollow()" style="background: rgba(0, 255, 136, 0.3); border-color: #00ff88;">Follow</button>
-                        </div>
-                    </div>
-                    <div id="map-container" style="height: 500px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 130, 0, 0.3);"></div>
-                    <div class="map-info-row" style="display: flex; justify-content: space-between; margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px;">
-                        <div style="text-align: center;">
-                            <div style="color: #888; font-size: 0.75rem;">POSITION</div>
-                            <div id="map-position" style="color: #00d4ff; font-family: monospace;">---</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="color: #888; font-size: 0.75rem;">TRACK</div>
-                            <div id="map-track" style="color: #00ff88; font-family: monospace;">---°</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="color: #888; font-size: 0.75rem;">GROUND SPEED</div>
-                            <div id="map-gs" style="color: #FF8200; font-family: monospace;">--- kt</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="color: #888; font-size: 0.75rem;">ALTITUDE</div>
-                            <div id="map-alt" style="color: #ffd700; font-family: monospace;">--- ft</div>
-                        </div>
-                    </div>
-                    <!-- Layer Toggles -->
-                    <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
-                        <button class="preset-btn" id="toggle-airspace-btn" onclick="toggleAirspaceLayer()" style="background: rgba(68, 68, 136, 0.4); border-color: #444488; font-size: 0.8rem; padding: 6px 12px;">
-                            ✓ Airspace
-                        </button>
-                        <button class="preset-btn" id="toggle-navaids-btn" onclick="toggleNavaidsLayer()" style="background: rgba(0, 200, 255, 0.3); border-color: #00c8ff; font-size: 0.8rem; padding: 6px 12px;">
-                            ✓ Navaids
-                        </button>
-                    </div>
-                </div>
-                <!-- Route Entry -->
-                <div class="fdp-section">
-                    <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-                        <span>Route / GeoJSON</span>
-                        <div id="map-route-switcher" style="display: none; font-size: 0.85rem; align-items: center;">
-                            <button class="preset-btn" onclick="mapRoutePrev()" style="padding: 4px 8px; font-size: 0.75rem;">◀</button>
-                            <span id="map-route-display" style="margin: 0 6px; color: #FF8200; font-size: 0.8rem;">---</span>
-                            <button class="preset-btn" onclick="mapRouteNext()" style="padding: 4px 8px; font-size: 0.75rem;">▶</button>
-                        </div>
-                    </div>
-                    <div class="map-route-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <div class="input-group">
-                            <label class="input-label">From</label>
-                            <input type="text" class="fdp-input" id="route-from" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase; text-align: center;">
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">To</label>
-                            <input type="text" class="fdp-input" id="route-to" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase; text-align: center;">
-                        </div>
-                    </div>
-                    <button class="preset-btn" style="width: 100%; margin-top: 10px;" onclick="drawRoute()">Draw Great Circle</button>
-                    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,130,0,0.2);">
-                        <label class="input-label">Paste GeoJSON Route</label>
-                        <textarea id="geojson-input" class="fdp-input" placeholder='{"type":"Feature","geometry":{"type":"LineString","coordinates":[[55.36,25.25],[0.46,51.47]]}}' style="width: 100%; height: 80px; resize: vertical; font-family: monospace; font-size: 0.8rem;"></textarea>
-                        <button class="preset-btn" style="width: 100%; margin-top: 8px;" onclick="loadGeoJSON()">Load GeoJSON</button>
-                    </div>
-                </div>
-                <!-- Track Log -->
-                <div class="fdp-section">
-                    <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
-                        <span>Track Log</span>
-                        <div style="display: flex; gap: 8px;">
-                            <button class="preset-btn" id="track-toggle-btn" onclick="toggleTrackLog()">Start Recording</button>
-                            <button class="clear-btn" onclick="clearTrackLog()">Clear</button>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 15px; margin-top: 10px;">
-                        <div style="text-align: center;">
-                            <div style="color: #888; font-size: 0.75rem;">POINTS</div>
-                            <div id="track-points" style="color: #00d4ff; font-size: 1.2rem;">0</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="color: #888; font-size: 0.75rem;">DISTANCE</div>
-                            <div id="track-distance" style="color: #00ff88; font-size: 1.2rem;">0 nm</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="color: #888; font-size: 0.75rem;">DURATION</div>
-                            <div id="track-duration" style="color: #FF8200; font-size: 1.2rem;">00:00</div>
-                        </div>
-                    </div>
-                    <button class="preset-btn" style="width: 100%; margin-top: 10px;" onclick="exportTrackLog()">Export GPX</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Timers Tab -->
-        <div class="tab-content" id="tab-tmr">
-            <div class="timers-grid" id="timers-container"></div>
-        </div>
-
         <!-- Fuel Tab -->
         <div class="tab-content" id="tab-fuel">
             <div class="fdp-container">
@@ -3770,92 +3654,8 @@
             </div>
         </div>
 
-        <!-- Layover Tab -->
-        <div class="tab-content" id="tab-lay">
-            <div class="fdp-container">
-                <!-- UTC Offset Selector -->
-                <div class="local-offset-selector">
-                    <label>Local Time Offset:</label>
-                    <select id="layover-offset" onchange="calculateLayover()">
-                        <option value="-12">UTC-12</option>
-                        <option value="-11">UTC-11</option>
-                        <option value="-10">UTC-10</option>
-                        <option value="-9">UTC-9</option>
-                        <option value="-8">UTC-8</option>
-                        <option value="-7">UTC-7</option>
-                        <option value="-6">UTC-6</option>
-                        <option value="-5">UTC-5</option>
-                        <option value="-4">UTC-4</option>
-                        <option value="-3">UTC-3 (MSK)</option>
-                        <option value="-2">UTC-2</option>
-                        <option value="-1">UTC-1</option>
-                        <option value="0">UTC+0 (LGW)</option>
-                        <option value="1">UTC+1 (BEG/PRG/ZAG)</option>
-                        <option value="2">UTC+2 (CAI/AMM/TLV/ATH)</option>
-                        <option value="3">UTC+3 (RUH/JED/KWI/BAH/DOH)</option>
-                        <option value="3.5">UTC+3:30 (IKA/THR)</option>
-                        <option value="4" selected>UTC+4 (DXB/MCT/TBS)</option>
-                        <option value="4.5">UTC+4:30 (KBL)</option>
-                        <option value="5">UTC+5 (KHI/LHE/ISB/TAS)</option>
-                        <option value="5.5">UTC+5:30 (DEL/BOM/COK/CMB)</option>
-                        <option value="6">UTC+6 (DAC/ALA)</option>
-                        <option value="7">UTC+7 (BKK)</option>
-                        <option value="8">UTC+8</option>
-                        <option value="9">UTC+9</option>
-                        <option value="10">UTC+10</option>
-                        <option value="11">UTC+11</option>
-                        <option value="12">UTC+12</option>
-                    </select>
-                </div>
-
-                <div class="fdp-section">
-                    <div class="section-title">Wake Up Calculator</div>
-                    <div class="fdp-row">
-                        <div class="fdp-field">
-                            <label class="fdp-label">STD (UTC)</label>
-                            <button class="input-btn" id="layover-std-btn" onclick="openTimePicker('layover-std')" style="max-width:100%">----</button>
-                            <input type="hidden" id="layover-std" value="">
-                        </div>
-                        <div class="fdp-field">
-                            <label class="fdp-label">Pickup Before STD</label>
-                            <button class="input-btn" id="layover-pickup-btn" onclick="openTimePicker('layover-pickup')" style="max-width:100%">0130</button>
-                            <input type="hidden" id="layover-pickup" value="0130">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="fdp-section">
-                    <div class="section-title">Calculated Times</div>
-                    <div class="fdp-results" style="margin-top:0">
-                        <div class="fdp-result-grid">
-                            <div class="fdp-result-item">
-                                <div class="fdp-result-label">STD (Local)</div>
-                                <div class="fdp-result-local" id="layover-std-local">--:--</div>
-                                <div class="fdp-result-utc" id="layover-std-utc">UTC: --:--</div>
-                            </div>
-                            <div class="fdp-result-item">
-                                <div class="fdp-result-label">Wake Up Time</div>
-                                <div class="fdp-result-local" id="layover-wake-local">--:--</div>
-                                <div class="fdp-result-utc" id="layover-wake-utc">UTC: --:--</div>
-                            </div>
-                            <div class="fdp-result-item">
-                                <div class="fdp-result-label">Hotel Departure</div>
-                                <div class="fdp-result-local" id="layover-hotel-local" style="color:#ffd700">--:--</div>
-                                <div class="fdp-result-utc" id="layover-hotel-utc">UTC: --:--</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="text-align:center; font-size:0.75rem; color:#888; margin-top:10px;">
-                        Hotel Departure = STD - Pickup Time | Wake Up = Hotel Departure - 1 hour
-                    </div>
-                </div>
-
-                <button class="clear-btn" id="layover-clear" style="margin-top:15px">Clear</button>
-            </div>
-        </div>
-
-        <!-- FDP Calculator Tab -->
-        <div class="tab-content" id="tab-fdp">
+        <!-- DUTY Tab (FDP + Layover merged) -->
+        <div class="tab-content" id="tab-duty">
             <div class="fdp-container">
                 <!-- Local Time Offset -->
                 <div class="local-offset-selector">
@@ -4100,6 +3900,79 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Layover / Wake Up Section (merged from LAY tab) -->
+                <div class="fdp-section">
+                    <div class="section-title">Layover / Wake Up Calculator</div>
+                    <div class="fdp-row" style="margin-bottom: 10px;">
+                        <div class="fdp-field">
+                            <label class="fdp-label">Layover Timezone</label>
+                            <select class="fdp-select" id="layover-offset" onchange="calculateLayover()" style="max-width: 100%;">
+                                <option value="-12">UTC-12</option>
+                                <option value="-11">UTC-11</option>
+                                <option value="-10">UTC-10</option>
+                                <option value="-9">UTC-9</option>
+                                <option value="-8">UTC-8</option>
+                                <option value="-7">UTC-7</option>
+                                <option value="-6">UTC-6</option>
+                                <option value="-5">UTC-5</option>
+                                <option value="-4">UTC-4</option>
+                                <option value="-3">UTC-3 (MSK)</option>
+                                <option value="-2">UTC-2</option>
+                                <option value="-1">UTC-1</option>
+                                <option value="0">UTC+0 (LGW)</option>
+                                <option value="1">UTC+1 (BEG/PRG/ZAG)</option>
+                                <option value="2">UTC+2 (CAI/AMM/TLV/ATH)</option>
+                                <option value="3">UTC+3 (RUH/JED/KWI/BAH/DOH)</option>
+                                <option value="3.5">UTC+3:30 (IKA/THR)</option>
+                                <option value="4" selected>UTC+4 (DXB/MCT/TBS)</option>
+                                <option value="4.5">UTC+4:30 (KBL)</option>
+                                <option value="5">UTC+5 (KHI/LHE/ISB/TAS)</option>
+                                <option value="5.5">UTC+5:30 (DEL/BOM/COK/CMB)</option>
+                                <option value="6">UTC+6 (DAC/ALA)</option>
+                                <option value="7">UTC+7 (BKK)</option>
+                                <option value="8">UTC+8</option>
+                                <option value="9">UTC+9</option>
+                                <option value="10">UTC+10</option>
+                                <option value="11">UTC+11</option>
+                                <option value="12">UTC+12</option>
+                            </select>
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">STD (UTC)</label>
+                            <button class="input-btn" id="layover-std-btn" onclick="openTimePicker('layover-std')" style="max-width:100%">----</button>
+                            <input type="hidden" id="layover-std" value="">
+                        </div>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Pickup Before STD</label>
+                            <button class="input-btn" id="layover-pickup-btn" onclick="openTimePicker('layover-pickup')" style="max-width:100%">0130</button>
+                            <input type="hidden" id="layover-pickup" value="0130">
+                        </div>
+                    </div>
+                    <div class="fdp-results" style="margin-top:0">
+                        <div class="fdp-result-grid">
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">STD (Local)</div>
+                                <div class="fdp-result-local" id="layover-std-local">--:--</div>
+                                <div class="fdp-result-utc" id="layover-std-utc">UTC: --:--</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Wake Up Time</div>
+                                <div class="fdp-result-local" id="layover-wake-local">--:--</div>
+                                <div class="fdp-result-utc" id="layover-wake-utc">UTC: --:--</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Hotel Departure</div>
+                                <div class="fdp-result-local" id="layover-hotel-local" style="color:#ffd700">--:--</div>
+                                <div class="fdp-result-utc" id="layover-hotel-utc">UTC: --:--</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align:center; font-size:0.75rem; color:#888; margin-top:10px;">
+                        Hotel Departure = STD - Pickup Time | Wake Up = Hotel Departure - 1 hour
+                    </div>
+                    <button class="clear-btn" id="layover-clear" style="margin-top:15px">Clear Layover</button>
+                </div>
             </div>
         </div>
 
@@ -4292,6 +4165,105 @@
                             </div>
                         </div>
                         <button class="clear-btn" onclick="clearAirportLookup()">Clear</button>
+                    </div>
+                </div>
+
+                <!-- Map Section (merged from MAP tab) -->
+                <div class="top-sections" style="grid-template-columns: 1fr; margin-top: 20px;">
+                    <div class="section" id="nav-map-section">
+                        <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Moving Map</span>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="preset-btn" id="map-center-btn" onclick="centerMapOnPosition()">Center</button>
+                                <button class="preset-btn" id="map-follow-btn" onclick="toggleMapFollow()" style="background: rgba(0, 255, 136, 0.3); border-color: #00ff88;">Follow</button>
+                            </div>
+                        </div>
+                        <div id="map-container" style="height: 500px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 130, 0, 0.3);"></div>
+                        <div class="map-info-row" style="display: flex; justify-content: space-between; margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px;">
+                            <div style="text-align: center;">
+                                <div style="color: #888; font-size: 0.75rem;">POSITION</div>
+                                <div id="map-position" style="color: #00d4ff; font-family: monospace;">---</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="color: #888; font-size: 0.75rem;">TRACK</div>
+                                <div id="map-track" style="color: #00ff88; font-family: monospace;">---°</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="color: #888; font-size: 0.75rem;">GROUND SPEED</div>
+                                <div id="map-gs" style="color: #FF8200; font-family: monospace;">--- kt</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="color: #888; font-size: 0.75rem;">ALTITUDE</div>
+                                <div id="map-alt" style="color: #ffd700; font-family: monospace;">--- ft</div>
+                            </div>
+                        </div>
+                        <!-- Layer Toggles -->
+                        <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+                            <button class="preset-btn" id="toggle-airspace-btn" onclick="toggleAirspaceLayer()" style="background: rgba(68, 68, 136, 0.4); border-color: #444488; font-size: 0.8rem; padding: 6px 12px;">
+                                ✓ Airspace
+                            </button>
+                            <button class="preset-btn" id="toggle-navaids-btn" onclick="toggleNavaidsLayer()" style="background: rgba(0, 200, 255, 0.3); border-color: #00c8ff; font-size: 0.8rem; padding: 6px 12px;">
+                                ✓ Navaids
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Route Entry Section -->
+                <div class="top-sections" style="grid-template-columns: 1fr; margin-top: 15px;">
+                    <div class="section">
+                        <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                            <span>Route / GeoJSON</span>
+                            <div id="map-route-switcher" style="display: none; font-size: 0.85rem; align-items: center;">
+                                <button class="preset-btn" onclick="mapRoutePrev()" style="padding: 4px 8px; font-size: 0.75rem;">◀</button>
+                                <span id="map-route-display" style="margin: 0 6px; color: #FF8200; font-size: 0.8rem;">---</span>
+                                <button class="preset-btn" onclick="mapRouteNext()" style="padding: 4px 8px; font-size: 0.75rem;">▶</button>
+                            </div>
+                        </div>
+                        <div class="map-route-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="input-group">
+                                <label class="input-label">From</label>
+                                <input type="text" class="fdp-input" id="route-from" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase; text-align: center;">
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">To</label>
+                                <input type="text" class="fdp-input" id="route-to" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase; text-align: center;">
+                            </div>
+                        </div>
+                        <button class="preset-btn" style="width: 100%; margin-top: 10px;" onclick="drawRoute()">Draw Great Circle</button>
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,130,0,0.2);">
+                            <label class="input-label">Paste GeoJSON Route</label>
+                            <textarea id="geojson-input" class="fdp-input" placeholder='{"type":"Feature","geometry":{"type":"LineString","coordinates":[[55.36,25.25],[0.46,51.47]]}}' style="width: 100%; height: 80px; resize: vertical; font-family: monospace; font-size: 0.8rem;"></textarea>
+                            <button class="preset-btn" style="width: 100%; margin-top: 8px;" onclick="loadGeoJSON()">Load GeoJSON</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Track Log Section -->
+                <div class="top-sections" style="grid-template-columns: 1fr; margin-top: 15px;">
+                    <div class="section">
+                        <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Track Log</span>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="preset-btn" id="track-toggle-btn" onclick="toggleTrackLog()">Start Recording</button>
+                                <button class="clear-btn" onclick="clearTrackLog()">Clear</button>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 15px; margin-top: 10px;">
+                            <div style="text-align: center;">
+                                <div style="color: #888; font-size: 0.75rem;">POINTS</div>
+                                <div id="track-points" style="color: #00d4ff; font-size: 1.2rem;">0</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="color: #888; font-size: 0.75rem;">DISTANCE</div>
+                                <div id="track-distance" style="color: #00ff88; font-size: 1.2rem;">0 nm</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="color: #888; font-size: 0.75rem;">DURATION</div>
+                                <div id="track-duration" style="color: #FF8200; font-size: 1.2rem;">00:00</div>
+                            </div>
+                        </div>
+                        <button class="preset-btn" style="width: 100%; margin-top: 10px;" onclick="exportTrackLog()">Export GPX</button>
                     </div>
                 </div>
             </div>
@@ -4513,6 +4485,12 @@
                     </div>
                     <button class="clear-btn" onclick="clearTimezones()">Clear</button>
                 </div>
+
+                <!-- Timers Section (merged from TMR tab) -->
+                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
+                    <div class="section-title">Timers</div>
+                    <div class="timers-grid" id="timers-container"></div>
+                </div>
             </div>
         </div>
 
@@ -4721,169 +4699,6 @@
                 </div>
 
                 <button class="clear-btn" onclick="clearLmc()" style="margin-top: 15px;">Clear All</button>
-            </div>
-        </div>
-
-        <!-- NOTES Tab (Scratchpad) -->
-        <div class="tab-content" id="tab-notes">
-            <div class="fdp-container">
-                <div class="section" style="max-width: 800px; margin: 0 auto;">
-                    <div class="section-title">Scratchpad</div>
-                    <div class="scratchpad-container">
-                        <textarea class="scratchpad-textarea" id="notes-scratchpad" placeholder="ATIS, Clearances, Notes..." style="min-height: 300px;"></textarea>
-                        <div style="display:flex;gap:10px;margin-top:10px">
-                            <button class="preset-btn" style="flex:1;padding:10px" onclick="saveNotesScratchpad()">Save to History</button>
-                            <button class="preset-btn" style="flex:1;padding:10px;background:rgba(255,80,80,0.2);border-color:#ff5050;color:#ff8888" onclick="clearNotesScratchpad()">Clear</button>
-                        </div>
-                        <div class="scratchpad-history" id="notes-scratchpad-history"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MISC Tab (Miscellaneous Tools) -->
-        <div class="tab-content" id="tab-misc">
-            <div class="fdp-container">
-                <div class="top-sections" style="grid-template-columns: repeat(2, 1fr);">
-                    <!-- Flight Route Lookup -->
-                    <div class="section">
-                        <div class="section-title">Flight Route Lookup</div>
-                        <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px; text-align: center;">
-                            Enter a flight number to find the route
-                        </p>
-                        <div class="fdp-field">
-                            <label class="fdp-label">Flight</label>
-                            <input type="text" class="fdp-input" id="route-flight-input" placeholder="e.g. FZ307, EK1, QR100"
-                                   oninput="lookupFlightRoute()" style="text-transform: uppercase; font-size: 1.2rem; text-align: center;">
-                        </div>
-                        <div class="fdp-results" style="margin-top: 20px;">
-                            <div class="fdp-result-grid" style="grid-template-columns: 1fr;">
-                                <div class="fdp-result-item">
-                                    <div class="fdp-result-label">Route</div>
-                                    <div class="fdp-result-value" id="route-result" style="font-size: 1.3rem;">---</div>
-                                    <div class="fdp-result-utc" id="route-icao" style="color: #888;">---</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-top: 15px; text-align: center; font-size: 0.75rem; color: #666;" id="route-status">
-                            Loading route database...
-                        </div>
-                    </div>
-
-                    <!-- Registration Prefix Lookup -->
-                    <div class="section">
-                        <div class="section-title">Registration Prefix Lookup</div>
-                        <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px; text-align: center;">
-                            Enter an aircraft registration prefix to find the country
-                        </p>
-                        <div class="fdp-field">
-                            <label class="fdp-label">Prefix</label>
-                            <input type="text" class="fdp-input" id="reg-prefix-input" placeholder="e.g. A6, N, G, VT"
-                                   oninput="lookupRegistrationPrefix()" style="text-transform: uppercase; font-size: 1.2rem; text-align: center;">
-                        </div>
-                        <div class="fdp-results" style="margin-top: 20px;">
-                            <div class="fdp-result-grid" style="grid-template-columns: 1fr;">
-                                <div class="fdp-result-item">
-                                    <div class="fdp-result-label">Country</div>
-                                    <div class="fdp-result-value" id="reg-country-result" style="font-size: 1.5rem;">---</div>
-                                    <div class="fdp-result-utc" id="reg-country-code" style="color: #888;">---</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Callsign / Route Lookup -->
-                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
-                    <div class="section-title">Callsign / Route Lookup</div>
-                    <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px; text-align: center;">
-                        Search by callsign (e.g. 2LA, 307) or route (e.g. DXB-TBS, OMDB-UGTB)
-                    </p>
-                    <div class="fdp-field">
-                        <label class="fdp-label">Callsign or Route</label>
-                        <input type="text" class="fdp-input" id="callsign-input" placeholder="e.g. 2LA or DXB-TBS"
-                               oninput="lookupCallsign()" style="text-transform: uppercase; font-size: 1.2rem; text-align: center;">
-                    </div>
-                    <div class="fdp-results" style="margin-top: 20px;">
-                        <div id="callsign-results" style="max-height: 300px; overflow-y: auto;">
-                            <div style="text-align: center; color: #888;">Enter a callsign to search</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pantry Selector Calculator -->
-                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
-                    <div class="section-title">Pantry Selector (DXB)</div>
-                    <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px; text-align: center;">
-                        Calculate pantry code, weight and index for DOW/DOI
-                    </p>
-                    <div class="pantry-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <div class="input-group">
-                            <label class="input-label">Aircraft</label>
-                            <select id="pantry-aircraft" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="updatePantryConfigOptions(); calculatePantry();">
-                                <option value="">Select</option>
-                                <option value="B737-800">B737-800</option>
-                                <option value="B737-8">B737-8</option>
-                                <option value="B737-9">B737-9</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">Config</label>
-                            <select id="pantry-config" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="calculatePantry();">
-                                <option value="">Select</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">Direction</label>
-                            <select id="pantry-direction" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="calculatePantry();">
-                                <option value="">Select</option>
-                                <option value="OUTBOUND_DXB">From DXB</option>
-                                <option value="INBOUND_DXB">To DXB</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">Type</label>
-                            <select id="pantry-flight-type" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="calculatePantry();">
-                                <option value="NORMAL">Normal</option>
-                                <option value="TRAINING">Training</option>
-                                <option value="DELIVERY">Delivery</option>
-                                <option value="FERRY">Ferry</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">Dest (IATA)</label>
-                            <input type="text" class="fdp-input" id="pantry-destination" placeholder="TBS"
-                                   oninput="calculatePantry()" style="text-transform: uppercase; font-size: 1rem; text-align: center;" maxlength="3">
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">Route Pair</label>
-                            <input type="text" class="fdp-input" id="pantry-route-pair" placeholder="MLE-CMB"
-                                   oninput="calculatePantry()" style="text-transform: uppercase; font-size: 1rem; text-align: center;" maxlength="7">
-                        </div>
-                    </div>
-                    <div class="fdp-results" style="margin-top: 20px;">
-                        <div class="fdp-result-grid" style="grid-template-columns: repeat(3, 1fr);">
-                            <div class="fdp-result-item">
-                                <div class="fdp-result-label">Pantry Code</div>
-                                <div class="fdp-result-value" id="pantry-code-result" style="font-size: 2rem; color: #00d4ff;">---</div>
-                            </div>
-                            <div class="fdp-result-item">
-                                <div class="fdp-result-label">Weight</div>
-                                <div class="fdp-result-value" id="pantry-weight-result" style="font-size: 1.5rem;">--- kg</div>
-                            </div>
-                            <div class="fdp-result-item">
-                                <div class="fdp-result-label">Index</div>
-                                <div class="fdp-result-value" id="pantry-index-result" style="font-size: 1.5rem;">--- IU</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 10px; text-align: center; font-size: 0.85rem; color: #888;" id="pantry-match-reason">
-                        Enter aircraft, config, direction and destination
-                    </div>
-                    <div style="margin-top: 15px; text-align: center;">
-                        <button class="clear-btn" onclick="clearPantryCalculator()">Clear</button>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -5183,7 +4998,20 @@
         <!-- SET Tab (Settings) -->
         <div class="tab-content" id="tab-set">
             <div class="fdp-container">
-                <div class="top-sections" style="grid-template-columns: repeat(2, 1fr);">
+                <!-- Scratchpad Section (merged from NOTES tab) -->
+                <div class="section" style="max-width: 800px; margin: 0 auto;">
+                    <div class="section-title">Scratchpad</div>
+                    <div class="scratchpad-container">
+                        <textarea class="scratchpad-textarea" id="notes-scratchpad" placeholder="ATIS, Clearances, Notes..." style="min-height: 250px;"></textarea>
+                        <div style="display:flex;gap:10px;margin-top:10px">
+                            <button class="preset-btn" style="flex:1;padding:10px" onclick="saveNotesScratchpad()">Save to History</button>
+                            <button class="preset-btn" style="flex:1;padding:10px;background:rgba(255,80,80,0.2);border-color:#ff5050;color:#ff8888" onclick="clearNotesScratchpad()">Clear</button>
+                        </div>
+                        <div class="scratchpad-history" id="notes-scratchpad-history"></div>
+                    </div>
+                </div>
+
+                <div class="top-sections" style="grid-template-columns: repeat(2, 1fr); margin-top: 20px;">
                     <!-- Quick Reset -->
                     <div class="section">
                         <div class="section-title">Quick Reset</div>
@@ -5200,30 +5028,29 @@
                         </div>
                     </div>
 
-                </div>
-
-                <!-- Data Status -->
-                <div class="section" style="max-width: 600px; margin: 20px auto 0;">
-                    <div class="section-title">Data Status</div>
-                    <div class="fdp-results" style="margin-top: 0;">
-                        <div class="fdp-result-grid" style="grid-template-columns: repeat(3, 1fr);">
-                            <div class="fdp-result-item">
-                                <div class="fdp-result-label">Schedule Sectors</div>
-                                <div class="fdp-result-value" id="status-sectors" style="color: #FF8200;">0</div>
-                            </div>
-                            <div class="fdp-result-item">
-                                <div class="fdp-result-label">Active Timers</div>
-                                <div class="fdp-result-value" id="status-timers" style="color: #00ff88;">0</div>
-                            </div>
-                            <div class="fdp-result-item">
-                                <div class="fdp-result-label">Notes Saved</div>
-                                <div class="fdp-result-value" id="status-notes" style="color: #00d4ff;">0</div>
+                    <!-- Data Status -->
+                    <div class="section">
+                        <div class="section-title">Data Status</div>
+                        <div class="fdp-results" style="margin-top: 0;">
+                            <div class="fdp-result-grid" style="grid-template-columns: repeat(3, 1fr);">
+                                <div class="fdp-result-item">
+                                    <div class="fdp-result-label">Schedule Sectors</div>
+                                    <div class="fdp-result-value" id="status-sectors" style="color: #FF8200;">0</div>
+                                </div>
+                                <div class="fdp-result-item">
+                                    <div class="fdp-result-label">Active Timers</div>
+                                    <div class="fdp-result-value" id="status-timers" style="color: #00ff88;">0</div>
+                                </div>
+                                <div class="fdp-result-item">
+                                    <div class="fdp-result-label">Notes Saved</div>
+                                    <div class="fdp-result-value" id="status-notes" style="color: #00d4ff;">0</div>
+                                </div>
                             </div>
                         </div>
+                        <p style="text-align: center; color: #666; font-size: 0.75rem; margin-top: 15px;">
+                            All data is stored locally in your browser.
+                        </p>
                     </div>
-                    <p style="text-align: center; color: #666; font-size: 0.75rem; margin-top: 15px;">
-                        All data is stored locally in your browser and persists across sessions.
-                    </p>
                 </div>
             </div>
         </div>
@@ -5289,6 +5116,148 @@
 
                     <div id="ref-not-found" style="display: none; text-align: center; padding: 15px; color: #ff6464; font-size: 0.9rem;">
                         Not found in OM-C database
+                    </div>
+                </div>
+
+                <!-- Misc Lookups Section (merged from MISC tab) -->
+                <div class="top-sections" style="grid-template-columns: repeat(2, 1fr); margin-top: 20px;">
+                    <!-- Flight Route Lookup -->
+                    <div class="section">
+                        <div class="section-title">Flight Route Lookup</div>
+                        <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px; text-align: center;">
+                            Enter a flight number to find the route
+                        </p>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Flight</label>
+                            <input type="text" class="fdp-input" id="route-flight-input" placeholder="e.g. FZ307, EK1, QR100"
+                                   oninput="lookupFlightRoute()" style="text-transform: uppercase; font-size: 1.2rem; text-align: center;">
+                        </div>
+                        <div class="fdp-results" style="margin-top: 20px;">
+                            <div class="fdp-result-grid" style="grid-template-columns: 1fr;">
+                                <div class="fdp-result-item">
+                                    <div class="fdp-result-label">Route</div>
+                                    <div class="fdp-result-value" id="route-result" style="font-size: 1.3rem;">---</div>
+                                    <div class="fdp-result-utc" id="route-icao" style="color: #888;">---</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px; text-align: center; font-size: 0.75rem; color: #666;" id="route-status">
+                            Loading route database...
+                        </div>
+                    </div>
+
+                    <!-- Registration Prefix Lookup -->
+                    <div class="section">
+                        <div class="section-title">Registration Prefix Lookup</div>
+                        <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px; text-align: center;">
+                            Enter an aircraft registration prefix to find the country
+                        </p>
+                        <div class="fdp-field">
+                            <label class="fdp-label">Prefix</label>
+                            <input type="text" class="fdp-input" id="reg-prefix-input" placeholder="e.g. A6, N, G, VT"
+                                   oninput="lookupRegistrationPrefix()" style="text-transform: uppercase; font-size: 1.2rem; text-align: center;">
+                        </div>
+                        <div class="fdp-results" style="margin-top: 20px;">
+                            <div class="fdp-result-grid" style="grid-template-columns: 1fr;">
+                                <div class="fdp-result-item">
+                                    <div class="fdp-result-label">Country</div>
+                                    <div class="fdp-result-value" id="reg-country-result" style="font-size: 1.5rem;">---</div>
+                                    <div class="fdp-result-utc" id="reg-country-code" style="color: #888;">---</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Callsign / Route Lookup -->
+                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
+                    <div class="section-title">Callsign / Route Lookup</div>
+                    <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px; text-align: center;">
+                        Search by callsign (e.g. 2LA, 307) or route (e.g. DXB-TBS, OMDB-UGTB)
+                    </p>
+                    <div class="fdp-field">
+                        <label class="fdp-label">Callsign or Route</label>
+                        <input type="text" class="fdp-input" id="callsign-input" placeholder="e.g. 2LA or DXB-TBS"
+                               oninput="lookupCallsign()" style="text-transform: uppercase; font-size: 1.2rem; text-align: center;">
+                    </div>
+                    <div class="fdp-results" style="margin-top: 20px;">
+                        <div id="callsign-results" style="max-height: 300px; overflow-y: auto;">
+                            <div style="text-align: center; color: #888;">Enter a callsign to search</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pantry Selector Calculator -->
+                <div class="section" style="max-width: 800px; margin: 20px auto 0;">
+                    <div class="section-title">Pantry Selector (DXB)</div>
+                    <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px; text-align: center;">
+                        Calculate pantry code, weight and index for DOW/DOI
+                    </p>
+                    <div class="pantry-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="input-group">
+                            <label class="input-label">Aircraft</label>
+                            <select id="pantry-aircraft" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="updatePantryConfigOptions(); calculatePantry();">
+                                <option value="">Select</option>
+                                <option value="B737-800">B737-800</option>
+                                <option value="B737-8">B737-8</option>
+                                <option value="B737-9">B737-9</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Config</label>
+                            <select id="pantry-config" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="calculatePantry();">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Direction</label>
+                            <select id="pantry-direction" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="calculatePantry();">
+                                <option value="">Select</option>
+                                <option value="OUTBOUND_DXB">From DXB</option>
+                                <option value="INBOUND_DXB">To DXB</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Type</label>
+                            <select id="pantry-flight-type" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="calculatePantry();">
+                                <option value="NORMAL">Normal</option>
+                                <option value="TRAINING">Training</option>
+                                <option value="DELIVERY">Delivery</option>
+                                <option value="FERRY">Ferry</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Dest (IATA)</label>
+                            <input type="text" class="fdp-input" id="pantry-destination" placeholder="TBS"
+                                   oninput="calculatePantry()" style="text-transform: uppercase; font-size: 1rem; text-align: center;" maxlength="3">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Route Pair</label>
+                            <input type="text" class="fdp-input" id="pantry-route-pair" placeholder="MLE-CMB"
+                                   oninput="calculatePantry()" style="text-transform: uppercase; font-size: 1rem; text-align: center;" maxlength="7">
+                        </div>
+                    </div>
+                    <div class="fdp-results" style="margin-top: 20px;">
+                        <div class="fdp-result-grid" style="grid-template-columns: repeat(3, 1fr);">
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Pantry Code</div>
+                                <div class="fdp-result-value" id="pantry-code-result" style="font-size: 2rem; color: #00d4ff;">---</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Weight</div>
+                                <div class="fdp-result-value" id="pantry-weight-result" style="font-size: 1.5rem;">--- kg</div>
+                            </div>
+                            <div class="fdp-result-item">
+                                <div class="fdp-result-label">Index</div>
+                                <div class="fdp-result-value" id="pantry-index-result" style="font-size: 1.5rem;">--- IU</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; text-align: center; font-size: 0.85rem; color: #888;" id="pantry-match-reason">
+                        Enter aircraft, config, direction and destination
+                    </div>
+                    <div style="margin-top: 15px; text-align: center;">
+                        <button class="clear-btn" onclick="clearPantryCalculator()">Clear</button>
                     </div>
                 </div>
             </div>
@@ -5868,8 +5837,8 @@
             document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
             document.getElementById(`tab-${tab}`).classList.add('active');
 
-            // Auto-sync FDP from schedule when opening FDP tab
-            if (tab === 'fdp') {
+            // Auto-sync FDP from schedule when opening DUTY tab
+            if (tab === 'duty') {
                 syncFromSchedule();
             }
 
@@ -5880,15 +5849,11 @@
                 updateNightSectorSwitcher();
             }
 
-            // Update route switcher when opening MAP tab
-            if (tab === 'map') {
-                updateMapRouteSwitcher();
-            }
-
-            // Update NAV tab switchers
+            // Update NAV tab switchers (including merged MAP functions)
             if (tab === 'nav') {
                 updateDistSwitcher();
                 updateAptInfoSwitcher();
+                updateMapRouteSwitcher();
             }
 
             // Update REF tab switcher
