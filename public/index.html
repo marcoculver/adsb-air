@@ -1897,13 +1897,55 @@
                 padding: 15px;
             }
 
+            /* Compact horizontal timer cards on mobile */
             .timer-card {
-                flex-direction: column;
-                text-align: center;
+                flex-direction: row;
+                padding: 10px;
+                gap: 10px;
             }
-
+            .clock-face {
+                width: 65px;
+                height: 65px;
+            }
+            .clock-inner {
+                top: 5px;
+                left: 5px;
+                right: 5px;
+                bottom: 5px;
+            }
+            .clock-time {
+                font-size: 0.75rem;
+            }
             .timer-display {
-                font-size: 1.6rem;
+                display: none;
+            }
+            .timer-name-input {
+                padding: 4px 8px;
+                font-size: 0.85rem;
+                margin-bottom: 5px;
+            }
+            .timer-type-toggle {
+                margin-bottom: 5px;
+            }
+            .type-btn {
+                padding: 4px;
+                font-size: 0.7rem;
+            }
+            .timer-time-setup {
+                margin-bottom: 5px;
+            }
+            .time-input-btn {
+                width: 40px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+            .timer-btn {
+                padding: 6px;
+                font-size: 0.75rem;
+            }
+            .btn-repeat {
+                flex: 0 0 32px;
+                font-size: 0.9rem;
             }
 
             .tab-btn {
