@@ -98,16 +98,17 @@
             border-right: 1px solid rgba(255, 130, 0, 0.3);
         }
 
-        .strip-eta {
+        .strip-remt-row {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            padding-right: 15px;
-            border-right: 1px solid rgba(255, 130, 0, 0.3);
+            justify-content: center;
+            gap: 10px;
+            padding: 6px 0;
+            border-top: 1px solid rgba(255, 130, 0, 0.2);
             cursor: pointer;
         }
 
-        .strip-eta:hover {
+        .strip-remt-row:hover {
             opacity: 0.8;
         }
 
@@ -130,7 +131,7 @@
         }
 
         .strip-eta-label {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             color: #888;
             text-transform: uppercase;
         }
@@ -1349,18 +1350,16 @@
             }
             .strip-top-row {
                 gap: 10px;
-                flex-wrap: wrap;
                 justify-content: space-between;
             }
             .strip-left-group {
                 gap: 10px;
-                flex-shrink: 1;
-                min-width: 0;
             }
             .strip-right-group {
                 gap: 8px;
-                flex-shrink: 1;
-                min-width: 0;
+            }
+            .strip-remt-row {
+                padding: 4px 0;
             }
             .strip-clock-time {
                 font-size: 1rem;
@@ -2425,7 +2424,7 @@
         <div class="sticky-header">
         <!-- Active Timers Strip -->
         <div class="active-timers-strip" id="active-timers-strip">
-            <!-- Top Row: Clocks, ETA, GPS, Qibla -->
+            <!-- Top Row: Clocks, GPS, Qibla -->
             <div class="strip-top-row">
                 <div class="strip-left-group">
                     <div class="strip-clock">
@@ -2435,10 +2434,6 @@
                     <div class="strip-clock" style="border-right: 1px solid rgba(255, 130, 0, 0.3); padding-right: 15px;">
                         <div class="strip-clock-time" id="strip-dxb-clock" style="color: #FF8200;">--:--</div>
                         <div class="strip-clock-label">DXB</div>
-                    </div>
-                    <div class="strip-eta" id="strip-eta" style="display:none" onclick="switchTab('sched')">
-                        <div class="strip-eta-time" id="strip-eta-time">--:--</div>
-                        <div class="strip-eta-label">ETA</div>
                     </div>
                 </div>
                 <div class="strip-right-group">
@@ -2460,6 +2455,11 @@
                         <div class="strip-qibla-label">QIBLA</div>
                     </div>
                 </div>
+            </div>
+            <!-- REMT Row (Remaining Time) -->
+            <div class="strip-remt-row" id="strip-eta" style="display:none" onclick="switchTab('sched')">
+                <div class="strip-eta-time" id="strip-eta-time">--:--</div>
+                <div class="strip-eta-label">REMT</div>
             </div>
             <!-- Bottom Row: Active Timers -->
             <div class="strip-timers-row" id="strip-timers"></div>
