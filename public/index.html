@@ -8394,7 +8394,7 @@
                         };
                         var aircraft = aircraftMap[schedule.aircraft] || schedule.aircraft;
                         document.getElementById('sched-aircraft').value = aircraft;
-                        document.getElementById('sched-aircraft-btn').textContent = aircraft;
+                        document.getElementById('sched-aircraft-display').textContent = aircraft;
                     }
                     if (schedule.tail) {
                         document.getElementById('sched-tail').value = schedule.tail;
@@ -8494,7 +8494,7 @@
 
         function selectAircraftPick(type) {
             document.getElementById('sched-aircraft').value = type;
-            document.getElementById('sched-aircraft-btn').textContent = type;
+            document.getElementById('sched-aircraft-display').textContent = type;
             closeAircraftPicker();
             onScheduleChange();
             saveSchedule();
