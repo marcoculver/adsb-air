@@ -5243,72 +5243,61 @@
         <div class="tab-content" id="tab-ref">
             <div class="fdp-container">
                 <!-- Airfield Authorization Lookup -->
-                <div class="section" style="max-width: 600px; margin: 0 auto;">
-                    <div class="section-title">Airfield Authorization Lookup</div>
-                    <p style="color: #888; font-size: 0.8rem; margin-bottom: 15px; text-align: center;">
-                        OM-C Airfield Authorizations - Enter ICAO or IATA code
-                    </p>
+                <div class="section" style="max-width: 400px; margin: 0 auto; padding: 12px;">
+                    <div class="section-title" style="margin-bottom: 8px;">Airfield Auth Lookup</div>
 
                     <!-- Schedule Switcher -->
-                    <div id="ref-switcher" style="display: none; justify-content: center; align-items: center; gap: 10px; margin-bottom: 15px; padding: 8px; background: rgba(255, 130, 0, 0.1); border-radius: 8px;">
-                        <button class="preset-btn" onclick="refSwitcherPrev()" style="padding: 5px 12px; min-width: auto;">&lt;</button>
-                        <span id="ref-switcher-display" style="font-size: 0.9rem; min-width: 120px; text-align: center;"></span>
-                        <button class="preset-btn" onclick="refSwitcherNext()" style="padding: 5px 12px; min-width: auto;">&gt;</button>
+                    <div id="ref-switcher" style="display: none; justify-content: center; align-items: center; gap: 8px; margin-bottom: 10px; padding: 6px; background: rgba(255, 130, 0, 0.1); border-radius: 6px;">
+                        <button class="preset-btn" onclick="refSwitcherPrev()" style="padding: 4px 10px; min-width: auto;">&lt;</button>
+                        <span id="ref-switcher-display" style="font-size: 0.85rem; min-width: 100px; text-align: center;"></span>
+                        <button class="preset-btn" onclick="refSwitcherNext()" style="padding: 4px 10px; min-width: auto;">&gt;</button>
                     </div>
 
-                    <div class="input-grid-2" style="margin-bottom: 15px;">
-                        <div class="input-group">
-                            <label>Airport Code</label>
-                            <input type="text" id="ref-airport-code" class="fdp-input" placeholder="OMDB or DXB" maxlength="4" style="text-transform: uppercase; text-align: center; font-size: 1.2rem;" oninput="this.value = this.value.toUpperCase()">
-                        </div>
-                        <div class="input-group" style="display: flex; align-items: flex-end;">
-                            <button class="calc-btn" onclick="lookupAirfieldAuth()" style="width: 100%;">LOOKUP</button>
-                        </div>
+                    <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                        <input type="text" id="ref-airport-code" class="fdp-input" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase; text-align: center; font-size: 1.1rem; flex: 1;" oninput="this.value = this.value.toUpperCase()" onfocus="this.value = ''">
+                        <button class="calc-btn" onclick="lookupAirfieldAuth()" style="padding: 8px 15px;">GO</button>
                     </div>
 
                     <!-- Results -->
                     <div id="ref-results" style="display: none;">
-                        <div class="fdp-results" style="margin-top: 15px;">
-                            <div style="text-align: center; margin-bottom: 15px;">
-                                <div id="ref-airport-name" style="font-size: 1.3rem; font-weight: bold; color: #fff;"></div>
-                                <div id="ref-airport-codes" style="font-size: 0.9rem; color: #888;"></div>
+                        <div style="text-align: center; margin-bottom: 8px;">
+                            <div id="ref-airport-name" style="font-size: 1.1rem; font-weight: bold; color: #fff;"></div>
+                            <div id="ref-airport-codes" style="font-size: 0.8rem; color: #888;"></div>
+                        </div>
+
+                        <div id="ref-category" style="text-align: center; margin-bottom: 8px; padding: 6px; border-radius: 6px;"></div>
+
+                        <div id="ref-restrictions" style="display: none; margin-bottom: 8px; padding: 8px; background: rgba(255, 100, 100, 0.1); border: 1px solid rgba(255, 100, 100, 0.3); border-radius: 6px;">
+                            <div style="color: #ff6464; font-weight: bold; font-size: 0.8rem; margin-bottom: 3px;">Restrictions:</div>
+                            <div id="ref-restrictions-text" style="color: #ff9999; font-size: 0.8rem;"></div>
+                        </div>
+
+                        <div class="fdp-result-grid" style="grid-template-columns: repeat(3, 1fr); gap: 6px;">
+                            <div class="fdp-result-item" id="ref-auth-dest" style="padding: 8px 4px;">
+                                <div class="fdp-result-label" style="font-size: 0.65rem;">DEST</div>
+                                <div class="fdp-result-value" id="ref-dest-status" style="font-size: 0.9rem;">-</div>
                             </div>
-
-                            <div id="ref-category" style="text-align: center; margin-bottom: 15px; padding: 10px; border-radius: 8px;"></div>
-
-                            <div id="ref-restrictions" style="display: none; margin-bottom: 15px; padding: 10px; background: rgba(255, 100, 100, 0.1); border: 1px solid rgba(255, 100, 100, 0.3); border-radius: 8px;">
-                                <div style="color: #ff6464; font-weight: bold; margin-bottom: 5px;">Restrictions:</div>
-                                <div id="ref-restrictions-text" style="color: #ff9999; font-size: 0.85rem;"></div>
+                            <div class="fdp-result-item" id="ref-auth-alt" style="padding: 8px 4px;">
+                                <div class="fdp-result-label" style="font-size: 0.65rem;">ALT</div>
+                                <div class="fdp-result-value" id="ref-alt-status" style="font-size: 0.9rem;">-</div>
                             </div>
-
-                            <div class="section-title" style="margin-top: 15px;">Authorizations</div>
-                            <div class="fdp-result-grid" style="grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                                <div class="fdp-result-item" id="ref-auth-dest">
-                                    <div class="fdp-result-label">Destination</div>
-                                    <div class="fdp-result-value" id="ref-dest-status">-</div>
-                                </div>
-                                <div class="fdp-result-item" id="ref-auth-alt">
-                                    <div class="fdp-result-label">Alternate</div>
-                                    <div class="fdp-result-value" id="ref-alt-status">-</div>
-                                </div>
-                                <div class="fdp-result-item" id="ref-auth-enr">
-                                    <div class="fdp-result-label">ERA</div>
-                                    <div class="fdp-result-value" id="ref-enr-status">-</div>
-                                </div>
-                                <div class="fdp-result-item" id="ref-auth-emerg">
-                                    <div class="fdp-result-label">Emergency Alt</div>
-                                    <div class="fdp-result-value" id="ref-emerg-status">-</div>
-                                </div>
-                                <div class="fdp-result-item" id="ref-auth-etops" style="grid-column: span 2;">
-                                    <div class="fdp-result-label">ETOPS Alternate</div>
-                                    <div class="fdp-result-value" id="ref-etops-status">-</div>
-                                </div>
+                            <div class="fdp-result-item" id="ref-auth-enr" style="padding: 8px 4px;">
+                                <div class="fdp-result-label" style="font-size: 0.65rem;">ERA</div>
+                                <div class="fdp-result-value" id="ref-enr-status" style="font-size: 0.9rem;">-</div>
+                            </div>
+                            <div class="fdp-result-item" id="ref-auth-emerg" style="padding: 8px 4px;">
+                                <div class="fdp-result-label" style="font-size: 0.65rem;">EMERG</div>
+                                <div class="fdp-result-value" id="ref-emerg-status" style="font-size: 0.9rem;">-</div>
+                            </div>
+                            <div class="fdp-result-item" id="ref-auth-etops" style="grid-column: span 2; padding: 8px 4px;">
+                                <div class="fdp-result-label" style="font-size: 0.65rem;">ETOPS ALT</div>
+                                <div class="fdp-result-value" id="ref-etops-status" style="font-size: 0.9rem;">-</div>
                             </div>
                         </div>
                     </div>
 
-                    <div id="ref-not-found" style="display: none; text-align: center; padding: 20px; color: #ff6464;">
-                        Airport not found in OM-C database
+                    <div id="ref-not-found" style="display: none; text-align: center; padding: 15px; color: #ff6464; font-size: 0.9rem;">
+                        Not found in OM-C database
                     </div>
                 </div>
             </div>
