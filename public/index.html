@@ -3129,6 +3129,115 @@
                 </div>
             </div>
 
+            <!-- Flight Path Calculators -->
+            <div class="top-sections" style="margin-top: 20px; grid-template-columns: repeat(3, 1fr);">
+                <!-- Glide Path / Rate of Descent Calculator -->
+                <div class="section">
+                    <div class="section-title">Glide Path / ROD</div>
+                    <div class="input-grid-2">
+                        <div class="input-group">
+                            <label class="input-label">Airport</label>
+                            <input type="text" class="fdp-input" id="gp-airport" placeholder="ICAO" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value = this.value.toUpperCase(); autofillGpElevation()">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Elevation (ft)</label>
+                            <button class="input-btn" id="gp-elev-btn" onclick="openWeightPicker('gp-elev', 'Elevation', 'ft')" style="max-width: 100%;">---</button>
+                            <input type="hidden" id="gp-elev" value="">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">OAT (°C)</label>
+                            <button class="input-btn" id="gp-oat-btn" onclick="openWxTempPicker('gp-oat', 'OAT')" style="max-width: 100%;">---</button>
+                            <input type="hidden" id="gp-oat" value="">
+                        </div>
+                    </div>
+                    <div class="input-grid-2" style="margin-top: 10px;">
+                        <div class="input-group">
+                            <label class="input-label">GP Angle (°)</label>
+                            <button class="input-btn" id="gp-angle-btn" onclick="openGlidePicker('gp-angle', 'Glide Path')" style="max-width: 100%;">3.0</button>
+                            <input type="hidden" id="gp-angle" value="3.0">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Ground Speed (kt)</label>
+                            <button class="input-btn" id="gp-gs-btn" onclick="openWeightPicker('gp-gs', 'Ground Speed', 'kt')" style="max-width: 100%;">---</button>
+                            <input type="hidden" id="gp-gs" value="">
+                        </div>
+                    </div>
+                    <div style="margin-top: 12px; border-top: 1px solid #333; padding-top: 12px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; text-align: center;">
+                            <div>
+                                <div style="font-size: 0.65rem; color: #888;">ISA / Deviation</div>
+                                <div style="display: flex; justify-content: center; gap: 8px;">
+                                    <span class="fdp-result-value" id="gp-isa" style="font-size: 0.85rem;">---°C</span>
+                                    <span class="fdp-result-value" id="gp-dev" style="font-size: 0.85rem;">---</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.65rem; color: #888;">Effective GP</div>
+                                <div class="fdp-result-value" id="gp-effective" style="font-size: 1.1rem; color: #00ff88;">---°</div>
+                                <div id="gp-hot-cold" style="font-size: 0.6rem;"></div>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-top: 10px;">
+                            <div style="font-size: 0.65rem; color: #888;">Rate of Descent</div>
+                            <div class="fdp-result-value" id="gp-rod" style="font-size: 1.4rem; color: #ff8200;">--- fpm</div>
+                        </div>
+                    </div>
+                    <button class="clear-btn" onclick="clearGlidePath()">Clear</button>
+                </div>
+
+                <!-- Climb Gradient Calculator -->
+                <div class="section">
+                    <div class="section-title">Climb Gradient</div>
+                    <div class="input-grid-2">
+                        <div class="input-group">
+                            <label class="input-label">Rate of Climb (fpm)</label>
+                            <button class="input-btn" id="climb-roc-btn" onclick="openWeightPicker('climb-roc', 'Rate of Climb', 'fpm')" style="max-width: 100%;">---</button>
+                            <input type="hidden" id="climb-roc" value="">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Ground Speed (kt)</label>
+                            <button class="input-btn" id="climb-gs-btn" onclick="openWeightPicker('climb-gs', 'Ground Speed', 'kt')" style="max-width: 100%;">---</button>
+                            <input type="hidden" id="climb-gs" value="">
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px; text-align: center;">
+                        <div style="font-size: 0.7rem; color: #888;">Climb Gradient</div>
+                        <div class="fdp-result-value" id="climb-gradient" style="font-size: 1.8rem; color: #00ff88;">--- %</div>
+                        <div style="font-size: 0.7rem; color: #888; margin-top: 8px;">Climb Angle</div>
+                        <div class="fdp-result-value" id="climb-angle" style="font-size: 1.2rem; color: #00d4ff;">---°</div>
+                    </div>
+                    <div style="text-align: center; font-size: 0.6rem; color: #666; margin-top: 8px;">
+                        Gradient = (ROC ÷ GS) × 60 ÷ 6076 × 100
+                    </div>
+                    <button class="clear-btn" onclick="clearClimbGradient()">Clear</button>
+                </div>
+
+                <!-- Quick ROD Calculator -->
+                <div class="section">
+                    <div class="section-title">Quick ROD</div>
+                    <div class="input-grid-2">
+                        <div class="input-group">
+                            <label class="input-label">GP Angle (°)</label>
+                            <button class="input-btn" id="qrod-angle-btn" onclick="openGlidePicker('qrod-angle', 'GP Angle')" style="max-width: 100%;">3.0</button>
+                            <input type="hidden" id="qrod-angle" value="3.0">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Ground Speed (kt)</label>
+                            <button class="input-btn" id="qrod-gs-btn" onclick="openWeightPicker('qrod-gs', 'Ground Speed', 'kt')" style="max-width: 100%;">---</button>
+                            <input type="hidden" id="qrod-gs" value="">
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px; text-align: center;">
+                        <div style="font-size: 0.7rem; color: #888;">Required Rate of Descent</div>
+                        <div class="fdp-result-value" id="qrod-result" style="font-size: 1.8rem; color: #ff8200;">--- fpm</div>
+                    </div>
+                    <div style="text-align: center; font-size: 0.6rem; color: #666; margin-top: 8px;">
+                        ROD = GS × tan(angle) × 101.27
+                    </div>
+                    <button class="clear-btn" onclick="clearQuickRod()">Clear</button>
+                </div>
+            </div>
+
         </div>
 
         <!-- MAP Tab -->
@@ -3980,73 +4089,11 @@
             </div>
         </div>
 
-        <!-- Nav Tab (Glide Path, Coordinates) -->
+        <!-- Nav Tab (Coordinates) -->
         <div class="tab-content" id="tab-nav">
             <div class="fdp-container">
-                <div class="top-sections" style="grid-template-columns: repeat(2, 1fr);">
-                    <!-- Glide Path / Rate of Descent Calculator -->
-                    <div class="section">
-                        <div class="section-title">Glide Path / Rate of Descent</div>
-                        <div class="input-grid-2">
-                            <div class="input-group">
-                                <label class="input-label">Airport</label>
-                                <input type="text" class="fdp-input" id="gp-airport" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value = this.value.toUpperCase(); autofillGpElevation()">
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label">Elevation (ft)</label>
-                                <button class="input-btn" id="gp-elev-btn" onclick="openWeightPicker('gp-elev', 'Elevation', 'ft')" style="max-width: 100%;">---</button>
-                                <input type="hidden" id="gp-elev" value="">
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label">OAT at Airport (°C)</label>
-                                <button class="input-btn" id="gp-oat-btn" onclick="openWxTempPicker('gp-oat', 'OAT')" style="max-width: 100%;">---</button>
-                                <input type="hidden" id="gp-oat" value="">
-                            </div>
-                        </div>
-                        <div class="input-grid-2" style="margin-top: 10px;">
-                            <div class="input-group">
-                                <label class="input-label">Published GP (°)</label>
-                                <button class="input-btn" id="gp-angle-btn" onclick="openGlidePicker('gp-angle', 'Glide Path')" style="max-width: 100%;">3.0</button>
-                                <input type="hidden" id="gp-angle" value="3.0">
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label">Ground Speed (kt)</label>
-                                <button class="input-btn" id="gp-gs-btn" onclick="openWeightPicker('gp-gs', 'Ground Speed', 'kt')" style="max-width: 100%;">---</button>
-                                <input type="hidden" id="gp-gs" value="">
-                            </div>
-                        </div>
-                        <div style="margin-top: 15px; border-top: 1px solid #333; padding-top: 15px;">
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center;">
-                                <div>
-                                    <div style="font-size: 0.7rem; color: #888;">ISA at Elevation</div>
-                                    <div class="fdp-result-value" id="gp-isa" style="font-size: 1rem;">---°C</div>
-                                </div>
-                                <div>
-                                    <div style="font-size: 0.7rem; color: #888;">Temp Deviation</div>
-                                    <div class="fdp-result-value" id="gp-dev" style="font-size: 1rem;">---</div>
-                                </div>
-                            </div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center; margin-top: 15px;">
-                                <div>
-                                    <div style="font-size: 0.7rem; color: #888;">Effective GP Angle</div>
-                                    <div class="fdp-result-value" id="gp-effective" style="font-size: 1.3rem; color: #00ff88;">---°</div>
-                                    <div id="gp-hot-cold" style="font-size: 0.75rem; margin-top: 3px;"></div>
-                                </div>
-                                <div>
-                                    <div style="font-size: 0.7rem; color: #888;">Rate of Descent</div>
-                                    <div class="fdp-result-value" id="gp-rod" style="font-size: 1.3rem; color: #ff8200;">--- fpm</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="text-align: center; font-size: 0.65rem; color: #666; margin-top: 10px;">
-                            Hot = fly lower (steeper) | Cold = fly higher (shallower)
-                        </div>
-                        <button class="clear-btn" onclick="clearGlidePath()">Clear</button>
-                    </div>
-                </div>
-
                 <!-- Coordinates Converter Row -->
-                <div class="top-sections" style="grid-template-columns: 1fr; margin-top: 20px;">
+                <div class="top-sections" style="grid-template-columns: 1fr;">
                     <div class="section">
                         <div class="section-title">Coordinates / LIDO Converter</div>
 
@@ -6150,6 +6197,8 @@
                 else if (fieldId.startsWith('sdt3-')) calculateSDT3();
                 else if (fieldId.startsWith('wx-')) calculateWeather();
                 else if (fieldId.startsWith('gp-')) calculateGlidePath();
+                else if (fieldId.startsWith('climb-')) calculateClimbGradient();
+                else if (fieldId.startsWith('qrod-')) calculateQuickRod();
                 else if (fieldId.startsWith('catchup-')) {
                     // Auto-update catch-up display when values change
                 }
@@ -11995,6 +12044,85 @@
             document.getElementById('gp-hot-cold').innerHTML = '';
             document.getElementById('gp-rod').textContent = '--- fpm';
             document.getElementById('gp-rod').style.color = '#ff8200';
+        }
+
+        // ============ CLIMB GRADIENT CALCULATOR ============
+        function calculateClimbGradient() {
+            var roc = parseFloat(document.getElementById('climb-roc').value);
+            var gs = parseFloat(document.getElementById('climb-gs').value);
+
+            var gradientEl = document.getElementById('climb-gradient');
+            var angleEl = document.getElementById('climb-angle');
+
+            if (!isNaN(roc) && !isNaN(gs) && gs > 0) {
+                // Gradient (%) = (ROC in fpm / GS in kt) × (60 / 6076.12) × 100
+                // Simplified: Gradient = ROC / (GS × 101.27) × 100
+                var gradient = (roc / (gs * 101.27)) * 100;
+                var angle = Math.atan(gradient / 100) * (180 / Math.PI);
+
+                gradientEl.textContent = gradient.toFixed(1) + ' %';
+                angleEl.textContent = angle.toFixed(2) + '°';
+
+                // Color based on typical climb gradients
+                if (gradient >= 3.3) {
+                    gradientEl.style.color = '#00ff88'; // Good climb
+                } else if (gradient >= 2.4) {
+                    gradientEl.style.color = '#ffd700'; // Marginal
+                } else {
+                    gradientEl.style.color = '#ff5252'; // Low
+                }
+            } else {
+                gradientEl.textContent = '--- %';
+                gradientEl.style.color = '#00ff88';
+                angleEl.textContent = '---°';
+            }
+        }
+
+        function clearClimbGradient() {
+            document.getElementById('climb-roc').value = '';
+            document.getElementById('climb-roc-btn').textContent = '---';
+            document.getElementById('climb-gs').value = '';
+            document.getElementById('climb-gs-btn').textContent = '---';
+            document.getElementById('climb-gradient').textContent = '--- %';
+            document.getElementById('climb-gradient').style.color = '#00ff88';
+            document.getElementById('climb-angle').textContent = '---°';
+        }
+
+        // ============ QUICK ROD CALCULATOR ============
+        function calculateQuickRod() {
+            var angle = parseFloat(document.getElementById('qrod-angle').value) || 3.0;
+            var gs = parseFloat(document.getElementById('qrod-gs').value);
+
+            var rodEl = document.getElementById('qrod-result');
+
+            if (!isNaN(gs) && gs > 0) {
+                // ROD = GS × tan(angle) × 101.27
+                var gpRad = angle * Math.PI / 180;
+                var rod = gs * Math.tan(gpRad) * 101.27;
+
+                rodEl.textContent = Math.round(rod) + ' fpm';
+
+                // Color based on typical ranges
+                if (rod > 1000) {
+                    rodEl.style.color = '#ff5252';
+                } else if (rod > 800) {
+                    rodEl.style.color = '#ff8200';
+                } else {
+                    rodEl.style.color = '#00ff88';
+                }
+            } else {
+                rodEl.textContent = '--- fpm';
+                rodEl.style.color = '#ff8200';
+            }
+        }
+
+        function clearQuickRod() {
+            document.getElementById('qrod-angle').value = '3.0';
+            document.getElementById('qrod-angle-btn').textContent = '3.0';
+            document.getElementById('qrod-gs').value = '';
+            document.getElementById('qrod-gs-btn').textContent = '---';
+            document.getElementById('qrod-result').textContent = '--- fpm';
+            document.getElementById('qrod-result').style.color = '#ff8200';
         }
 
         function autofillGpElevation() {
