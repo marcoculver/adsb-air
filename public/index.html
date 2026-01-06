@@ -8376,15 +8376,18 @@
                 });
             }
             localStorage.setItem('flightSchedule', JSON.stringify(schedule));
+            console.log('SAVE: Schedule saved to localStorage');
         }
 
         function loadSchedule() {
             try {
                 const saved = localStorage.getItem('flightSchedule');
                 console.log('LOAD: Raw localStorage data:', saved);
+                console.log('LOAD: All localStorage keys:', Object.keys(localStorage));
                 if (saved) {
                     const schedule = JSON.parse(saved);
                     console.log('LOAD: Parsed schedule:', schedule);
+                    console.log('LOAD: Sectors[0]:', schedule.sectors ? schedule.sectors[0] : 'none');
                     currentSectorCount = schedule.sectorCount || 1;
                     if (schedule.aircraft) {
                         // Migrate old aircraft names to ICAO codes
@@ -8452,8 +8455,9 @@
                 if (typeof checkAircraftMismatch === 'function') {
                     checkAircraftMismatch();
                 }
+                console.log('LOAD: Schedule load completed successfully');
             } catch (e) {
-                console.error('Error loading schedule:', e);
+                console.error('LOAD ERROR:', e);
             }
         }
 
