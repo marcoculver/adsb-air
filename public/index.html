@@ -2016,21 +2016,23 @@
             /* SUN tab mobile grids */
             .sun-location-grid {
                 display: flex !important;
-                flex-wrap: wrap !important;
+                flex-direction: column !important;
                 gap: 8px !important;
             }
 
             .sun-location-grid .fdp-field {
-                flex: 1 1 45% !important;
-                min-width: 80px !important;
+                min-width: 0 !important;
             }
 
-            .sun-location-grid .sun-or-divider {
-                display: none !important;
+            .sun-location-grid .fdp-input {
+                width: 100% !important;
+                min-width: 0 !important;
+                box-sizing: border-box !important;
             }
 
             .sun-location-grid .sun-gps-btn {
-                flex: 1 1 100% !important;
+                flex-shrink: 0 !important;
+                padding: 8px !important;
             }
 
             .twilight-grid {
