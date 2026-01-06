@@ -2488,7 +2488,7 @@
                     <div class="fdp-row duty-info-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
                         <div class="fdp-field">
                             <label class="fdp-label">Tail Number</label>
-                            <button class="input-btn" id="sched-tail-btn" onclick="openTailPicker()" style="max-width: 100%;">A6-___</button>
+                            <button class="input-btn" id="sched-tail-btn" onclick="openTailPicker()" style="max-width: 100%;">A6</button>
                             <input type="hidden" id="sched-tail" value="">
                         </div>
                         <div class="fdp-field">
@@ -8220,7 +8220,7 @@
                     if (arrDelay) { arrDelay.textContent = '--'; arrDelay.style.color = '#888'; }
                 }
                 document.getElementById('sched-tail').value = '';
-                document.getElementById('sched-tail-btn').textContent = 'A6-___';
+                document.getElementById('sched-tail-btn').textContent = 'A6';
                 currentSectorCount = 1;
                 for (let s = 2; s <= 4; s++) {
                     document.getElementById(`sector-${s}-block`).style.display = 'none';
@@ -8286,7 +8286,7 @@
                     }
                     if (schedule.tail) {
                         document.getElementById('sched-tail').value = schedule.tail;
-                        document.getElementById('sched-tail-btn').textContent = schedule.tail || 'A6-___';
+                        document.getElementById('sched-tail-btn').textContent = schedule.tail || 'A6';
                     }
                     for (let s = 1; s <= 4; s++) {
                         // Show or hide sector based on count
@@ -8327,7 +8327,7 @@
                 // Auto-capitalize the input
                 const upperValue = newValue.toUpperCase();
                 document.getElementById(fieldId).value = upperValue;
-                document.getElementById(fieldId + '-btn').textContent = upperValue || (fieldId.includes('flt') ? 'FZ___' : (fieldId.includes('tail') ? 'A6-___' : '---'));
+                document.getElementById(fieldId + '-btn').textContent = upperValue || (fieldId.includes('flt') ? 'FZ___' : (fieldId.includes('tail') ? 'A6' : '---'));
 
                 // Dynamic update: If ARR changed, update subsequent sectors
                 var arrMatch = fieldId.match(/^s(\d)-arr$/);
@@ -8609,7 +8609,7 @@
             } else {
                 var fullValue = tailPickerValue ? 'A6-' + tailPickerValue : '';
                 document.getElementById('sched-tail').value = fullValue;
-                document.getElementById('sched-tail-btn').textContent = fullValue || 'A6-___';
+                document.getElementById('sched-tail-btn').textContent = fullValue || 'A6';
                 closeTailPicker();
 
                 // Auto-fill aircraft type and config from fleet database
