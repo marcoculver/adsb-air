@@ -2535,7 +2535,7 @@
                         </div>
                         <div class="fdp-field">
                             <label class="fdp-label">Stand</label>
-                            <button class="input-btn" id="s1-stand-btn" onclick="openTextPicker('s1-stand', 'Stand')" style="max-width: 100%; font-size: 0.85rem;">---</button>
+                            <button class="input-btn" id="s1-stand-btn" onclick="openStandPicker('s1-stand')" style="max-width: 100%; font-size: 0.85rem;">---</button>
                             <input type="hidden" id="s1-stand" value="">
                         </div>
                     </div>
@@ -2634,7 +2634,7 @@
                         </div>
                         <div class="fdp-field">
                             <label class="fdp-label">Stand</label>
-                            <button class="input-btn" id="s2-stand-btn" onclick="openTextPicker('s2-stand', 'Stand')" style="max-width: 100%; font-size: 0.85rem;">---</button>
+                            <button class="input-btn" id="s2-stand-btn" onclick="openStandPicker('s2-stand')" style="max-width: 100%; font-size: 0.85rem;">---</button>
                             <input type="hidden" id="s2-stand" value="">
                         </div>
                     </div>
@@ -2729,7 +2729,7 @@
                         </div>
                         <div class="fdp-field">
                             <label class="fdp-label">Stand</label>
-                            <button class="input-btn" id="s3-stand-btn" onclick="openTextPicker('s3-stand', 'Stand')" style="max-width: 100%; font-size: 0.85rem;">---</button>
+                            <button class="input-btn" id="s3-stand-btn" onclick="openStandPicker('s3-stand')" style="max-width: 100%; font-size: 0.85rem;">---</button>
                             <input type="hidden" id="s3-stand" value="">
                         </div>
                     </div>
@@ -2824,7 +2824,7 @@
                         </div>
                         <div class="fdp-field">
                             <label class="fdp-label">Stand</label>
-                            <button class="input-btn" id="s4-stand-btn" onclick="openTextPicker('s4-stand', 'Stand')" style="max-width: 100%; font-size: 0.85rem;">---</button>
+                            <button class="input-btn" id="s4-stand-btn" onclick="openStandPicker('s4-stand')" style="max-width: 100%; font-size: 0.85rem;">---</button>
                             <input type="hidden" id="s4-stand" value="">
                         </div>
                     </div>
@@ -5312,6 +5312,46 @@
             <div class="picker-actions">
                 <button class="picker-cancel" onclick="closeTailPicker()">Cancel</button>
                 <button class="picker-confirm" onclick="confirmTailPicker()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stand Picker Modal -->
+    <div class="modal-overlay" id="stand-picker-modal">
+        <div class="number-picker" style="max-width: 320px; width: 90%;">
+            <div class="picker-title">Stand Number</div>
+            <div class="picker-display">
+                <span class="picker-value" id="stand-picker-value" style="font-size: 2rem;">---</span>
+            </div>
+            <!-- Letters -->
+            <div class="picker-buttons" style="grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 8px;">
+                <button class="picker-btn" onclick="standPickerAppend('A')" style="min-width: 0; padding: 10px 0; background: rgba(255,130,0,0.3);">A</button>
+                <button class="picker-btn" onclick="standPickerAppend('B')" style="min-width: 0; padding: 10px 0; background: rgba(255,130,0,0.3);">B</button>
+                <button class="picker-btn" onclick="standPickerAppend('C')" style="min-width: 0; padding: 10px 0; background: rgba(255,130,0,0.3);">C</button>
+                <button class="picker-btn" onclick="standPickerAppend('D')" style="min-width: 0; padding: 10px 0; background: rgba(255,130,0,0.3);">D</button>
+                <button class="picker-btn" onclick="standPickerAppend('E')" style="min-width: 0; padding: 10px 0; background: rgba(255,130,0,0.3);">E</button>
+                <button class="picker-btn" onclick="standPickerAppend('F')" style="min-width: 0; padding: 10px 0; background: rgba(255,130,0,0.3);">F</button>
+                <button class="picker-btn" onclick="standPickerAppend('G')" style="min-width: 0; padding: 10px 0; background: rgba(255,130,0,0.3);">G</button>
+            </div>
+            <!-- Numbers -->
+            <div class="picker-buttons" style="grid-template-columns: repeat(5, 1fr); gap: 4px;">
+                <button class="picker-btn" onclick="standPickerAppend('1')">1</button>
+                <button class="picker-btn" onclick="standPickerAppend('2')">2</button>
+                <button class="picker-btn" onclick="standPickerAppend('3')">3</button>
+                <button class="picker-btn" onclick="standPickerAppend('4')">4</button>
+                <button class="picker-btn" onclick="standPickerAppend('5')">5</button>
+                <button class="picker-btn" onclick="standPickerAppend('6')">6</button>
+                <button class="picker-btn" onclick="standPickerAppend('7')">7</button>
+                <button class="picker-btn" onclick="standPickerAppend('8')">8</button>
+                <button class="picker-btn" onclick="standPickerAppend('9')">9</button>
+                <button class="picker-btn" onclick="standPickerAppend('0')">0</button>
+                <button class="picker-btn clear" onclick="standPickerClear()" style="grid-column: span 2;">Clear</button>
+                <button class="picker-btn" onclick="standPickerBackspace()" style="grid-column: span 2;">←</button>
+                <button class="picker-btn" onclick="standPickerAppend('R')" style="background: rgba(0,200,255,0.3);">R</button>
+            </div>
+            <div class="picker-actions">
+                <button class="picker-cancel" onclick="closeStandPicker()">Cancel</button>
+                <button class="picker-confirm" onclick="confirmStandPicker()">OK</button>
             </div>
         </div>
     </div>
@@ -8616,6 +8656,50 @@
                 updateAircraftFromTail(fullValue);
                 saveSchedule();
             }
+        }
+
+        // ============ STAND PICKER ============
+        var standPickerValue = '';
+        var standPickerFieldId = '';
+
+        function openStandPicker(fieldId) {
+            standPickerFieldId = fieldId;
+            var currentValue = document.getElementById(fieldId).value || '';
+            standPickerValue = currentValue;
+            updateStandPickerDisplay();
+            document.getElementById('stand-picker-modal').classList.add('active');
+        }
+
+        function updateStandPickerDisplay() {
+            document.getElementById('stand-picker-value').textContent = standPickerValue || '---';
+        }
+
+        function standPickerAppend(char) {
+            if (standPickerValue.length < 4) {
+                standPickerValue += char;
+                updateStandPickerDisplay();
+            }
+        }
+
+        function standPickerBackspace() {
+            standPickerValue = standPickerValue.slice(0, -1);
+            updateStandPickerDisplay();
+        }
+
+        function standPickerClear() {
+            standPickerValue = '';
+            updateStandPickerDisplay();
+        }
+
+        function closeStandPicker() {
+            document.getElementById('stand-picker-modal').classList.remove('active');
+        }
+
+        function confirmStandPicker() {
+            document.getElementById(standPickerFieldId).value = standPickerValue;
+            document.getElementById(standPickerFieldId + '-btn').textContent = standPickerValue || '---';
+            closeStandPicker();
+            saveSchedule();
         }
 
         // Global selected config for use across tabs
