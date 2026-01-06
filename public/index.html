@@ -2463,9 +2463,15 @@
                 </div>
             </div>
             <!-- REMT Row (Remaining Time) -->
-            <div class="strip-remt-row" id="strip-eta" style="display:none" onclick="switchTab('sched')">
-                <div class="strip-eta-time" id="strip-eta-time">--:--</div>
-                <div class="strip-eta-label">REMT</div>
+            <div class="strip-remt-row" id="strip-eta" style="display:none" onclick="switchTab('time')">
+                <div style="display: flex; align-items: center; gap: 5px;">
+                    <span class="strip-eta-label">ETA</span>
+                    <span id="strip-eta-target" style="font-family: 'Courier New', monospace; color: #00d4ff; font-size: 1rem;">----</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 5px;">
+                    <span class="strip-eta-label">REMT</span>
+                    <span class="strip-eta-time" id="strip-eta-time">--:--</span>
+                </div>
             </div>
             <!-- Bottom Row: Active Timers -->
             <div class="strip-timers-row" id="strip-timers"></div>
@@ -6956,6 +6962,7 @@
             const etaDisplay = document.getElementById('eta-countdown');
             const stripEta = document.getElementById('strip-eta');
             const stripEtaTime = document.getElementById('strip-eta-time');
+            const stripEtaTarget = document.getElementById('strip-eta-target');
 
             const eta = parseTime(etaStr);
             if (!eta) {
@@ -6964,6 +6971,9 @@
                 stripEta.style.display = 'none';
                 return;
             }
+
+            // Update ETA target display
+            stripEtaTarget.textContent = etaStr;
 
             let nowMins, nowSecs = 0;
 
