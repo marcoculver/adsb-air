@@ -1,0 +1,4472 @@
+{
+  "document_metadata": {
+    "title": "OM-C Aerodrome Briefings and Limitations (Appendices)",
+    "section": "1.A List of Authorized and Categorized Airfields",
+    "revision_number": 79,
+    "revision_date": "2026-01-02",
+    "document_date": "2026-01-06T14:04:30",
+    "source_url": "https://docunet-online.vistair.com/",
+    "references": ["FLT 3.7.8", "FLT 4.2.3"],
+    "notes": {
+      "general": "Click on highlighted (blue) text to go to the respective briefing pages.",
+      "category_a_guidance": "# – Guidance for Category A airfield.",
+      "hj_only": "* Authorized HJ only."
+    },
+    "status": "UNCONTROLLED IF PRINTED"
+  },
+  "airfields": [
+    {
+      "icao": "BGSF",
+      "iata": "SFJ",
+      "name": "Kangerlussuaq",
+      "restrictions": "Delivery flights only",
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "BIKF",
+      "iata": "KEF",
+      "name": "Keflavik",
+      "restrictions": "Delivery flights only",
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "CYFB",
+      "iata": "YFB",
+      "name": "Iqaluit",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "CYOD",
+      "iata": "YOD",
+      "name": "Cold Lake",
+      "restrictions": "Delivery flights only",
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "CYQB",
+      "iata": "YQB",
+      "name": "Quebec Jean Lesage Intl",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "CYQT",
+      "iata": "YQT",
+      "name": "Thunder Bay",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "CYQX",
+      "iata": "YQX",
+      "name": "Gander Intl",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "CYYR",
+      "iata": "YYR",
+      "name": "Goose Bay",
+      "restrictions": "Delivery flights only",
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "CYYT",
+      "iata": "YYT",
+      "name": "St Johns Intl",
+      "restrictions": "Delivery flights only",
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "CYWG",
+      "iata": "YWG",
+      "name": "Winnipeg",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "CYXE",
+      "iata": "YXE",
+      "name": "Saskatoon Intl",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "CYYC",
+      "iata": "YYC",
+      "name": "Calgary Intl",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EDDS",
+      "iata": "STR",
+      "name": "Stuttgart",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EDDM",
+      "iata": "MUC",
+      "name": "Munich",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EETN",
+      "iata": "TLL",
+      "name": "Tallinn",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EFHK",
+      "iata": "HEL",
+      "name": "Helsinki",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EFTP",
+      "iata": "TMP",
+      "name": "Tampere",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EGBB",
+      "iata": "BHX",
+      "name": "Birmingham",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EGGW",
+      "iata": "LTN",
+      "name": "London Luton",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EGPF",
+      "iata": "GLA",
+      "name": "Glasgow",
+      "restrictions": "Delivery flights only",
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EGSH",
+      "iata": "NWI",
+      "name": "Norwich",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EGSS",
+      "iata": "STN",
+      "name": "London Stansted",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EIDW",
+      "iata": "DUB",
+      "name": "Dublin",
+      "restrictions": "Delivery and Maintenance Flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EINN",
+      "iata": "SNN",
+      "name": "Shannon",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EPKK",
+      "iata": "KRK",
+      "name": "Krakow Balice",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EPKT",
+      "iata": "KTW",
+      "name": "Katowice",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EPMO",
+      "iata": "WMI",
+      "name": "Warsaw Modlin",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EPPO",
+      "iata": "POZ",
+      "name": "Poznan Lawica",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EPRZ",
+      "iata": "RZE",
+      "name": "Rzeszow",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EPWA",
+      "iata": "WAW",
+      "name": "Warsaw Chopin",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EPWR",
+      "iata": "WRO",
+      "name": "Wroclaw Strachowice",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EVRA",
+      "iata": "RIX",
+      "name": "Riga",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "EYVI",
+      "iata": "VNO",
+      "name": "Vilnius",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "FTTJ",
+      "iata": "NDJ",
+      "name": "N'Djamena",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HAAB",
+      "iata": "ADD",
+      "name": "Addis Ababa",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HCMH",
+      "iata": "HGA",
+      "name": "Hargeisa",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HCMM",
+      "iata": "MGQ",
+      "name": "Mogadishu Aden Adde Intl",
+      "restrictions": null,
+      "category": "B",
+      "special_notes": "Authorized HJ only",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HDAM",
+      "iata": "JIB",
+      "name": "Djibouti",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HEAL",
+      "iata": "DBB",
+      "name": "Al Alamain",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HEAT",
+      "iata": "ATZ",
+      "name": "Asyut",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HEAX",
+      "iata": "HBE",
+      "name": "Alexandria (Alexandria Intl)",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HECA",
+      "iata": "CAI",
+      "name": "Cairo",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HEGN",
+      "iata": "HRG",
+      "name": "Hurghada",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HELX",
+      "iata": "LXR",
+      "name": "Luxor",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HEMA",
+      "iata": "RMF",
+      "name": "Marsa Alam",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HESG",
+      "iata": "HMB",
+      "name": "Suhag",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HESH",
+      "iata": "SSH",
+      "name": "Sharm El Sheikh Intl",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HESX",
+      "iata": "SPX",
+      "name": "Giza Sphinx",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HHAS",
+      "iata": "ASM",
+      "name": "Asmara",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": false,
+        "enroute_alternate": false,
+        "emergency_alternate": true,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "HKEL",
+      "iata": "EDL",
+      "name": "Eldoret",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HKJK",
+      "iata": "NBO",
+      "name": "Nairobi",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HKMO",
+      "iata": "MBA",
+      "name": "Mombasa",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HRYR",
+      "iata": "KGL",
+      "name": "Kigali",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HJJJ",
+      "iata": "JUB",
+      "name": "Juba",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "HTDA",
+      "iata": "DAR",
+      "name": "Dar Es Salaam",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HTKJ",
+      "iata": "JRO",
+      "name": "Kilimanjaro",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HTZA",
+      "iata": "ZNZ",
+      "name": "Zanzibar",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "HUEN",
+      "iata": "EBB",
+      "name": "Entebbe",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "KBFI",
+      "iata": "BFI",
+      "name": "Seattle Boeing Field",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "KBIL",
+      "iata": "BIL",
+      "name": "Billings Logan",
+      "restrictions": "Delivery flights only",
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "KCLT",
+      "iata": "CLT",
+      "name": "Charlotte/Douglas",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "KMSP",
+      "iata": "MSP",
+      "name": "Minneapolis St Paul",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "KPAE",
+      "iata": "PAE",
+      "name": "Everett, Paine Fld",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LATI",
+      "iata": "TIA",
+      "name": "Tirana Mother Teresa",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LBBG",
+      "iata": "BOJ",
+      "name": "Burgas",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LBSF",
+      "iata": "SOF",
+      "name": "Sofia",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LCLK",
+      "iata": "LCA",
+      "name": "Larnaka",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LCPH",
+      "iata": "PFO",
+      "name": "Pafos",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LDDU",
+      "iata": "DBV",
+      "name": "Dubrovnik",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LDSP",
+      "iata": "SPU",
+      "name": "Split",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LDZA",
+      "iata": "ZAG",
+      "name": "Zagreb",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LFSB",
+      "iata": "BSL",
+      "name": "Basle Mulhouse",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LFLL",
+      "iata": "LYS",
+      "name": "Lyon Saint Exupery",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LGAV",
+      "iata": "ATH",
+      "name": "Athens",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LGKR",
+      "iata": "CFU",
+      "name": "Kerkira Ioannis Kapodistrias",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LGKV",
+      "iata": "KVA",
+      "name": "Kavala",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LGMK",
+      "iata": "JMK",
+      "name": "Mikonos",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": false,
+        "enroute_alternate": false,
+        "emergency_alternate": false,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "LGTS",
+      "iata": "SKG",
+      "name": "Thessaloniki",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LGSR",
+      "iata": "JTR",
+      "name": "Santorini",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": false,
+        "enroute_alternate": false,
+        "emergency_alternate": false,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "LHBP",
+      "iata": "BUD",
+      "name": "Budapest",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LIBD",
+      "iata": "BRI",
+      "name": "Bari Palese",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LIBR",
+      "iata": "BDS",
+      "name": "Brindisi",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LICB",
+      "iata": "CIY",
+      "name": "Comiso",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LICC",
+      "iata": "CTA",
+      "name": "Catania",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LICJ",
+      "iata": "PMO",
+      "name": "Palermo",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LIEA",
+      "iata": "AHO",
+      "name": "Alghero Fertilia",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LIEE",
+      "iata": "CAG",
+      "name": "Cagliari Elmas",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LIEO",
+      "iata": "OLB",
+      "name": "Olbia Costa Smeralda",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LIME",
+      "iata": "BGY",
+      "name": "Bergamo",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LIMC",
+      "iata": "MXP",
+      "name": "Milan Malpensa",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LIMJ",
+      "iata": "GOA",
+      "name": "Genoa",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LIPE",
+      "iata": "BLQ",
+      "name": "Bologna",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LIPX",
+      "iata": "VRN",
+      "name": "Verona",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LIRA",
+      "iata": "CIA",
+      "name": "Rome Ciampino",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LIRN",
+      "iata": "NAP",
+      "name": "Naples Capodichino",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LIRF",
+      "iata": "FCO",
+      "name": "Rome Fiumicino",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LIRP",
+      "iata": "PSA",
+      "name": "Pisa",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LJLJ",
+      "iata": "LJU",
+      "name": "Ljubljana Brnik",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LKPR",
+      "iata": "PRG",
+      "name": "Prague",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LKTB",
+      "iata": "BRQ",
+      "name": "Brno Turany",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LLBG",
+      "iata": "TLV",
+      "name": "Ben Gurion",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": false,
+        "enroute_alternate": false,
+        "emergency_alternate": false,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "LLER",
+      "iata": "ETM",
+      "name": "Eilat",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": false,
+        "emergency_alternate": false,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "LMML",
+      "iata": "MLA",
+      "name": "Malta",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LOWL",
+      "iata": "LNZ",
+      "name": "Linz",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LOWS",
+      "iata": "SZG",
+      "name": "Salzburg",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LOWW",
+      "iata": "VIE",
+      "name": "Vienna Schwechat",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LPAZ",
+      "iata": "SMA",
+      "name": "Santa Maria",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LPLA",
+      "iata": "TER",
+      "name": "Lajes AB",
+      "restrictions": "Delivery flights only",
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LPPD",
+      "iata": "PDL",
+      "name": "Ponta Delgado Joao Paulo II",
+      "restrictions": "Delivery flights only",
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LQSA",
+      "iata": "SJJ",
+      "name": "Sarajevo",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LQTZ",
+      "iata": "TZL",
+      "name": "Tuzla",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LRBS",
+      "iata": "BBU",
+      "name": "Bucharest (Baneasa)",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LRCK",
+      "iata": "CND",
+      "name": "Constanta",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LRCL",
+      "iata": "CLJ",
+      "name": "Cluj Napoca",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LRIA",
+      "iata": "IAS",
+      "name": "Iasi",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LROP",
+      "iata": "OTP",
+      "name": "Bucharest",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LRTR",
+      "iata": "TSR",
+      "name": "Timisoara Traian Vuia",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LSGG",
+      "iata": "GVA",
+      "name": "Geneva",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LSZH",
+      "iata": "ZRH",
+      "name": "Zurich",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LTAC",
+      "iata": "ESB",
+      "name": "Ankara Esenboga",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LTAI",
+      "iata": "AYT",
+      "name": "Antalya",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LTAN",
+      "iata": "KYA",
+      "name": "Konya",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LTAR",
+      "iata": "VAS",
+      "name": "Sivas",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LTAU",
+      "iata": "ASR",
+      "name": "Kayseri",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LTBJ",
+      "iata": "ADB",
+      "name": "Izmir",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LTBU",
+      "iata": "TEQ",
+      "name": "Tekirdag Corlu",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LTCE",
+      "iata": "ERZ",
+      "name": "Erzurum",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LTCG",
+      "iata": "TZX",
+      "name": "Trabzon",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LTFE",
+      "iata": "BJV",
+      "name": "Bodrum",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LTFJ",
+      "iata": "SAW",
+      "name": "Istanbul Sabiha Gokcen",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LTFM",
+      "iata": "IST",
+      "name": "Istanbul",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LUKK",
+      "iata": "RMO",
+      "name": "Chisinau",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LWOH",
+      "iata": "OHD",
+      "name": "Ohrid",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LWSK",
+      "iata": "SKP",
+      "name": "Skopje",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LYBE",
+      "iata": "BEG",
+      "name": "Belgrade",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LYNI",
+      "iata": "INI",
+      "name": "Nis Konstantin Veliki",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LYPG",
+      "iata": "TGD",
+      "name": "Podgorica",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LYTV",
+      "iata": "TIV",
+      "name": "Tivat",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "LZIB",
+      "iata": "BTS",
+      "name": "Bratislava",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OAKB",
+      "iata": "KBL",
+      "name": "Kabul Intl",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": false,
+        "enroute_alternate": false,
+        "emergency_alternate": false,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "OBBI",
+      "iata": "BAH",
+      "name": "Bahrain",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OEAB",
+      "iata": "AHB",
+      "name": "Abha",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OEAH",
+      "iata": "HOF",
+      "name": "Al Ahsa",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OEAO",
+      "iata": "ULH",
+      "name": "Alula",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OEDF",
+      "iata": "DMM",
+      "name": "Dammam",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OEGN",
+      "iata": "GIZ",
+      "name": "Jazan",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OEGS",
+      "iata": "ELQ",
+      "name": "Gassim",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OEHL",
+      "iata": "HAS",
+      "name": "Hail",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OEJN",
+      "iata": "JED",
+      "name": "Jeddah",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OEMA",
+      "iata": "MED",
+      "name": "Madinah",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OENG",
+      "iata": "EAM",
+      "name": "Nejran",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OENN",
+      "iata": "NUM",
+      "name": "Neom Bay",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "OEPA",
+      "iata": "AQI",
+      "name": "Al Qaisumah",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OERS",
+      "iata": "RSI",
+      "name": "Hanak Red Sea International",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OERK",
+      "iata": "RUH",
+      "name": "Riyadh",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OESK",
+      "iata": "AJF",
+      "name": "Al Jouf",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OETB",
+      "iata": "TUU",
+      "name": "Tabuk",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OETF",
+      "iata": "TIF",
+      "name": "Taif",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": false,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OEYN",
+      "iata": "YNB",
+      "name": "Yenbo",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OIAW",
+      "iata": "AWZ",
+      "name": "Ahwaz",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OIBB",
+      "iata": "BUZ",
+      "name": "Bushehr",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OIBK",
+      "iata": "KIH",
+      "name": "Kish Island",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OIFM",
+      "iata": "IFN",
+      "name": "Esfahan",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OIGG",
+      "iata": "RAS",
+      "name": "Rasht",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OIIE",
+      "iata": "IKA",
+      "name": "Tehran, Imam Khomaini Intl",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OIII",
+      "iata": "THR",
+      "name": "Tehran Mehrabad Intl",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OIKB",
+      "iata": "BND",
+      "name": "Bandar Abbass",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OIKK",
+      "iata": "KER",
+      "name": "Kerman Airport",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OIKQ",
+      "iata": "GSM",
+      "name": "Gheshm",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OIMM",
+      "iata": "MHD",
+      "name": "Mashhad",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "OISL",
+      "iata": "LRR",
+      "name": "Lar",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OISS",
+      "iata": "SYZ",
+      "name": "Shiraz",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OITT",
+      "iata": "TBZ",
+      "name": "Tabriz",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OIYY",
+      "iata": "AZD",
+      "name": "Yazd",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OIZC",
+      "iata": "ZBR",
+      "name": "Chah Bahar Konarak Mil",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OIZH",
+      "iata": "ZAH",
+      "name": "Zahedan",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OJAI",
+      "iata": "AMM",
+      "name": "Amman Queen Alia Int'l",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OJAQ",
+      "iata": "AQJ",
+      "name": "Aqaba King Hussein",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OKKK",
+      "iata": "KWI",
+      "name": "Kuwait",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OLBA",
+      "iata": "BEY",
+      "name": "Beirut",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OMAA",
+      "iata": "AUH",
+      "name": "Abu Dhabi",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OMAD",
+      "iata": "AZI",
+      "name": "Al Bateen",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OMAL",
+      "iata": "AAN",
+      "name": "Al Ain",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OMDB",
+      "iata": "DXB",
+      "name": "Dubai",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OMDW",
+      "iata": "DWC",
+      "name": "Al Maktoum Int'l",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OMFJ",
+      "iata": "FJR",
+      "name": "Fujairah",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": false,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "OMRK",
+      "iata": "RKT",
+      "name": "Ras Al Khaimah",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OMSJ",
+      "iata": "SHJ",
+      "name": "Sharjah",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OOMS",
+      "iata": "MCT",
+      "name": "Muscat",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OOSA",
+      "iata": "SLL",
+      "name": "Salalah",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OOSH",
+      "iata": "OHS",
+      "name": "Suhar",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OPFA",
+      "iata": "LYP",
+      "name": "Faisalabad",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OPIS",
+      "iata": "ISB",
+      "name": "Islamabad",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OPKC",
+      "iata": "KHI",
+      "name": "Karachi",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OPLA",
+      "iata": "LHE",
+      "name": "Lahore Allama Iqbal Intl",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OPMT",
+      "iata": "MUX",
+      "name": "Multan",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OPPS",
+      "iata": "PEW",
+      "name": "Peshawar",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OPQT",
+      "iata": "UET",
+      "name": "Quetta",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": false,
+        "enroute_alternate": false,
+        "emergency_alternate": false,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "OPST",
+      "iata": "SKT",
+      "name": "Sialkot",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "ORBI",
+      "iata": "BGW",
+      "name": "Baghdad Intl",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "ORER",
+      "iata": "EBL",
+      "name": "Erbil",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "ORMM",
+      "iata": "BSR",
+      "name": "Basrah",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "ORNI",
+      "iata": "NJF",
+      "name": "Najaf",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "ORSU",
+      "iata": "ISU",
+      "name": "Sulaymaniyah",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "OSDI",
+      "iata": "DAM",
+      "name": "Damascus",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": false,
+        "enroute_alternate": false,
+        "emergency_alternate": false,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "OTHH",
+      "iata": "DOH",
+      "name": "Doha Hamad Intl",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UAAA",
+      "iata": "ALA",
+      "name": "Almaty",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UACC",
+      "iata": "NQZ",
+      "name": "Nur-Sultan",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UADD",
+      "iata": "DMB",
+      "name": "Taraz",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UAII",
+      "iata": "CIT",
+      "name": "Shymkent",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UAKK",
+      "iata": "KGF",
+      "name": "Karaganda",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UAOO",
+      "iata": "KZO",
+      "name": "Kyzylorda",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "UATE",
+      "iata": "SCO",
+      "name": "Aktau",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UATG",
+      "iata": "GUW",
+      "name": "Atyrau",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UATT",
+      "iata": "AKX",
+      "name": "Aktobe",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UBBB",
+      "iata": "GYD",
+      "name": "Baku",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UBBG",
+      "iata": "GNJ",
+      "name": "Ganja",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": false,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UBBN",
+      "iata": "NAJ",
+      "name": "Nakhchivan",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UBBQ",
+      "iata": "GBB",
+      "name": "Gabala",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UCFM",
+      "iata": "BSZ",
+      "name": "Bishkek",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UCFO",
+      "iata": "OSS",
+      "name": "Osh",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UDYZ",
+      "iata": "EVN",
+      "name": "Yerevan",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UGKO",
+      "iata": "KUT",
+      "name": "Kutaisi",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UGSB",
+      "iata": "BUS",
+      "name": "Batumi",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UGTB",
+      "iata": "TBS",
+      "name": "Tbilisi",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "ULLI",
+      "iata": "LED",
+      "name": "St. Petersburg Pulkovo",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UMMS",
+      "iata": "MSQ",
+      "name": "Minsk – 2",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UNBB",
+      "iata": "BAX",
+      "name": "Barnaul",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UNKL",
+      "iata": "KJA",
+      "name": "Krasnoyarsk",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UNNT",
+      "iata": "OVB",
+      "name": "Novosibirsk",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UNOO",
+      "iata": "OMS",
+      "name": "Omsk",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "URKK",
+      "iata": "KRR",
+      "name": "Krasnodar",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "URMG",
+      "iata": "GRV",
+      "name": "Grozny",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "URML",
+      "iata": "MCX",
+      "name": "Makhachkala",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "URMM",
+      "iata": "MRV",
+      "name": "Mineralnyye Vody",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "URRP",
+      "iata": "ROV",
+      "name": "Rostov-na-Donu Platov",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": false,
+        "emergency_alternate": false,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "URSS",
+      "iata": "AER",
+      "name": "Sochi",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": false,
+        "enroute_alternate": false,
+        "emergency_alternate": false,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "URWA",
+      "iata": "ASF",
+      "name": "Astrakhan",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "URWW",
+      "iata": "VOG",
+      "name": "Volgograd",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "USCC",
+      "iata": "CEK",
+      "name": "Chelyabinsk",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "USCM",
+      "iata": "MQF",
+      "name": "Magnitogorsk",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "USPP",
+      "iata": "PEE",
+      "name": "Perm",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "USSS",
+      "iata": "SVX",
+      "name": "Yekaterinburg",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "USTR",
+      "iata": "TJM",
+      "name": "Tyumen",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UTAA",
+      "iata": "ASB",
+      "name": "Ashgabat",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UTAK",
+      "iata": "KRW",
+      "name": "Turkmenbashi",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UTAM",
+      "iata": "MYP",
+      "name": "Mary",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UTAT",
+      "iata": "TAZ",
+      "name": "Dashoguz",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UTAV",
+      "iata": "CRZ",
+      "name": "Turkmenabat",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UTDD",
+      "iata": "DYU",
+      "name": "Dushanbe",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UTDL",
+      "iata": "LBD",
+      "name": "Khujand",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UUBW",
+      "iata": "ZIA",
+      "name": "Ramenskoye",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "UUDD",
+      "iata": "DME",
+      "name": "Moscow Domodedovo",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UUEE",
+      "iata": "SVO",
+      "name": "Moscow Sheremetyevo",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UUOO",
+      "iata": "VOZ",
+      "name": "Voronezh Chertovitskoye",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": false,
+        "emergency_alternate": false,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "UUWW",
+      "iata": "VKO",
+      "name": "Moscow Vnukovo",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UWGG",
+      "iata": "GOJ",
+      "name": "Nizhny Novgorod",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UWKD",
+      "iata": "KZN",
+      "name": "Kazan",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UWLW",
+      "iata": "ULY",
+      "name": "Ulyanovsk",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UWOO",
+      "iata": "REN",
+      "name": "Orenburg",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UWSG",
+      "iata": "GSV",
+      "name": "Saratov Gagarin",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UWUU",
+      "iata": "UFA",
+      "name": "Ufa",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UWWW",
+      "iata": "KUF",
+      "name": "Samara",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UZFN",
+      "iata": "NMA",
+      "name": "Namangan",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UZNN",
+      "iata": "NCU",
+      "name": "Nukus",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UZNU",
+      "iata": "UGC",
+      "name": "Urgench",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UZSA",
+      "iata": "NVI",
+      "name": "Navoi",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UZSB",
+      "iata": "BHK",
+      "name": "Bukhara",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UZSS",
+      "iata": "SKD",
+      "name": "Samarkand",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UZST",
+      "iata": "TMJ",
+      "name": "Termez",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": false,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "UZTT",
+      "iata": "TAS",
+      "name": "Tashkent",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VAAH",
+      "iata": "AMD",
+      "name": "Ahmedabad",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VABB",
+      "iata": "BOM",
+      "name": "Mumbai",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VANP",
+      "iata": "NAG",
+      "name": "Nagpur",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VCBI",
+      "iata": "CMB",
+      "name": "Colombo",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VCRI",
+      "iata": "HRI",
+      "name": "Mattala Rajapaksa",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VEBS",
+      "iata": "BBI",
+      "name": "Biju Patnaik",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VECC",
+      "iata": "CCU",
+      "name": "Kolkata",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VEGT",
+      "iata": "GAU",
+      "name": "Guwahati",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VEGY",
+      "iata": "GAY",
+      "name": "Gaya",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VGEG",
+      "iata": "CGP",
+      "name": "Chattogram",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VGHS",
+      "iata": "DAC",
+      "name": "Dhaka",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VGSY",
+      "iata": "ZYL",
+      "name": "Sylhet",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VEBN",
+      "iata": "VNS",
+      "name": "Varanasi",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VIAR",
+      "iata": "ATQ",
+      "name": "Amritsar",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VIDP",
+      "iata": "DEL",
+      "name": "Delhi",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VIJP",
+      "iata": "JAI",
+      "name": "Jaipur",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": false,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VILK",
+      "iata": "LKO",
+      "name": "Lucknow",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VNBW",
+      "iata": "BWA",
+      "name": "Bhairahawa",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VNKT",
+      "iata": "KTM",
+      "name": "Kathmandu",
+      "restrictions": null,
+      "category": "C",
+      "authorizations": {
+        "destination": true,
+        "alternate": false,
+        "enroute_alternate": false,
+        "emergency_alternate": true,
+        "etops_alternate": false
+      }
+    },
+    {
+      "icao": "VOBL",
+      "iata": "BLR",
+      "name": "Bengaluru",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VOBZ",
+      "iata": "VGA",
+      "name": "Vijayawada",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VOCB",
+      "iata": "CJB",
+      "name": "Coimbatore",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VOCI",
+      "iata": "COK",
+      "name": "Cochin",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VOCL",
+      "iata": "CCJ",
+      "name": "Calicut",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VOGO",
+      "iata": "GOI",
+      "name": "Goa",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VOHS",
+      "iata": "HYD",
+      "name": "Hyderabad",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VOKN",
+      "iata": "CNN",
+      "name": "Kannur",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VOMD",
+      "iata": "IXM",
+      "name": "Madurai",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VOML",
+      "iata": "IXE",
+      "name": "Mangalore",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VOMM",
+      "iata": "MAA",
+      "name": "Chennai",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VOTR",
+      "iata": "TRZ",
+      "name": "Tiruchirappalli (Trichy)",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VOTV",
+      "iata": "TRV",
+      "name": "Thiruvananthapuram",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VRMG",
+      "iata": "GAN",
+      "name": "Gan Island",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VRMM",
+      "iata": "MLE",
+      "name": "Male",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VTBD",
+      "iata": "DMK",
+      "name": "Don Mueang Intl",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VTBS",
+      "iata": "BKK",
+      "name": "Bangkok",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VTBU",
+      "iata": "UTP",
+      "name": "Rayong",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VTCC",
+      "iata": "CNX",
+      "name": "Chiang Mai",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VTSG",
+      "iata": "KBV",
+      "name": "Krabi",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VTSP",
+      "iata": "HKT",
+      "name": "Phuket",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VTSS",
+      "iata": "HDY",
+      "name": "Songkhla Hat Yai",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VYMD",
+      "iata": "MDL",
+      "name": "Mandalay",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VYNT",
+      "iata": "NYT",
+      "name": "Naypyitaw",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "VYYY",
+      "iata": "RGN",
+      "name": "Yangon",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": false,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "WMKK",
+      "iata": "KUL",
+      "name": "Kuala Lumpur",
+      "restrictions": null,
+      "category": "A",
+      "authorizations": {
+        "destination": false,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "WMKL",
+      "iata": "LGK",
+      "name": "Langkawi",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    },
+    {
+      "icao": "WMKP",
+      "iata": "PEN",
+      "name": "Penang",
+      "restrictions": null,
+      "category": "B",
+      "authorizations": {
+        "destination": true,
+        "alternate": true,
+        "enroute_alternate": true,
+        "emergency_alternate": true,
+        "etops_alternate": true
+      }
+    }
+  ]
+}

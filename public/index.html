@@ -2507,6 +2507,7 @@
             <button class="tab-btn" onclick="switchTab('misc')">MISC</button>
             <button class="tab-btn" onclick="switchTab('sun')">SUN</button>
             <button class="tab-btn" onclick="switchTab('set')">SET</button>
+            <button class="tab-btn" onclick="switchTab('ref')">REF</button>
         </div>
         </div><!-- End sticky-header -->
 
@@ -5237,6 +5238,81 @@
                 </div>
             </div>
         </div>
+
+        <!-- REF Tab (Reference Data) -->
+        <div class="tab-content" id="tab-ref">
+            <div class="fdp-container">
+                <!-- Airfield Authorization Lookup -->
+                <div class="section" style="max-width: 600px; margin: 0 auto;">
+                    <div class="section-title">Airfield Authorization Lookup</div>
+                    <p style="color: #888; font-size: 0.8rem; margin-bottom: 15px; text-align: center;">
+                        OM-C Airfield Authorizations - Enter ICAO or IATA code
+                    </p>
+
+                    <!-- Schedule Switcher -->
+                    <div id="ref-switcher" style="display: none; justify-content: center; align-items: center; gap: 10px; margin-bottom: 15px; padding: 8px; background: rgba(255, 130, 0, 0.1); border-radius: 8px;">
+                        <button class="preset-btn" onclick="refSwitcherPrev()" style="padding: 5px 12px; min-width: auto;">&lt;</button>
+                        <span id="ref-switcher-display" style="font-size: 0.9rem; min-width: 120px; text-align: center;"></span>
+                        <button class="preset-btn" onclick="refSwitcherNext()" style="padding: 5px 12px; min-width: auto;">&gt;</button>
+                    </div>
+
+                    <div class="input-grid-2" style="margin-bottom: 15px;">
+                        <div class="input-group">
+                            <label>Airport Code</label>
+                            <input type="text" id="ref-airport-code" class="fdp-input" placeholder="OMDB or DXB" maxlength="4" style="text-transform: uppercase; text-align: center; font-size: 1.2rem;" oninput="this.value = this.value.toUpperCase()">
+                        </div>
+                        <div class="input-group" style="display: flex; align-items: flex-end;">
+                            <button class="calc-btn" onclick="lookupAirfieldAuth()" style="width: 100%;">LOOKUP</button>
+                        </div>
+                    </div>
+
+                    <!-- Results -->
+                    <div id="ref-results" style="display: none;">
+                        <div class="fdp-results" style="margin-top: 15px;">
+                            <div style="text-align: center; margin-bottom: 15px;">
+                                <div id="ref-airport-name" style="font-size: 1.3rem; font-weight: bold; color: #fff;"></div>
+                                <div id="ref-airport-codes" style="font-size: 0.9rem; color: #888;"></div>
+                            </div>
+
+                            <div id="ref-category" style="text-align: center; margin-bottom: 15px; padding: 10px; border-radius: 8px;"></div>
+
+                            <div id="ref-restrictions" style="display: none; margin-bottom: 15px; padding: 10px; background: rgba(255, 100, 100, 0.1); border: 1px solid rgba(255, 100, 100, 0.3); border-radius: 8px;">
+                                <div style="color: #ff6464; font-weight: bold; margin-bottom: 5px;">Restrictions:</div>
+                                <div id="ref-restrictions-text" style="color: #ff9999; font-size: 0.85rem;"></div>
+                            </div>
+
+                            <div class="section-title" style="margin-top: 15px;">Authorizations</div>
+                            <div class="fdp-result-grid" style="grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                                <div class="fdp-result-item" id="ref-auth-dest">
+                                    <div class="fdp-result-label">Destination</div>
+                                    <div class="fdp-result-value" id="ref-dest-status">-</div>
+                                </div>
+                                <div class="fdp-result-item" id="ref-auth-alt">
+                                    <div class="fdp-result-label">Alternate</div>
+                                    <div class="fdp-result-value" id="ref-alt-status">-</div>
+                                </div>
+                                <div class="fdp-result-item" id="ref-auth-enr">
+                                    <div class="fdp-result-label">ERA</div>
+                                    <div class="fdp-result-value" id="ref-enr-status">-</div>
+                                </div>
+                                <div class="fdp-result-item" id="ref-auth-emerg">
+                                    <div class="fdp-result-label">Emergency Alt</div>
+                                    <div class="fdp-result-value" id="ref-emerg-status">-</div>
+                                </div>
+                                <div class="fdp-result-item" id="ref-auth-etops" style="grid-column: span 2;">
+                                    <div class="fdp-result-label">ETOPS Alternate</div>
+                                    <div class="fdp-result-value" id="ref-etops-status">-</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="ref-not-found" style="display: none; text-align: center; padding: 20px; color: #ff6464;">
+                        Airport not found in OM-C database
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Number Picker Modal -->
@@ -5833,6 +5909,11 @@
             if (tab === 'nav') {
                 updateDistSwitcher();
                 updateAptInfoSwitcher();
+            }
+
+            // Update REF tab switcher
+            if (tab === 'ref') {
+                updateRefSwitcher();
             }
         }
 
@@ -9289,6 +9370,128 @@
             .catch(function(err) {
                 console.log('Airports database not loaded');
             });
+
+        // ============ OM-C AIRFIELD AUTHORIZATION DATABASE ============
+        var omcAirfieldsDatabase = null;
+
+        // Load OM-C airfield authorizations
+        fetch('/dashboard/database/aerodrome_briefings.json')
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                omcAirfieldsDatabase = data;
+                console.log('OM-C database loaded: ' + data.airfields.length + ' airfields');
+            })
+            .catch(function(err) {
+                console.log('OM-C airfield database not loaded:', err);
+            });
+
+        // REF Tab Switcher
+        var refSwitcherIndex = 0;
+
+        function updateRefSwitcher() {
+            var airports = getUniqueAirports();
+            var switcher = document.getElementById('ref-switcher');
+            var display = document.getElementById('ref-switcher-display');
+
+            if (airports.length > 0) {
+                switcher.style.display = 'flex';
+                if (refSwitcherIndex >= airports.length) refSwitcherIndex = 0;
+                var apt = airports[refSwitcherIndex];
+                display.innerHTML = '<span style="color: #FF8200; font-weight: bold;">' + apt + '</span> <span style="color: #888;">(' + (refSwitcherIndex + 1) + '/' + airports.length + ')</span>';
+                document.getElementById('ref-airport-code').value = apt;
+                lookupAirfieldAuth();
+            } else {
+                switcher.style.display = 'none';
+            }
+        }
+
+        function refSwitcherPrev() {
+            var airports = getUniqueAirports();
+            if (airports.length === 0) return;
+            refSwitcherIndex = (refSwitcherIndex - 1 + airports.length) % airports.length;
+            updateRefSwitcher();
+        }
+
+        function refSwitcherNext() {
+            var airports = getUniqueAirports();
+            if (airports.length === 0) return;
+            refSwitcherIndex = (refSwitcherIndex + 1) % airports.length;
+            updateRefSwitcher();
+        }
+
+        function lookupAirfieldAuth() {
+            var code = document.getElementById('ref-airport-code').value.toUpperCase().trim();
+            var resultsEl = document.getElementById('ref-results');
+            var notFoundEl = document.getElementById('ref-not-found');
+
+            resultsEl.style.display = 'none';
+            notFoundEl.style.display = 'none';
+
+            if (!code || !omcAirfieldsDatabase) {
+                return;
+            }
+
+            // Search by ICAO or IATA
+            var airfield = omcAirfieldsDatabase.airfields.find(function(a) {
+                return a.icao === code || a.iata === code;
+            });
+
+            if (!airfield) {
+                notFoundEl.style.display = 'block';
+                return;
+            }
+
+            // Display results
+            resultsEl.style.display = 'block';
+            document.getElementById('ref-airport-name').textContent = airfield.name;
+            document.getElementById('ref-airport-codes').textContent = airfield.icao + ' / ' + airfield.iata;
+
+            // Category styling
+            var categoryEl = document.getElementById('ref-category');
+            var catColors = {
+                'A': { bg: 'rgba(255, 100, 100, 0.2)', border: '#ff6464', text: '#ff6464' },
+                'B': { bg: 'rgba(255, 180, 0, 0.2)', border: '#ffb400', text: '#ffb400' },
+                'C': { bg: 'rgba(0, 255, 136, 0.2)', border: '#00ff88', text: '#00ff88' }
+            };
+            var catStyle = catColors[airfield.category] || catColors['C'];
+            categoryEl.style.background = catStyle.bg;
+            categoryEl.style.border = '1px solid ' + catStyle.border;
+            categoryEl.innerHTML = '<span style="color: ' + catStyle.text + '; font-weight: bold; font-size: 1.2rem;">Category ' + airfield.category + '</span>';
+
+            // Restrictions
+            var restrictEl = document.getElementById('ref-restrictions');
+            var restrictTextEl = document.getElementById('ref-restrictions-text');
+            if (airfield.restrictions && airfield.restrictions.trim()) {
+                restrictEl.style.display = 'block';
+                restrictTextEl.textContent = airfield.restrictions;
+            } else {
+                restrictEl.style.display = 'none';
+            }
+
+            // Authorization statuses
+            var auths = airfield.authorizations;
+            setAuthStatus('ref-dest-status', 'ref-auth-dest', auths.destination);
+            setAuthStatus('ref-alt-status', 'ref-auth-alt', auths.alternate);
+            setAuthStatus('ref-enr-status', 'ref-auth-enr', auths.enroute_alternate);
+            setAuthStatus('ref-emerg-status', 'ref-auth-emerg', auths.emergency_alternate);
+            setAuthStatus('ref-etops-status', 'ref-auth-etops', auths.etops_alternate);
+        }
+
+        function setAuthStatus(statusId, itemId, authorized) {
+            var statusEl = document.getElementById(statusId);
+            var itemEl = document.getElementById(itemId);
+            if (authorized) {
+                statusEl.textContent = 'YES';
+                statusEl.style.color = '#00ff88';
+                itemEl.style.background = 'rgba(0, 255, 136, 0.1)';
+                itemEl.style.borderColor = 'rgba(0, 255, 136, 0.3)';
+            } else {
+                statusEl.textContent = 'NO';
+                statusEl.style.color = '#ff6464';
+                itemEl.style.background = 'rgba(255, 100, 100, 0.1)';
+                itemEl.style.borderColor = 'rgba(255, 100, 100, 0.3)';
+            }
+        }
 
         function lookupFlightRoute() {
             var input = document.getElementById('route-flight-input').value.toUpperCase().trim();
