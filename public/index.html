@@ -4190,7 +4190,14 @@
                 <div class="top-sections" style="grid-template-columns: 1fr; margin-top: 20px;">
                     <!-- Airport Distance Calculator -->
                     <div class="section">
-                        <div class="section-title">Airport Distance Calculator</div>
+                        <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                            <span>Airport Distance Calculator</span>
+                            <div id="dist-switcher" style="display: none; font-size: 0.85rem; align-items: center;">
+                                <button class="preset-btn" onclick="distSwitcherPrev()" style="padding: 4px 8px; font-size: 0.75rem;">◀</button>
+                                <span id="dist-switcher-display" style="margin: 0 6px; color: #FF8200; font-size: 0.8rem;">---</span>
+                                <button class="preset-btn" onclick="distSwitcherNext()" style="padding: 4px 8px; font-size: 0.75rem;">▶</button>
+                            </div>
+                        </div>
                         <div class="input-grid-2">
                             <div class="input-group">
                                 <label class="input-label">From (ICAO/IATA)</label>
@@ -4237,7 +4244,14 @@
 
                     <!-- Airport Info Lookup -->
                     <div class="section">
-                        <div class="section-title">Airport Info Lookup</div>
+                        <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                            <span>Airport Info Lookup</span>
+                            <div id="apt-info-switcher" style="display: none; font-size: 0.85rem; align-items: center;">
+                                <button class="preset-btn" onclick="aptInfoSwitcherPrev()" style="padding: 4px 8px; font-size: 0.75rem;">◀</button>
+                                <span id="apt-info-switcher-display" style="margin: 0 6px; color: #FF8200; font-size: 0.8rem;">---</span>
+                                <button class="preset-btn" onclick="aptInfoSwitcherNext()" style="padding: 4px 8px; font-size: 0.75rem;">▶</button>
+                            </div>
+                        </div>
                         <div class="input-group">
                             <label class="input-label">ICAO or IATA Code</label>
                             <input type="text" class="fdp-input" id="apt-lookup" placeholder="OMDB or DXB" maxlength="4" style="text-transform: uppercase; text-align: center;" oninput="this.value = this.value.toUpperCase(); lookupAirport()">
@@ -5813,6 +5827,12 @@
             // Update route switcher when opening MAP tab
             if (tab === 'map') {
                 updateMapRouteSwitcher();
+            }
+
+            // Update NAV tab switchers
+            if (tab === 'nav') {
+                updateDistSwitcher();
+                updateAptInfoSwitcher();
             }
         }
 
@@ -10351,6 +10371,83 @@
                 drawRoute();
             }
             updateMapRouteSwitcher();
+        }
+
+        // NAV tab Distance Calculator switcher
+        var distSwitcherIndex = 0;
+
+        function updateDistSwitcher() {
+            var sectors = getSectorList();
+            var switcher = document.getElementById('dist-switcher');
+            var display = document.getElementById('dist-switcher-display');
+
+            if (sectors.length > 0) {
+                switcher.style.display = 'flex';
+                switcher.style.alignItems = 'center';
+                if (distSwitcherIndex >= sectors.length) distSwitcherIndex = 0;
+                var sector = sectors[distSwitcherIndex];
+                display.innerHTML = '<span style="color: #FF8200; font-weight: bold;">' + sector.dep + '→' + sector.arr + '</span> <span style="color: #888;">(' + (distSwitcherIndex + 1) + '/' + sectors.length + ')</span>';
+                // Auto-fill
+                document.getElementById('dist-from').value = sector.dep;
+                document.getElementById('dist-to').value = sector.arr;
+                calculateAirportDistance();
+            } else {
+                switcher.style.display = 'none';
+            }
+        }
+
+        function distSwitcherPrev() {
+            var sectors = getSectorList();
+            if (sectors.length === 0) return;
+            distSwitcherIndex--;
+            if (distSwitcherIndex < 0) distSwitcherIndex = sectors.length - 1;
+            updateDistSwitcher();
+        }
+
+        function distSwitcherNext() {
+            var sectors = getSectorList();
+            if (sectors.length === 0) return;
+            distSwitcherIndex++;
+            if (distSwitcherIndex >= sectors.length) distSwitcherIndex = 0;
+            updateDistSwitcher();
+        }
+
+        // NAV tab Airport Info switcher (cycles through unique airports)
+        var aptInfoSwitcherIndex = 0;
+
+        function updateAptInfoSwitcher() {
+            var airports = getUniqueAirports();
+            var switcher = document.getElementById('apt-info-switcher');
+            var display = document.getElementById('apt-info-switcher-display');
+
+            if (airports.length > 0) {
+                switcher.style.display = 'flex';
+                switcher.style.alignItems = 'center';
+                if (aptInfoSwitcherIndex >= airports.length) aptInfoSwitcherIndex = 0;
+                var apt = airports[aptInfoSwitcherIndex];
+                display.innerHTML = '<span style="color: #FF8200; font-weight: bold;">' + apt + '</span> <span style="color: #888;">(' + (aptInfoSwitcherIndex + 1) + '/' + airports.length + ')</span>';
+                // Auto-fill and lookup
+                document.getElementById('apt-lookup').value = apt;
+                lookupAirport();
+            } else {
+                switcher.style.display = 'none';
+            }
+        }
+
+        function aptInfoSwitcherPrev() {
+            var airports = getUniqueAirports();
+            if (airports.length === 0) return;
+            aptInfoSwitcherIndex--;
+            if (aptInfoSwitcherIndex < 0) aptInfoSwitcherIndex = airports.length - 1;
+            updateAptInfoSwitcher();
+        }
+
+        function aptInfoSwitcherNext() {
+            var airports = getUniqueAirports();
+            if (airports.length === 0) return;
+            aptInfoSwitcherIndex++;
+            if (aptInfoSwitcherIndex >= airports.length) aptInfoSwitcherIndex = 0;
+            updateAptInfoSwitcher();
         }
 
         // Clear coordinate inputs when airport is focused
