@@ -5318,20 +5318,44 @@
 
     <!-- Stand Picker Modal -->
     <div class="modal-overlay" id="stand-picker-modal">
-        <div class="number-picker" style="max-width: 320px; width: 90%;">
+        <div class="number-picker" style="max-width: 340px; width: 90%;">
             <div class="picker-title">Stand Number</div>
             <div class="picker-display">
                 <span class="picker-value" id="stand-picker-value" style="font-size: 2rem;">---</span>
             </div>
-            <!-- Letters -->
-            <div class="picker-buttons" style="grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 8px;">
-                <button class="picker-btn" onclick="standPickerAppend('A')" style="min-width: 0; padding: 10px 0; background: rgba(255,130,0,0.3);">A</button>
-                <button class="picker-btn" onclick="standPickerAppend('B')" style="min-width: 0; padding: 10px 0; background: rgba(255,130,0,0.3);">B</button>
-                <button class="picker-btn" onclick="standPickerAppend('C')" style="min-width: 0; padding: 10px 0; background: rgba(255,130,0,0.3);">C</button>
-                <button class="picker-btn" onclick="standPickerAppend('D')" style="min-width: 0; padding: 10px 0; background: rgba(255,130,0,0.3);">D</button>
-                <button class="picker-btn" onclick="standPickerAppend('E')" style="min-width: 0; padding: 10px 0; background: rgba(255,130,0,0.3);">E</button>
-                <button class="picker-btn" onclick="standPickerAppend('F')" style="min-width: 0; padding: 10px 0; background: rgba(255,130,0,0.3);">F</button>
-                <button class="picker-btn" onclick="standPickerAppend('G')" style="min-width: 0; padding: 10px 0; background: rgba(255,130,0,0.3);">G</button>
+            <!-- Letters A-M -->
+            <div class="picker-buttons" style="grid-template-columns: repeat(7, 1fr); gap: 3px; margin-bottom: 4px;">
+                <button class="picker-btn" onclick="standPickerAppend('A')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">A</button>
+                <button class="picker-btn" onclick="standPickerAppend('B')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">B</button>
+                <button class="picker-btn" onclick="standPickerAppend('C')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">C</button>
+                <button class="picker-btn" onclick="standPickerAppend('D')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">D</button>
+                <button class="picker-btn" onclick="standPickerAppend('E')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">E</button>
+                <button class="picker-btn" onclick="standPickerAppend('F')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">F</button>
+                <button class="picker-btn" onclick="standPickerAppend('G')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">G</button>
+                <button class="picker-btn" onclick="standPickerAppend('H')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">H</button>
+                <button class="picker-btn" onclick="standPickerAppend('I')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">I</button>
+                <button class="picker-btn" onclick="standPickerAppend('J')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">J</button>
+                <button class="picker-btn" onclick="standPickerAppend('K')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">K</button>
+                <button class="picker-btn" onclick="standPickerAppend('L')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">L</button>
+                <button class="picker-btn" onclick="standPickerAppend('M')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">M</button>
+                <button class="picker-btn" onclick="standPickerAppend('N')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">N</button>
+            </div>
+            <!-- Letters N-Z -->
+            <div class="picker-buttons" style="grid-template-columns: repeat(7, 1fr); gap: 3px; margin-bottom: 8px;">
+                <button class="picker-btn" onclick="standPickerAppend('O')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">O</button>
+                <button class="picker-btn" onclick="standPickerAppend('P')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">P</button>
+                <button class="picker-btn" onclick="standPickerAppend('Q')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">Q</button>
+                <button class="picker-btn" onclick="standPickerAppend('R')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">R</button>
+                <button class="picker-btn" onclick="standPickerAppend('S')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">S</button>
+                <button class="picker-btn" onclick="standPickerAppend('T')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">T</button>
+                <button class="picker-btn" onclick="standPickerAppend('U')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">U</button>
+                <button class="picker-btn" onclick="standPickerAppend('V')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">V</button>
+                <button class="picker-btn" onclick="standPickerAppend('W')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">W</button>
+                <button class="picker-btn" onclick="standPickerAppend('X')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">X</button>
+                <button class="picker-btn" onclick="standPickerAppend('Y')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">Y</button>
+                <button class="picker-btn" onclick="standPickerAppend('Z')" style="min-width: 0; padding: 8px 0; background: rgba(255,130,0,0.3);">Z</button>
+                <button class="picker-btn clear" onclick="standPickerClear()" style="min-width: 0; padding: 8px 0;">C</button>
+                <button class="picker-btn" onclick="standPickerBackspace()" style="min-width: 0; padding: 8px 0;">←</button>
             </div>
             <!-- Numbers -->
             <div class="picker-buttons" style="grid-template-columns: repeat(5, 1fr); gap: 4px;">
@@ -5345,9 +5369,6 @@
                 <button class="picker-btn" onclick="standPickerAppend('8')">8</button>
                 <button class="picker-btn" onclick="standPickerAppend('9')">9</button>
                 <button class="picker-btn" onclick="standPickerAppend('0')">0</button>
-                <button class="picker-btn clear" onclick="standPickerClear()" style="grid-column: span 2;">Clear</button>
-                <button class="picker-btn" onclick="standPickerBackspace()" style="grid-column: span 2;">←</button>
-                <button class="picker-btn" onclick="standPickerAppend('R')" style="background: rgba(0,200,255,0.3);">R</button>
             </div>
             <div class="picker-actions">
                 <button class="picker-cancel" onclick="closeStandPicker()">Cancel</button>
