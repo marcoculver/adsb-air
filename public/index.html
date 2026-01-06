@@ -5541,7 +5541,25 @@
                     if (!response.ok) throw new Error('HTTP ' + response.status);
                     return response.json();
                 })
-                .then(function(data) { fleetData = data; })
+                .then(function(data) {
+                    fleetData = data;
+                    // Re-apply tail number now that fleet data is loaded
+                    var savedTail = document.getElementById('sched-tail').value;
+                    if (savedTail && typeof updateAircraftFromTail === 'function') {
+                        updateAircraftFromTail(savedTail);
+                        // Restore saved config from localStorage
+                        var savedSchedule = localStorage.getItem('flightSchedule');
+                        if (savedSchedule) {
+                            try {
+                                var schedule = JSON.parse(savedSchedule);
+                                if (schedule.config) {
+                                    document.getElementById('sched-config').value = schedule.config;
+                                    selectedConfig = schedule.config;
+                                }
+                            } catch (e) {}
+                        }
+                    }
+                })
                 .catch(function(err) { console.error('Failed to load fleet data:', err.message || err); });
         }
         loadFleetData(); // Call immediately
@@ -5994,7 +6012,7 @@
                     }
                 }
                 else if (fieldId.startsWith('oooi-')) calculateOOOI();
-                else if (fieldId === 'eta-time') { etaManualStartTime = null; calculateETA(); }
+                else if (fieldId === 'eta-time') { etaManualStartTime = null; saveETA(); calculateETA(); }
                 else if (fieldId === 'utc-manual') { etaManualStartTime = val ? Date.now() : null; saveETA(); calculateETA(); }
                 else if (fieldId === 'fdp-report' || fieldId === 'fdp-actual-report') calculateFDP();
                 else if (fieldId === 'quick-report') calculateQuickDuty();
@@ -8338,6 +8356,7 @@
                 sectorCount: currentSectorCount,
                 aircraft: document.getElementById('sched-aircraft').value,
                 tail: document.getElementById('sched-tail').value,
+                config: document.getElementById('sched-config').value,
                 sectors: []
             };
             for (let s = 1; s <= 4; s++) {
@@ -8380,23 +8399,46 @@
                     if (schedule.tail) {
                         document.getElementById('sched-tail').value = schedule.tail;
                         document.getElementById('sched-tail-btn').textContent = schedule.tail || 'A6';
+                        // Populate config dropdown based on tail
+                        if (typeof updateAircraftFromTail === 'function') {
+                            updateAircraftFromTail(schedule.tail);
+                        }
+                        // Restore saved config selection
+                        if (schedule.config) {
+                            document.getElementById('sched-config').value = schedule.config;
+                            selectedConfig = schedule.config;
+                        }
                     }
                     for (let s = 1; s <= 4; s++) {
                         // Show or hide sector based on count
                         document.getElementById(`sector-${s}-block`).style.display = s <= currentSectorCount ? 'block' : 'none';
                         if (schedule.sectors && schedule.sectors[s-1]) {
                             const sector = schedule.sectors[s-1];
+                            const timeFields = ['std', 'sta', 'out', 'off', 'on', 'in'];
                             Object.keys(sector).forEach(field => {
                                 const input = document.getElementById(`s${s}-${field}`);
                                 const btn = document.getElementById(`s${s}-${field}-btn`);
                                 if (input && sector[field]) {
                                     input.value = sector[field];
-                                    if (btn) btn.textContent = sector[field];
+                                    if (btn) {
+                                        // Format time fields with padding
+                                        if (timeFields.includes(field)) {
+                                            btn.textContent = sector[field].toString().padStart(4, '0');
+                                        } else {
+                                            btn.textContent = sector[field];
+                                        }
+                                    }
                                 }
                             });
+                            // Calculate sector times after loading
+                            calculateSectorTimes(s);
                         }
                     }
                     document.getElementById('sched-total-sectors').textContent = currentSectorCount;
+                    // Update turnaround displays
+                    if (typeof updateTurnaroundTimes === 'function') {
+                        updateTurnaroundTimes();
+                    }
                 }
                 // Default Sector 1 DEP to DXB (home base) if empty
                 if (!document.getElementById('s1-dep').value) {
