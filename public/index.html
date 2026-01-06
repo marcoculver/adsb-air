@@ -1400,6 +1400,9 @@
             }
 
             /* MISC tab mobile */
+            #tab-misc .top-sections {
+                grid-template-columns: 1fr !important;
+            }
             .pantry-grid {
                 grid-template-columns: 1fr 1fr !important;
                 gap: 10px !important;
@@ -1407,6 +1410,16 @@
             #tab-misc .fdp-result-grid {
                 grid-template-columns: 1fr !important;
                 gap: 10px !important;
+            }
+
+            /* MAP Track Log mobile */
+            #tab-map .fdp-section > div[style*="display: flex; gap: 15px"] {
+                flex-wrap: wrap !important;
+                justify-content: space-around !important;
+            }
+            #tab-map .fdp-section > div[style*="display: flex; gap: 15px"] > div {
+                flex: 1 1 30% !important;
+                min-width: 70px !important;
             }
         }
 
