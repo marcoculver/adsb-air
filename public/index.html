@@ -1256,7 +1256,17 @@
                 grid-template-columns: 1fr 1fr !important;
             }
             /* SCHED tab mobile */
-            #tab-sched .fdp-row[style*="grid-template-columns: 1fr 1fr 1fr"] {
+            #tab-sched .duty-info-row {
+                grid-template-columns: 1fr 1fr 1fr !important;
+                gap: 8px !important;
+            }
+            #tab-sched .duty-info-row .fdp-label {
+                display: none !important;
+            }
+            #tab-sched .duty-info-row .fdp-field {
+                margin: 0 !important;
+            }
+            #tab-sched .fdp-row[style*="grid-template-columns: 1fr 1fr 1fr"]:not(.duty-info-row) {
                 grid-template-columns: 1fr 1fr !important;
             }
             #tab-sched .fdp-row[style*="grid-template-columns: 1fr 2fr 1fr 1fr"] {
@@ -2417,15 +2427,10 @@
         <!-- SCHED Tab (Schedule Entry - Primary Tab) -->
         <div class="tab-content active" id="tab-sched">
             <div class="fdp-container">
-                <!-- Schedule Header -->
-                <div class="fdp-section" style="text-align: center; padding: 15px;">
-                    <h2 style="color: #FF8200; margin-bottom: 10px;">Flight Schedule</h2>
-                </div>
-
                 <!-- Duty Information -->
                 <div class="fdp-section">
                     <div class="section-title">Duty Information</div>
-                    <div class="fdp-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                    <div class="fdp-row duty-info-row" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
                         <div class="fdp-field">
                             <label class="fdp-label">Tail Number</label>
                             <button class="input-btn" id="sched-tail-btn" onclick="openTailPicker()" style="max-width: 100%;">A6-___</button>
