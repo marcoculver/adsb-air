@@ -1895,12 +1895,40 @@
             }
 
             /* SUN tab mobile grids */
+            .sun-location-grid {
+                grid-template-columns: 1fr 1fr 1fr !important;
+                gap: 8px !important;
+            }
+
+            .sun-location-grid .sun-or-divider {
+                display: none !important;
+            }
+
+            .sun-location-grid .sun-gps-btn {
+                grid-column: span 3;
+                margin-top: 5px;
+            }
+
+            .sun-date-grid {
+                grid-template-columns: 1fr 1fr !important;
+            }
+
+            .twilight-grid {
+                grid-template-columns: 1fr !important;
+                gap: 8px !important;
+            }
+
             .arrival-conditions-grid {
                 grid-template-columns: 1fr 1fr !important;
             }
 
             .night-time-grid {
                 grid-template-columns: 1fr 1fr !important;
+            }
+
+            #sun-sector-switcher {
+                flex-wrap: wrap;
+                justify-content: flex-end;
             }
         }
 
@@ -4667,28 +4695,28 @@
                             <button class="preset-btn" onclick="sunSectorNext()" style="padding: 4px 10px; font-size: 0.8rem;">▶</button>
                         </div>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr auto 1fr 1fr auto; gap: 10px; align-items: end;">
+                    <div class="sun-location-grid" style="display: grid; grid-template-columns: 1fr auto 1fr 1fr auto; gap: 10px; align-items: end;">
                         <div class="fdp-field">
                             <label>Airport</label>
                             <input type="text" id="sun-airport" class="fdp-input" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase;" oninput="this.value=this.value.toUpperCase()" onfocus="clearSunCoords()">
                         </div>
-                        <div style="color: #666; font-size: 0.85rem; padding-bottom: 10px;">OR</div>
+                        <div class="sun-or-divider" style="color: #666; font-size: 0.85rem; padding-bottom: 10px;">OR</div>
                         <div class="fdp-field">
-                            <label>Latitude</label>
-                            <input type="text" id="sun-lat" class="fdp-input" placeholder="e.g. 25.25" style="text-align: center;" onfocus="clearSunAirport()">
+                            <label>Lat</label>
+                            <input type="text" id="sun-lat" class="fdp-input" placeholder="25.25" style="text-align: center;" onfocus="clearSunAirport()">
                         </div>
                         <div class="fdp-field">
-                            <label>Longitude</label>
-                            <input type="text" id="sun-lon" class="fdp-input" placeholder="e.g. 55.36" style="text-align: center;" onfocus="clearSunAirport()">
+                            <label>Lon</label>
+                            <input type="text" id="sun-lon" class="fdp-input" placeholder="55.36" style="text-align: center;" onfocus="clearSunAirport()">
                         </div>
-                        <button class="preset-btn" onclick="useSunGps()" style="padding: 8px 12px; font-size: 0.8rem;" title="Use GPS location">📍 GPS</button>
+                        <button class="preset-btn sun-gps-btn" onclick="useSunGps()" style="padding: 8px 12px; font-size: 0.8rem;" title="Use GPS location">📍</button>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; margin-top: 10px;">
+                    <div class="sun-date-grid" style="display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; margin-top: 10px;">
                         <div class="fdp-field">
                             <label>Date</label>
                             <input type="date" id="sun-date" class="fdp-input">
                         </div>
-                        <button class="preset-btn" onclick="calculateSunTimes()" style="padding: 10px 20px; font-size: 0.9rem;">Calculate</button>
+                        <button class="preset-btn" onclick="calculateSunTimes()" style="padding: 10px 20px; font-size: 0.9rem;">Calc</button>
                     </div>
                     <div id="sun-location-info" style="color: #888; font-size: 0.85rem; margin-top: 5px; text-align: center;"></div>
                 </div>
@@ -4818,7 +4846,7 @@
                 <!-- Twilight Times -->
                 <div class="section" style="max-width: 800px; margin: 20px auto 0;">
                     <div class="section-title">Twilight Times (UTC)</div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; font-size: 0.9rem;">
+                    <div class="twilight-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; font-size: 0.9rem;">
                         <div style="text-align: center; padding: 10px; background: rgba(100,149,237,0.15); border-radius: 8px;">
                             <div style="color: #6495ED; margin-bottom: 5px;">Civil</div>
                             <div style="color: #888; font-size: 0.8rem;">Sun 6° below</div>
@@ -9705,56 +9733,60 @@
             return null;
         }
 
-        // Sun tab sector switcher
-        var sunCurrentSector = 1;
+        // Sun tab airport switcher - cycles through unique airports from all sectors
+        var sunAirportList = [];
+        var sunCurrentAirportIndex = 0;
 
-        function getSectorCount() {
-            var count = 0;
+        function getUniqueAirports() {
+            var airports = [];
             for (var i = 1; i <= 4; i++) {
+                var dep = document.getElementById('s' + i + '-dep');
                 var arr = document.getElementById('s' + i + '-arr');
-                if (arr && arr.value) count = i;
+                if (dep && dep.value && airports.indexOf(dep.value) === -1) {
+                    airports.push(dep.value);
+                }
+                if (arr && arr.value && airports.indexOf(arr.value) === -1) {
+                    airports.push(arr.value);
+                }
             }
-            return Math.max(count, 1);
+            return airports;
         }
 
         function updateSunSectorSwitcher() {
-            var count = getSectorCount();
+            sunAirportList = getUniqueAirports();
             var switcher = document.getElementById('sun-sector-switcher');
             var display = document.getElementById('sun-sector-display');
 
-            if (count > 1) {
+            if (sunAirportList.length > 1) {
                 switcher.style.display = 'flex';
                 switcher.style.alignItems = 'center';
-                if (sunCurrentSector > count) sunCurrentSector = count;
+                if (sunCurrentAirportIndex >= sunAirportList.length) sunCurrentAirportIndex = 0;
 
-                var arr = document.getElementById('s' + sunCurrentSector + '-arr');
-                var arrCode = arr ? arr.value : '';
-                display.innerHTML = '<span style="color: #888;">Sector ' + sunCurrentSector + '/' + count + '</span> <span style="color: #FF8200; font-weight: bold;">' + (arrCode || '---') + '</span>';
+                var currentAirport = sunAirportList[sunCurrentAirportIndex] || '---';
+                display.innerHTML = '<span style="color: #FF8200; font-weight: bold;">' + currentAirport + '</span> <span style="color: #888;">(' + (sunCurrentAirportIndex + 1) + '/' + sunAirportList.length + ')</span>';
             } else {
                 switcher.style.display = 'none';
             }
         }
 
         function sunSectorPrev() {
-            var count = getSectorCount();
-            sunCurrentSector--;
-            if (sunCurrentSector < 1) sunCurrentSector = count;
-            applySunSector();
+            if (sunAirportList.length === 0) return;
+            sunCurrentAirportIndex--;
+            if (sunCurrentAirportIndex < 0) sunCurrentAirportIndex = sunAirportList.length - 1;
+            applySunAirport();
         }
 
         function sunSectorNext() {
-            var count = getSectorCount();
-            sunCurrentSector++;
-            if (sunCurrentSector > count) sunCurrentSector = 1;
-            applySunSector();
+            if (sunAirportList.length === 0) return;
+            sunCurrentAirportIndex++;
+            if (sunCurrentAirportIndex >= sunAirportList.length) sunCurrentAirportIndex = 0;
+            applySunAirport();
         }
 
-        function applySunSector() {
-            var arr = document.getElementById('s' + sunCurrentSector + '-arr');
-            var arrCode = arr ? arr.value : '';
-
-            if (arrCode) {
-                document.getElementById('sun-airport').value = arrCode;
+        function applySunAirport() {
+            var airport = sunAirportList[sunCurrentAirportIndex];
+            if (airport) {
+                document.getElementById('sun-airport').value = airport;
                 clearSunCoords();
                 calculateSunTimes();
             }
