@@ -4837,18 +4837,15 @@
                             <input type="text" id="sun-airport" class="fdp-input" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase;" oninput="this.value=this.value.toUpperCase()" onfocus="clearSunCoords()">
                         </div>
                         <div style="display: flex; gap: 10px; align-items: end;">
-                            <div class="fdp-field" style="flex: 1;">
+                            <div class="fdp-field" style="flex: 2;">
                                 <label>Lat</label>
                                 <input type="text" id="sun-lat" class="fdp-input" placeholder="25.25" style="text-align: center;" onfocus="clearSunAirport()">
                             </div>
-                            <div class="fdp-field" style="flex: 1;">
+                            <div class="fdp-field" style="flex: 2;">
                                 <label>Lon</label>
                                 <input type="text" id="sun-lon" class="fdp-input" placeholder="55.36" style="text-align: center;" onfocus="clearSunAirport()">
                             </div>
-                            <div class="fdp-field" style="flex: 1;">
-                                <label>GPS</label>
-                                <button class="preset-btn sun-gps-btn" onclick="useSunGps()" style="width: 100%; padding: 10px; font-size: 0.9rem;" title="Use GPS location">📍</button>
-                            </div>
+                            <button class="preset-btn sun-gps-btn" onclick="useSunGps()" style="height: 38px; padding: 0 12px; font-size: 0.9rem;" title="Use GPS location">📍</button>
                         </div>
                     </div>
                     <div class="sun-date-grid" style="display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; margin-top: 10px;">
