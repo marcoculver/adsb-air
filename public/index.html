@@ -8160,24 +8160,33 @@
             if (sectorNum <= 1) return;
             var prevSector = sectorNum - 1;
 
-            // Copy ARR from previous sector to DEP
-            var prevArr = document.getElementById('s' + prevSector + '-arr').value;
-            if (prevArr) {
-                document.getElementById('s' + sectorNum + '-dep').value = prevArr;
-                document.getElementById('s' + sectorNum + '-dep-btn').textContent = prevArr;
-            }
-
-            // Increment flight number
+            // Increment flight number first
             var prevFlt = document.getElementById('s' + prevSector + '-flt').value;
+            var newFlt = '';
             if (prevFlt) {
                 var match = prevFlt.match(/^([A-Z]{2})(\d+)([A-Z]?)$/i);
                 if (match) {
                     var prefix = match[1].toUpperCase();
                     var num = parseInt(match[2], 10) + 1;
                     var suffix = match[3] || '';
-                    var newFlt = prefix + num.toString() + suffix;
+                    newFlt = prefix + num.toString() + suffix;
                     document.getElementById('s' + sectorNum + '-flt').value = newFlt;
                     document.getElementById('s' + sectorNum + '-flt-btn').textContent = newFlt;
+                }
+            }
+
+            // Try to look up route from the new flight number
+            var routeFound = false;
+            if (newFlt && routeDatabase) {
+                routeFound = autoFillRouteFromFlight('s' + sectorNum + '-flt', newFlt);
+            }
+
+            // Only use previous sector's ARR as DEP if route not found
+            if (!routeFound) {
+                var prevArr = document.getElementById('s' + prevSector + '-arr').value;
+                if (prevArr) {
+                    document.getElementById('s' + sectorNum + '-dep').value = prevArr;
+                    document.getElementById('s' + sectorNum + '-dep-btn').textContent = prevArr;
                 }
             }
 
@@ -8493,16 +8502,16 @@
         }
 
         function autoFillRouteFromFlight(fieldId, flightNumber) {
-            if (!routeDatabase) return;
+            if (!routeDatabase) return false;
 
             // Extract sector number from field ID (e.g., "s1-flt" -> 1)
             var sectorMatch = fieldId.match(/^s(\d+)-flt$/);
-            if (!sectorMatch) return;
+            if (!sectorMatch) return false;
             var sectorNum = sectorMatch[1];
 
             // Parse flight number
             var fltMatch = flightNumber.match(/^([A-Z]{2,3})(\d+[A-Z]?)$/i);
-            if (!fltMatch) return;
+            if (!fltMatch) return false;
 
             var airlineCode = fltMatch[1].toUpperCase();
             var flightNum = fltMatch[2].toUpperCase();
@@ -8539,8 +8548,10 @@
                         arrInput.value = arrIata;
                         arrBtn.textContent = arrIata;
                     }
+                    return true; // Route found and filled
                 }
             }
+            return false; // Route not found
         }
 
         // ============ TAIL NUMBER PICKER ============
