@@ -1896,8 +1896,14 @@
 
             /* SUN tab mobile grids */
             .sun-location-grid {
-                grid-template-columns: 1fr 1fr 1fr !important;
+                display: flex !important;
+                flex-wrap: wrap !important;
                 gap: 8px !important;
+            }
+
+            .sun-location-grid .fdp-field {
+                flex: 1 1 45% !important;
+                min-width: 80px !important;
             }
 
             .sun-location-grid .sun-or-divider {
@@ -1905,12 +1911,7 @@
             }
 
             .sun-location-grid .sun-gps-btn {
-                grid-column: span 3;
-                margin-top: 5px;
-            }
-
-            .sun-date-grid {
-                grid-template-columns: 1fr 1fr !important;
+                flex: 1 1 100% !important;
             }
 
             .twilight-grid {
@@ -1923,7 +1924,18 @@
             }
 
             .night-time-grid {
-                grid-template-columns: 1fr 1fr !important;
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 8px !important;
+            }
+
+            .night-time-grid .fdp-field {
+                flex: 1 1 45% !important;
+                min-width: 70px !important;
+            }
+
+            .night-time-grid .fdp-field:nth-child(3) {
+                flex: 1 1 100% !important;
             }
 
             #sun-sector-switcher {
