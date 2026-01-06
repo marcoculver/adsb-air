@@ -1994,6 +1994,10 @@
             }
 
             /* Sun & Moon Direction Mobile */
+            .sun-moon-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
             .sun-moon-direction-grid {
                 grid-template-columns: 1fr !important;
                 gap: 20px !important;
@@ -4860,7 +4864,7 @@
 
                 <!-- Sun & Moon Rise/Set Times -->
                 <div class="section" style="max-width: 800px; margin: 20px auto 0;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="sun-moon-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                         <!-- Sun Times -->
                         <div>
                             <div class="section-title" style="color: #FF8200;">Sun</div>
