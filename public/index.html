@@ -1394,6 +1394,20 @@
             #map-container {
                 height: 350px !important;
             }
+            .map-route-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 8px !important;
+            }
+
+            /* MISC tab mobile */
+            .pantry-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 10px !important;
+            }
+            #tab-misc .fdp-result-grid {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
         }
 
         /* Toggle Buttons */
@@ -3299,8 +3313,15 @@
                 </div>
                 <!-- Route Entry -->
                 <div class="fdp-section">
-                    <div class="section-title">Route / GeoJSON</div>
-                    <div class="input-grid-2">
+                    <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                        <span>Route / GeoJSON</span>
+                        <div id="map-route-switcher" style="display: none; font-size: 0.85rem; align-items: center;">
+                            <button class="preset-btn" onclick="mapRoutePrev()" style="padding: 4px 8px; font-size: 0.75rem;">◀</button>
+                            <span id="map-route-display" style="margin: 0 6px; color: #FF8200; font-size: 0.8rem;">---</span>
+                            <button class="preset-btn" onclick="mapRouteNext()" style="padding: 4px 8px; font-size: 0.75rem;">▶</button>
+                        </div>
+                    </div>
+                    <div class="map-route-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                         <div class="input-group">
                             <label class="input-label">From</label>
                             <input type="text" class="fdp-input" id="route-from" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase; text-align: center;">
@@ -4619,32 +4640,32 @@
                     <p style="color: #888; font-size: 0.85rem; margin-bottom: 15px; text-align: center;">
                         Calculate pantry code, weight and index for DOW/DOI
                     </p>
-                    <div class="input-grid-2" style="gap: 15px;">
+                    <div class="pantry-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div class="input-group">
-                            <label class="input-label">Aircraft Type</label>
+                            <label class="input-label">Aircraft</label>
                             <select id="pantry-aircraft" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="updatePantryConfigOptions(); calculatePantry();">
-                                <option value="">Select Aircraft</option>
+                                <option value="">Select</option>
                                 <option value="B737-800">B737-800</option>
                                 <option value="B737-8">B737-8</option>
                                 <option value="B737-9">B737-9</option>
                             </select>
                         </div>
                         <div class="input-group">
-                            <label class="input-label">Cabin Config</label>
+                            <label class="input-label">Config</label>
                             <select id="pantry-config" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="calculatePantry();">
-                                <option value="">Select Config</option>
+                                <option value="">Select</option>
                             </select>
                         </div>
                         <div class="input-group">
                             <label class="input-label">Direction</label>
                             <select id="pantry-direction" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="calculatePantry();">
-                                <option value="">Select Direction</option>
-                                <option value="OUTBOUND_DXB">From DXB (Outbound)</option>
-                                <option value="INBOUND_DXB">To DXB (Inbound)</option>
+                                <option value="">Select</option>
+                                <option value="OUTBOUND_DXB">From DXB</option>
+                                <option value="INBOUND_DXB">To DXB</option>
                             </select>
                         </div>
                         <div class="input-group">
-                            <label class="input-label">Flight Type</label>
+                            <label class="input-label">Type</label>
                             <select id="pantry-flight-type" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="calculatePantry();">
                                 <option value="NORMAL">Normal</option>
                                 <option value="TRAINING">Training</option>
@@ -4653,13 +4674,13 @@
                             </select>
                         </div>
                         <div class="input-group">
-                            <label class="input-label">Destination (IATA)</label>
-                            <input type="text" class="fdp-input" id="pantry-destination" placeholder="e.g. TBS, CMB"
+                            <label class="input-label">Dest (IATA)</label>
+                            <input type="text" class="fdp-input" id="pantry-destination" placeholder="TBS"
                                    oninput="calculatePantry()" style="text-transform: uppercase; font-size: 1rem; text-align: center;" maxlength="3">
                         </div>
                         <div class="input-group">
-                            <label class="input-label">Route Pair (Optional)</label>
-                            <input type="text" class="fdp-input" id="pantry-route-pair" placeholder="e.g. MLE-CMB"
+                            <label class="input-label">Route Pair</label>
+                            <input type="text" class="fdp-input" id="pantry-route-pair" placeholder="MLE-CMB"
                                    oninput="calculatePantry()" style="text-transform: uppercase; font-size: 1rem; text-align: center;" maxlength="7">
                         </div>
                     </div>
@@ -5534,6 +5555,11 @@
                 updateSunSectorSwitcher();
                 updateArrCondSwitcher();
                 updateNightSectorSwitcher();
+            }
+
+            // Update route switcher when opening MAP tab
+            if (tab === 'map') {
+                updateMapRouteSwitcher();
             }
         }
 
@@ -9910,6 +9936,52 @@
                 document.getElementById('sun-night-arr').value = sector.arr;
             }
             updateNightSectorSwitcher();
+        }
+
+        // MAP tab route switcher (cycles through sectors for route drawing)
+        var mapRouteSectorIndex = 0;
+
+        function updateMapRouteSwitcher() {
+            var sectors = getSectorList();
+            var switcher = document.getElementById('map-route-switcher');
+            var display = document.getElementById('map-route-display');
+
+            if (sectors.length > 0) {
+                switcher.style.display = 'flex';
+                if (mapRouteSectorIndex >= sectors.length) mapRouteSectorIndex = 0;
+                var sector = sectors[mapRouteSectorIndex];
+                display.innerHTML = '<span style="color: #FF8200; font-weight: bold;">' + sector.dep + '→' + sector.arr + '</span> <span style="color: #888;">(' + (mapRouteSectorIndex + 1) + '/' + sectors.length + ')</span>';
+            } else {
+                switcher.style.display = 'none';
+            }
+        }
+
+        function mapRoutePrev() {
+            var sectors = getSectorList();
+            if (sectors.length === 0) return;
+            mapRouteSectorIndex--;
+            if (mapRouteSectorIndex < 0) mapRouteSectorIndex = sectors.length - 1;
+            applyMapRoute();
+        }
+
+        function mapRouteNext() {
+            var sectors = getSectorList();
+            if (sectors.length === 0) return;
+            mapRouteSectorIndex++;
+            if (mapRouteSectorIndex >= sectors.length) mapRouteSectorIndex = 0;
+            applyMapRoute();
+        }
+
+        function applyMapRoute() {
+            var sectors = getSectorList();
+            if (sectors.length === 0) return;
+            var sector = sectors[mapRouteSectorIndex];
+            if (sector) {
+                document.getElementById('route-from').value = sector.dep;
+                document.getElementById('route-to').value = sector.arr;
+                drawRoute();
+            }
+            updateMapRouteSwitcher();
         }
 
         // Clear coordinate inputs when airport is focused
