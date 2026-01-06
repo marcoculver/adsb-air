@@ -8511,16 +8511,9 @@
 
         function openFlightPicker(fieldId) {
             flightPickerFieldId = fieldId;
-            const currentValue = document.getElementById(fieldId).value || '';
-            // Parse existing value (format: FZ123 or FZ123A or FZ123B)
-            const match = currentValue.match(/^FZ(\d+)([AB])?$/i);
-            if (match) {
-                flightPickerValue = match[1];
-                flightPickerSuffix = (match[2] || '').toUpperCase();
-            } else {
-                flightPickerValue = '';
-                flightPickerSuffix = '';
-            }
+            // Always start fresh - user can type new number immediately
+            flightPickerValue = '';
+            flightPickerSuffix = '';
             updateFlightPickerDisplay();
             updateFlightSuffixButtons();
             document.getElementById('flight-picker-modal').classList.add('active');
