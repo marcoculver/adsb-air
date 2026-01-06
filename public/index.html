@@ -10089,11 +10089,14 @@
             var switcher = document.getElementById('arr-cond-switcher');
             var display = document.getElementById('arr-cond-display');
 
-            if (sunAirportList.length > 1) {
+            if (sunAirportList.length > 0) {
                 switcher.style.display = 'flex';
+                switcher.style.alignItems = 'center';
                 if (arrCondAirportIndex >= sunAirportList.length) arrCondAirportIndex = 0;
                 var currentAirport = sunAirportList[arrCondAirportIndex] || '---';
                 display.innerHTML = '<span style="color: #FF8200; font-weight: bold;">' + currentAirport + '</span> <span style="color: #888;">(' + (arrCondAirportIndex + 1) + '/' + sunAirportList.length + ')</span>';
+                // Auto-fill destination
+                document.getElementById('sun-arr-airport').value = currentAirport;
             } else {
                 switcher.style.display = 'none';
             }
@@ -10141,11 +10144,15 @@
             var switcher = document.getElementById('night-sector-switcher');
             var display = document.getElementById('night-sector-display');
 
-            if (sectors.length > 1) {
+            if (sectors.length > 0) {
                 switcher.style.display = 'flex';
+                switcher.style.alignItems = 'center';
                 if (nightSectorIndex >= sectors.length) nightSectorIndex = 0;
                 var sector = sectors[nightSectorIndex];
                 display.innerHTML = '<span style="color: #FF8200; font-weight: bold;">' + sector.dep + '→' + sector.arr + '</span> <span style="color: #888;">(' + (nightSectorIndex + 1) + '/' + sectors.length + ')</span>';
+                // Auto-fill dep/arr
+                document.getElementById('sun-night-dep').value = sector.dep;
+                document.getElementById('sun-night-arr').value = sector.arr;
             } else {
                 switcher.style.display = 'none';
             }
