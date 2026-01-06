@@ -5285,12 +5285,14 @@
                                 <div class="fdp-result-label" style="font-size: 0.65rem;">ERA</div>
                                 <div class="fdp-result-value" id="ref-enr-status" style="font-size: 0.9rem;">-</div>
                             </div>
+                        </div>
+                        <div class="fdp-result-grid" style="grid-template-columns: repeat(2, 1fr); gap: 6px; margin-top: 6px;">
                             <div class="fdp-result-item" id="ref-auth-emerg" style="padding: 8px 4px;">
                                 <div class="fdp-result-label" style="font-size: 0.65rem;">EMERG</div>
                                 <div class="fdp-result-value" id="ref-emerg-status" style="font-size: 0.9rem;">-</div>
                             </div>
-                            <div class="fdp-result-item" id="ref-auth-etops" style="grid-column: span 2; padding: 8px 4px;">
-                                <div class="fdp-result-label" style="font-size: 0.65rem;">ETOPS ALT</div>
+                            <div class="fdp-result-item" id="ref-auth-etops" style="padding: 8px 4px;">
+                                <div class="fdp-result-label" style="font-size: 0.65rem;">ETOPS</div>
                                 <div class="fdp-result-value" id="ref-etops-status" style="font-size: 0.9rem;">-</div>
                             </div>
                         </div>
@@ -9438,9 +9440,9 @@
             // Category styling
             var categoryEl = document.getElementById('ref-category');
             var catColors = {
-                'A': { bg: 'rgba(255, 100, 100, 0.2)', border: '#ff6464', text: '#ff6464' },
+                'A': { bg: 'rgba(0, 255, 136, 0.2)', border: '#00ff88', text: '#00ff88' },
                 'B': { bg: 'rgba(255, 180, 0, 0.2)', border: '#ffb400', text: '#ffb400' },
-                'C': { bg: 'rgba(0, 255, 136, 0.2)', border: '#00ff88', text: '#00ff88' }
+                'C': { bg: 'rgba(255, 100, 100, 0.2)', border: '#ff6464', text: '#ff6464' }
             };
             var catStyle = catColors[airfield.category] || catColors['C'];
             categoryEl.style.background = catStyle.bg;
