@@ -4885,9 +4885,13 @@
 
                 <!-- Arrival Daylight & Glare Check -->
                 <div class="section" style="max-width: 800px; margin: 20px auto 0;">
-                    <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                         <span>Arrival Conditions</span>
-                        <button class="preset-btn" onclick="autofillArrivalDaylight()" style="padding: 4px 10px; font-size: 0.75rem;">From Sched</button>
+                        <div id="arr-cond-switcher" style="display: none; font-size: 0.85rem; align-items: center;">
+                            <button class="preset-btn" onclick="arrCondPrev()" style="padding: 4px 8px; font-size: 0.75rem;">◀</button>
+                            <span id="arr-cond-display" style="margin: 0 6px; color: #FF8200; font-size: 0.8rem;">---</span>
+                            <button class="preset-btn" onclick="arrCondNext()" style="padding: 4px 8px; font-size: 0.75rem;">▶</button>
+                        </div>
                     </div>
                     <div class="arrival-conditions-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px;">
                         <div class="fdp-field">
@@ -4917,9 +4921,13 @@
 
                 <!-- Night Flight Time Calculator -->
                 <div class="section" style="max-width: 800px; margin: 20px auto 0;">
-                    <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                         <span>Night Flight Time</span>
-                        <button class="preset-btn" onclick="autofillNightTime()" style="padding: 4px 10px; font-size: 0.75rem;">From Sched</button>
+                        <div id="night-sector-switcher" style="display: none; font-size: 0.85rem; align-items: center;">
+                            <button class="preset-btn" onclick="nightSectorPrev()" style="padding: 4px 8px; font-size: 0.75rem;">◀</button>
+                            <span id="night-sector-display" style="margin: 0 6px; color: #FF8200; font-size: 0.8rem;">---</span>
+                            <button class="preset-btn" onclick="nightSectorNext()" style="padding: 4px 8px; font-size: 0.75rem;">▶</button>
+                        </div>
                     </div>
                     <div class="night-time-grid" style="display: grid; grid-template-columns: 0.6fr 0.6fr 1fr 1fr 1fr; gap: 10px;">
                         <div class="fdp-field">
@@ -5521,9 +5529,11 @@
                 syncFromSchedule();
             }
 
-            // Update sector switcher when opening SUN tab
+            // Update all switchers when opening SUN tab
             if (tab === 'sun') {
                 updateSunSectorSwitcher();
+                updateArrCondSwitcher();
+                updateNightSectorSwitcher();
             }
         }
 
@@ -9803,6 +9813,103 @@
                 calculateSunTimes();
             }
             updateSunSectorSwitcher();
+        }
+
+        // Arrival Conditions airport switcher (cycles through unique airports)
+        var arrCondAirportIndex = 0;
+
+        function updateArrCondSwitcher() {
+            sunAirportList = getUniqueAirports();
+            var switcher = document.getElementById('arr-cond-switcher');
+            var display = document.getElementById('arr-cond-display');
+
+            if (sunAirportList.length > 1) {
+                switcher.style.display = 'flex';
+                if (arrCondAirportIndex >= sunAirportList.length) arrCondAirportIndex = 0;
+                var currentAirport = sunAirportList[arrCondAirportIndex] || '---';
+                display.innerHTML = '<span style="color: #FF8200; font-weight: bold;">' + currentAirport + '</span> <span style="color: #888;">(' + (arrCondAirportIndex + 1) + '/' + sunAirportList.length + ')</span>';
+            } else {
+                switcher.style.display = 'none';
+            }
+        }
+
+        function arrCondPrev() {
+            if (sunAirportList.length === 0) return;
+            arrCondAirportIndex--;
+            if (arrCondAirportIndex < 0) arrCondAirportIndex = sunAirportList.length - 1;
+            applyArrCondAirport();
+        }
+
+        function arrCondNext() {
+            if (sunAirportList.length === 0) return;
+            arrCondAirportIndex++;
+            if (arrCondAirportIndex >= sunAirportList.length) arrCondAirportIndex = 0;
+            applyArrCondAirport();
+        }
+
+        function applyArrCondAirport() {
+            var airport = sunAirportList[arrCondAirportIndex];
+            if (airport) {
+                document.getElementById('sun-arr-airport').value = airport;
+            }
+            updateArrCondSwitcher();
+        }
+
+        // Night Flight Time sector switcher (cycles through sectors with DEP→ARR)
+        var nightSectorIndex = 0;
+
+        function getSectorList() {
+            var sectors = [];
+            for (var i = 1; i <= 4; i++) {
+                var dep = document.getElementById('s' + i + '-dep');
+                var arr = document.getElementById('s' + i + '-arr');
+                if (dep && dep.value && arr && arr.value) {
+                    sectors.push({ dep: dep.value, arr: arr.value, index: i });
+                }
+            }
+            return sectors;
+        }
+
+        function updateNightSectorSwitcher() {
+            var sectors = getSectorList();
+            var switcher = document.getElementById('night-sector-switcher');
+            var display = document.getElementById('night-sector-display');
+
+            if (sectors.length > 1) {
+                switcher.style.display = 'flex';
+                if (nightSectorIndex >= sectors.length) nightSectorIndex = 0;
+                var sector = sectors[nightSectorIndex];
+                display.innerHTML = '<span style="color: #FF8200; font-weight: bold;">' + sector.dep + '→' + sector.arr + '</span> <span style="color: #888;">(' + (nightSectorIndex + 1) + '/' + sectors.length + ')</span>';
+            } else {
+                switcher.style.display = 'none';
+            }
+        }
+
+        function nightSectorPrev() {
+            var sectors = getSectorList();
+            if (sectors.length === 0) return;
+            nightSectorIndex--;
+            if (nightSectorIndex < 0) nightSectorIndex = sectors.length - 1;
+            applyNightSector();
+        }
+
+        function nightSectorNext() {
+            var sectors = getSectorList();
+            if (sectors.length === 0) return;
+            nightSectorIndex++;
+            if (nightSectorIndex >= sectors.length) nightSectorIndex = 0;
+            applyNightSector();
+        }
+
+        function applyNightSector() {
+            var sectors = getSectorList();
+            if (sectors.length === 0) return;
+            var sector = sectors[nightSectorIndex];
+            if (sector) {
+                document.getElementById('sun-night-dep').value = sector.dep;
+                document.getElementById('sun-night-arr').value = sector.arr;
+            }
+            updateNightSectorSwitcher();
         }
 
         // Clear coordinate inputs when airport is focused
