@@ -5325,6 +5325,44 @@
                         Loading LVO database...
                     </div>
                 </div>
+
+                <!-- 90% Minimum Fuel Section -->
+                <div class="section" style="max-width: 500px; margin: 20px auto 0; padding: 12px;">
+                    <div class="section-title" style="margin-bottom: 8px;">90% Minimum Fuel</div>
+
+                    <!-- Schedule Switcher for Min Fuel -->
+                    <div id="minfuel-switcher" style="display: none; justify-content: center; align-items: center; gap: 8px; margin-bottom: 10px; padding: 6px; background: rgba(255, 130, 0, 0.1); border-radius: 6px;">
+                        <button class="preset-btn" onclick="minfuelSwitcherPrev()" style="padding: 4px 10px; min-width: auto;">&lt;</button>
+                        <span id="minfuel-switcher-display" style="font-size: 0.85rem; min-width: 100px; text-align: center;"></span>
+                        <button class="preset-btn" onclick="minfuelSwitcherNext()" style="padding: 4px 10px; min-width: auto;">&gt;</button>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                        <input type="text" id="minfuel-station-code" class="fdp-input" placeholder="IATA" maxlength="3" style="text-transform: uppercase; text-align: center; font-size: 1.1rem; flex: 1;" oninput="this.value = this.value.toUpperCase()" onfocus="this.value = ''">
+                        <button class="preset-btn" onclick="lookupMinFuel()" style="padding: 10px 20px;">GO</button>
+                    </div>
+
+                    <!-- Results -->
+                    <div id="minfuel-results" style="display: none;">
+                        <div style="text-align: center; padding: 15px; background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 8px;">
+                            <div id="minfuel-station" style="font-size: 1.1rem; font-weight: bold; color: #fff; margin-bottom: 8px;"></div>
+                            <div style="font-size: 2rem; font-weight: bold; color: #00d4ff;" id="minfuel-value"></div>
+                            <div style="font-size: 0.8rem; color: #888; margin-top: 4px;">kg</div>
+                        </div>
+                    </div>
+
+                    <div id="minfuel-not-found" style="display: none; text-align: center; padding: 15px; color: #ff6464; font-size: 0.9rem;">
+                        Station not in 90% Min Fuel table
+                    </div>
+
+                    <!-- Description -->
+                    <div id="minfuel-description" style="margin-top: 12px; padding: 10px; background: rgba(0, 0, 0, 0.2); border-radius: 6px; font-size: 0.75rem; color: #888; line-height: 1.4; display: none;"></div>
+
+                    <!-- Revision Info -->
+                    <div id="minfuel-revision-info" style="margin-top: 10px; text-align: center; font-size: 0.75rem; color: #666;">
+                        Loading Min Fuel database...
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -5926,9 +5964,10 @@
                 updateRefSwitcher();
             }
 
-            // Update OPS tab switcher
+            // Update OPS tab switchers
             if (tab === 'ops') {
                 updateOpsSwitcher();
+                updateMinfuelSwitcher();
             }
         }
 
@@ -9420,6 +9459,31 @@
                 if (revInfo) revInfo.textContent = 'Database not available';
             });
 
+        // ============ 90% MIN FUEL DATABASE ============
+        var minFuelDatabase = null;
+
+        // Load 90% Min Fuel database
+        fetch('/dashboard/database/min_fuel_90.json')
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                minFuelDatabase = data;
+                console.log('Min Fuel database loaded: ' + data.fuel_data.length + ' stations');
+                var revInfo = document.getElementById('minfuel-revision-info');
+                if (revInfo && data.document_info) {
+                    revInfo.textContent = data.document_info.title + ' - ' + data.document_info.date;
+                }
+                var descEl = document.getElementById('minfuel-description');
+                if (descEl && data.document_info && data.document_info.description) {
+                    descEl.textContent = data.document_info.description;
+                    descEl.style.display = 'block';
+                }
+            })
+            .catch(function(err) {
+                console.log('Min Fuel database not loaded:', err);
+                var revInfo = document.getElementById('minfuel-revision-info');
+                if (revInfo) revInfo.textContent = 'Database not available';
+            });
+
         // REF Tab Switcher
         var refSwitcherIndex = 0;
 
@@ -9642,6 +9706,68 @@
             }
 
             containerEl.innerHTML = html;
+        }
+
+        // ============ 90% MIN FUEL LOOKUP ============
+        var minfuelSwitcherIndex = 0;
+
+        function updateMinfuelSwitcher() {
+            var airports = getUniqueAirports();
+            var switcher = document.getElementById('minfuel-switcher');
+            var display = document.getElementById('minfuel-switcher-display');
+
+            if (airports.length > 0) {
+                switcher.style.display = 'flex';
+                if (minfuelSwitcherIndex >= airports.length) minfuelSwitcherIndex = 0;
+                var apt = airports[minfuelSwitcherIndex];
+                display.innerHTML = '<span style="color: #FF8200; font-weight: bold;">' + apt + '</span> <span style="color: #888;">(' + (minfuelSwitcherIndex + 1) + '/' + airports.length + ')</span>';
+                document.getElementById('minfuel-station-code').value = apt;
+                lookupMinFuel();
+            } else {
+                switcher.style.display = 'none';
+            }
+        }
+
+        function minfuelSwitcherPrev() {
+            var airports = getUniqueAirports();
+            if (airports.length === 0) return;
+            minfuelSwitcherIndex = (minfuelSwitcherIndex - 1 + airports.length) % airports.length;
+            updateMinfuelSwitcher();
+        }
+
+        function minfuelSwitcherNext() {
+            var airports = getUniqueAirports();
+            if (airports.length === 0) return;
+            minfuelSwitcherIndex = (minfuelSwitcherIndex + 1) % airports.length;
+            updateMinfuelSwitcher();
+        }
+
+        function lookupMinFuel() {
+            var code = document.getElementById('minfuel-station-code').value.toUpperCase().trim();
+            var resultsEl = document.getElementById('minfuel-results');
+            var notFoundEl = document.getElementById('minfuel-not-found');
+
+            resultsEl.style.display = 'none';
+            notFoundEl.style.display = 'none';
+
+            if (!code || !minFuelDatabase) {
+                return;
+            }
+
+            // Search by station code
+            var station = minFuelDatabase.fuel_data.find(function(s) {
+                return s.station === code;
+            });
+
+            if (!station) {
+                notFoundEl.style.display = 'block';
+                return;
+            }
+
+            // Display results
+            resultsEl.style.display = 'block';
+            document.getElementById('minfuel-station').textContent = station.station;
+            document.getElementById('minfuel-value').textContent = station.fuel_kg.toLocaleString();
         }
 
         function lookupFlightRoute() {
