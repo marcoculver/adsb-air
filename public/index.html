@@ -2515,6 +2515,7 @@
             <button class="tab-btn" onclick="switchTab('sun')">SUN</button>
             <button class="tab-btn" onclick="switchTab('set')">SET</button>
             <button class="tab-btn" onclick="switchTab('ref')">REF</button>
+            <button class="tab-btn" onclick="switchTab('ops')">OPS</button>
         </div>
         </div><!-- End sticky-header -->
 
@@ -5286,6 +5287,46 @@
                 </div>
             </div>
         </div>
+
+        <!-- OPS Tab (LVO Approach Minima) -->
+        <div class="tab-content" id="tab-ops">
+            <div class="fdp-container">
+                <div class="section" style="max-width: 500px; margin: 0 auto; padding: 12px;">
+                    <div class="section-title" style="margin-bottom: 8px;">LVO Approach Minima</div>
+
+                    <!-- Schedule Switcher -->
+                    <div id="ops-switcher" style="display: none; justify-content: center; align-items: center; gap: 8px; margin-bottom: 10px; padding: 6px; background: rgba(255, 130, 0, 0.1); border-radius: 6px;">
+                        <button class="preset-btn" onclick="opsSwitcherPrev()" style="padding: 4px 10px; min-width: auto;">&lt;</button>
+                        <span id="ops-switcher-display" style="font-size: 0.85rem; min-width: 100px; text-align: center;"></span>
+                        <button class="preset-btn" onclick="opsSwitcherNext()" style="padding: 4px 10px; min-width: auto;">&gt;</button>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                        <input type="text" id="ops-airport-code" class="fdp-input" placeholder="ICAO/IATA" maxlength="4" style="text-transform: uppercase; text-align: center; font-size: 1.1rem; flex: 1;" oninput="this.value = this.value.toUpperCase()" onfocus="this.value = ''">
+                        <button class="preset-btn" onclick="lookupLvoMinima()" style="padding: 10px 20px;">GO</button>
+                    </div>
+
+                    <!-- Results -->
+                    <div id="ops-results" style="display: none;">
+                        <div style="text-align: center; margin-bottom: 12px;">
+                            <div id="ops-airport-name" style="font-size: 1.2rem; font-weight: bold; color: #fff;"></div>
+                            <div id="ops-airport-codes" style="font-size: 0.85rem; color: #888;"></div>
+                        </div>
+
+                        <div id="ops-approaches-container"></div>
+                    </div>
+
+                    <div id="ops-not-found" style="display: none; text-align: center; padding: 15px; color: #ff6464; font-size: 0.9rem;">
+                        Not found in LVO Minima database
+                    </div>
+
+                    <!-- Revision Info -->
+                    <div id="ops-revision-info" style="margin-top: 15px; text-align: center; font-size: 0.75rem; color: #666;">
+                        Loading LVO database...
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Number Picker Modal -->
@@ -5883,6 +5924,11 @@
             // Update REF tab switcher
             if (tab === 'ref') {
                 updateRefSwitcher();
+            }
+
+            // Update OPS tab switcher
+            if (tab === 'ops') {
+                updateOpsSwitcher();
             }
         }
 
@@ -9354,6 +9400,26 @@
                 console.log('OM-C airfield database not loaded:', err);
             });
 
+        // ============ LVO MINIMA DATABASE ============
+        var lvoMinimaDatabase = null;
+
+        // Load LVO Minima database
+        fetch('/dashboard/database/lvo_minima.json')
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                lvoMinimaDatabase = data;
+                console.log('LVO Minima database loaded: ' + data.airports.length + ' airports');
+                var revInfo = document.getElementById('ops-revision-info');
+                if (revInfo && data.document_info) {
+                    revInfo.textContent = 'OM-C Rev ' + data.document_info.revision_number + ' - ' + data.document_info.revision_date;
+                }
+            })
+            .catch(function(err) {
+                console.log('LVO Minima database not loaded:', err);
+                var revInfo = document.getElementById('ops-revision-info');
+                if (revInfo) revInfo.textContent = 'Database not available';
+            });
+
         // REF Tab Switcher
         var refSwitcherIndex = 0;
 
@@ -9460,6 +9526,122 @@
                 itemEl.style.background = 'rgba(255, 100, 100, 0.1)';
                 itemEl.style.borderColor = 'rgba(255, 100, 100, 0.3)';
             }
+        }
+
+        // ============ OPS TAB (LVO MINIMA) ============
+        var opsSwitcherIndex = 0;
+
+        function updateOpsSwitcher() {
+            var airports = getUniqueAirports();
+            var switcher = document.getElementById('ops-switcher');
+            var display = document.getElementById('ops-switcher-display');
+
+            if (airports.length > 0) {
+                switcher.style.display = 'flex';
+                if (opsSwitcherIndex >= airports.length) opsSwitcherIndex = 0;
+                var apt = airports[opsSwitcherIndex];
+                display.innerHTML = '<span style="color: #FF8200; font-weight: bold;">' + apt + '</span> <span style="color: #888;">(' + (opsSwitcherIndex + 1) + '/' + airports.length + ')</span>';
+                document.getElementById('ops-airport-code').value = apt;
+                lookupLvoMinima();
+            } else {
+                switcher.style.display = 'none';
+            }
+        }
+
+        function opsSwitcherPrev() {
+            var airports = getUniqueAirports();
+            if (airports.length === 0) return;
+            opsSwitcherIndex = (opsSwitcherIndex - 1 + airports.length) % airports.length;
+            updateOpsSwitcher();
+        }
+
+        function opsSwitcherNext() {
+            var airports = getUniqueAirports();
+            if (airports.length === 0) return;
+            opsSwitcherIndex = (opsSwitcherIndex + 1) % airports.length;
+            updateOpsSwitcher();
+        }
+
+        function lookupLvoMinima() {
+            var code = document.getElementById('ops-airport-code').value.toUpperCase().trim();
+            var resultsEl = document.getElementById('ops-results');
+            var notFoundEl = document.getElementById('ops-not-found');
+            var containerEl = document.getElementById('ops-approaches-container');
+
+            resultsEl.style.display = 'none';
+            notFoundEl.style.display = 'none';
+
+            if (!code || !lvoMinimaDatabase) {
+                return;
+            }
+
+            // Search by ICAO or IATA
+            var airport = lvoMinimaDatabase.airports.find(function(a) {
+                return a.icao === code || a.iata === code;
+            });
+
+            if (!airport) {
+                notFoundEl.style.display = 'block';
+                return;
+            }
+
+            // Display results
+            resultsEl.style.display = 'block';
+            document.getElementById('ops-airport-name').textContent = airport.name;
+            document.getElementById('ops-airport-codes').textContent = airport.icao + ' / ' + airport.iata;
+
+            // Build approaches table
+            var html = '<div class="ops-approaches-table">';
+
+            // Group approaches by category
+            var catII = airport.approaches.filter(function(a) { return a.category === 'CAT II'; });
+            var catIIIA = airport.approaches.filter(function(a) { return a.category === 'CAT IIIA'; });
+
+            // CAT IIIA first (better minima)
+            if (catIIIA.length > 0) {
+                html += '<div class="ops-category-header" style="background: rgba(0, 255, 136, 0.2); color: #00ff88; padding: 6px 10px; border-radius: 6px 6px 0 0; font-weight: bold; text-align: center;">CAT IIIA</div>';
+                html += '<div class="ops-approaches-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 6px; padding: 8px; background: rgba(0, 0, 0, 0.2); margin-bottom: 10px;">';
+                catIIIA.forEach(function(app) {
+                    var restrictedMark = app.restricted ? '<span style="color: #ffd700;">*</span>' : '';
+                    html += '<div class="ops-approach-item" style="background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.3); border-radius: 6px; padding: 8px; text-align: center;">';
+                    html += '<div style="font-size: 1.1rem; font-weight: bold; color: #fff;">RWY ' + app.runway + restrictedMark + '</div>';
+                    html += '<div style="font-size: 0.75rem; color: #888; margin-top: 4px;">DH: <span style="color: #00ff88;">' + app.dh_ft + ' ft</span></div>';
+                    html += '<div style="font-size: 0.75rem; color: #888;">RVR: <span style="color: #00ff88;">' + app.rvr_m + ' m</span></div>';
+                    html += '</div>';
+                });
+                html += '</div>';
+            }
+
+            // CAT II
+            if (catII.length > 0) {
+                html += '<div class="ops-category-header" style="background: rgba(255, 180, 0, 0.2); color: #ffb400; padding: 6px 10px; border-radius: 6px 6px 0 0; font-weight: bold; text-align: center;">CAT II</div>';
+                html += '<div class="ops-approaches-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 6px; padding: 8px; background: rgba(0, 0, 0, 0.2);">';
+                catII.forEach(function(app) {
+                    var restrictedMark = app.restricted ? '<span style="color: #ffd700;">*</span>' : '';
+                    html += '<div class="ops-approach-item" style="background: rgba(255, 180, 0, 0.1); border: 1px solid rgba(255, 180, 0, 0.3); border-radius: 6px; padding: 8px; text-align: center;">';
+                    html += '<div style="font-size: 1.1rem; font-weight: bold; color: #fff;">RWY ' + app.runway + restrictedMark + '</div>';
+                    if (typeof app.dh_ft === 'string') {
+                        html += '<div style="font-size: 0.7rem; color: #ffb400; margin-top: 4px;">' + app.dh_ft + '</div>';
+                    } else {
+                        html += '<div style="font-size: 0.75rem; color: #888; margin-top: 4px;">DH: <span style="color: #ffb400;">' + app.dh_ft + ' ft</span></div>';
+                        html += '<div style="font-size: 0.75rem; color: #888;">RVR: <span style="color: #ffb400;">' + app.rvr_m + ' m</span></div>';
+                    }
+                    html += '</div>';
+                });
+                html += '</div>';
+            }
+
+            html += '</div>';
+
+            // Add asterisk note if any restricted approaches
+            var hasRestricted = airport.approaches.some(function(a) { return a.restricted; });
+            if (hasRestricted && lvoMinimaDatabase.notes && lvoMinimaDatabase.notes.asterisk_note) {
+                html += '<div style="margin-top: 10px; padding: 8px; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 6px; font-size: 0.7rem; color: #ffd700;">';
+                html += '<strong>*</strong> ' + lvoMinimaDatabase.notes.asterisk_note;
+                html += '</div>';
+            }
+
+            containerEl.innerHTML = html;
         }
 
         function lookupFlightRoute() {
