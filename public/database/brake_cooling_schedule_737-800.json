@@ -1,0 +1,450 @@
+{
+  "metadata": {
+    "aircraft": "Boeing 737-800",
+    "variant": "737-800WSFP1/CFM56-7B26",
+    "documentReference": "737-800WSFP1/CFM56-7B26 FAA",
+    "brakeCategory": "Category C/N Brakes",
+    "documentTitle": "737 Flight Crew Operations Manual - Performance Inflight Advisory Information",
+    "subject": "Recommended Brake Cooling Schedule",
+    "units": "Millions of Foot Pounds",
+    "brakeTypes": ["Category C Steel Brakes", "Category N Carbon Brakes"]
+  },
+  
+  "referenceBrakeEnergy": {
+    "description": "Reference Brake Energy Per Brake (Millions of Foot Pounds) - Wind Corrected",
+    "notes": "*To correct for wind, enter table with the brakes on speed minus one half the headwind or plus 1.5 times the tailwind. If ground speed is used for brakes on speed, ignore wind and enter table with sea level, 15°C.",
+    "units": {
+      "weight": "1000 KG",
+      "oat": "°C",
+      "brakesOnSpeed": "KIAS",
+      "pressureAltitude": "1000 FT",
+      "brakeEnergy": "Millions of Foot Pounds"
+    },
+    "data": [
+      {"weight": 80, "oat": 0, "speed": 80, "altitude": {"0": 15.1, "5": 17.0, "10": 19.3}},
+      {"weight": 80, "oat": 0, "speed": 100, "altitude": {"0": 22.4, "5": 25.3, "10": 28.9}},
+      {"weight": 80, "oat": 0, "speed": 120, "altitude": {"0": 30.9, "5": 35.0, "10": 40.2}},
+      {"weight": 80, "oat": 0, "speed": 140, "altitude": {"0": 40.4, "5": 45.9, "10": 53.0}},
+      {"weight": 80, "oat": 0, "speed": 160, "altitude": {"0": 50.8, "5": 57.9, "10": 67.3}},
+      {"weight": 80, "oat": 0, "speed": 180, "altitude": {"0": 60.8, "5": 69.6, "10": 81.2}},
+      
+      {"weight": 80, "oat": 10, "speed": 80, "altitude": {"0": 15.6, "5": 17.6, "10": 20.0}},
+      {"weight": 80, "oat": 10, "speed": 100, "altitude": {"0": 23.1, "5": 26.1, "10": 29.8}},
+      {"weight": 80, "oat": 10, "speed": 120, "altitude": {"0": 31.9, "5": 36.2, "10": 41.5}},
+      {"weight": 80, "oat": 10, "speed": 140, "altitude": {"0": 41.8, "5": 47.5, "10": 54.8}},
+      {"weight": 80, "oat": 10, "speed": 160, "altitude": {"0": 52.5, "5": 59.9, "10": 69.5}},
+      {"weight": 80, "oat": 10, "speed": 180, "altitude": {"0": 62.8, "5": 71.9, "10": 83.9}},
+      
+      {"weight": 80, "oat": 15, "speed": 80, "altitude": {"0": 15.8, "5": 17.8, "10": 20.2}},
+      {"weight": 80, "oat": 15, "speed": 100, "altitude": {"0": 23.5, "5": 26.5, "10": 30.3}},
+      {"weight": 80, "oat": 15, "speed": 120, "altitude": {"0": 32.4, "5": 36.7, "10": 42.1}},
+      {"weight": 80, "oat": 15, "speed": 140, "altitude": {"0": 42.4, "5": 48.2, "10": 55.6}},
+      {"weight": 80, "oat": 15, "speed": 160, "altitude": {"0": 53.3, "5": 60.7, "10": 70.5}},
+      {"weight": 80, "oat": 15, "speed": 180, "altitude": {"0": 63.7, "5": 72.9, "10": 85.1}},
+      
+      {"weight": 80, "oat": 20, "speed": 80, "altitude": {"0": 16.0, "5": 18.1, "10": 20.5}},
+      {"weight": 80, "oat": 20, "speed": 100, "altitude": {"0": 23.8, "5": 26.9, "10": 30.7}},
+      {"weight": 80, "oat": 20, "speed": 120, "altitude": {"0": 32.8, "5": 37.2, "10": 42.7}},
+      {"weight": 80, "oat": 20, "speed": 140, "altitude": {"0": 42.9, "5": 48.8, "10": 56.3}},
+      {"weight": 80, "oat": 20, "speed": 160, "altitude": {"0": 54.0, "5": 61.5, "10": 71.4}},
+      {"weight": 80, "oat": 20, "speed": 180, "altitude": {"0": 64.6, "5": 73.9, "10": 86.2}},
+      
+      {"weight": 80, "oat": 30, "speed": 80, "altitude": {"0": 16.4, "5": 18.5, "10": 21.1}},
+      {"weight": 80, "oat": 30, "speed": 100, "altitude": {"0": 24.4, "5": 27.6, "10": 31.5}},
+      {"weight": 80, "oat": 30, "speed": 120, "altitude": {"0": 33.7, "5": 38.2, "10": 43.8}},
+      {"weight": 80, "oat": 30, "speed": 140, "altitude": {"0": 44.0, "5": 50.0, "10": 57.7}},
+      {"weight": 80, "oat": 30, "speed": 160, "altitude": {"0": 55.3, "5": 63.1, "10": 73.2}},
+      {"weight": 80, "oat": 30, "speed": 180, "altitude": {"0": 66.2, "5": 75.7, "10": 88.4}},
+      
+      {"weight": 80, "oat": 40, "speed": 80, "altitude": {"0": 16.6, "5": 18.7, "10": 21.3}},
+      {"weight": 80, "oat": 40, "speed": 100, "altitude": {"0": 24.7, "5": 27.9, "10": 31.9}},
+      {"weight": 80, "oat": 40, "speed": 120, "altitude": {"0": 34.1, "5": 38.7, "10": 44.4}},
+      {"weight": 80, "oat": 40, "speed": 140, "altitude": {"0": 44.7, "5": 50.9, "10": 58.8}},
+      {"weight": 80, "oat": 40, "speed": 160, "altitude": {"0": 56.3, "5": 64.3, "10": 74.8}},
+      {"weight": 80, "oat": 40, "speed": 180, "altitude": {"0": 67.5, "5": 77.4, "10": 90.5}},
+      
+      {"weight": 80, "oat": 50, "speed": 80, "altitude": {"0": 16.6, "5": 18.7, "10": 21.3}},
+      {"weight": 80, "oat": 50, "speed": 100, "altitude": {"0": 24.8, "5": 28.0, "10": 32.1}},
+      {"weight": 80, "oat": 50, "speed": 120, "altitude": {"0": 34.3, "5": 39.0, "10": 44.9}},
+      {"weight": 80, "oat": 50, "speed": 140, "altitude": {"0": 45.2, "5": 51.5, "10": 59.7}},
+      {"weight": 80, "oat": 50, "speed": 160, "altitude": {"0": 57.1, "5": 65.4, "10": 76.3}},
+      {"weight": 80, "oat": 50, "speed": 180, "altitude": {"0": 68.7, "5": 79.0, "10": 92.9}},
+      
+      {"weight": 70, "oat": 0, "speed": 80, "altitude": {"0": 13.7, "5": 15.4, "10": 17.5}},
+      {"weight": 70, "oat": 0, "speed": 100, "altitude": {"0": 20.2, "5": 22.8, "10": 26.0}},
+      {"weight": 70, "oat": 0, "speed": 120, "altitude": {"0": 27.7, "5": 31.3, "10": 35.9}},
+      {"weight": 70, "oat": 0, "speed": 140, "altitude": {"0": 36.1, "5": 41.0, "10": 47.2}},
+      {"weight": 70, "oat": 0, "speed": 160, "altitude": {"0": 45.3, "5": 51.6, "10": 59.7}},
+      {"weight": 70, "oat": 0, "speed": 180, "altitude": {"0": 54.9, "5": 62.7, "10": 72.9}},
+      
+      {"weight": 70, "oat": 10, "speed": 80, "altitude": {"0": 14.2, "5": 15.9, "10": 18.1}},
+      {"weight": 70, "oat": 10, "speed": 100, "altitude": {"0": 20.8, "5": 23.5, "10": 26.8}},
+      {"weight": 70, "oat": 10, "speed": 120, "altitude": {"0": 28.6, "5": 32.4, "10": 37.1}},
+      {"weight": 70, "oat": 10, "speed": 140, "altitude": {"0": 37.3, "5": 42.3, "10": 48.7}},
+      {"weight": 70, "oat": 10, "speed": 160, "altitude": {"0": 46.8, "5": 53.3, "10": 61.6}},
+      {"weight": 70, "oat": 10, "speed": 180, "altitude": {"0": 56.7, "5": 64.8, "10": 75.4}},
+      
+      {"weight": 70, "oat": 15, "speed": 80, "altitude": {"0": 14.4, "5": 16.2, "10": 18.4}},
+      {"weight": 70, "oat": 15, "speed": 100, "altitude": {"0": 21.1, "5": 23.9, "10": 27.2}},
+      {"weight": 70, "oat": 15, "speed": 120, "altitude": {"0": 29.0, "5": 32.8, "10": 37.6}},
+      {"weight": 70, "oat": 15, "speed": 140, "altitude": {"0": 37.8, "5": 43.0, "10": 49.4}},
+      {"weight": 70, "oat": 15, "speed": 160, "altitude": {"0": 47.5, "5": 54.0, "10": 62.5}},
+      {"weight": 70, "oat": 15, "speed": 180, "altitude": {"0": 57.5, "5": 65.7, "10": 76.4}},
+      
+      {"weight": 70, "oat": 20, "speed": 80, "altitude": {"0": 14.6, "5": 16.4, "10": 18.6}},
+      {"weight": 70, "oat": 20, "speed": 100, "altitude": {"0": 21.4, "5": 24.2, "10": 27.6}},
+      {"weight": 70, "oat": 20, "speed": 120, "altitude": {"0": 29.4, "5": 33.3, "10": 38.1}},
+      {"weight": 70, "oat": 20, "speed": 140, "altitude": {"0": 38.4, "5": 43.5, "10": 50.1}},
+      {"weight": 70, "oat": 20, "speed": 160, "altitude": {"0": 48.1, "5": 54.8, "10": 63.4}},
+      {"weight": 70, "oat": 20, "speed": 180, "altitude": {"0": 58.3, "5": 66.5, "10": 77.4}},
+      
+      {"weight": 70, "oat": 30, "speed": 80, "altitude": {"0": 14.9, "5": 16.8, "10": 19.1}},
+      {"weight": 70, "oat": 30, "speed": 100, "altitude": {"0": 22.0, "5": 24.8, "10": 28.3}},
+      {"weight": 70, "oat": 30, "speed": 120, "altitude": {"0": 30.2, "5": 34.1, "10": 39.1}},
+      {"weight": 70, "oat": 30, "speed": 140, "altitude": {"0": 39.3, "5": 44.6, "10": 51.4}},
+      {"weight": 70, "oat": 30, "speed": 160, "altitude": {"0": 49.3, "5": 56.1, "10": 64.9}},
+      {"weight": 70, "oat": 30, "speed": 180, "altitude": {"0": 59.8, "5": 68.2, "10": 79.4}},
+      
+      {"weight": 70, "oat": 40, "speed": 80, "altitude": {"0": 15.1, "5": 17.0, "10": 19.3}},
+      {"weight": 70, "oat": 40, "speed": 100, "altitude": {"0": 22.2, "5": 25.1, "10": 28.6}},
+      {"weight": 70, "oat": 40, "speed": 120, "altitude": {"0": 30.5, "5": 34.6, "10": 39.6}},
+      {"weight": 70, "oat": 40, "speed": 140, "altitude": {"0": 39.9, "5": 45.3, "10": 52.2}},
+      {"weight": 70, "oat": 40, "speed": 160, "altitude": {"0": 50.1, "5": 57.1, "10": 66.2}},
+      {"weight": 70, "oat": 40, "speed": 180, "altitude": {"0": 60.9, "5": 69.6, "10": 81.2}},
+      
+      {"weight": 70, "oat": 50, "speed": 80, "altitude": {"0": 15.1, "5": 17.0, "10": 19.3}},
+      {"weight": 70, "oat": 50, "speed": 100, "altitude": {"0": 22.3, "5": 25.2, "10": 28.8}},
+      {"weight": 70, "oat": 50, "speed": 120, "altitude": {"0": 30.7, "5": 34.8, "10": 40.0}},
+      {"weight": 70, "oat": 50, "speed": 140, "altitude": {"0": 40.2, "5": 45.8, "10": 52.9}},
+      {"weight": 70, "oat": 50, "speed": 160, "altitude": {"0": 50.7, "5": 58.0, "10": 67.4}},
+      {"weight": 70, "oat": 50, "speed": 180, "altitude": {"0": 61.8, "5": 70.9, "10": 83.0}},
+      
+      {"weight": 60, "oat": 0, "speed": 80, "altitude": {"0": 12.3, "5": 13.9, "10": 15.7}},
+      {"weight": 60, "oat": 0, "speed": 100, "altitude": {"0": 18.0, "5": 20.3, "10": 23.1}},
+      {"weight": 60, "oat": 0, "speed": 120, "altitude": {"0": 24.4, "5": 27.6, "10": 31.6}},
+      {"weight": 60, "oat": 0, "speed": 140, "altitude": {"0": 31.7, "5": 35.9, "10": 41.2}},
+      {"weight": 60, "oat": 0, "speed": 160, "altitude": {"0": 39.6, "5": 45.0, "10": 51.8}},
+      {"weight": 60, "oat": 0, "speed": 180, "altitude": {"0": 48.1, "5": 54.8, "10": 63.5}},
+      
+      {"weight": 60, "oat": 10, "speed": 80, "altitude": {"0": 12.7, "5": 14.3, "10": 16.3}},
+      {"weight": 60, "oat": 10, "speed": 100, "altitude": {"0": 18.5, "5": 20.9, "10": 23.8}},
+      {"weight": 60, "oat": 10, "speed": 120, "altitude": {"0": 25.2, "5": 28.5, "10": 32.6}},
+      {"weight": 60, "oat": 10, "speed": 140, "altitude": {"0": 32.7, "5": 37.1, "10": 42.6}},
+      {"weight": 60, "oat": 10, "speed": 160, "altitude": {"0": 40.9, "5": 46.5, "10": 53.6}},
+      {"weight": 60, "oat": 10, "speed": 180, "altitude": {"0": 49.7, "5": 56.6, "10": 65.6}},
+      
+      {"weight": 60, "oat": 15, "speed": 80, "altitude": {"0": 12.9, "5": 14.6, "10": 16.5}},
+      {"weight": 60, "oat": 15, "speed": 100, "altitude": {"0": 18.8, "5": 21.2, "10": 24.2}},
+      {"weight": 60, "oat": 15, "speed": 120, "altitude": {"0": 25.6, "5": 29.0, "10": 33.1}},
+      {"weight": 60, "oat": 15, "speed": 140, "altitude": {"0": 33.2, "5": 37.6, "10": 43.2}},
+      {"weight": 60, "oat": 15, "speed": 160, "altitude": {"0": 41.5, "5": 47.1, "10": 54.4}},
+      {"weight": 60, "oat": 15, "speed": 180, "altitude": {"0": 50.4, "5": 57.4, "10": 66.5}},
+      
+      {"weight": 60, "oat": 20, "speed": 80, "altitude": {"0": 13.1, "5": 14.8, "10": 16.7}},
+      {"weight": 60, "oat": 20, "speed": 100, "altitude": {"0": 19.1, "5": 21.5, "10": 24.5}},
+      {"weight": 60, "oat": 20, "speed": 120, "altitude": {"0": 26.0, "5": 29.4, "10": 33.5}},
+      {"weight": 60, "oat": 20, "speed": 140, "altitude": {"0": 33.6, "5": 38.1, "10": 43.8}},
+      {"weight": 60, "oat": 20, "speed": 160, "altitude": {"0": 42.0, "5": 47.8, "10": 55.1}},
+      {"weight": 60, "oat": 20, "speed": 180, "altitude": {"0": 51.1, "5": 58.2, "10": 67.4}},
+      
+      {"weight": 60, "oat": 30, "speed": 80, "altitude": {"0": 13.4, "5": 15.1, "10": 17.2}},
+      {"weight": 60, "oat": 30, "speed": 100, "altitude": {"0": 19.6, "5": 22.1, "10": 25.1}},
+      {"weight": 60, "oat": 30, "speed": 120, "altitude": {"0": 26.6, "5": 30.1, "10": 34.4}},
+      {"weight": 60, "oat": 30, "speed": 140, "altitude": {"0": 34.5, "5": 39.1, "10": 44.9}},
+      {"weight": 60, "oat": 30, "speed": 160, "altitude": {"0": 43.1, "5": 49.0, "10": 56.5}},
+      {"weight": 60, "oat": 30, "speed": 180, "altitude": {"0": 52.3, "5": 59.6, "10": 69.1}},
+      
+      {"weight": 60, "oat": 40, "speed": 80, "altitude": {"0": 13.6, "5": 15.3, "10": 17.3}},
+      {"weight": 60, "oat": 40, "speed": 100, "altitude": {"0": 19.8, "5": 22.3, "10": 25.4}},
+      {"weight": 60, "oat": 40, "speed": 120, "altitude": {"0": 26.9, "5": 30.5, "10": 34.9}},
+      {"weight": 60, "oat": 40, "speed": 140, "altitude": {"0": 35.0, "5": 39.7, "10": 45.6}},
+      {"weight": 60, "oat": 40, "speed": 160, "altitude": {"0": 43.8, "5": 49.8, "10": 57.5}},
+      {"weight": 60, "oat": 40, "speed": 180, "altitude": {"0": 53.2, "5": 60.7, "10": 70.5}},
+      
+      {"weight": 60, "oat": 50, "speed": 80, "altitude": {"0": 13.5, "5": 15.3, "10": 17.3}},
+      {"weight": 60, "oat": 50, "speed": 100, "altitude": {"0": 19.8, "5": 22.4, "10": 25.5}},
+      {"weight": 60, "oat": 50, "speed": 120, "altitude": {"0": 27.0, "5": 30.6, "10": 35.1}},
+      {"weight": 60, "oat": 50, "speed": 140, "altitude": {"0": 35.2, "5": 40.0, "10": 46.0}},
+      {"weight": 60, "oat": 50, "speed": 160, "altitude": {"0": 44.2, "5": 50.4, "10": 58.3}},
+      {"weight": 60, "oat": 50, "speed": 180, "altitude": {"0": 53.9, "5": 61.7, "10": 71.9}},
+      
+      {"weight": 50, "oat": 0, "speed": 80, "altitude": {"0": 11.0, "5": 12.3, "10": 14.0}},
+      {"weight": 50, "oat": 0, "speed": 100, "altitude": {"0": 15.7, "5": 17.7, "10": 20.2}},
+      {"weight": 50, "oat": 0, "speed": 120, "altitude": {"0": 21.2, "5": 23.9, "10": 27.3}},
+      {"weight": 50, "oat": 0, "speed": 140, "altitude": {"0": 27.2, "5": 30.8, "10": 35.3}},
+      {"weight": 50, "oat": 0, "speed": 160, "altitude": {"0": 33.8, "5": 38.3, "10": 44.1}},
+      {"weight": 50, "oat": 0, "speed": 180, "altitude": {"0": 40.9, "5": 46.4, "10": 53.6}},
+      
+      {"weight": 50, "oat": 10, "speed": 80, "altitude": {"0": 11.3, "5": 12.7, "10": 14.4}},
+      {"weight": 50, "oat": 10, "speed": 100, "altitude": {"0": 16.3, "5": 18.3, "10": 20.8}},
+      {"weight": 50, "oat": 10, "speed": 120, "altitude": {"0": 21.9, "5": 24.7, "10": 28.2}},
+      {"weight": 50, "oat": 10, "speed": 140, "altitude": {"0": 28.1, "5": 31.8, "10": 36.5}},
+      {"weight": 50, "oat": 10, "speed": 160, "altitude": {"0": 34.9, "5": 39.6, "10": 45.5}},
+      {"weight": 50, "oat": 10, "speed": 180, "altitude": {"0": 42.2, "5": 48.0, "10": 55.4}},
+      
+      {"weight": 50, "oat": 15, "speed": 80, "altitude": {"0": 11.5, "5": 12.9, "10": 14.7}},
+      {"weight": 50, "oat": 15, "speed": 100, "altitude": {"0": 16.5, "5": 18.6, "10": 21.1}},
+      {"weight": 50, "oat": 15, "speed": 120, "altitude": {"0": 22.2, "5": 25.1, "10": 28.6}},
+      {"weight": 50, "oat": 15, "speed": 140, "altitude": {"0": 28.6, "5": 32.3, "10": 37.0}},
+      {"weight": 50, "oat": 15, "speed": 160, "altitude": {"0": 35.4, "5": 40.2, "10": 46.2}},
+      {"weight": 50, "oat": 15, "speed": 180, "altitude": {"0": 42.8, "5": 48.7, "10": 56.2}},
+      
+      {"weight": 50, "oat": 20, "speed": 80, "altitude": {"0": 11.6, "5": 13.1, "10": 14.9}},
+      {"weight": 50, "oat": 20, "speed": 100, "altitude": {"0": 16.7, "5": 18.9, "10": 21.4}},
+      {"weight": 50, "oat": 20, "speed": 120, "altitude": {"0": 22.5, "5": 25.4, "10": 29.0}},
+      {"weight": 50, "oat": 20, "speed": 140, "altitude": {"0": 28.9, "5": 32.8, "10": 37.5}},
+      {"weight": 50, "oat": 20, "speed": 160, "altitude": {"0": 35.9, "5": 40.7, "10": 46.8}},
+      {"weight": 50, "oat": 20, "speed": 180, "altitude": {"0": 43.4, "5": 49.3, "10": 56.9}},
+      
+      {"weight": 50, "oat": 30, "speed": 80, "altitude": {"0": 11.9, "5": 13.4, "10": 15.2}},
+      {"weight": 50, "oat": 30, "speed": 100, "altitude": {"0": 17.2, "5": 19.3, "10": 22.0}},
+      {"weight": 50, "oat": 30, "speed": 120, "altitude": {"0": 23.1, "5": 26.1, "10": 29.7}},
+      {"weight": 50, "oat": 30, "speed": 140, "altitude": {"0": 29.7, "5": 33.6, "10": 38.4}},
+      {"weight": 50, "oat": 30, "speed": 160, "altitude": {"0": 36.8, "5": 41.8, "10": 48.0}},
+      {"weight": 50, "oat": 30, "speed": 180, "altitude": {"0": 44.5, "5": 50.6, "10": 58.4}},
+      
+      {"weight": 50, "oat": 40, "speed": 80, "altitude": {"0": 12.1, "5": 13.6, "10": 15.4}},
+      {"weight": 50, "oat": 40, "speed": 100, "altitude": {"0": 17.3, "5": 19.5, "10": 22.2}},
+      {"weight": 50, "oat": 40, "speed": 120, "altitude": {"0": 23.4, "5": 26.4, "10": 30.1}},
+      {"weight": 50, "oat": 40, "speed": 140, "altitude": {"0": 30.1, "5": 34.0, "10": 39.0}},
+      {"weight": 50, "oat": 40, "speed": 160, "altitude": {"0": 37.4, "5": 42.4, "10": 48.8}},
+      {"weight": 50, "oat": 40, "speed": 180, "altitude": {"0": 45.2, "5": 51.4, "10": 59.4}},
+      
+      {"weight": 50, "oat": 50, "speed": 80, "altitude": {"0": 12.0, "5": 13.6, "10": 15.4}},
+      {"weight": 50, "oat": 50, "speed": 100, "altitude": {"0": 17.3, "5": 19.6, "10": 22.3}},
+      {"weight": 50, "oat": 50, "speed": 120, "altitude": {"0": 23.4, "5": 26.5, "10": 30.3}},
+      {"weight": 50, "oat": 50, "speed": 140, "altitude": {"0": 30.2, "5": 34.2, "10": 39.3}},
+      {"weight": 50, "oat": 50, "speed": 160, "altitude": {"0": 37.6, "5": 42.8, "10": 49.3}},
+      {"weight": 50, "oat": 50, "speed": 180, "altitude": {"0": 45.7, "5": 52.1, "10": 60.3}},
+      
+      {"weight": 40, "oat": 0, "speed": 80, "altitude": {"0": 9.6, "5": 10.8, "10": 12.3}},
+      {"weight": 40, "oat": 0, "speed": 100, "altitude": {"0": 13.5, "5": 15.2, "10": 17.3}},
+      {"weight": 40, "oat": 0, "speed": 120, "altitude": {"0": 17.9, "5": 20.2, "10": 23.0}},
+      {"weight": 40, "oat": 0, "speed": 140, "altitude": {"0": 22.8, "5": 25.8, "10": 29.4}},
+      {"weight": 40, "oat": 0, "speed": 160, "altitude": {"0": 28.1, "5": 31.8, "10": 36.4}},
+      {"weight": 40, "oat": 0, "speed": 180, "altitude": {"0": 33.7, "5": 38.2, "10": 43.9}},
+      
+      {"weight": 40, "oat": 10, "speed": 80, "altitude": {"0": 10.0, "5": 11.2, "10": 12.7}},
+      {"weight": 40, "oat": 10, "speed": 100, "altitude": {"0": 14.0, "5": 15.8, "10": 17.9}},
+      {"weight": 40, "oat": 10, "speed": 120, "altitude": {"0": 18.5, "5": 20.9, "10": 23.8}},
+      {"weight": 40, "oat": 10, "speed": 140, "altitude": {"0": 23.6, "5": 26.6, "10": 30.4}},
+      {"weight": 40, "oat": 10, "speed": 160, "altitude": {"0": 29.0, "5": 32.8, "10": 37.6}},
+      {"weight": 40, "oat": 10, "speed": 180, "altitude": {"0": 34.8, "5": 39.5, "10": 45.4}},
+      
+      {"weight": 40, "oat": 15, "speed": 80, "altitude": {"0": 10.1, "5": 11.4, "10": 12.9}},
+      {"weight": 40, "oat": 15, "speed": 100, "altitude": {"0": 14.2, "5": 16.0, "10": 18.1}},
+      {"weight": 40, "oat": 15, "speed": 120, "altitude": {"0": 18.8, "5": 21.2, "10": 24.1}},
+      {"weight": 40, "oat": 15, "speed": 140, "altitude": {"0": 23.9, "5": 27.0, "10": 30.8}},
+      {"weight": 40, "oat": 15, "speed": 160, "altitude": {"0": 29.4, "5": 33.3, "10": 38.2}},
+      {"weight": 40, "oat": 15, "speed": 180, "altitude": {"0": 35.3, "5": 40.0, "10": 46.0}},
+      
+      {"weight": 40, "oat": 20, "speed": 80, "altitude": {"0": 10.2, "5": 11.5, "10": 13.1}},
+      {"weight": 40, "oat": 20, "speed": 100, "altitude": {"0": 14.4, "5": 16.2, "10": 18.4}},
+      {"weight": 40, "oat": 20, "speed": 120, "altitude": {"0": 19.1, "5": 21.5, "10": 24.5}},
+      {"weight": 40, "oat": 20, "speed": 140, "altitude": {"0": 24.2, "5": 27.4, "10": 31.3}},
+      {"weight": 40, "oat": 20, "speed": 160, "altitude": {"0": 29.8, "5": 33.8, "10": 38.7}},
+      {"weight": 40, "oat": 20, "speed": 180, "altitude": {"0": 35.8, "5": 40.6, "10": 46.6}},
+      
+      {"weight": 40, "oat": 30, "speed": 80, "altitude": {"0": 10.5, "5": 11.8, "10": 13.4}},
+      {"weight": 40, "oat": 30, "speed": 100, "altitude": {"0": 14.8, "5": 16.6, "10": 18.9}},
+      {"weight": 40, "oat": 30, "speed": 120, "altitude": {"0": 19.6, "5": 22.1, "10": 25.1}},
+      {"weight": 40, "oat": 30, "speed": 140, "altitude": {"0": 24.9, "5": 28.1, "10": 32.1}},
+      {"weight": 40, "oat": 30, "speed": 160, "altitude": {"0": 30.6, "5": 34.6, "10": 39.7}},
+      {"weight": 40, "oat": 30, "speed": 180, "altitude": {"0": 36.7, "5": 41.6, "10": 47.8}},
+      
+      {"weight": 40, "oat": 40, "speed": 80, "altitude": {"0": 10.6, "5": 11.9, "10": 13.5}},
+      {"weight": 40, "oat": 40, "speed": 100, "altitude": {"0": 14.9, "5": 16.8, "10": 19.1}},
+      {"weight": 40, "oat": 40, "speed": 120, "altitude": {"0": 19.8, "5": 22.3, "10": 25.4}},
+      {"weight": 40, "oat": 40, "speed": 140, "altitude": {"0": 25.2, "5": 28.4, "10": 32.5}},
+      {"weight": 40, "oat": 40, "speed": 160, "altitude": {"0": 31.0, "5": 35.1, "10": 40.2}},
+      {"weight": 40, "oat": 40, "speed": 180, "altitude": {"0": 37.2, "5": 42.2, "10": 48.6}},
+      
+      {"weight": 40, "oat": 50, "speed": 80, "altitude": {"0": 10.6, "5": 11.9, "10": 13.5}},
+      {"weight": 40, "oat": 50, "speed": 100, "altitude": {"0": 14.9, "5": 16.8, "10": 19.1}},
+      {"weight": 40, "oat": 50, "speed": 120, "altitude": {"0": 19.8, "5": 22.3, "10": 25.5}},
+      {"weight": 40, "oat": 50, "speed": 140, "altitude": {"0": 25.2, "5": 28.6, "10": 32.7}},
+      {"weight": 40, "oat": 50, "speed": 160, "altitude": {"0": 31.1, "5": 35.3, "10": 40.6}},
+      {"weight": 40, "oat": 50, "speed": 180, "altitude": {"0": 37.5, "5": 42.6, "10": 49.1}}
+    ]
+  },
+  
+  "adjustedBrakeEnergy": {
+    "description": "Adjusted Brake Energy Per Brake (Millions of Foot Pounds)",
+    "notes": [
+      "Observe maximum quick turnaround limit.",
+      "Table shows energy per brake added by a single stop with all brakes operating. Energy is assumed to be equally distributed among the operating brakes. Total energy is the sum of residual energy plus energy added.",
+      "Add 1.0 million foot pounds per brake for each taxi mile."
+    ],
+    
+    "noReverseThrust": {
+      "title": "No Reverse Thrust",
+      "data": [
+        {"event": "RTO MAX MAN", "energyLevels": {"10": 10, "20": 20, "30": 30, "40": 40, "50": 50, "60": 60, "70": 70, "80": 80, "90": 90}},
+        {"event": "MAX MAN", "energyLevels": {"10": 7.8, "20": 16.3, "30": 25.3, "40": 34.7, "50": 44.7, "60": 55.0, "70": 65.7, "80": 76.6, "90": 87.9}},
+        {"event": "MAX AUTO", "energyLevels": {"10": 7.5, "20": 15.4, "30": 23.6, "40": 32.4, "50": 41.8, "60": 51.8, "70": 62.5, "80": 74.1, "90": 86.5}},
+        {"event": "AUTOBRAKE 3", "energyLevels": {"10": 7.3, "20": 14.7, "30": 22.3, "40": 30.2, "50": 38.6, "60": 47.6, "70": 57.4, "80": 68.1, "90": 80.0}},
+        {"event": "AUTOBRAKE 2", "energyLevels": {"10": 7.0, "20": 13.8, "30": 20.5, "40": 27.4, "50": 34.8, "60": 42.7, "70": 51.5, "80": 61.3, "90": 72.4}},
+        {"event": "AUTOBRAKE 1", "energyLevels": {"10": 6.7, "20": 13.1, "30": 19.2, "40": 25.3, "50": 31.8, "60": 38.8, "70": 46.6, "80": 55.4, "90": 65.5}}
+      ]
+    },
+    
+    "twoEngineDetentReverseThrust": {
+      "title": "Two Engine Detent Reverse Thrust",
+      "data": [
+        {"event": "RTO MAX MAN", "energyLevels": {"10": 10, "20": 20, "30": 30, "40": 40, "50": 50, "60": 60, "70": 70, "80": 80, "90": 90}},
+        {"event": "MAX MAN", "energyLevels": {"10": 7.0, "20": 14.6, "30": 22.8, "40": 31.4, "50": 40.5, "60": 49.9, "70": 59.7, "80": 69.8, "90": 80.0}},
+        {"event": "MAX AUTO", "energyLevels": {"10": 5.8, "20": 12.3, "30": 19.5, "40": 27.2, "50": 35.6, "60": 44.5, "70": 53.9, "80": 63.7, "90": 74.1}},
+        {"event": "AUTOBRAKE 3", "energyLevels": {"10": 4.3, "20": 9.2, "30": 14.7, "40": 20.7, "50": 27.2, "60": 34.4, "70": 42.0, "80": 50.2, "90": 59.0}},
+        {"event": "AUTOBRAKE 2", "energyLevels": {"10": 2.5, "20": 5.6, "30": 9.1, "40": 13.1, "50": 17.8, "60": 23.0, "70": 28.8, "80": 35.2, "90": 42.3}},
+        {"event": "AUTOBRAKE 1", "energyLevels": {"10": 1.8, "20": 3.8, "30": 6.1, "40": 8.8, "50": 11.9, "60": 15.5, "70": 19.6, "80": 24.4, "90": 29.8}}
+      ]
+    }
+  },
+  
+  "coolingTime": {
+    "categoryCSteel": {
+      "title": "Cooling Time (Minutes) - Category C Steel Brakes",
+      "description": "Event Adjusted Brake Energy (Millions of Foot Pounds)",
+      "data": [
+        {
+          "energyRange": "16 & BELOW",
+          "brakeTemperatureMonitor": {"upTo2.4": 2.6},
+          "inflightGearDown": {"procedure": "NO SPECIAL PROCEDURE", "time": 1},
+          "ground": {"procedure": "REQUIRED", "time": 10}
+        },
+        {
+          "energyRange": "17",
+          "brakeTemperatureMonitor": {"upTo2.4": 3.1},
+          "inflightGearDown": {"procedure": "NO SPECIAL PROCEDURE", "time": 2},
+          "ground": {"procedure": "REQUIRED", "time": 20}
+        },
+        {
+          "energyRange": "20",
+          "brakeTemperatureMonitor": {"upTo2.4": 3.5},
+          "inflightGearDown": {"procedure": "NO SPECIAL PROCEDURE", "time": 3},
+          "ground": {"procedure": "REQUIRED", "time": 30}
+        },
+        {
+          "energyRange": "23",
+          "brakeTemperatureMonitor": {"upTo2.4": 3.9},
+          "inflightGearDown": {"procedure": "NO SPECIAL PROCEDURE", "time": 4},
+          "ground": {"procedure": "REQUIRED", "time": 40}
+        },
+        {
+          "energyRange": "28",
+          "brakeTemperatureMonitor": {"upTo2.4": 4.4},
+          "inflightGearDown": {"procedure": "NO SPECIAL PROCEDURE", "time": 5},
+          "ground": {"procedure": "REQUIRED", "time": 50}
+        },
+        {
+          "energyRange": "32",
+          "brakeTemperatureMonitor": {"upTo2.4": 4.9},
+          "inflightGearDown": {"procedure": "NO SPECIAL PROCEDURE", "time": 6},
+          "ground": {"procedure": "REQUIRED", "time": 60}
+        },
+        {
+          "energyRange": "33 TO 48",
+          "brakeTemperatureMonitor": {"range": "5.0 TO 7.5"},
+          "inflightGearDown": {"procedure": "CAUTION"},
+          "ground": {"procedure": "CAUTION"}
+        },
+        {
+          "energyRange": "49 & ABOVE",
+          "brakeTemperatureMonitor": {"range": "7.5 & ABOVE"},
+          "inflightGearDown": {"procedure": "FUSE PLUG MELT ZONE"},
+          "ground": {"procedure": "FUSE PLUG MELT ZONE"}
+        }
+      ],
+      "notes": "BRAKE TEMPERATURE MONITOR SYSTEM INDICATION ON CDS"
+    },
+    
+    "categoryNCarbon": {
+      "title": "Cooling Time (Minutes) - Category N Carbon Brakes",
+      "description": "Event Adjusted Brake Energy (Millions of Foot Pounds)",
+      "data": [
+        {
+          "energyRange": "16 & BELOW",
+          "brakeTemperatureMonitor": {"upTo2.5": 2.6},
+          "inflightGearDown": {"procedure": "NO SPECIAL PROCEDURE", "time": 1},
+          "ground": {"procedure": "REQUIRED", "time": 6.7}
+        },
+        {
+          "energyRange": "17",
+          "brakeTemperatureMonitor": {"upTo2.5": 3},
+          "inflightGearDown": {"procedure": "NO SPECIAL PROCEDURE", "time": 4},
+          "ground": {"procedure": "REQUIRED", "time": 16.0}
+        },
+        {
+          "energyRange": "19",
+          "brakeTemperatureMonitor": {"upTo2.5": 3.8},
+          "inflightGearDown": {"procedure": "NO SPECIAL PROCEDURE", "time": 5},
+          "ground": {"procedure": "REQUIRED", "time": 24.1}
+        },
+        {
+          "energyRange": "20.9",
+          "brakeTemperatureMonitor": {"upTo2.5": 4.5},
+          "inflightGearDown": {"procedure": "NO SPECIAL PROCEDURE", "time": 6},
+          "ground": {"procedure": "REQUIRED", "time": 34.2}
+        },
+        {
+          "energyRange": "23.5",
+          "brakeTemperatureMonitor": {"upTo2.5": 4.9},
+          "inflightGearDown": {"procedure": "NO SPECIAL PROCEDURE", "time": 7},
+          "ground": {"procedure": "REQUIRED", "time": 45.9}
+        },
+        {
+          "energyRange": "26.9",
+          "brakeTemperatureMonitor": {"upTo2.5": 7.6},
+          "inflightGearDown": {"procedure": "NO SPECIAL PROCEDURE", "time": 7.6},
+          "ground": {"procedure": "REQUIRED", "time": 53.3}
+        },
+        {
+          "energyRange": "29.4",
+          "brakeTemperatureMonitor": null,
+          "inflightGearDown": {"procedure": "CAUTION"},
+          "ground": null
+        },
+        {
+          "energyRange": "30 TO 41",
+          "brakeTemperatureMonitor": {"range": "5.0 TO 7.1"},
+          "inflightGearDown": {"procedure": "CAUTION"},
+          "ground": {"procedure": "CAUTION"}
+        },
+        {
+          "energyRange": "41 & ABOVE",
+          "brakeTemperatureMonitor": {"range": "7.1 & ABOVE"},
+          "inflightGearDown": {"procedure": "FUSE PLUG MELT ZONE"},
+          "ground": {"procedure": "FUSE PLUG MELT ZONE"}
+        }
+      ],
+      "notes": "BRAKE TEMPERATURE MONITOR SYSTEM INDICATION ON CDS"
+    }
+  },
+  
+  "importantNotes": [
+    {
+      "section": "quickTurnaround",
+      "note": "Observe maximum quick turnaround limit."
+    },
+    {
+      "section": "brakeEnergy",
+      "note": "Table shows energy per brake added by a single stop with all brakes operating. Energy is assumed to be equally distributed among the operating brakes. Total energy is the sum of residual energy plus energy added."
+    },
+    {
+      "section": "taxiAdjustment",
+      "note": "Add 1.0 million foot pounds per brake for each taxi mile."
+    },
+    {
+      "section": "cautionZone",
+      "note": "When in caution zone, wheel fuse plugs may melt. Delay takeoff and inspect after one hour. If overheat occurs after takeoff, extend gear soon for at least 7 minutes."
+    },
+    {
+      "section": "fusePlugMeltZone",
+      "note": "When in fuse plug melt zone, clear runway immediately. Unless required, do not set parking brake. Do not approach gear or attempt taxi for one hour. Tire, wheel and brake replacement may be required. If overheat occurs after takeoff, extend gear soon for at least 12 minutes."
+    },
+    {
+      "section": "brakeTemperatureMonitor",
+      "note": "Brake temperature monitor system (BTMS) indication on CDS systems page may be used 10 to 15 minutes after airplane has come to a complete stop or inflight with gear retracted to determine recommended cooling schedule."
+    }
+  ]
+}

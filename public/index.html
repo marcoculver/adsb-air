@@ -5381,25 +5381,36 @@
                 <!-- Brake Cooling Schedule Calculator -->
                 <div class="section" style="max-width: 600px; margin: 20px auto 0; padding: 12px;">
                     <div class="section-title" style="margin-bottom: 8px;">Brake Cooling Schedule</div>
-                    <div style="font-size: 0.7rem; color: #888; text-align: center; margin-bottom: 12px;">B737-8 / LEAP-1B28B1</div>
+
+                    <!-- Aircraft Selection -->
+                    <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 8px;">
+                        <button id="brake-ac-max" onclick="selectBrakeAircraft('max')" style="padding: 6px 16px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s; background: #FF8200; color: #000; border: 1px solid #FF8200;">737-8</button>
+                        <button id="brake-ac-ng" onclick="selectBrakeAircraft('ng')" style="padding: 6px 16px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s; background: transparent; color: #888; border: 1px solid #444;">737-800</button>
+                    </div>
+                    <!-- Brake Type Selection (NG only) -->
+                    <div id="brake-type-selector" style="display: none; justify-content: center; gap: 8px; margin-bottom: 8px;">
+                        <button id="brake-type-carbon" onclick="selectBrakeType('carbon')" style="padding: 4px 12px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; cursor: pointer; transition: all 0.2s; background: #00d4ff; color: #000; border: 1px solid #00d4ff;">Carbon</button>
+                        <button id="brake-type-steel" onclick="selectBrakeType('steel')" style="padding: 4px 12px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; cursor: pointer; transition: all 0.2s; background: transparent; color: #888; border: 1px solid #444;">Steel</button>
+                    </div>
+                    <div id="brake-aircraft-info" style="font-size: 0.65rem; color: #888; text-align: center; margin-bottom: 12px;">B737-8 / LEAP-1B28B1</div>
 
                     <!-- Main inputs -->
                     <div class="input-grid-2" style="gap: 10px; margin-bottom: 10px;">
                         <div class="input-group">
                             <label class="input-label">Weight (1000 kg)</label>
-                            <input type="number" id="brake-weight" class="fdp-input" placeholder="50-90" min="50" max="90" step="1" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()">
+                            <input type="number" id="brake-weight" class="fdp-input" min="40" max="90" step="0.1" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()">
                         </div>
                         <div class="input-group">
                             <label class="input-label">OAT (C)</label>
-                            <input type="number" id="brake-oat" class="fdp-input" placeholder="-25 to 50" min="-25" max="50" step="1" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()">
+                            <input type="number" id="brake-oat" class="fdp-input" min="-25" max="50" step="1" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()">
                         </div>
                         <div class="input-group">
                             <label class="input-label">Brakes-on Speed (KIAS)</label>
-                            <input type="number" id="brake-speed" class="fdp-input" placeholder="80-180" min="80" max="180" step="1" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()">
+                            <input type="number" id="brake-speed" class="fdp-input" min="80" max="180" step="1" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()">
                         </div>
                         <div class="input-group">
-                            <label class="input-label">Press Alt (1000 ft)</label>
-                            <input type="number" id="brake-alt" class="fdp-input" placeholder="0-10" min="0" max="10" step="0.5" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()">
+                            <label class="input-label">Press Alt (ft)</label>
+                            <input type="number" id="brake-alt" class="fdp-input" min="0" max="10000" step="100" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()">
                         </div>
                     </div>
 
@@ -9617,24 +9628,112 @@
             });
 
         // ============ BRAKE COOLING DATABASE ============
-        var brakeCoolingDatabase = null;
+        var brakeCoolingDatabaseMAX = null;
+        var brakeCoolingDatabaseNG = null;
+        var selectedBrakeAircraft = 'max'; // 'max' or 'ng'
+        var selectedBrakeType = 'carbon'; // 'carbon' or 'steel' (NG only)
 
-        // Load Brake Cooling database
+        // Load Brake Cooling databases
         fetch('/dashboard/database/brake_cooling_schedule.json')
             .then(function(response) { return response.json(); })
             .then(function(data) {
-                brakeCoolingDatabase = data;
-                console.log('Brake Cooling database loaded');
-                var revInfo = document.getElementById('brake-revision-info');
-                if (revInfo && data.metadata) {
-                    revInfo.textContent = data.metadata.aircraft + ' - ' + data.metadata.documentReference;
-                }
+                brakeCoolingDatabaseMAX = data;
+                console.log('Brake Cooling database (MAX) loaded');
+                initBrakeAircraftButtons();
             })
             .catch(function(err) {
-                console.log('Brake Cooling database not loaded:', err);
-                var revInfo = document.getElementById('brake-revision-info');
-                if (revInfo) revInfo.textContent = 'Database not available';
+                console.log('Brake Cooling database (MAX) not loaded:', err);
             });
+
+        fetch('/dashboard/database/brake_cooling_schedule_737-800.json')
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                brakeCoolingDatabaseNG = data;
+                console.log('Brake Cooling database (NG) loaded');
+                initBrakeAircraftButtons();
+            })
+            .catch(function(err) {
+                console.log('Brake Cooling database (NG) not loaded:', err);
+            });
+
+        function initBrakeAircraftButtons() {
+            // Default to schedule aircraft type if available
+            if (scheduleData && scheduleData.length > 0) {
+                var acType = scheduleData[0].ac_type || '';
+                if (acType.includes('737-800') || acType.includes('NG')) {
+                    selectedBrakeAircraft = 'ng';
+                } else if (acType.includes('737-8') || acType.includes('MAX')) {
+                    selectedBrakeAircraft = 'max';
+                }
+            }
+            selectBrakeAircraft(selectedBrakeAircraft);
+        }
+
+        function selectBrakeAircraft(type) {
+            selectedBrakeAircraft = type;
+            var maxBtn = document.getElementById('brake-ac-max');
+            var ngBtn = document.getElementById('brake-ac-ng');
+            var infoEl = document.getElementById('brake-aircraft-info');
+            var weightInput = document.getElementById('brake-weight');
+            var revInfo = document.getElementById('brake-revision-info');
+            var brakeTypeSelector = document.getElementById('brake-type-selector');
+
+            if (type === 'max') {
+                maxBtn.style.background = '#FF8200';
+                maxBtn.style.color = '#000';
+                maxBtn.style.border = '1px solid #FF8200';
+                ngBtn.style.background = 'transparent';
+                ngBtn.style.color = '#888';
+                ngBtn.style.border = '1px solid #444';
+                infoEl.textContent = 'B737-8 / LEAP-1B28B1';
+                weightInput.min = '50';
+                weightInput.max = '90';
+                brakeTypeSelector.style.display = 'none';
+                if (brakeCoolingDatabaseMAX) {
+                    revInfo.textContent = brakeCoolingDatabaseMAX.metadata.aircraft + ' - ' + brakeCoolingDatabaseMAX.metadata.documentReference;
+                }
+            } else {
+                ngBtn.style.background = '#FF8200';
+                ngBtn.style.color = '#000';
+                ngBtn.style.border = '1px solid #FF8200';
+                maxBtn.style.background = 'transparent';
+                maxBtn.style.color = '#888';
+                maxBtn.style.border = '1px solid #444';
+                infoEl.textContent = 'B737-800 / CFM56-7B26 / ' + (selectedBrakeType === 'carbon' ? 'Carbon' : 'Steel');
+                weightInput.min = '40';
+                weightInput.max = '80';
+                brakeTypeSelector.style.display = 'flex';
+                if (brakeCoolingDatabaseNG) {
+                    revInfo.textContent = brakeCoolingDatabaseNG.metadata.aircraft + ' - ' + brakeCoolingDatabaseNG.metadata.documentReference;
+                }
+            }
+            calculateBrakeCooling();
+        }
+
+        function selectBrakeType(type) {
+            selectedBrakeType = type;
+            var carbonBtn = document.getElementById('brake-type-carbon');
+            var steelBtn = document.getElementById('brake-type-steel');
+            var infoEl = document.getElementById('brake-aircraft-info');
+
+            if (type === 'carbon') {
+                carbonBtn.style.background = '#00d4ff';
+                carbonBtn.style.color = '#000';
+                carbonBtn.style.border = '1px solid #00d4ff';
+                steelBtn.style.background = 'transparent';
+                steelBtn.style.color = '#888';
+                steelBtn.style.border = '1px solid #444';
+            } else {
+                steelBtn.style.background = '#00d4ff';
+                steelBtn.style.color = '#000';
+                steelBtn.style.border = '1px solid #00d4ff';
+                carbonBtn.style.background = 'transparent';
+                carbonBtn.style.color = '#888';
+                carbonBtn.style.border = '1px solid #444';
+            }
+            infoEl.textContent = 'B737-800 / CFM56-7B26 / ' + (type === 'carbon' ? 'Carbon' : 'Steel');
+            calculateBrakeCooling();
+        }
 
         // Linear interpolation helper
         function lerp(x, x1, x2, y1, y2) {
@@ -9644,16 +9743,34 @@
 
         // Get brake energy from table with interpolation
         function getBrakeEnergy(weight, oat, speed, alt) {
-            var tableData = brakeCoolingDatabase.referenceBrakeEnergy.table1a.data;
+            var db = selectedBrakeAircraft === 'max' ? brakeCoolingDatabaseMAX : brakeCoolingDatabaseNG;
+            if (!db) return null;
 
-            // Available values in table
-            var weights = [50, 60, 70, 80, 90];
+            // Get table data - different structure for MAX vs NG
+            var tableData;
+            if (selectedBrakeAircraft === 'max') {
+                tableData = db.referenceBrakeEnergy.table1a.data;
+            } else {
+                tableData = db.referenceBrakeEnergy.data;
+            }
+
+            // Available values in table - different for each aircraft
+            var weights, minWeight, maxWeight;
+            if (selectedBrakeAircraft === 'max') {
+                weights = [50, 60, 70, 80, 90];
+                minWeight = 50;
+                maxWeight = 90;
+            } else {
+                weights = [40, 50, 60, 70, 80];
+                minWeight = 40;
+                maxWeight = 80;
+            }
             var oats = [0, 10, 15, 20, 30, 40, 50];
             var speeds = [80, 100, 120, 140, 160, 180];
             var alts = [0, 5, 10];
 
             // Clamp to table bounds
-            weight = Math.max(50, Math.min(90, weight));
+            weight = Math.max(minWeight, Math.min(maxWeight, weight));
             oat = Math.max(0, Math.min(50, oat));
             speed = Math.max(80, Math.min(180, speed));
             alt = Math.max(0, Math.min(10, alt));
@@ -9673,12 +9790,15 @@
             var sBounds = findBounds(speed, speeds);
             var aBounds = findBounds(alt, alts);
 
-            // Lookup function for exact table values
+            // Lookup function for exact table values (handles both field name structures)
             function lookup(w, o, s, a) {
                 for (var i = 0; i < tableData.length; i++) {
                     var row = tableData[i];
-                    if (row.weight == w && row.oat == o && row.brakesOnSpeed == s) {
-                        var val = row.pressureAltitude[a.toString()];
+                    // MAX uses brakesOnSpeed/pressureAltitude, NG uses speed/altitude
+                    var rowSpeed = row.brakesOnSpeed !== undefined ? row.brakesOnSpeed : row.speed;
+                    var rowAlt = row.pressureAltitude !== undefined ? row.pressureAltitude : row.altitude;
+                    if (row.weight == w && row.oat == o && rowSpeed == s) {
+                        var val = rowAlt[a.toString()];
                         return val !== null && val !== undefined ? val : null;
                     }
                 }
@@ -9727,69 +9847,110 @@
 
         // Get cooling time with interpolation
         function getCoolingInfo(energy) {
-            var coolingData = brakeCoolingDatabase.coolingTime.table3.brakeEnergyRanges;
-
-            // Build array of energy thresholds and times
-            var thresholds = [];
-            for (var i = 0; i < coolingData.length; i++) {
-                var range = coolingData[i];
-                var rangeStr = range.range;
-
-                if (rangeStr.includes('& BELOW')) {
-                    thresholds.push({ energy: parseFloat(rangeStr.replace('& BELOW', '').trim()), data: range, type: 'below' });
-                } else if (rangeStr.includes('& ABOVE')) {
-                    thresholds.push({ energy: parseFloat(rangeStr.replace('& ABOVE', '').trim()), data: range, type: 'above' });
-                } else if (rangeStr.includes(' TO ')) {
-                    var parts = rangeStr.split(' TO ');
-                    thresholds.push({ energy: parseFloat(parts[0]), energyMax: parseFloat(parts[1]), data: range, type: 'range' });
-                } else {
-                    thresholds.push({ energy: parseFloat(rangeStr), data: range, type: 'point' });
+            // Different thresholds for MAX vs NG (Category C Steel Brakes)
+            if (selectedBrakeAircraft === 'max') {
+                // 737-8 MAX thresholds
+                if (energy <= 16.4) {
+                    return { status: 'NORMAL', color: '#00ff88', bg: 'rgba(0, 255, 136, 0.15)', gearTime: 'No procedure req', groundTime: 'Normal', warning: '' };
                 }
-            }
-
-            // Check thresholds
-            if (energy <= 16.4) {
-                return { status: 'NORMAL', color: '#00ff88', bg: 'rgba(0, 255, 136, 0.15)', gearTime: 'No procedure req', groundTime: 'Normal', warning: '' };
-            }
-            if (energy >= 41) {
-                return { status: 'FUSE PLUG MELT', color: '#ff5252', bg: 'rgba(255, 82, 82, 0.2)', gearTime: '12+ min', groundTime: 'DO NOT TAXI', warning: 'FUSE PLUG MELT ZONE: Clear runway immediately. Do not set parking brake. Do not approach gear for one hour.' };
-            }
-            if (energy >= 29.9 && energy < 41) {
-                return { status: 'CAUTION', color: '#ffd700', bg: 'rgba(255, 215, 0, 0.15)', gearTime: '7+ min', groundTime: 'Delay T/O 1hr', warning: 'CAUTION ZONE: Wheel fuse plugs may melt. Delay takeoff and inspect after one hour.' };
-            }
-            if (energy >= 26.9 && energy < 29.9) {
-                // Interpolate in caution zone
-                var gearTime = lerp(energy, 26.9, 28.2, 7.0, 7.3);
-                var groundTime = lerp(energy, 26.9, 28.2, 45.8, 50);
-                return { status: 'CAUTION', color: '#ffd700', bg: 'rgba(255, 215, 0, 0.15)', gearTime: gearTime.toFixed(1) + ' min', groundTime: groundTime.toFixed(0) + ' min', warning: 'CAUTION ZONE: Wheel fuse plugs may melt.' };
-            }
-
-            // Interpolate cooling times for normal cooling required zone (16.4 - 26.9)
-            var coolingPoints = [
-                { e: 17, gear: 1.0, ground: 6.6 },
-                { e: 19, gear: 4.0, ground: 16.1 },
-                { e: 20.9, gear: 5.0, ground: 24.2 },
-                { e: 22.4, gear: 5.6, ground: 30 },
-                { e: 23.5, gear: 6.0, ground: 34.3 },
-                { e: 25.1, gear: 6.5, ground: 40 },
-                { e: 26.9, gear: 7.0, ground: 45.8 }
-            ];
-
-            // Find surrounding points
-            var lower = coolingPoints[0];
-            var upper = coolingPoints[coolingPoints.length - 1];
-            for (var j = 0; j < coolingPoints.length - 1; j++) {
-                if (energy >= coolingPoints[j].e && energy <= coolingPoints[j + 1].e) {
-                    lower = coolingPoints[j];
-                    upper = coolingPoints[j + 1];
-                    break;
+                if (energy >= 41) {
+                    return { status: 'FUSE PLUG MELT', color: '#ff5252', bg: 'rgba(255, 82, 82, 0.2)', gearTime: '12+ min', groundTime: 'DO NOT TAXI', warning: 'FUSE PLUG MELT ZONE: Clear runway immediately. Do not set parking brake. Do not approach gear for one hour.' };
                 }
+                if (energy >= 29.9 && energy < 41) {
+                    return { status: 'CAUTION', color: '#ffd700', bg: 'rgba(255, 215, 0, 0.15)', gearTime: '7+ min', groundTime: 'Delay T/O 1hr', warning: 'CAUTION ZONE: Wheel fuse plugs may melt. Delay takeoff and inspect after one hour.' };
+                }
+                if (energy >= 26.9 && energy < 29.9) {
+                    var gearTime = lerp(energy, 26.9, 28.2, 7.0, 7.3);
+                    var groundTime = lerp(energy, 26.9, 28.2, 45.8, 50);
+                    return { status: 'CAUTION', color: '#ffd700', bg: 'rgba(255, 215, 0, 0.15)', gearTime: gearTime.toFixed(1) + ' min', groundTime: groundTime.toFixed(0) + ' min', warning: 'CAUTION ZONE: Wheel fuse plugs may melt.' };
+                }
+                // Interpolate cooling times for normal cooling required zone (16.4 - 26.9)
+                var coolingPointsMAX = [
+                    { e: 17, gear: 1.0, ground: 6.6 },
+                    { e: 19, gear: 4.0, ground: 16.1 },
+                    { e: 20.9, gear: 5.0, ground: 24.2 },
+                    { e: 22.4, gear: 5.6, ground: 30 },
+                    { e: 23.5, gear: 6.0, ground: 34.3 },
+                    { e: 25.1, gear: 6.5, ground: 40 },
+                    { e: 26.9, gear: 7.0, ground: 45.8 }
+                ];
+                var lower = coolingPointsMAX[0];
+                var upper = coolingPointsMAX[coolingPointsMAX.length - 1];
+                for (var j = 0; j < coolingPointsMAX.length - 1; j++) {
+                    if (energy >= coolingPointsMAX[j].e && energy <= coolingPointsMAX[j + 1].e) {
+                        lower = coolingPointsMAX[j];
+                        upper = coolingPointsMAX[j + 1];
+                        break;
+                    }
+                }
+                var gearTimeVal = lerp(energy, lower.e, upper.e, lower.gear, upper.gear);
+                var groundTimeVal = lerp(energy, lower.e, upper.e, lower.ground, upper.ground);
+                return { status: 'COOLING REQ', color: '#FF8200', bg: 'rgba(255, 130, 0, 0.15)', gearTime: gearTimeVal.toFixed(1) + ' min', groundTime: groundTimeVal.toFixed(0) + ' min', warning: '' };
+            } else if (selectedBrakeType === 'carbon') {
+                // 737-800 NG thresholds (Category N Carbon Brakes)
+                if (energy <= 16) {
+                    return { status: 'NORMAL', color: '#00ff88', bg: 'rgba(0, 255, 136, 0.15)', gearTime: '1 min', groundTime: '7 min', warning: '' };
+                }
+                if (energy >= 41) {
+                    return { status: 'FUSE PLUG MELT', color: '#ff5252', bg: 'rgba(255, 82, 82, 0.2)', gearTime: 'N/A', groundTime: 'DO NOT TAXI', warning: 'FUSE PLUG MELT ZONE: Clear runway immediately. Do not set parking brake. Do not approach gear for one hour.' };
+                }
+                if (energy >= 29.4 && energy < 41) {
+                    return { status: 'CAUTION', color: '#ffd700', bg: 'rgba(255, 215, 0, 0.15)', gearTime: 'CAUTION', groundTime: 'CAUTION', warning: 'CAUTION ZONE: Wheel fuse plugs may melt. Delay takeoff and inspect after one hour.' };
+                }
+                // Interpolate cooling times for normal cooling required zone (16 - 26.9)
+                var coolingPointsCarbon = [
+                    { e: 16, gear: 1, ground: 6.7 },
+                    { e: 17, gear: 4, ground: 16.0 },
+                    { e: 19, gear: 5, ground: 24.1 },
+                    { e: 20.9, gear: 6, ground: 34.2 },
+                    { e: 23.5, gear: 7, ground: 45.9 },
+                    { e: 26.9, gear: 7.6, ground: 53.3 }
+                ];
+                var lowerCarbon = coolingPointsCarbon[0];
+                var upperCarbon = coolingPointsCarbon[coolingPointsCarbon.length - 1];
+                for (var m = 0; m < coolingPointsCarbon.length - 1; m++) {
+                    if (energy >= coolingPointsCarbon[m].e && energy <= coolingPointsCarbon[m + 1].e) {
+                        lowerCarbon = coolingPointsCarbon[m];
+                        upperCarbon = coolingPointsCarbon[m + 1];
+                        break;
+                    }
+                }
+                var gearTimeCarbon = lerp(energy, lowerCarbon.e, upperCarbon.e, lowerCarbon.gear, upperCarbon.gear);
+                var groundTimeCarbon = lerp(energy, lowerCarbon.e, upperCarbon.e, lowerCarbon.ground, upperCarbon.ground);
+                return { status: 'COOLING REQ', color: '#FF8200', bg: 'rgba(255, 130, 0, 0.15)', gearTime: gearTimeCarbon.toFixed(1) + ' min', groundTime: groundTimeCarbon.toFixed(0) + ' min', warning: '' };
+            } else {
+                // 737-800 NG thresholds (Category C Steel Brakes)
+                if (energy <= 16) {
+                    return { status: 'NORMAL', color: '#00ff88', bg: 'rgba(0, 255, 136, 0.15)', gearTime: '1 min', groundTime: '10 min', warning: '' };
+                }
+                if (energy >= 49) {
+                    return { status: 'FUSE PLUG MELT', color: '#ff5252', bg: 'rgba(255, 82, 82, 0.2)', gearTime: 'N/A', groundTime: 'DO NOT TAXI', warning: 'FUSE PLUG MELT ZONE: Clear runway immediately. Do not set parking brake. Do not approach gear for one hour.' };
+                }
+                if (energy >= 33 && energy < 49) {
+                    return { status: 'CAUTION', color: '#ffd700', bg: 'rgba(255, 215, 0, 0.15)', gearTime: 'CAUTION', groundTime: 'CAUTION', warning: 'CAUTION ZONE: Wheel fuse plugs may melt. Delay takeoff and inspect after one hour.' };
+                }
+                // Interpolate cooling times for normal cooling required zone (16 - 32)
+                var coolingPointsSteel = [
+                    { e: 16, gear: 1, ground: 10 },
+                    { e: 17, gear: 2, ground: 20 },
+                    { e: 20, gear: 3, ground: 30 },
+                    { e: 23, gear: 4, ground: 40 },
+                    { e: 28, gear: 5, ground: 50 },
+                    { e: 32, gear: 6, ground: 60 }
+                ];
+                var lowerSteel = coolingPointsSteel[0];
+                var upperSteel = coolingPointsSteel[coolingPointsSteel.length - 1];
+                for (var k = 0; k < coolingPointsSteel.length - 1; k++) {
+                    if (energy >= coolingPointsSteel[k].e && energy <= coolingPointsSteel[k + 1].e) {
+                        lowerSteel = coolingPointsSteel[k];
+                        upperSteel = coolingPointsSteel[k + 1];
+                        break;
+                    }
+                }
+                var gearTimeSteel = lerp(energy, lowerSteel.e, upperSteel.e, lowerSteel.gear, upperSteel.gear);
+                var groundTimeSteel = lerp(energy, lowerSteel.e, upperSteel.e, lowerSteel.ground, upperSteel.ground);
+                return { status: 'COOLING REQ', color: '#FF8200', bg: 'rgba(255, 130, 0, 0.15)', gearTime: gearTimeSteel.toFixed(0) + ' min', groundTime: groundTimeSteel.toFixed(0) + ' min', warning: '' };
             }
-
-            var gearTimeVal = lerp(energy, lower.e, upper.e, lower.gear, upper.gear);
-            var groundTimeVal = lerp(energy, lower.e, upper.e, lower.ground, upper.ground);
-
-            return { status: 'COOLING REQ', color: '#FF8200', bg: 'rgba(255, 130, 0, 0.15)', gearTime: gearTimeVal.toFixed(1) + ' min', groundTime: groundTimeVal.toFixed(0) + ' min', warning: '' };
         }
 
         function calculateBrakeCooling() {
@@ -9804,7 +9965,8 @@
             var noDataEl = document.getElementById('brake-no-data');
             var correctionsEl = document.getElementById('brake-corrections');
 
-            if (!weightInput || !oatInput || !speedInput || !altInput || !brakeCoolingDatabase) {
+            var db = selectedBrakeAircraft === 'max' ? brakeCoolingDatabaseMAX : brakeCoolingDatabaseNG;
+            if (!weightInput || !oatInput || !speedInput || !altInput || !db) {
                 resultsEl.style.display = 'none';
                 noDataEl.style.display = 'block';
                 noDataEl.textContent = 'Enter weight, OAT, speed, and altitude';
@@ -9815,7 +9977,7 @@
             var weight = parseFloat(weightInput);
             var oat = parseFloat(oatInput);
             var speed = parseFloat(speedInput);
-            var alt = parseFloat(altInput);
+            var alt = parseFloat(altInput) / 1000; // Convert ft to thousands
             var wind = parseFloat(windInput);
             var taxiDist = parseFloat(taxiInput);
 
