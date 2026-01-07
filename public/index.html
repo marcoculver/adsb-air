@@ -5398,19 +5398,41 @@
                     <div class="input-grid-2" style="gap: 10px; margin-bottom: 10px;">
                         <div class="input-group">
                             <label class="input-label">Weight (1000 kg)</label>
-                            <input type="number" id="brake-weight" class="fdp-input" min="40" max="90" step="0.1" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()">
+                            <input type="number" id="brake-weight" class="fdp-input" min="40" max="90" step="0.1" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()" onfocus="this.select()">
                         </div>
                         <div class="input-group">
                             <label class="input-label">OAT (C)</label>
-                            <input type="number" id="brake-oat" class="fdp-input" min="-25" max="50" step="1" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()">
+                            <input type="number" id="brake-oat" class="fdp-input" min="-25" max="50" step="1" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()" onfocus="this.select()">
                         </div>
                         <div class="input-group">
                             <label class="input-label">Brakes-on Speed (KIAS)</label>
-                            <input type="number" id="brake-speed" class="fdp-input" min="80" max="180" step="1" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()">
+                            <input type="number" id="brake-speed" class="fdp-input" min="80" max="180" step="1" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()" onfocus="this.select()">
                         </div>
                         <div class="input-group">
                             <label class="input-label">Press Alt (ft)</label>
-                            <input type="number" id="brake-alt" class="fdp-input" min="0" max="10000" step="100" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()">
+                            <input type="number" id="brake-alt" class="fdp-input" min="0" max="10000" step="100" style="text-align: center; font-size: 1rem;" oninput="calculateBrakeCooling()" onfocus="this.select()">
+                        </div>
+                    </div>
+
+                    <!-- Event Type Selection -->
+                    <div style="margin-bottom: 10px;">
+                        <label class="input-label" style="font-size: 0.65rem; display: block; text-align: center; margin-bottom: 6px;">Event / Autobrake</label>
+                        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;">
+                            <button id="brake-evt-rto" onclick="selectBrakeEvent('RTO')" class="brake-evt-btn" style="padding: 4px 8px; border-radius: 4px; font-size: 0.6rem; font-weight: bold; cursor: pointer; background: transparent; color: #888; border: 1px solid #444;">RTO</button>
+                            <button id="brake-evt-maxman" onclick="selectBrakeEvent('MAX MAN')" class="brake-evt-btn" style="padding: 4px 8px; border-radius: 4px; font-size: 0.6rem; font-weight: bold; cursor: pointer; background: transparent; color: #888; border: 1px solid #444;">MAX MAN</button>
+                            <button id="brake-evt-maxauto" onclick="selectBrakeEvent('MAX AUTO')" class="brake-evt-btn" style="padding: 4px 8px; border-radius: 4px; font-size: 0.6rem; font-weight: bold; cursor: pointer; background: #00d4ff; color: #000; border: 1px solid #00d4ff;">MAX AUTO</button>
+                            <button id="brake-evt-ab3" onclick="selectBrakeEvent('AB3')" class="brake-evt-btn" style="padding: 4px 8px; border-radius: 4px; font-size: 0.6rem; font-weight: bold; cursor: pointer; background: transparent; color: #888; border: 1px solid #444;">AB3</button>
+                            <button id="brake-evt-ab2" onclick="selectBrakeEvent('AB2')" class="brake-evt-btn" style="padding: 4px 8px; border-radius: 4px; font-size: 0.6rem; font-weight: bold; cursor: pointer; background: transparent; color: #888; border: 1px solid #444;">AB2</button>
+                            <button id="brake-evt-ab1" onclick="selectBrakeEvent('AB1')" class="brake-evt-btn" style="padding: 4px 8px; border-radius: 4px; font-size: 0.6rem; font-weight: bold; cursor: pointer; background: transparent; color: #888; border: 1px solid #444;">AB1</button>
+                        </div>
+                    </div>
+
+                    <!-- Reverse Thrust Selection -->
+                    <div style="margin-bottom: 12px;">
+                        <label class="input-label" style="font-size: 0.65rem; display: block; text-align: center; margin-bottom: 6px;">Reverse Thrust</label>
+                        <div style="display: flex; justify-content: center; gap: 6px;">
+                            <button id="brake-rev-none" onclick="selectBrakeReverse('none')" class="brake-rev-btn" style="padding: 4px 10px; border-radius: 4px; font-size: 0.6rem; font-weight: bold; cursor: pointer; background: transparent; color: #888; border: 1px solid #444;">No Rev</button>
+                            <button id="brake-rev-two" onclick="selectBrakeReverse('two')" class="brake-rev-btn" style="padding: 4px 10px; border-radius: 4px; font-size: 0.6rem; font-weight: bold; cursor: pointer; background: #00d4ff; color: #000; border: 1px solid #00d4ff;">2 Eng Rev</button>
                         </div>
                     </div>
 
@@ -5419,12 +5441,12 @@
                         <div class="input-grid-2" style="gap: 10px;">
                             <div class="input-group">
                                 <label class="input-label" style="font-size: 0.65rem;">Wind (kt) <span style="color: #888;">+H / -T</span></label>
-                                <input type="number" id="brake-wind" class="fdp-input" placeholder="0" step="1" style="text-align: center; font-size: 0.9rem;" oninput="calculateBrakeCooling()">
+                                <input type="number" id="brake-wind" class="fdp-input" step="1" style="text-align: center; font-size: 0.9rem;" oninput="calculateBrakeCooling()" onfocus="this.select()">
                                 <div style="font-size: 0.6rem; color: #666; text-align: center; margin-top: 2px;">Positive=headwind</div>
                             </div>
                             <div class="input-group">
                                 <label class="input-label" style="font-size: 0.65rem;">Taxi Distance (nm)</label>
-                                <input type="number" id="brake-taxi" class="fdp-input" placeholder="0" min="0" step="0.1" style="text-align: center; font-size: 0.9rem;" oninput="calculateBrakeCooling()">
+                                <input type="number" id="brake-taxi" class="fdp-input" min="0" step="0.1" style="text-align: center; font-size: 0.9rem;" oninput="calculateBrakeCooling()" onfocus="this.select()">
                                 <div style="font-size: 0.6rem; color: #666; text-align: center; margin-top: 2px;">Adds taxi energy</div>
                             </div>
                         </div>
@@ -9632,6 +9654,8 @@
         var brakeCoolingDatabaseNG = null;
         var selectedBrakeAircraft = 'max'; // 'max' or 'ng'
         var selectedBrakeType = 'carbon'; // 'carbon' or 'steel' (NG only)
+        var selectedBrakeEvent = 'MAX AUTO'; // RTO, MAX MAN, MAX AUTO, AB3, AB2, AB1
+        var selectedBrakeReverse = 'two'; // 'none' or 'two'
 
         // Load Brake Cooling databases
         fetch('/dashboard/database/brake_cooling_schedule.json')
@@ -9735,10 +9759,140 @@
             calculateBrakeCooling();
         }
 
+        function selectBrakeEvent(event) {
+            selectedBrakeEvent = event;
+            var eventMap = {
+                'RTO': 'brake-evt-rto',
+                'MAX MAN': 'brake-evt-maxman',
+                'MAX AUTO': 'brake-evt-maxauto',
+                'AB3': 'brake-evt-ab3',
+                'AB2': 'brake-evt-ab2',
+                'AB1': 'brake-evt-ab1'
+            };
+            // Reset all buttons
+            Object.values(eventMap).forEach(function(id) {
+                var btn = document.getElementById(id);
+                if (btn) {
+                    btn.style.background = 'transparent';
+                    btn.style.color = '#888';
+                    btn.style.border = '1px solid #444';
+                }
+            });
+            // Highlight selected
+            var selectedBtn = document.getElementById(eventMap[event]);
+            if (selectedBtn) {
+                selectedBtn.style.background = '#00d4ff';
+                selectedBtn.style.color = '#000';
+                selectedBtn.style.border = '1px solid #00d4ff';
+            }
+            calculateBrakeCooling();
+        }
+
+        function selectBrakeReverse(reverse) {
+            selectedBrakeReverse = reverse;
+            var noneBtn = document.getElementById('brake-rev-none');
+            var twoBtn = document.getElementById('brake-rev-two');
+            if (reverse === 'none') {
+                noneBtn.style.background = '#00d4ff';
+                noneBtn.style.color = '#000';
+                noneBtn.style.border = '1px solid #00d4ff';
+                twoBtn.style.background = 'transparent';
+                twoBtn.style.color = '#888';
+                twoBtn.style.border = '1px solid #444';
+            } else {
+                twoBtn.style.background = '#00d4ff';
+                twoBtn.style.color = '#000';
+                twoBtn.style.border = '1px solid #00d4ff';
+                noneBtn.style.background = 'transparent';
+                noneBtn.style.color = '#888';
+                noneBtn.style.border = '1px solid #444';
+            }
+            calculateBrakeCooling();
+        }
+
         // Linear interpolation helper
         function lerp(x, x1, x2, y1, y2) {
             if (x1 === x2) return y1;
             return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
+        }
+
+        // Get event-adjusted brake energy from table 2a/2b
+        function getEventAdjustedEnergy(refEnergy) {
+            var db = selectedBrakeAircraft === 'max' ? brakeCoolingDatabaseMAX : brakeCoolingDatabaseNG;
+            if (!db) return refEnergy;
+
+            // Get the correct table based on reverse thrust selection
+            var tableData;
+            if (selectedBrakeAircraft === 'max') {
+                tableData = selectedBrakeReverse === 'none'
+                    ? db.eventAdjustedBrakeEnergy.table2a.data
+                    : db.eventAdjustedBrakeEnergy.table2b.data;
+            } else {
+                // NG structure is different - uses adjustedBrakeEnergy
+                tableData = selectedBrakeReverse === 'none'
+                    ? db.adjustedBrakeEnergy.noReverseThrust.data
+                    : db.adjustedBrakeEnergy.twoEngineDetentReverseThrust.data;
+            }
+
+            // Map short event names to full names in database
+            var eventNameMap = {
+                'RTO': 'RTO MAX MAN',
+                'MAX MAN': 'MAX MAN',
+                'MAX AUTO': 'MAX AUTO',
+                'AB3': 'AUTOBRAKE 3',
+                'AB2': 'AUTOBRAKE 2',
+                'AB1': 'AUTOBRAKE 1'
+            };
+            var eventName = eventNameMap[selectedBrakeEvent] || selectedBrakeEvent;
+
+            // Find the event data
+            var eventData = null;
+            for (var i = 0; i < tableData.length; i++) {
+                if (tableData[i].event === eventName) {
+                    eventData = tableData[i];
+                    break;
+                }
+            }
+            if (!eventData) return refEnergy;
+
+            // Get energy levels - different structure for MAX vs NG
+            var energyLevels = eventData.brakeEnergyPerBrake || eventData.energyLevels;
+            if (!energyLevels) return refEnergy;
+
+            // Available reference energy levels in table
+            var refLevels = selectedBrakeAircraft === 'max'
+                ? [10, 20, 30, 40, 50, 60]
+                : [10, 20, 30, 40, 50, 60, 70, 80, 90];
+
+            // Find surrounding values for interpolation (allow extrapolation)
+            var lowerRef, upperRef;
+            if (refEnergy <= refLevels[0]) {
+                // Below table - use first two points for extrapolation
+                lowerRef = refLevels[0];
+                upperRef = refLevels[1];
+            } else if (refEnergy >= refLevels[refLevels.length - 1]) {
+                // Above table - use last two points for extrapolation
+                lowerRef = refLevels[refLevels.length - 2];
+                upperRef = refLevels[refLevels.length - 1];
+            } else {
+                // Within table - find surrounding values
+                for (var j = 0; j < refLevels.length - 1; j++) {
+                    if (refEnergy >= refLevels[j] && refEnergy <= refLevels[j + 1]) {
+                        lowerRef = refLevels[j];
+                        upperRef = refLevels[j + 1];
+                        break;
+                    }
+                }
+            }
+
+            // Get adjusted values at bounds
+            var lowerAdj = energyLevels[lowerRef.toString()];
+            var upperAdj = energyLevels[upperRef.toString()];
+
+            if (lowerAdj === undefined || upperAdj === undefined) return refEnergy;
+
+            // Interpolate/extrapolate
+            return lerp(refEnergy, lowerRef, upperRef, lowerAdj, upperAdj);
         }
 
         // Get brake energy from table with interpolation
@@ -9757,8 +9911,8 @@
             // Available values in table - different for each aircraft
             var weights, minWeight, maxWeight;
             if (selectedBrakeAircraft === 'max') {
-                weights = [50, 60, 70, 80, 90];
-                minWeight = 50;
+                weights = [40, 50, 60, 70, 80, 90];
+                minWeight = 40;
                 maxWeight = 90;
             } else {
                 weights = [40, 50, 60, 70, 80];
@@ -9999,16 +10153,23 @@
                 correctionText.push('Speed corrected: ' + speed + ' ' + (windCorrection > 0 ? '+' : '') + windCorrection.toFixed(0) + ' = ' + correctedSpeed.toFixed(0) + ' kt');
             }
 
-            // Get base brake energy with interpolation
-            var baseEnergy = getBrakeEnergy(weight, oat, correctedSpeed, alt);
+            // Get reference brake energy with interpolation (Table 1a)
+            var refEnergy = getBrakeEnergy(weight, oat, correctedSpeed, alt);
 
-            if (baseEnergy === null) {
+            if (refEnergy === null) {
                 resultsEl.style.display = 'none';
                 noDataEl.style.display = 'block';
                 noDataEl.textContent = 'No data for this combination (check speed limits for weight)';
                 correctionsEl.style.display = 'none';
                 return;
             }
+
+            // Get event-adjusted brake energy (Table 2a/2b)
+            var eventAdjustedEnergy = getEventAdjustedEnergy(refEnergy);
+
+            // Show event adjustment in corrections
+            var eventLabel = selectedBrakeEvent + ' / ' + (selectedBrakeReverse === 'none' ? 'No Rev' : '2 Eng Rev');
+            correctionText.push('Event: ' + eventLabel + ' (Ref: ' + refEnergy.toFixed(1) + ' → Adj: ' + eventAdjustedEnergy.toFixed(1) + ')');
 
             // Taxi energy: 2.0 MFP per mile (3.0 if OAT < -25 or > 30)
             var taxiEnergyPerMile = (oat < -25 || oat > 30) ? 3.0 : 2.0;
@@ -10019,7 +10180,7 @@
             }
 
             // Total energy
-            var totalEnergy = baseEnergy + taxiEnergy;
+            var totalEnergy = eventAdjustedEnergy + taxiEnergy;
 
             // Show corrections
             if (correctionText.length > 0) {
@@ -10037,7 +10198,7 @@
             // Show breakdown
             var breakdownEl = document.getElementById('brake-energy-breakdown');
             if (taxiEnergy > 0) {
-                breakdownEl.textContent = 'Stop: ' + baseEnergy.toFixed(1) + ' + Taxi: ' + taxiEnergy.toFixed(1);
+                breakdownEl.textContent = 'Event: ' + eventAdjustedEnergy.toFixed(1) + ' + Taxi: ' + taxiEnergy.toFixed(1);
             } else {
                 breakdownEl.textContent = '';
             }
@@ -11900,27 +12061,23 @@
 
                 // Compass rose SVG
                 var sunAngle = sunPos.azimuth - 90; // SVG starts at 3 o'clock, adjust to start at 12
-                var rwyAngle = rwyHdg - 90;
                 // Sun on outer edge
                 var sunX = 60 + 48 * Math.cos(sunAngle * Math.PI / 180);
                 var sunY = 60 + 48 * Math.sin(sunAngle * Math.PI / 180);
-                // Aircraft over the runway
-                var acX = 60 + 15 * Math.cos(rwyAngle * Math.PI / 180);
-                var acY = 60 + 15 * Math.sin(rwyAngle * Math.PI / 180);
 
                 html += '<svg width="120" height="120" viewBox="0 0 120 120" style="flex-shrink: 0;">';
                 // Outer circle
                 html += '<circle cx="60" cy="60" r="55" fill="rgba(0,0,0,0.3)" stroke="#444" stroke-width="1"/>';
                 // Cardinal tick marks
-                html += '<line x1="60" y1="5" x2="60" y2="12" stroke="#666" stroke-width="2"/>';
-                html += '<line x1="115" y1="60" x2="108" y2="60" stroke="#555" stroke-width="1"/>';
-                html += '<line x1="60" y1="115" x2="60" y2="108" stroke="#555" stroke-width="1"/>';
-                html += '<line x1="5" y1="60" x2="12" y2="60" stroke="#555" stroke-width="1"/>';
+                html += '<line x1="60" y1="5" x2="60" y2="12" stroke="#888" stroke-width="2"/>';
+                html += '<line x1="115" y1="60" x2="108" y2="60" stroke="#888" stroke-width="2"/>';
+                html += '<line x1="60" y1="115" x2="60" y2="108" stroke="#888" stroke-width="2"/>';
+                html += '<line x1="5" y1="60" x2="12" y2="60" stroke="#888" stroke-width="2"/>';
                 // Cardinal labels
-                html += '<text x="60" y="22" text-anchor="middle" fill="#888" font-size="9" font-weight="bold">N</text>';
-                html += '<text x="100" y="63" text-anchor="middle" fill="#555" font-size="8">E</text>';
-                html += '<text x="60" y="104" text-anchor="middle" fill="#555" font-size="8">S</text>';
-                html += '<text x="20" y="63" text-anchor="middle" fill="#555" font-size="8">W</text>';
+                html += '<text x="60" y="22" text-anchor="middle" fill="#aaa" font-size="11" font-weight="bold">N</text>';
+                html += '<text x="102" y="64" text-anchor="middle" fill="#aaa" font-size="11" font-weight="bold">E</text>';
+                html += '<text x="60" y="106" text-anchor="middle" fill="#aaa" font-size="11" font-weight="bold">S</text>';
+                html += '<text x="18" y="64" text-anchor="middle" fill="#aaa" font-size="11" font-weight="bold">W</text>';
                 // Runway rectangle
                 html += '<g transform="rotate(' + rwyHdg + ', 60, 60)">';
                 html += '<rect x="56" y="28" width="8" height="64" fill="#4CAF50" rx="1"/>';
@@ -11930,8 +12087,8 @@
                 html += '<line x1="60" y1="68" x2="60" y2="76" stroke="#fff" stroke-width="1"/>';
                 html += '<line x1="60" y1="80" x2="60" y2="88" stroke="#fff" stroke-width="1"/>';
                 html += '</g>';
-                // Aircraft icon (over runway, bigger)
-                html += '<g transform="translate(' + acX + ',' + acY + ') rotate(' + (rwyHdg + 180) + ') scale(1.4)">';
+                // Aircraft icon (centered on runway, pointing in runway direction)
+                html += '<g transform="translate(60, 60) rotate(' + rwyHdg + ') scale(2)">';
                 html += '<path d="M0,-6 L2,-2 L2,2 L6,4 L6,6 L2,5 L2,7 L4,8 L4,10 L0,9 L-4,10 L-4,8 L-2,7 L-2,5 L-6,6 L-6,4 L-2,2 L-2,-2 Z" fill="#fff" stroke="#333" stroke-width="0.5"/>';
                 html += '</g>';
                 // Sun icon (outer edge, smaller)
