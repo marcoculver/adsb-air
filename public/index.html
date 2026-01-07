@@ -5377,6 +5377,102 @@
                         Loading Min Fuel database...
                     </div>
                 </div>
+
+                <!-- Brake Cooling Schedule Calculator -->
+                <div class="section" style="max-width: 600px; margin: 20px auto 0; padding: 12px;">
+                    <div class="section-title" style="margin-bottom: 8px;">Brake Cooling Schedule</div>
+                    <div style="font-size: 0.7rem; color: #888; text-align: center; margin-bottom: 12px;">B737-8 / LEAP-1B28B1</div>
+
+                    <div class="input-grid-2" style="gap: 10px; margin-bottom: 12px;">
+                        <div class="input-group">
+                            <label class="input-label">Weight (1000 kg)</label>
+                            <select id="brake-weight" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="calculateBrakeCooling()">
+                                <option value="">Select</option>
+                                <option value="50">50</option>
+                                <option value="60">60</option>
+                                <option value="70">70</option>
+                                <option value="80">80</option>
+                                <option value="90">90</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">OAT (°C)</label>
+                            <select id="brake-oat" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="calculateBrakeCooling()">
+                                <option value="">Select</option>
+                                <option value="0">0</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Brakes-on Speed (KIAS)</label>
+                            <select id="brake-speed" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="calculateBrakeCooling()">
+                                <option value="">Select</option>
+                                <option value="80">80</option>
+                                <option value="100">100</option>
+                                <option value="120">120</option>
+                                <option value="140">140</option>
+                                <option value="160">160</option>
+                                <option value="180">180</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Press Alt (1000 ft)</label>
+                            <select id="brake-alt" class="fdp-select" style="width: 100%; height: 44px; font-size: 1rem;" onchange="calculateBrakeCooling()">
+                                <option value="">Select</option>
+                                <option value="0">0 (SL)</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Results -->
+                    <div id="brake-results" style="display: none;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                            <div style="background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 8px; padding: 12px; text-align: center;">
+                                <div style="font-size: 0.7rem; color: #888; margin-bottom: 4px;">BRAKE ENERGY</div>
+                                <div id="brake-energy-value" style="font-size: 1.8rem; font-weight: bold; color: #00d4ff;">--</div>
+                                <div style="font-size: 0.65rem; color: #888;">Million ft-lbs</div>
+                            </div>
+                            <div id="brake-status-box" style="border-radius: 8px; padding: 12px; text-align: center;">
+                                <div style="font-size: 0.7rem; color: #888; margin-bottom: 4px;">STATUS</div>
+                                <div id="brake-status-text" style="font-size: 1.2rem; font-weight: bold;">--</div>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div style="background: rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 10px; text-align: center;">
+                                <div style="font-size: 0.65rem; color: #888; margin-bottom: 4px;">GEAR DOWN IN-FLIGHT</div>
+                                <div id="brake-gear-time" style="font-size: 1.3rem; font-weight: bold; color: #FF8200;">--</div>
+                            </div>
+                            <div style="background: rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 10px; text-align: center;">
+                                <div style="font-size: 0.65rem; color: #888; margin-bottom: 4px;">GROUND COOLING</div>
+                                <div id="brake-ground-time" style="font-size: 1.3rem; font-weight: bold; color: #FF8200;">--</div>
+                            </div>
+                        </div>
+
+                        <div id="brake-warning" style="margin-top: 10px; padding: 10px; border-radius: 6px; font-size: 0.75rem; display: none;"></div>
+                    </div>
+
+                    <div id="brake-no-data" style="display: none; text-align: center; padding: 15px; color: #888; font-size: 0.85rem;">
+                        Select all parameters to calculate
+                    </div>
+
+                    <!-- Notes -->
+                    <div style="margin-top: 12px; padding: 10px; background: rgba(0, 0, 0, 0.2); border-radius: 6px; font-size: 0.7rem; color: #888; line-height: 1.4;">
+                        <div style="margin-bottom: 6px;"><strong>Wind correction:</strong> Enter brakes-on speed minus 1/2 headwind or plus 1.5x tailwind</div>
+                        <div><strong>Taxi energy:</strong> Add 2.0 MFP/brake per taxi mile (3.0 if OAT &lt;-25C or &gt;30C)</div>
+                    </div>
+
+                    <div id="brake-revision-info" style="margin-top: 10px; text-align: center; font-size: 0.75rem; color: #666;">
+                        Loading Brake Cooling database...
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -9529,6 +9625,156 @@
                 var revInfo = document.getElementById('minfuel-revision-info');
                 if (revInfo) revInfo.textContent = 'Database not available';
             });
+
+        // ============ BRAKE COOLING DATABASE ============
+        var brakeCoolingDatabase = null;
+
+        // Load Brake Cooling database
+        fetch('/dashboard/database/brake_cooling_schedule.json')
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                brakeCoolingDatabase = data;
+                console.log('Brake Cooling database loaded');
+                var revInfo = document.getElementById('brake-revision-info');
+                if (revInfo && data.metadata) {
+                    revInfo.textContent = data.metadata.aircraft + ' - ' + data.metadata.documentReference;
+                }
+            })
+            .catch(function(err) {
+                console.log('Brake Cooling database not loaded:', err);
+                var revInfo = document.getElementById('brake-revision-info');
+                if (revInfo) revInfo.textContent = 'Database not available';
+            });
+
+        function calculateBrakeCooling() {
+            var weight = document.getElementById('brake-weight').value;
+            var oat = document.getElementById('brake-oat').value;
+            var speed = document.getElementById('brake-speed').value;
+            var alt = document.getElementById('brake-alt').value;
+
+            var resultsEl = document.getElementById('brake-results');
+            var noDataEl = document.getElementById('brake-no-data');
+
+            if (!weight || !oat || !speed || !alt || !brakeCoolingDatabase) {
+                resultsEl.style.display = 'none';
+                noDataEl.style.display = 'block';
+                return;
+            }
+
+            noDataEl.style.display = 'none';
+
+            // Find matching brake energy from table 1a
+            var tableData = brakeCoolingDatabase.referenceBrakeEnergy.table1a.data;
+            var energy = null;
+
+            for (var i = 0; i < tableData.length; i++) {
+                var row = tableData[i];
+                if (row.weight == parseInt(weight) &&
+                    row.oat == parseInt(oat) &&
+                    row.brakesOnSpeed == parseInt(speed)) {
+                    energy = row.pressureAltitude[alt];
+                    break;
+                }
+            }
+
+            if (energy === null || energy === undefined) {
+                resultsEl.style.display = 'none';
+                noDataEl.style.display = 'block';
+                noDataEl.textContent = 'No data for this combination';
+                return;
+            }
+
+            resultsEl.style.display = 'block';
+            document.getElementById('brake-energy-value').textContent = energy.toFixed(1);
+
+            // Determine status and cooling times from table 3
+            var coolingData = brakeCoolingDatabase.coolingTime.table3.brakeEnergyRanges;
+            var status = 'NORMAL';
+            var statusColor = '#00ff88';
+            var statusBg = 'rgba(0, 255, 136, 0.15)';
+            var gearTime = 'N/A';
+            var groundTime = 'N/A';
+            var warning = '';
+
+            // Find appropriate cooling range
+            for (var j = 0; j < coolingData.length; j++) {
+                var range = coolingData[j];
+                var rangeStr = range.range;
+
+                // Parse range
+                if (rangeStr.includes('& BELOW')) {
+                    var maxVal = parseFloat(rangeStr.replace('& BELOW', '').trim());
+                    if (energy <= maxVal) {
+                        status = 'NORMAL';
+                        statusColor = '#00ff88';
+                        statusBg = 'rgba(0, 255, 136, 0.15)';
+                        gearTime = 'No special procedure';
+                        groundTime = 'Normal';
+                        break;
+                    }
+                } else if (rangeStr.includes('& ABOVE')) {
+                    var minVal = parseFloat(rangeStr.replace('& ABOVE', '').trim());
+                    if (energy >= minVal) {
+                        status = 'FUSE PLUG MELT';
+                        statusColor = '#ff5252';
+                        statusBg = 'rgba(255, 82, 82, 0.2)';
+                        gearTime = '12+ min';
+                        groundTime = 'DO NOT TAXI';
+                        warning = 'FUSE PLUG MELT ZONE: Clear runway immediately. Do not set parking brake. Do not approach gear for one hour. Tire/wheel/brake replacement may be required.';
+                        break;
+                    }
+                } else if (rangeStr.includes(' TO ')) {
+                    var parts = rangeStr.split(' TO ');
+                    var min = parseFloat(parts[0]);
+                    var max = parseFloat(parts[1]);
+                    if (energy >= min && energy <= max) {
+                        status = 'CAUTION';
+                        statusColor = '#ffd700';
+                        statusBg = 'rgba(255, 215, 0, 0.15)';
+                        gearTime = '7+ min';
+                        groundTime = 'Delay T/O';
+                        warning = 'CAUTION ZONE: Wheel fuse plugs may melt. Delay takeoff and inspect after one hour.';
+                        break;
+                    }
+                } else {
+                    var val = parseFloat(rangeStr);
+                    if (!isNaN(val) && energy <= val + 1 && energy >= val - 1) {
+                        if (range.gearDownInflight.procedure === 'CAUTION') {
+                            status = 'CAUTION';
+                            statusColor = '#ffd700';
+                            statusBg = 'rgba(255, 215, 0, 0.15)';
+                            warning = 'CAUTION ZONE: Wheel fuse plugs may melt. Delay takeoff and inspect after one hour.';
+                        } else {
+                            status = 'COOLING REQ';
+                            statusColor = '#FF8200';
+                            statusBg = 'rgba(255, 130, 0, 0.15)';
+                        }
+                        gearTime = range.gearDownInflight.time ? range.gearDownInflight.time + ' min' : 'N/A';
+                        groundTime = range.ground.time ? range.ground.time + ' min' : 'Required';
+                        break;
+                    }
+                }
+            }
+
+            // Update display
+            document.getElementById('brake-status-text').textContent = status;
+            document.getElementById('brake-status-text').style.color = statusColor;
+            document.getElementById('brake-status-box').style.background = statusBg;
+            document.getElementById('brake-status-box').style.border = '1px solid ' + statusColor;
+            document.getElementById('brake-gear-time').textContent = gearTime;
+            document.getElementById('brake-ground-time').textContent = groundTime;
+
+            var warningEl = document.getElementById('brake-warning');
+            if (warning) {
+                warningEl.style.display = 'block';
+                warningEl.style.background = statusBg;
+                warningEl.style.border = '1px solid ' + statusColor;
+                warningEl.style.color = statusColor;
+                warningEl.textContent = warning;
+            } else {
+                warningEl.style.display = 'none';
+            }
+        }
 
         // REF Tab Switcher
         var refSwitcherIndex = 0;

@@ -1,0 +1,6300 @@
+{
+  "metadata": {
+    "aircraft": "Boeing 737-8",
+    "documentReference": "737-8/LEAP-1B28B1 FAA CATB",
+    "documentTitle": "737 Flight Crew Operations Manual - Performance Inflight Advisory Information",
+    "subject": "Recommended Brake Cooling Schedule",
+    "unit": "Millions of Foot Pounds"
+  },
+  "referenceBrakeEnergy": {
+    "table1a": {
+      "tableId": "1a",
+      "description": "Sea Level to 10000 ft Pressure Altitude",
+      "altitudeRange": {
+        "min": 0,
+        "max": 10000,
+        "unit": "ft"
+      },
+      "notes": "To correct for wind, enter table with the brakes-on speed minus one-half the headwind or plus 1.5 times the tailwind. If ground speed is used for brakes-on speed, ignore wind and enter table with sea level, 15°C.",
+      "data": [
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 16.7,
+            "5": 19.0,
+            "10": 21.6
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 24.8,
+            "5": 28.4,
+            "10": 32.7
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 34.1,
+            "5": 39.4,
+            "10": 45.7
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 44.4,
+            "5": 51.6,
+            "10": 60.1
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 55.6,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 17.3,
+            "5": 19.6,
+            "10": 22.5
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 25.6,
+            "5": 29.3,
+            "10": 33.8
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 35.2,
+            "5": 40.7,
+            "10": 47.2
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 45.9,
+            "5": 53.3,
+            "10": 62.2
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 57.4,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 17.6,
+            "5": 19.9,
+            "10": 22.7
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 26.0,
+            "5": 29.8,
+            "10": 34.3
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 35.8,
+            "5": 41.3,
+            "10": 48.0
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 46.6,
+            "5": 54.2,
+            "10": 63.2
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 58.4,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 17.8,
+            "5": 20.2,
+            "10": 23.0
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 26.4,
+            "5": 30.3,
+            "10": 34.8
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 36.3,
+            "5": 42.0,
+            "10": 48.8
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 47.4,
+            "5": 55.1,
+            "10": 64.2
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 59.3,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 18.4,
+            "5": 20.8,
+            "10": 23.7
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 27.2,
+            "5": 31.2,
+            "10": 35.9
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 37.4,
+            "5": 43.3,
+            "10": 50.2
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 48.8,
+            "5": 56.7,
+            "10": 66.2
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 61.1,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 18.6,
+            "5": 21.1,
+            "10": 24.0
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 27.5,
+            "5": 31.6,
+            "10": 36.4
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 38.0,
+            "5": 44.0,
+            "10": 51.2
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 49.7,
+            "5": 57.9,
+            "10": 67.7
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 62.5,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 18.5,
+            "5": 21.0,
+            "10": 24.0
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 27.5,
+            "5": 31.6,
+            "10": 36.6
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 38.2,
+            "5": 44.3,
+            "10": 51.8
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 50.2,
+            "5": 58.7,
+            "10": 68.9
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 63.4,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 15.3,
+            "5": 17.3,
+            "10": 19.6
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 22.5,
+            "5": 25.7,
+            "10": 29.5
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 30.8,
+            "5": 35.6,
+            "10": 41.2
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 40.2,
+            "5": 46.6,
+            "10": 54.3
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 50.2,
+            "5": 58.3,
+            "10": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 60.6,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 15.8,
+            "5": 17.8,
+            "10": 20.3
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 23.2,
+            "5": 26.6,
+            "10": 30.5
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 31.9,
+            "5": 36.7,
+            "10": 42.6
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 41.5,
+            "5": 48.2,
+            "10": 56.1
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 51.9,
+            "5": 60.3,
+            "10": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 62.6,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 16.0,
+            "5": 18.1,
+            "10": 20.6
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 23.6,
+            "5": 27.0,
+            "10": 31.0
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 32.4,
+            "5": 37.3,
+            "10": 43.2
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 42.2,
+            "5": 48.9,
+            "10": 57.0
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 52.7,
+            "5": 61.3,
+            "10": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 63.6,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 16.3,
+            "5": 18.4,
+            "10": 20.9
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 24.0,
+            "5": 27.4,
+            "10": 31.5
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 32.9,
+            "5": 37.9,
+            "10": 43.9
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 42.8,
+            "5": 49.7,
+            "10": 57.9
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 53.5,
+            "5": 62.3,
+            "10": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 64.6,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 16.7,
+            "5": 18.9,
+            "10": 21.5
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 24.7,
+            "5": 28.2,
+            "10": 32.4
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 33.9,
+            "5": 39.1,
+            "10": 45.2
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 44.1,
+            "5": 51.2,
+            "10": 59.7
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 55.2,
+            "5": 64.2,
+            "10": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 66.6,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 16.9,
+            "5": 19.2,
+            "10": 21.8
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 25.0,
+            "5": 28.6,
+            "10": 32.9
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 34.4,
+            "5": 39.7,
+            "10": 46.0
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 44.9,
+            "5": 52.2,
+            "10": 61.0
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 56.3,
+            "5": 65.6,
+            "10": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 68.2,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 16.8,
+            "5": 19.1,
+            "10": 21.7
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 25.0,
+            "5": 28.6,
+            "10": 33.0
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 34.5,
+            "5": 39.9,
+            "10": 46.4
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 45.3,
+            "5": 52.8,
+            "10": 61.9
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 57.0,
+            "5": 66.8,
+            "10": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 69.4,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 13.8,
+            "5": 15.6,
+            "10": 17.7
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 20.2,
+            "5": 23.0,
+            "10": 26.4
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 27.5,
+            "5": 31.6,
+            "10": 36.5
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 35.7,
+            "5": 41.3,
+            "10": 48.0
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 44.7,
+            "5": 51.9,
+            "10": 60.5
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 54.0,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 14.3,
+            "5": 16.1,
+            "10": 18.3
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 20.9,
+            "5": 23.8,
+            "10": 27.2
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 28.4,
+            "5": 32.7,
+            "10": 37.8
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 36.9,
+            "5": 42.7,
+            "10": 49.6
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 46.2,
+            "5": 53.6,
+            "10": 62.5
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 55.8,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 14.5,
+            "5": 16.4,
+            "10": 18.6
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 21.2,
+            "5": 24.2,
+            "10": 27.7
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 28.9,
+            "5": 33.2,
+            "10": 38.4
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 37.5,
+            "5": 43.4,
+            "10": 50.4
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 46.9,
+            "5": 54.5,
+            "10": 63.5
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 56.7,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 14.7,
+            "5": 16.6,
+            "10": 18.9
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 21.5,
+            "5": 24.5,
+            "10": 28.1
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 29.3,
+            "5": 33.7,
+            "10": 39.0
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 38.1,
+            "5": 44.1,
+            "10": 51.2
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 47.6,
+            "5": 55.4,
+            "10": 64.5
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 57.6,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 15.2,
+            "5": 17.1,
+            "10": 19.4
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 22.2,
+            "5": 25.3,
+            "10": 28.9
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 30.2,
+            "5": 34.7,
+            "10": 40.1
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 39.2,
+            "5": 45.4,
+            "10": 52.8
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 49.1,
+            "5": 57.1,
+            "10": 66.5
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 59.4,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 15.3,
+            "5": 17.3,
+            "10": 19.6
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 22.4,
+            "5": 25.6,
+            "10": 29.3
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 30.6,
+            "5": 35.3,
+            "10": 40.8
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 39.8,
+            "5": 46.2,
+            "10": 53.8
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 50.0,
+            "5": 58.2,
+            "10": 68.1
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 60.7,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 15.2,
+            "5": 17.2,
+            "10": 19.6
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 22.4,
+            "5": 25.6,
+            "10": 29.4
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 30.7,
+            "5": 35.4,
+            "10": 41.0
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 40.1,
+            "5": 46.6,
+            "10": 54.5
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 50.5,
+            "5": 59.1,
+            "10": 69.3
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 61.6,
+            "5": null,
+            "10": null
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 12.4,
+            "5": 14.0,
+            "10": 15.8
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 17.9,
+            "5": 20.4,
+            "10": 23.2
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 24.2,
+            "5": 27.7,
+            "10": 31.9
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 31.2,
+            "5": 36.0,
+            "10": 41.7
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 38.8,
+            "5": 45.0,
+            "10": 52.4
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 47.0,
+            "5": 54.6,
+            "10": null
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 12.8,
+            "5": 14.4,
+            "10": 16.3
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 18.5,
+            "5": 21.0,
+            "10": 24.0
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 25.0,
+            "5": 28.6,
+            "10": 33.0
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 32.2,
+            "5": 37.2,
+            "10": 43.1
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 40.1,
+            "5": 46.5,
+            "10": 54.1
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 48.5,
+            "5": 56.4,
+            "10": null
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 13.0,
+            "5": 14.7,
+            "10": 16.6
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 18.8,
+            "5": 21.4,
+            "10": 24.4
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 25.4,
+            "5": 29.1,
+            "10": 33.5
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 32.7,
+            "5": 37.8,
+            "10": 43.8
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 40.7,
+            "5": 47.2,
+            "10": 55.0
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 49.3,
+            "5": 57.3,
+            "10": null
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 13.2,
+            "5": 14.9,
+            "10": 16.8
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 19.1,
+            "5": 21.7,
+            "10": 24.8
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 25.8,
+            "5": 29.6,
+            "10": 34.0
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 33.3,
+            "5": 38.4,
+            "10": 44.4
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 41.4,
+            "5": 48.0,
+            "10": 55.9
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 50.1,
+            "5": 58.3,
+            "10": null
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 13.6,
+            "5": 15.3,
+            "10": 17.3
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 19.7,
+            "5": 22.3,
+            "10": 25.5
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 26.6,
+            "5": 30.4,
+            "10": 35.0
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 34.2,
+            "5": 39.5,
+            "10": 45.8
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 42.6,
+            "5": 49.4,
+            "10": 57.6
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 51.6,
+            "5": 60.1,
+            "10": null
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 13.7,
+            "5": 15.5,
+            "10": 17.5
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 19.9,
+            "5": 22.6,
+            "10": 25.8
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 26.9,
+            "5": 30.9,
+            "10": 35.6
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 34.8,
+            "5": 40.2,
+            "10": 46.6
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 43.4,
+            "5": 50.4,
+            "10": 58.8
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 52.6,
+            "5": 61.3,
+            "10": null
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 13.7,
+            "5": 15.4,
+            "10": 17.4
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 19.8,
+            "5": 22.5,
+            "10": 25.8
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 26.9,
+            "5": 30.9,
+            "10": 35.7
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 34.9,
+            "5": 40.4,
+            "10": 47.0
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 43.7,
+            "5": 50.9,
+            "10": 59.6
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 53.2,
+            "5": 62.3,
+            "10": null
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 11.0,
+            "5": 12.4,
+            "10": 14.0
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 15.7,
+            "5": 17.7,
+            "10": 20.1
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 20.9,
+            "5": 23.8,
+            "10": 27.3
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 26.7,
+            "5": 30.6,
+            "10": 35.4
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 33.0,
+            "5": 38.1,
+            "10": 44.2
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 39.7,
+            "5": 46.0,
+            "10": 53.5
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 11.4,
+            "5": 12.8,
+            "10": 14.4
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 16.2,
+            "5": 18.3,
+            "10": 20.8
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 21.6,
+            "5": 24.6,
+            "10": 28.2
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 27.6,
+            "5": 31.7,
+            "10": 36.5
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 34.1,
+            "5": 39.3,
+            "10": 45.6
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 41.0,
+            "5": 47.5,
+            "10": 55.3
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 11.5,
+            "5": 13.0,
+            "10": 14.6
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 16.4,
+            "5": 18.6,
+            "10": 21.1
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 21.9,
+            "5": 25.0,
+            "10": 28.7
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 28.0,
+            "5": 32.2,
+            "10": 37.1
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 34.6,
+            "5": 40.0,
+            "10": 46.4
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 41.6,
+            "5": 48.3,
+            "10": 56.2
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 11.7,
+            "5": 13.2,
+            "10": 14.9
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 16.7,
+            "5": 18.9,
+            "10": 21.5
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 22.3,
+            "5": 25.4,
+            "10": 29.1
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 28.4,
+            "5": 32.7,
+            "10": 37.7
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 35.1,
+            "5": 40.6,
+            "10": 47.1
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 42.3,
+            "5": 49.1,
+            "10": 57.1
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 12.1,
+            "5": 13.5,
+            "10": 15.3
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 17.2,
+            "5": 19.4,
+            "10": 22.1
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 22.9,
+            "5": 26.1,
+            "10": 30.0
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 29.3,
+            "5": 33.6,
+            "10": 38.8
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 36.2,
+            "5": 41.8,
+            "10": 48.5
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 43.6,
+            "5": 50.6,
+            "10": 58.9
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 12.2,
+            "5": 13.7,
+            "10": 15.4
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 17.3,
+            "5": 19.6,
+            "10": 22.4
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 23.2,
+            "5": 26.5,
+            "10": 30.4
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 29.7,
+            "5": 34.1,
+            "10": 39.5
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 36.8,
+            "5": 42.5,
+            "10": 49.4
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 44.3,
+            "5": 51.5,
+            "10": 60.1
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 12.1,
+            "5": 13.6,
+            "10": 15.4
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 17.3,
+            "5": 19.6,
+            "10": 22.3
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 23.1,
+            "5": 26.5,
+            "10": 30.4
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 29.7,
+            "5": 34.2,
+            "10": 39.7
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 36.9,
+            "5": 42.8,
+            "10": 49.9
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 44.7,
+            "5": 52.1,
+            "10": 61.0
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 9.6,
+            "5": 10.8,
+            "10": 12.1
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 13.4,
+            "5": 15.1,
+            "10": 17.1
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 17.6,
+            "5": 19.9,
+            "10": 22.7
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 22.1,
+            "5": 25.3,
+            "10": 29.0
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 27.0,
+            "5": 31.1,
+            "10": 35.9
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 32.2,
+            "5": 37.2,
+            "10": 43.2
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 9.9,
+            "5": 11.1,
+            "10": 12.5
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 13.8,
+            "5": 15.6,
+            "10": 17.7
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 18.1,
+            "5": 20.6,
+            "10": 23.5
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 22.8,
+            "5": 26.1,
+            "10": 29.9
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 27.9,
+            "5": 32.1,
+            "10": 37.1
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 33.3,
+            "5": 38.5,
+            "10": 44.6
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 10.1,
+            "5": 11.3,
+            "10": 12.7
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 14.0,
+            "5": 15.8,
+            "10": 17.9
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 18.4,
+            "5": 20.9,
+            "10": 23.8
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 23.2,
+            "5": 26.5,
+            "10": 30.4
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 28.4,
+            "5": 32.6,
+            "10": 37.6
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 33.8,
+            "5": 39.1,
+            "10": 45.3
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 10.2,
+            "5": 11.5,
+            "10": 12.9
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 14.3,
+            "5": 16.1,
+            "10": 18.2
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 18.7,
+            "5": 21.2,
+            "10": 24.2
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 23.6,
+            "5": 26.9,
+            "10": 30.9
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 28.8,
+            "5": 33.1,
+            "10": 38.2
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 34.4,
+            "5": 39.7,
+            "10": 46.0
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 10.5,
+            "5": 11.8,
+            "10": 13.3
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 14.7,
+            "5": 16.5,
+            "10": 18.7
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 19.2,
+            "5": 21.8,
+            "10": 24.9
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 24.3,
+            "5": 27.7,
+            "10": 31.8
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 29.7,
+            "5": 34.1,
+            "10": 39.4
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 35.4,
+            "5": 40.9,
+            "10": 47.4
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 10.6,
+            "5": 11.9,
+            "10": 13.4
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 14.8,
+            "5": 16.7,
+            "10": 19.0
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 19.5,
+            "5": 22.1,
+            "10": 25.2
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 24.6,
+            "5": 28.1,
+            "10": 32.3
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 30.1,
+            "5": 34.6,
+            "10": 40.0
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 35.9,
+            "5": 41.6,
+            "10": 48.3
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 10.5,
+            "5": 11.8,
+            "10": 13.3
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 14.7,
+            "5": 16.6,
+            "10": 18.9
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 19.4,
+            "5": 22.0,
+            "10": 25.2
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 24.5,
+            "5": 28.1,
+            "10": 32.3
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 30.1,
+            "5": 34.7,
+            "10": 40.3
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "0": 36.1,
+            "5": 41.8,
+            "10": 48.7
+          }
+        }
+      ]
+    },
+    "table1b": {
+      "tableId": "1b",
+      "description": "10000 ft to 14500 ft Pressure Altitude",
+      "altitudeRange": {
+        "min": 10000,
+        "max": 14500,
+        "unit": "ft"
+      },
+      "notes": "To correct for wind, enter table with the brakes-on speed minus one-half the headwind or plus 1.5 times the tailwind. If ground speed is used for brakes-on speed, ignore wind and enter table with sea level, 15°C.",
+      "data": [
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 21.6,
+            "12": 22.8,
+            "14.5": 24.3
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 32.7,
+            "12": 34.6,
+            "14.5": 37.1
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 45.7,
+            "12": 48.5,
+            "14.5": 52.3
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 60.1,
+            "12": null,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 22.3,
+            "12": 23.5,
+            "14.5": 25.1
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 33.8,
+            "12": 35.7,
+            "14.5": 38.3
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 47.2,
+            "12": 50.2,
+            "14.5": 54.0
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 62.2,
+            "12": null,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 22.7,
+            "12": 23.9,
+            "14.5": 25.5
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 34.3,
+            "12": 36.3,
+            "14.5": 39.0
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 48.0,
+            "12": 51.0,
+            "14.5": 54.9
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 63.2,
+            "12": null,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 23.0,
+            "12": 24.3,
+            "14.5": 25.9
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 34.8,
+            "12": 36.9,
+            "14.5": 39.6
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 48.8,
+            "12": 51.8,
+            "14.5": 55.8
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 64.2,
+            "12": null,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 23.7,
+            "12": 25.0,
+            "14.5": 26.6
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 35.9,
+            "12": 38.0,
+            "14.5": 40.8
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 50.2,
+            "12": 53.3,
+            "14.5": 57.5
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 66.2,
+            "12": null,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 24.0,
+            "12": 25.3,
+            "14.5": 27.0
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 36.4,
+            "12": 38.6,
+            "14.5": 41.4
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 51.2,
+            "12": 54.4,
+            "14.5": 58.7
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 67.7,
+            "12": null,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 24.0,
+            "12": 25.3,
+            "14.5": 27.0
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 36.6,
+            "12": 38.8,
+            "14.5": 41.7
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 51.8,
+            "12": 55.1,
+            "14.5": 59.5
+          }
+        },
+        {
+          "weight": 90,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 68.9,
+            "12": null,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 19.6,
+            "12": 20.7,
+            "14.5": 22.0
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 29.5,
+            "12": 31.2,
+            "14.5": 33.5
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 41.2,
+            "12": 43.7,
+            "14.5": 47.0
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 54.3,
+            "12": 57.7,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 20.3,
+            "12": 21.3,
+            "14.5": 22.7
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 30.5,
+            "12": 32.2,
+            "14.5": 34.5
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 42.6,
+            "12": 45.1,
+            "14.5": 48.6
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 56.1,
+            "12": 59.6,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 20.6,
+            "12": 21.7,
+            "14.5": 23.1
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 31.0,
+            "12": 32.7,
+            "14.5": 35.1
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 43.2,
+            "12": 45.9,
+            "14.5": 49.4
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 57.0,
+            "12": 60.6,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 20.9,
+            "12": 22.0,
+            "14.5": 23.4
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 31.5,
+            "12": 33.3,
+            "14.5": 35.6
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 43.9,
+            "12": 46.6,
+            "14.5": 50.2
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 57.9,
+            "12": 61.5,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 21.5,
+            "12": 22.7,
+            "14.5": 24.1
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 32.4,
+            "12": 34.2,
+            "14.5": 36.7
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 45.2,
+            "12": 48.0,
+            "14.5": 51.7
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 59.7,
+            "12": 63.4,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 21.8,
+            "12": 22.9,
+            "14.5": 24.4
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 32.9,
+            "12": 34.8,
+            "14.5": 37.2
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 46.0,
+            "12": 48.9,
+            "14.5": 52.7
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 61.0,
+            "12": 64.9,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 21.7,
+            "12": 22.9,
+            "14.5": 24.4
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 33.0,
+            "12": 34.9,
+            "14.5": 37.4
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 46.4,
+            "12": 49.4,
+            "14.5": 53.3
+          }
+        },
+        {
+          "weight": 80,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 61.9,
+            "12": 65.9,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 17.7,
+            "12": 18.6,
+            "14.5": 19.8
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 26.4,
+            "12": 27.8,
+            "14.5": 29.7
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 36.5,
+            "12": 38.7,
+            "14.5": 41.6
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 48.0,
+            "12": 51.0,
+            "14.5": 55.0
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 60.5,
+            "12": null,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 18.3,
+            "12": 19.2,
+            "14.5": 20.4
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 27.2,
+            "12": 28.7,
+            "14.5": 30.7
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 37.8,
+            "12": 40.0,
+            "14.5": 43.0
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 49.6,
+            "12": 52.7,
+            "14.5": 56.8
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 62.5,
+            "12": null,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 18.6,
+            "12": 19.5,
+            "14.5": 20.8
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 27.7,
+            "12": 29.2,
+            "14.5": 31.2
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 38.4,
+            "12": 40.6,
+            "14.5": 43.7
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 50.4,
+            "12": 53.5,
+            "14.5": 57.8
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 63.5,
+            "12": null,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 18.9,
+            "12": 19.8,
+            "14.5": 21.1
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 28.1,
+            "12": 29.7,
+            "14.5": 31.7
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 39.0,
+            "12": 41.3,
+            "14.5": 44.4
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 51.2,
+            "12": 54.4,
+            "14.5": 58.7
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 64.5,
+            "12": null,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 19.4,
+            "12": 20.4,
+            "14.5": 21.7
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 28.9,
+            "12": 30.5,
+            "14.5": 32.7
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 40.1,
+            "12": 42.5,
+            "14.5": 45.7
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 52.8,
+            "12": 56.1,
+            "14.5": 60.4
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 66.5,
+            "12": null,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 19.6,
+            "12": 20.6,
+            "14.5": 22.0
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 29.3,
+            "12": 31.0,
+            "14.5": 33.2
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 40.8,
+            "12": 43.2,
+            "14.5": 46.5
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 53.8,
+            "12": 57.2,
+            "14.5": 61.8
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 68.1,
+            "12": null,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 19.6,
+            "12": 20.6,
+            "14.5": 21.9
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 29.4,
+            "12": 31.0,
+            "14.5": 33.2
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 41.0,
+            "12": 43.5,
+            "14.5": 46.9
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 54.5,
+            "12": 58.0,
+            "14.5": 62.7
+          }
+        },
+        {
+          "weight": 70,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 69.3,
+            "12": null,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 15.8,
+            "12": 16.6,
+            "14.5": 17.6
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 23.2,
+            "12": 24.5,
+            "14.5": 26.2
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 31.9,
+            "12": 33.8,
+            "14.5": 36.2
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 41.7,
+            "12": 44.2,
+            "14.5": 47.6
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 52.4,
+            "12": 55.6,
+            "14.5": 60.0
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 16.3,
+            "12": 17.1,
+            "14.5": 18.2
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 24.0,
+            "12": 25.3,
+            "14.5": 27.0
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 33.0,
+            "12": 34.9,
+            "14.5": 37.4
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 43.1,
+            "12": 45.7,
+            "14.5": 49.2
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 54.1,
+            "12": 57.5,
+            "14.5": 62.1
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 16.6,
+            "12": 17.4,
+            "14.5": 18.5
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 24.4,
+            "12": 25.7,
+            "14.5": 27.5
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 33.5,
+            "12": 35.4,
+            "14.5": 38.0
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 43.8,
+            "12": 46.4,
+            "14.5": 50.0
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 55.0,
+            "12": 58.4,
+            "14.5": 63.1
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 16.8,
+            "12": 17.7,
+            "14.5": 18.8
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 24.8,
+            "12": 26.1,
+            "14.5": 27.9
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 34.0,
+            "12": 36.0,
+            "14.5": 38.6
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 44.4,
+            "12": 47.2,
+            "14.5": 50.8
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 55.9,
+            "12": 59.4,
+            "14.5": 64.1
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 17.3,
+            "12": 18.2,
+            "14.5": 19.3
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 25.5,
+            "12": 26.9,
+            "14.5": 28.7
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 35.0,
+            "12": 37.1,
+            "14.5": 39.8
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 45.8,
+            "12": 48.6,
+            "14.5": 52.3
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 57.6,
+            "12": 61.2,
+            "14.5": 66.0
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 17.5,
+            "12": 18.4,
+            "14.5": 19.5
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 25.8,
+            "12": 27.2,
+            "14.5": 29.1
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 35.6,
+            "12": 37.6,
+            "14.5": 40.4
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 46.6,
+            "12": 49.5,
+            "14.5": 53.5
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 58.8,
+            "12": 62.5,
+            "14.5": 67.6
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 17.4,
+            "12": 18.3,
+            "14.5": 19.5
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 25.8,
+            "12": 27.2,
+            "14.5": 29.1
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 35.7,
+            "12": 37.8,
+            "14.5": 40.6
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 47.0,
+            "12": 50.0,
+            "14.5": 54.0
+          }
+        },
+        {
+          "weight": 60,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 59.6,
+            "12": 63.5,
+            "14.5": 68.8
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 14.0,
+            "12": 14.6,
+            "14.5": 15.5
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 20.1,
+            "12": 21.2,
+            "14.5": 22.6
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 27.3,
+            "12": 28.8,
+            "14.5": 30.8
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 35.4,
+            "12": 37.4,
+            "14.5": 40.2
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 44.2,
+            "12": 46.9,
+            "14.5": 50.5
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 53.5,
+            "12": 56.9,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 14.4,
+            "12": 15.1,
+            "14.5": 16.0
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 20.8,
+            "12": 21.9,
+            "14.5": 23.3
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 28.2,
+            "12": 29.8,
+            "14.5": 31.9
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 36.5,
+            "12": 38.7,
+            "14.5": 41.5
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 45.6,
+            "12": 48.4,
+            "14.5": 52.2
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 55.3,
+            "12": 58.8,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 14.6,
+            "12": 15.3,
+            "14.5": 16.3
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 21.1,
+            "12": 22.2,
+            "14.5": 23.7
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 28.7,
+            "12": 30.3,
+            "14.5": 32.4
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 37.1,
+            "12": 39.3,
+            "14.5": 42.2
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 46.4,
+            "12": 49.2,
+            "14.5": 53.0
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 56.2,
+            "12": 59.8,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 14.9,
+            "12": 15.6,
+            "14.5": 16.5
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 21.5,
+            "12": 22.6,
+            "14.5": 24.0
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 29.1,
+            "12": 30.7,
+            "14.5": 32.9
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 37.7,
+            "12": 39.9,
+            "14.5": 42.9
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 47.1,
+            "12": 50.0,
+            "14.5": 53.8
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 57.1,
+            "12": 60.7,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 15.3,
+            "12": 16.0,
+            "14.5": 17.0
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 22.1,
+            "12": 23.3,
+            "14.5": 24.7
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 30.0,
+            "12": 31.6,
+            "14.5": 33.9
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 38.8,
+            "12": 41.1,
+            "14.5": 44.2
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 48.5,
+            "12": 51.5,
+            "14.5": 55.5
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 58.9,
+            "12": 62.6,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 15.4,
+            "12": 16.2,
+            "14.5": 17.2
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 22.4,
+            "12": 23.5,
+            "14.5": 25.1
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 30.4,
+            "12": 32.1,
+            "14.5": 34.4
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 39.5,
+            "12": 41.8,
+            "14.5": 45.0
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 49.4,
+            "12": 52.5,
+            "14.5": 56.7
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 60.1,
+            "12": 64.0,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 15.4,
+            "12": 16.1,
+            "14.5": 17.1
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 22.3,
+            "12": 23.5,
+            "14.5": 25.0
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 30.4,
+            "12": 32.2,
+            "14.5": 34.5
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 39.7,
+            "12": 42.1,
+            "14.5": 45.3
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 49.9,
+            "12": 53.1,
+            "14.5": 57.4
+          }
+        },
+        {
+          "weight": 50,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 61.0,
+            "12": 65.0,
+            "14.5": null
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 12.1,
+            "12": 12.7,
+            "14.5": 13.4
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 17.1,
+            "12": 18.0,
+            "14.5": 19.1
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 22.7,
+            "12": 23.9,
+            "14.5": 25.5
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 29.0,
+            "12": 30.6,
+            "14.5": 32.8
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 35.9,
+            "12": 38.0,
+            "14.5": 40.8
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 0,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 43.2,
+            "12": 45.8,
+            "14.5": 49.3
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 12.5,
+            "12": 13.1,
+            "14.5": 13.9
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 17.7,
+            "12": 18.5,
+            "14.5": 19.7
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 23.5,
+            "12": 24.7,
+            "14.5": 26.4
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 29.9,
+            "12": 31.6,
+            "14.5": 33.9
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 37.1,
+            "12": 39.2,
+            "14.5": 42.1
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 10,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 44.6,
+            "12": 47.3,
+            "14.5": 51.0
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 12.7,
+            "12": 13.3,
+            "14.5": 14.1
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 17.9,
+            "12": 18.8,
+            "14.5": 20.0
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 23.8,
+            "12": 25.1,
+            "14.5": 26.8
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 30.4,
+            "12": 32.1,
+            "14.5": 34.4
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 37.6,
+            "12": 39.9,
+            "14.5": 42.8
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 15,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 45.3,
+            "12": 48.1,
+            "14.5": 51.8
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 12.9,
+            "12": 13.5,
+            "14.5": 14.3
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 18.2,
+            "12": 19.1,
+            "14.5": 20.3
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 24.2,
+            "12": 25.5,
+            "14.5": 27.2
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 30.9,
+            "12": 32.6,
+            "14.5": 35.0
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 38.2,
+            "12": 40.5,
+            "14.5": 43.5
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 20,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 46.0,
+            "12": 48.8,
+            "14.5": 52.6
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 13.3,
+            "12": 13.9,
+            "14.5": 14.7
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 18.7,
+            "12": 19.7,
+            "14.5": 20.9
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 24.9,
+            "12": 26.3,
+            "14.5": 28.1
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 31.8,
+            "12": 33.6,
+            "14.5": 36.0
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 39.4,
+            "12": 41.7,
+            "14.5": 44.8
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 30,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 47.4,
+            "12": 50.3,
+            "14.5": 54.2
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 13.4,
+            "12": 14.0,
+            "14.5": 14.9
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 19.0,
+            "12": 19.9,
+            "14.5": 21.2
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 25.2,
+            "12": 26.6,
+            "14.5": 28.4
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 32.3,
+            "12": 34.1,
+            "14.5": 36.5
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 40.0,
+            "12": 42.4,
+            "14.5": 45.6
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 40,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 48.3,
+            "12": 51.3,
+            "14.5": 55.3
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 80,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 13.3,
+            "12": 13.9,
+            "14.5": 14.8
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 100,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 18.9,
+            "12": 19.8,
+            "14.5": 21.1
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 120,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 25.2,
+            "12": 26.6,
+            "14.5": 28.4
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 140,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 32.3,
+            "12": 34.2,
+            "14.5": 36.7
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 160,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 40.3,
+            "12": 42.7,
+            "14.5": 46.0
+          }
+        },
+        {
+          "weight": 40,
+          "weightUnit": "1000 KG",
+          "oat": 50,
+          "oatUnit": "°C",
+          "brakesOnSpeed": 180,
+          "speedUnit": "KIAS",
+          "pressureAltitude": {
+            "10": 48.7,
+            "12": 51.8,
+            "14.5": 56.0
+          }
+        }
+      ]
+    }
+  },
+  
+  "eventAdjustedBrakeEnergy": {
+    "description": "Event Adjusted Brake Energy in Millions of Foot Pounds",
+    "notes": [
+      "Observe maximum quick turnaround limit. Table shows energy per brake added by a single stop with all brakes operating. Energy is assumed to be equally distributed among the operating brakes. Total energy is the sum of residual energy plus energy added."
+    ],
+    "table2a": {
+      "tableId": "2a",
+      "description": "No Reverse Thrust",
+      "data": [
+        {
+          "event": "RTO MAX MAN",
+          "brakeEnergyPerBrake": {
+            "10": 10.0,
+            "20": 20.0,
+            "30": 30.0,
+            "40": 40.0,
+            "50": 50.0,
+            "60": 60.0
+          }
+        },
+        {
+          "event": "MAX MAN",
+          "brakeEnergyPerBrake": {
+            "10": 7.7,
+            "20": 16.2,
+            "30": 25.2,
+            "40": 34.7,
+            "50": 44.6,
+            "60": 54.7
+          }
+        },
+        {
+          "event": "MAX AUTO",
+          "brakeEnergyPerBrake": {
+            "10": 7.3,
+            "20": 15.1,
+            "30": 23.5,
+            "40": 32.4,
+            "50": 41.7,
+            "60": 51.4
+          }
+        },
+        {
+          "event": "AUTOBRAKE 3",
+          "brakeEnergyPerBrake": {
+            "10": 6.9,
+            "20": 14.2,
+            "30": 21.9,
+            "40": 29.8,
+            "50": 38.2,
+            "60": 46.9
+          }
+        },
+        {
+          "event": "AUTOBRAKE 2",
+          "brakeEnergyPerBrake": {
+            "10": 6.5,
+            "20": 13.1,
+            "30": 19.9,
+            "40": 26.9,
+            "50": 34.1,
+            "60": 41.7
+          }
+        },
+        {
+          "event": "AUTOBRAKE 1",
+          "brakeEnergyPerBrake": {
+            "10": 6.0,
+            "20": 12.0,
+            "30": 18.2,
+            "40": 24.4,
+            "50": 30.8,
+            "60": 37.5
+          }
+        }
+      ]
+    },
+    "table2b": {
+      "tableId": "2b",
+      "description": "Two Engine Reverse Thrust",
+      "data": [
+        {
+          "event": "RTO MAX MAN",
+          "brakeEnergyPerBrake": {
+            "10": 10.0,
+            "20": 20.0,
+            "30": 30.0,
+            "40": 40.0,
+            "50": 50.0,
+            "60": 60.0
+          }
+        },
+        {
+          "event": "MAX MAN",
+          "brakeEnergyPerBrake": {
+            "10": 7.1,
+            "20": 15.0,
+            "30": 23.5,
+            "40": 32.3,
+            "50": 41.5,
+            "60": 50.8
+          }
+        },
+        {
+          "event": "MAX AUTO",
+          "brakeEnergyPerBrake": {
+            "10": 5.9,
+            "20": 12.4,
+            "30": 19.6,
+            "40": 27.3,
+            "50": 35.5,
+            "60": 44.3
+          }
+        },
+        {
+          "event": "AUTOBRAKE 3",
+          "brakeEnergyPerBrake": {
+            "10": 4.1,
+            "20": 8.8,
+            "30": 14.1,
+            "40": 19.9,
+            "50": 26.3,
+            "60": 33.1
+          }
+        },
+        {
+          "event": "AUTOBRAKE 2",
+          "brakeEnergyPerBrake": {
+            "10": 2.3,
+            "20": 5.1,
+            "30": 8.2,
+            "40": 11.8,
+            "50": 15.8,
+            "60": 20.4
+          }
+        },
+        {
+          "event": "AUTOBRAKE 1",
+          "brakeEnergyPerBrake": {
+            "10": 1.6,
+            "20": 3.5,
+            "30": 5.7,
+            "40": 8.1,
+            "50": 10.9,
+            "60": 14.1
+          }
+        }
+      ]
+    }
+  },
+  "coolingTime": {
+    "table3": {
+      "tableId": "3",
+      "description": "Cooling Time (Minutes)",
+      "brakeEnergyRanges": [
+        {
+          "range": "16.4 & BELOW",
+          "gearDownInflight": {
+            "procedure": "NO SPECIAL PROCEDURE REQUIRED",
+            "time": null
+          },
+          "ground": {
+            "procedure": "REQUIRED",
+            "time": null
+          },
+          "brakeTemperatureIndication": {
+            "range": "UP TO 2.5",
+            "time": null
+          }
+        },
+        {
+          "range": "17",
+          "gearDownInflight": {
+            "procedure": "NO SPECIAL PROCEDURE REQUIRED",
+            "time": 1.0
+          },
+          "ground": {
+            "procedure": "REQUIRED",
+            "time": 6.6
+          },
+          "brakeTemperatureIndication": {
+            "range": "UP TO 2.5",
+            "time": 2.6
+          }
+        },
+        {
+          "range": "19",
+          "gearDownInflight": {
+            "procedure": "NO SPECIAL PROCEDURE REQUIRED",
+            "time": 4.0
+          },
+          "ground": {
+            "procedure": "REQUIRED",
+            "time": 16.1
+          },
+          "brakeTemperatureIndication": {
+            "range": "UP TO 2.5",
+            "time": 3.0
+          }
+        },
+        {
+          "range": "20.9",
+          "gearDownInflight": {
+            "procedure": "NO SPECIAL PROCEDURE REQUIRED",
+            "time": 5.0
+          },
+          "ground": {
+            "procedure": "REQUIRED",
+            "time": 24.2
+          },
+          "brakeTemperatureIndication": {
+            "range": "UP TO 2.5",
+            "time": 3.3
+          }
+        },
+        {
+          "range": "22.4",
+          "gearDownInflight": {
+            "procedure": "NO SPECIAL PROCEDURE REQUIRED",
+            "time": 5.6
+          },
+          "ground": {
+            "procedure": "REQUIRED",
+            "time": 30
+          },
+          "brakeTemperatureIndication": {
+            "range": "UP TO 2.5",
+            "time": 3.6
+          }
+        },
+        {
+          "range": "23.5",
+          "gearDownInflight": {
+            "procedure": "NO SPECIAL PROCEDURE REQUIRED",
+            "time": 6.0
+          },
+          "ground": {
+            "procedure": "REQUIRED",
+            "time": 34.3
+          },
+          "brakeTemperatureIndication": {
+            "range": "UP TO 2.5",
+            "time": 3.8
+          }
+        },
+        {
+          "range": "25.1",
+          "gearDownInflight": {
+            "procedure": "NO SPECIAL PROCEDURE REQUIRED",
+            "time": 6.5
+          },
+          "ground": {
+            "procedure": "REQUIRED",
+            "time": 40
+          },
+          "brakeTemperatureIndication": {
+            "range": "UP TO 2.5",
+            "time": 4.1
+          }
+        },
+        {
+          "range": "26.9",
+          "gearDownInflight": {
+            "procedure": "CAUTION",
+            "time": 7.0
+          },
+          "ground": {
+            "procedure": "REQUIRED",
+            "time": 45.8
+          },
+          "brakeTemperatureIndication": {
+            "range": "UP TO 2.5",
+            "time": 4.5
+          }
+        },
+        {
+          "range": "28.2",
+          "gearDownInflight": {
+            "procedure": "CAUTION",
+            "time": 7.3
+          },
+          "ground": {
+            "procedure": "REQUIRED",
+            "time": 50
+          },
+          "brakeTemperatureIndication": {
+            "range": "UP TO 2.5",
+            "time": 4.7
+          }
+        },
+        {
+          "range": "29.9 TO 41",
+          "gearDownInflight": {
+            "procedure": "CAUTION",
+            "time": null
+          },
+          "ground": {
+            "procedure": "REQUIRED",
+            "time": null
+          },
+          "brakeTemperatureIndication": {
+            "range": "*5.0 TO 7.1",
+            "time": null
+          }
+        },
+        {
+          "range": "41 & ABOVE",
+          "gearDownInflight": {
+            "procedure": "FUSE PLUG MELT ZONE",
+            "time": null
+          },
+          "ground": {
+            "procedure": "REQUIRED",
+            "time": null
+          },
+          "brakeTemperatureIndication": {
+            "range": "7.1 & ABOVE",
+            "time": null
+          }
+        }
+      ]
+    }
+  },
+  "importantNotes": [
+    {
+      "section": "brakeEnergy",
+      "note": "Observe maximum quick turnaround limit. Table shows energy per brake added by a single stop with all brakes operating. Energy is assumed to be equally distributed among the operating brakes. Total energy is the sum of residual energy plus energy added."
+    },
+    {
+      "section": "brakeEnergy",
+      "note": "Add 2.0 million foot pounds per brake for each taxi mile, or add 3.0 million foot pounds per brake for each taxi mile if OAT is below -25°C or above 30°C."
+    },
+    {
+      "section": "coolingCaution",
+      "note": "When in caution zone, wheel fuse plugs may melt. Delay takeoff and inspect after one hour. If overheat occurs after takeoff, extend gear soon for at least 7 minutes."
+    },
+    {
+      "section": "coolingFusePlugMelt",
+      "note": "When in fuse plug melt zone, clear runway immediately. Unless required, do not set parking brake. Do not approach gear or attempt taxi for one hour. Tire, wheel and brake replacement may be required. If overheat occurs after takeoff, extend gear soon for at least 12 minutes."
+    },
+    {
+      "section": "brakeTemperatureDisplay",
+      "note": "Brake temperature indication on Multifunction Display may be used 10 to 15 minutes after airplane has come to a complete stop, or in flight with gear retracted, to determine recommended cooling schedule."
+    },
+    {
+      "section": "tbms",
+      "note": "*For airplanes with TBMS (combined Tire Pressure and Brake Temperature Monitoring System), the beginning of the caution range can vary from 5.0 to 6.2 depending on wheel temperature."
+    }
+  ]
+}
