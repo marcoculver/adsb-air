@@ -1204,6 +1204,18 @@
             #tab-wx .snowtam-input {
                 font-size: 14px;
             }
+            #tab-wx .snowtam-decoded {
+                overflow-x: auto;
+                max-width: 100%;
+            }
+            #tab-wx details {
+                overflow: hidden;
+                max-width: 100%;
+            }
+            #tab-wx .snowtam-runway {
+                overflow-x: auto;
+                min-width: 0;
+            }
             #tab-wx .friction-table table {
                 font-size: 0.75rem;
             }
@@ -3437,9 +3449,11 @@
                             </div>
                             <div class="input-group">
                                 <label class="input-label">Wind (220/13 or 220/3m)</label>
-                                <button class="input-btn" id="xwind-opt-btn" onclick="openOPTWindPicker()" style="max-width:100%; font-size: 0.85rem;">---/--</button>
+                                <button class="input-btn" id="xwind-opt-btn" onclick="openWindModal()" style="max-width:100%; font-size: 0.85rem;">---/--</button>
+                                <div id="xwind-conversion" style="font-size: 0.65rem; color: #888; text-align: center; margin-top: 2px; display: none;"></div>
                                 <input type="hidden" id="xwind-dir" value="">
                                 <input type="hidden" id="xwind-spd" value="">
+                                <input type="hidden" id="xwind-original" value="">
                             </div>
                         </div>
                         <div class="input-grid-2" style="margin-top:8px">
@@ -3500,15 +3514,15 @@
                     <div class="section">
                         <div class="section-title" style="font-size: 0.8rem;">RWYCC / Crosswind Limits (B737 NG/MAX)</div>
                         <div class="friction-table">
-                            <table style="font-size: 0.7rem;">
+                            <table style="font-size: 0.7rem;" id="rwcc-table">
                                 <tr><th>CC</th><th>Condition</th><th>Braking</th><th style="color:#FF8200">T/O</th><th style="color:#00d4ff">LDG</th></tr>
-                                <tr><td>6</td><td>Dry</td><td class="grf-good">Dry</td><td>33</td><td>37</td></tr>
-                                <tr><td>5</td><td>Wet/Frost/≤3mm</td><td class="grf-good">Good</td><td>25</td><td>37</td></tr>
-                                <tr><td>4</td><td>Compact snow ≤-15°C</td><td class="grf-medium">Med-Good</td><td>22</td><td>35</td></tr>
-                                <tr><td>3</td><td>Wet snow/>3mm</td><td class="grf-medium">Medium</td><td>20</td><td>25</td></tr>
-                                <tr><td>2</td><td>Water/Slush</td><td class="grf-poor">Med-Poor</td><td>15</td><td>17</td></tr>
-                                <tr><td>1</td><td>Ice</td><td class="grf-bad">Poor</td><td>13</td><td>15</td></tr>
-                                <tr><td>0</td><td>Wet ice/Water on ice</td><td class="grf-bad">&lt;Poor</td><td colspan="2" style="color:#ff5252">OPS PROHIBITED</td></tr>
+                                <tr id="rwcc-row-6"><td>6</td><td>Dry</td><td class="grf-good">Dry</td><td>33</td><td>37</td></tr>
+                                <tr id="rwcc-row-5"><td>5</td><td>Wet/Frost/≤3mm</td><td class="grf-good">Good</td><td>25</td><td>37</td></tr>
+                                <tr id="rwcc-row-4"><td>4</td><td>Compact snow ≤-15°C</td><td class="grf-medium">Med-Good</td><td>22</td><td>35</td></tr>
+                                <tr id="rwcc-row-3"><td>3</td><td>Wet snow/>3mm</td><td class="grf-medium">Medium</td><td>20</td><td>25</td></tr>
+                                <tr id="rwcc-row-2"><td>2</td><td>Water/Slush</td><td class="grf-poor">Med-Poor</td><td>15</td><td>17</td></tr>
+                                <tr id="rwcc-row-1"><td>1</td><td>Ice</td><td class="grf-bad">Poor</td><td>13</td><td>15</td></tr>
+                                <tr id="rwcc-row-0"><td>0</td><td>Wet ice/Water on ice</td><td class="grf-bad">&lt;Poor</td><td colspan="2" style="color:#ff5252">OPS PROHIBITED</td></tr>
                             </table>
                         </div>
                     </div>
@@ -5363,6 +5377,38 @@
                         Loading Min Fuel database...
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wind Picker Modal -->
+    <div class="modal-overlay" id="wind-picker-modal">
+        <div class="number-picker" style="max-width: 320px;">
+            <div class="picker-title">Enter Wind</div>
+            <div class="picker-display" style="flex-direction: column; gap: 5px;">
+                <span class="picker-value" id="wind-picker-value" style="font-size: 1.8rem; font-family: monospace;">---/--</span>
+                <span id="wind-picker-conversion" style="font-size: 0.75rem; color: #888;"></span>
+            </div>
+            <div class="picker-buttons">
+                <button class="picker-btn" onclick="windPickerAppend('1')">1</button>
+                <button class="picker-btn" onclick="windPickerAppend('2')">2</button>
+                <button class="picker-btn" onclick="windPickerAppend('3')">3</button>
+                <button class="picker-btn" onclick="windPickerAppend('4')">4</button>
+                <button class="picker-btn" onclick="windPickerAppend('5')">5</button>
+                <button class="picker-btn" onclick="windPickerAppend('6')">6</button>
+                <button class="picker-btn" onclick="windPickerAppend('7')">7</button>
+                <button class="picker-btn" onclick="windPickerAppend('8')">8</button>
+                <button class="picker-btn" onclick="windPickerAppend('9')">9</button>
+                <button class="picker-btn" onclick="windPickerAppend('/')" style="background: rgba(255,130,0,0.3); color: #FF8200; font-size: 1.5rem; font-weight: bold;">/</button>
+                <button class="picker-btn" onclick="windPickerAppend('0')">0</button>
+                <button class="picker-btn" onclick="windPickerAppend('M')" style="background: rgba(0,212,255,0.3); color: #00d4ff; font-weight: bold;">M</button>
+                <button class="picker-btn clear" onclick="windPickerClear()">C</button>
+                <button class="picker-btn" onclick="windPickerBackspace()">&larr;</button>
+                <button class="picker-btn" onclick="windPickerAppend('00')" style="font-size: 0.9rem;">00</button>
+            </div>
+            <div class="picker-actions">
+                <button class="picker-cancel" onclick="closeWindPicker()">Cancel</button>
+                <button class="picker-confirm" onclick="confirmWindPicker()">OK</button>
             </div>
         </div>
     </div>
@@ -11967,52 +12013,133 @@
             checkCrosswindLimit();
         }
 
-        function openOPTWindPicker() {
-            const currentDir = document.getElementById('xwind-dir').value || '';
-            const currentSpd = document.getElementById('xwind-spd').value || '';
-            const currentVal = currentDir && currentSpd ? `${currentDir}/${currentSpd}` : '';
+        // ============ WIND PICKER MODAL ============
+        var windPickerValue = '';
 
-            const input = prompt('Enter wind in OPT format:\n• 220/13 (direction/speed in kt)\n• 220/3m (direction/speed in m/s)\n\nExamples: 270/15, 180/5m', currentVal);
+        function openWindModal() {
+            const currentOriginal = document.getElementById('xwind-original').value || '';
+            windPickerValue = currentOriginal || '';
+            updateWindPickerDisplay();
+            document.getElementById('wind-picker-modal').classList.add('active');
+        }
 
-            if (input !== null && input.trim()) {
-                // Parse OPT format: DIR/SPD or DIR/SPDm
-                const match = input.trim().match(/^(\d{1,3})\/(\d{1,3})(m)?$/i);
-                if (match) {
-                    let dir = parseInt(match[1]);
-                    let spd = parseInt(match[2]);
-                    const isMetersPerSec = match[3] && match[3].toLowerCase() === 'm';
+        function closeWindPicker() {
+            document.getElementById('wind-picker-modal').classList.remove('active');
+        }
 
-                    // Convert m/s to knots if needed (1 m/s ≈ 1.944 kt)
-                    if (isMetersPerSec) {
-                        spd = Math.round(spd * 1.944);
-                    }
+        function windPickerAppend(char) {
+            // Only allow one slash
+            if (char === '/' && windPickerValue.includes('/')) return;
+            // Only allow M after slash and numbers
+            if (char === 'M' && (!windPickerValue.includes('/') || windPickerValue.endsWith('M'))) return;
+            // Don't allow numbers after M
+            if (windPickerValue.endsWith('M') && char !== '/' && char !== 'M') return;
 
-                    // Validate direction
-                    if (dir > 360) dir = 360;
-                    if (dir === 0) dir = 360;
+            windPickerValue += char;
+            updateWindPickerDisplay();
+        }
 
-                    // Set values
-                    document.getElementById('xwind-dir').value = dir.toString();
-                    document.getElementById('xwind-dir-btn').textContent = dir.toString().padStart(3, '0') + '°';
-                    document.getElementById('xwind-spd').value = spd.toString();
-                    document.getElementById('xwind-spd-btn').textContent = spd + ' kt';
-                    document.getElementById('xwind-opt-btn').textContent = `${dir.toString().padStart(3, '0')}/${spd}`;
+        function windPickerBackspace() {
+            windPickerValue = windPickerValue.slice(0, -1);
+            updateWindPickerDisplay();
+        }
 
-                    calculateCrosswind();
+        function windPickerClear() {
+            windPickerValue = '';
+            updateWindPickerDisplay();
+        }
+
+        function updateWindPickerDisplay() {
+            const displayEl = document.getElementById('wind-picker-value');
+            const convEl = document.getElementById('wind-picker-conversion');
+
+            displayEl.textContent = windPickerValue || '---/--';
+
+            // Show conversion preview if valid
+            const match = windPickerValue.match(/^(\d{1,3})\/(\d{1,3})(M)?$/i);
+            if (match) {
+                const isMeters = match[3] && match[3].toUpperCase() === 'M';
+                if (isMeters) {
+                    const ktSpeed = Math.round(parseInt(match[2]) * 1.944);
+                    convEl.textContent = '= ' + ktSpeed + ' kt';
+                    convEl.style.display = 'block';
                 } else {
-                    alert('Invalid format. Use: 220/13 or 220/3m');
+                    convEl.textContent = '';
+                    convEl.style.display = 'none';
                 }
+            } else {
+                convEl.textContent = '';
+                convEl.style.display = 'none';
             }
         }
 
+        function confirmWindPicker() {
+            if (!windPickerValue) {
+                closeWindPicker();
+                return;
+            }
+
+            // Parse format: DIR/SPD or DIR/SPDM
+            const match = windPickerValue.match(/^(\d{1,3})\/(\d{1,3})(M)?$/i);
+            if (match) {
+                let dir = parseInt(match[1]);
+                let spd = parseInt(match[2]);
+                const isMetersPerSec = match[3] && match[3].toUpperCase() === 'M';
+                const originalFormat = windPickerValue;
+
+                // Store original format
+                document.getElementById('xwind-original').value = originalFormat;
+
+                // Calculate kt speed
+                let ktSpeed = spd;
+                if (isMetersPerSec) {
+                    ktSpeed = Math.round(spd * 1.944);
+                }
+
+                // Validate direction
+                if (dir > 360) dir = 360;
+                if (dir === 0) dir = 360;
+
+                // Set values
+                document.getElementById('xwind-dir').value = dir.toString();
+                document.getElementById('xwind-dir-btn').textContent = dir.toString().padStart(3, '0') + '°';
+                document.getElementById('xwind-spd').value = ktSpeed.toString();
+                document.getElementById('xwind-spd-btn').textContent = ktSpeed + ' kt';
+
+                // Show original format on button
+                document.getElementById('xwind-opt-btn').textContent = originalFormat;
+
+                // Show conversion if m/s was used
+                const convEl = document.getElementById('xwind-conversion');
+                if (isMetersPerSec) {
+                    convEl.textContent = '= ' + ktSpeed + ' kt';
+                    convEl.style.display = 'block';
+                } else {
+                    convEl.style.display = 'none';
+                }
+
+                calculateCrosswind();
+                closeWindPicker();
+            } else {
+                alert('Invalid format. Use: 220/13 or 220/3M');
+            }
+        }
+
+        function openOPTWindPicker() {
+            // Legacy function - redirect to new modal
+            openWindModal();
+        }
+
         function clearCrosswind() {
-            ['xwind-rwy', 'xwind-dir', 'xwind-spd', 'xwind-gust'].forEach(id => {
+            ['xwind-rwy', 'xwind-dir', 'xwind-spd', 'xwind-gust', 'xwind-original'].forEach(id => {
                 document.getElementById(id).value = '';
             });
             document.getElementById('xwind-rwy-btn').textContent = '---°';
             document.getElementById('xwind-dir-btn').textContent = '---°';
             document.getElementById('xwind-spd-btn').textContent = '-- kt';
             document.getElementById('xwind-gust-btn').textContent = '-- kt';
+            document.getElementById('xwind-opt-btn').textContent = '---/--';
+            document.getElementById('xwind-conversion').style.display = 'none';
             document.getElementById('headwind-val').textContent = '--';
             document.getElementById('crosswind-val').textContent = '--';
             document.getElementById('runway-svg').setAttribute('transform', 'rotate(0, 100, 100)');
@@ -13597,7 +13724,30 @@
 
             // Update limitation warnings
             updateLimitationWarnings();
+
+            // Highlight current RWCC row in reference table
+            highlightRWCCTableRow();
             } catch(e) { console.error('updateRWYCCDisplay error:', e); }
+        }
+
+        function highlightRWCCTableRow() {
+            // Clear all highlights
+            for (var i = 0; i <= 6; i++) {
+                var row = document.getElementById('rwcc-row-' + i);
+                if (row) {
+                    row.style.background = '';
+                    row.style.boxShadow = '';
+                }
+            }
+
+            // Highlight current RWYCC row
+            if (currentRWYCC !== null) {
+                var currentRow = document.getElementById('rwcc-row-' + currentRWYCC);
+                if (currentRow) {
+                    currentRow.style.background = 'rgba(255, 130, 0, 0.25)';
+                    currentRow.style.boxShadow = 'inset 0 0 0 2px #FF8200';
+                }
+            }
         }
 
         function toggleLimitation(type) {
