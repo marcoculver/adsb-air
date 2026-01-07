@@ -9599,14 +9599,14 @@
 
             // CAT IIIA first (better minima)
             if (catIIIA.length > 0) {
-                html += '<div class="ops-category-header" style="background: rgba(0, 255, 136, 0.2); color: #00ff88; padding: 6px 10px; border-radius: 6px 6px 0 0; font-weight: bold; text-align: center;">CAT IIIA</div>';
+                html += '<div class="ops-category-header" style="background: rgba(255, 100, 100, 0.2); color: #ff6464; padding: 6px 10px; border-radius: 6px 6px 0 0; font-weight: bold; text-align: center;">CAT IIIA</div>';
                 html += '<div class="ops-approaches-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 6px; padding: 8px; background: rgba(0, 0, 0, 0.2); margin-bottom: 10px;">';
                 catIIIA.forEach(function(app) {
                     var restrictedMark = app.restricted ? '<span style="color: #ffd700;">*</span>' : '';
-                    html += '<div class="ops-approach-item" style="background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.3); border-radius: 6px; padding: 8px; text-align: center;">';
+                    html += '<div class="ops-approach-item" style="background: rgba(255, 100, 100, 0.1); border: 1px solid rgba(255, 100, 100, 0.3); border-radius: 6px; padding: 8px; text-align: center;">';
                     html += '<div style="font-size: 1.1rem; font-weight: bold; color: #fff;">RWY ' + app.runway + restrictedMark + '</div>';
-                    html += '<div style="font-size: 0.75rem; color: #888; margin-top: 4px;">DH: <span style="color: #00ff88;">' + app.dh_ft + ' ft</span></div>';
-                    html += '<div style="font-size: 0.75rem; color: #888;">RVR: <span style="color: #00ff88;">' + app.rvr_m + ' m</span></div>';
+                    html += '<div style="font-size: 0.75rem; color: #888; margin-top: 4px;">DH: <span style="color: #ff6464;">' + app.dh_ft + ' ft</span></div>';
+                    html += '<div style="font-size: 0.75rem; color: #888;">RVR: <span style="color: #ff6464;">' + app.rvr_m + ' m</span></div>';
                     html += '</div>';
                 });
                 html += '</div>';
