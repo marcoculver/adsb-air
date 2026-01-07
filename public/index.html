@@ -1849,10 +1849,15 @@
         .fuel-row.fuel-row-exceed {
             background: rgba(255, 68, 68, 0.25) !important;
             border-left: 3px solid #ff4444;
+            animation: fuel-flash 1s ease-in-out infinite;
         }
         .fuel-row.fuel-row-warn {
             background: rgba(255, 170, 0, 0.15) !important;
             border-left: 3px solid #ffaa00;
+        }
+        @keyframes fuel-flash {
+            0%, 100% { background: rgba(255, 68, 68, 0.15) !important; }
+            50% { background: rgba(255, 68, 68, 0.45) !important; }
         }
 
         /* Warning summary box */
