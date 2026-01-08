@@ -1750,13 +1750,26 @@
         }
         .fuel-row {
             display: grid;
-            grid-template-columns: 1fr 80px 70px;
+            grid-template-columns: 1fr 90px 35px 60px;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         @media (min-width: 400px) {
             .fuel-row {
-                grid-template-columns: 1fr 90px 80px;
+                grid-template-columns: 1fr 100px 40px 70px;
             }
+        }
+        .fuel-limit-label {
+            font-size: 0.7rem;
+            color: #666;
+            text-align: right;
+        }
+        .fuel-limit {
+            font-size: 0.75rem;
+            color: #666;
+            text-align: right;
         }
         .fuel-header {
             background: rgba(100, 100, 100, 0.4);
@@ -1774,19 +1787,20 @@
             background: rgba(0, 0, 0, 0.2);
         }
         .fuel-label {
-            padding: 8px 10px;
             color: #999;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
         .fuel-bold {
             font-weight: bold;
             color: #ccc;
         }
         .fuel-value {
-            padding: 8px 6px;
             text-align: center;
             color: #aaa;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            padding: 6px 4px;
+            background: rgba(100, 100, 100, 0.3);
+            border-radius: 4px;
         }
         .fuel-calc {
             color: #aaa;
@@ -1808,7 +1822,7 @@
             background: rgba(0, 0, 0, 0.3);
         }
 
-        .fuel-input {
+        button.fuel-input {
             width: 100%;
             padding: 6px 4px;
             font-size: 0.85rem;
@@ -1819,20 +1833,10 @@
             font-family: 'Courier New', monospace;
             text-align: center;
             box-sizing: border-box;
+            cursor: pointer;
         }
-        .fuel-input:focus {
-            outline: none;
-            border-color: #ffcc00;
-            background: rgba(255, 255, 0, 0.25);
-        }
-        /* Hide spinner buttons */
-        .fuel-input::-webkit-outer-spin-button,
-        .fuel-input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        .fuel-input[type=number] {
-            -moz-appearance: textfield;
+        button.fuel-input:active {
+            background: rgba(255, 255, 0, 0.3);
         }
 
         /* Limit warning colors */
@@ -1847,9 +1851,9 @@
 
         /* Row highlighting for exceeded limits */
         .fuel-row.fuel-row-exceed {
-            background: rgba(255, 68, 68, 0.25) !important;
+            background: rgba(255, 68, 68, 0.2) !important;
             border-left: 3px solid #ff4444;
-            animation: fuel-flash 1s ease-in-out infinite;
+            animation: fuel-flash 2s ease-in-out infinite;
         }
         .fuel-row.fuel-row-warn {
             background: rgba(255, 170, 0, 0.15) !important;
@@ -1857,7 +1861,7 @@
         }
         @keyframes fuel-flash {
             0%, 100% { background: rgba(255, 68, 68, 0.15) !important; }
-            50% { background: rgba(255, 68, 68, 0.45) !important; }
+            50% { background: rgba(255, 68, 68, 0.3) !important; }
         }
 
         /* Warning summary box */
@@ -3692,6 +3696,101 @@
         <!-- Fuel Tab -->
         <div class="tab-content" id="tab-fuel">
             <div class="fdp-container">
+                <!-- Fuel Simple Calculator -->
+                <div class="fdp-section" id="fuel-simple-section">
+                    <div class="section-title">Fuel Simple</div>
+
+                    <!-- Aircraft Type Selector -->
+                    <div style="display:flex; gap:8px; margin-bottom:12px; justify-content:center;">
+                        <button class="fuel-ac-btn active" id="fuel-ac-b738" onclick="selectFuelAircraft('B738')">B738</button>
+                        <button class="fuel-ac-btn" id="fuel-ac-b38m" onclick="selectFuelAircraft('B38M')">B38M</button>
+                        <button class="fuel-ac-btn" id="fuel-ac-b39m" onclick="selectFuelAircraft('B39M')">B39M</button>
+                    </div>
+
+                    <!-- Warnings -->
+                    <div class="fuel-warnings" id="fuel-warnings" style="display:none;"></div>
+
+                    <!-- Calculator Table -->
+                    <div class="fuel-table">
+                        <div class="fuel-row" id="fuel-row-req-ldw">
+                            <div class="fuel-label">Req Landing Weight</div>
+                            <button class="input-btn fuel-input" id="fuel-req-ldw-btn" onclick="openFuelSimplePicker('fuel-req-ldw', 'Req Landing Weight')">0</button>
+                            <div class="fuel-limit-label">Limit</div>
+                            <div class="fuel-limit" id="fuel-limit-ldw">66,360</div>
+                        </div>
+                        <div class="fuel-row" id="fuel-row-taxi">
+                            <div class="fuel-label">Taxi Fuel</div>
+                            <button class="input-btn fuel-input" id="fuel-taxi-btn" onclick="openFuelSimplePicker('fuel-taxi', 'Taxi Fuel')">0</button>
+                            <div class="fuel-limit-label"></div>
+                            <div class="fuel-limit"></div>
+                        </div>
+                        <div class="fuel-row" id="fuel-row-trip">
+                            <div class="fuel-label">Trip Fuel</div>
+                            <button class="input-btn fuel-input" id="fuel-trip-btn" onclick="openFuelSimplePicker('fuel-trip', 'Trip Fuel')">0</button>
+                            <div class="fuel-limit-label"></div>
+                            <div class="fuel-limit"></div>
+                        </div>
+                        <div class="fuel-row fuel-row-calc" id="fuel-row-max-allowed">
+                            <div class="fuel-label">Max Allowed Fuel</div>
+                            <div class="fuel-value fuel-calc" id="fuel-max-allowed">---</div>
+                            <div class="fuel-limit-label">Tank</div>
+                            <div class="fuel-limit" id="fuel-limit-tank">20,894</div>
+                        </div>
+                        <div class="fuel-row" id="fuel-row-decision-zfw">
+                            <div class="fuel-label">Decision ZFW</div>
+                            <button class="input-btn fuel-input" id="fuel-decision-zfw-btn" onclick="openFuelSimplePicker('fuel-decision-zfw', 'Decision ZFW')">0</button>
+                            <div class="fuel-limit-label">Limit</div>
+                            <div class="fuel-limit" id="fuel-limit-zfw">62,731</div>
+                        </div>
+                        <div class="fuel-row" id="fuel-row-final-block">
+                            <div class="fuel-label">Final Block Fuel</div>
+                            <button class="input-btn fuel-input" id="fuel-final-block-btn" onclick="openFuelSimplePicker('fuel-final-block', 'Final Block Fuel')">0</button>
+                            <div class="fuel-limit-label"></div>
+                            <div class="fuel-limit"></div>
+                        </div>
+                        <div class="fuel-row fuel-row-calc" id="fuel-row-taxi-weight">
+                            <div class="fuel-label">Taxi Weight</div>
+                            <div class="fuel-value fuel-calc" id="fuel-taxi-weight">---</div>
+                            <div class="fuel-limit-label">Limit</div>
+                            <div class="fuel-limit" id="fuel-limit-taxi">79,242</div>
+                        </div>
+                        <div class="fuel-row fuel-row-calc" id="fuel-row-tow">
+                            <div class="fuel-label">TOW</div>
+                            <div class="fuel-value fuel-calc" id="fuel-tow">---</div>
+                            <div class="fuel-limit-label">Limit</div>
+                            <div class="fuel-limit" id="fuel-limit-tow">79,015</div>
+                        </div>
+                        <div class="fuel-row fuel-row-calc" id="fuel-row-ldw">
+                            <div class="fuel-label">LDW</div>
+                            <div class="fuel-value fuel-calc" id="fuel-ldw">---</div>
+                            <div class="fuel-limit-label">Limit</div>
+                            <div class="fuel-limit" id="fuel-limit-ldw-calc">66,360</div>
+                        </div>
+                        <div class="fuel-row" id="fuel-row-updated-zfw">
+                            <div class="fuel-label">Updated ZFW</div>
+                            <button class="input-btn fuel-input" id="fuel-updated-zfw-btn" onclick="openFuelSimplePicker('fuel-updated-zfw', 'Updated ZFW')">0</button>
+                            <div class="fuel-limit-label">Limit</div>
+                            <div class="fuel-limit" id="fuel-limit-zfw2">62,731</div>
+                        </div>
+                        <div class="fuel-row fuel-row-calc" id="fuel-row-arrival">
+                            <div class="fuel-label">Arrival Fuel</div>
+                            <div class="fuel-value fuel-calc" id="fuel-arrival">---</div>
+                            <div class="fuel-limit-label"></div>
+                            <div class="fuel-limit"></div>
+                        </div>
+                    </div>
+
+                    <!-- Hidden inputs for values -->
+                    <input type="hidden" id="fuel-req-ldw" value="">
+                    <input type="hidden" id="fuel-taxi" value="">
+                    <input type="hidden" id="fuel-trip" value="">
+                    <input type="hidden" id="fuel-decision-zfw" value="">
+                    <input type="hidden" id="fuel-final-block" value="">
+                    <input type="hidden" id="fuel-updated-zfw" value="">
+
+                    <button class="preset-btn" onclick="clearFuelSimple()" style="margin-top:12px; width:100%;">Clear</button>
+                </div>
+
                 <!-- Input Block -->
                 <div class="fdp-section">
                     <div class="section-title">Fuel Inputs</div>
@@ -3846,168 +3945,6 @@
                         </div>
                     </div>
                     <button class="clear-btn" id="conv-clear" style="margin-top:10px">Clear Converter</button>
-                </div>
-
-                <!-- Fuel Simple Calculator -->
-                <div class="fdp-section">
-                    <div class="section-title">Fuel Simple</div>
-
-                    <!-- Aircraft Type Selector -->
-                    <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;">
-                        <button id="fuel-ac-b738" class="fuel-ac-btn active" onclick="selectFuelAircraft('B738')">B738</button>
-                        <button id="fuel-ac-b38m" class="fuel-ac-btn" onclick="selectFuelAircraft('B38M')">B38M</button>
-                        <button id="fuel-ac-b39m" class="fuel-ac-btn" onclick="selectFuelAircraft('B39M')">B39M</button>
-                    </div>
-
-                    <!-- Warning Summary -->
-                    <div id="fuel-warnings" class="fuel-warnings" style="display: none;"></div>
-
-                    <!-- Calculator Table -->
-                    <div class="fuel-table">
-                        <!-- Header Row -->
-                        <div class="fuel-row fuel-header">
-                            <div class="fuel-label">AC Type</div>
-                            <div class="fuel-value" id="fuel-ac-display">B738</div>
-                            <div class="fuel-limit-col">Limit</div>
-                        </div>
-
-                        <!-- Req Landing Weight -->
-                        <div class="fuel-row" id="fuel-row-req-ldw">
-                            <div class="fuel-label">Req Landing Weight</div>
-                            <div class="fuel-value">
-                                <input type="number" id="fuel-req-ldw" class="fuel-input" oninput="calculateFuelSimple()" onfocus="this.value=''">
-                            </div>
-                            <div class="fuel-limit-col fuel-limit-value" id="fuel-limit-ldw">66,360</div>
-                        </div>
-
-                        <!-- Spacer -->
-                        <div class="fuel-spacer"></div>
-
-                        <!-- Taxi Fuel -->
-                        <div class="fuel-row">
-                            <div class="fuel-label">Taxi Fuel</div>
-                            <div class="fuel-value">
-                                <input type="number" id="fuel-taxi" class="fuel-input" oninput="calculateFuelSimple()" onfocus="this.value=''">
-                            </div>
-                            <div class="fuel-limit-col"></div>
-                        </div>
-
-                        <!-- Trip Fuel -->
-                        <div class="fuel-row">
-                            <div class="fuel-label">Trip Fuel</div>
-                            <div class="fuel-value">
-                                <input type="number" id="fuel-trip" class="fuel-input" oninput="calculateFuelSimple()" onfocus="this.value=''">
-                            </div>
-                            <div class="fuel-limit-col"></div>
-                        </div>
-
-                        <!-- Decision ZFW -->
-                        <div class="fuel-row" id="fuel-row-decision-zfw">
-                            <div class="fuel-label fuel-bold">Decision ZFW</div>
-                            <div class="fuel-value">
-                                <input type="number" id="fuel-decision-zfw" class="fuel-input" oninput="calculateFuelSimple()" onfocus="this.value=''">
-                            </div>
-                            <div class="fuel-limit-col fuel-limit-value" id="fuel-limit-zfw">62,731</div>
-                        </div>
-
-                        <!-- Spacer -->
-                        <div class="fuel-spacer"></div>
-
-                        <!-- Max Allowed Fuel - highlighted section -->
-                        <div class="fuel-row fuel-highlight" id="fuel-row-max-allowed">
-                            <div class="fuel-label fuel-bold">Max Allowed Fuel</div>
-                            <div class="fuel-value fuel-calc" id="fuel-max-allowed">---</div>
-                            <div class="fuel-limit-col fuel-limit-value" id="fuel-limit-tank">20,894</div>
-                        </div>
-
-                        <!-- Spacer -->
-                        <div class="fuel-spacer"></div>
-
-                        <!-- Taxi Weight -->
-                        <div class="fuel-row" id="fuel-row-taxi-weight">
-                            <div class="fuel-label">Taxi Weight</div>
-                            <div class="fuel-value fuel-calc" id="fuel-taxi-weight">---</div>
-                            <div class="fuel-limit-col fuel-limit-value" id="fuel-limit-taxi">79,242</div>
-                        </div>
-
-                        <!-- Take Off Weight -->
-                        <div class="fuel-row" id="fuel-row-tow">
-                            <div class="fuel-label">Take Off Weight</div>
-                            <div class="fuel-value fuel-calc" id="fuel-tow">---</div>
-                            <div class="fuel-limit-col fuel-limit-value" id="fuel-limit-tow">79,015</div>
-                        </div>
-
-                        <!-- Landing Weight -->
-                        <div class="fuel-row" id="fuel-row-ldw">
-                            <div class="fuel-label">Landing Weight</div>
-                            <div class="fuel-value fuel-calc" id="fuel-ldw">---</div>
-                            <div class="fuel-limit-col fuel-limit-value" id="fuel-limit-ldw-calc">66,360</div>
-                        </div>
-
-                        <!-- Arrival Fuel -->
-                        <div class="fuel-row">
-                            <div class="fuel-label">Arrival Fuel</div>
-                            <div class="fuel-value fuel-calc" id="fuel-arrival">---</div>
-                            <div class="fuel-limit-col"></div>
-                        </div>
-
-                        <!-- Spacer -->
-                        <div class="fuel-spacer-lg"></div>
-
-                        <!-- Final Block Fuel -->
-                        <div class="fuel-row">
-                            <div class="fuel-label fuel-bold">Final Block Fuel</div>
-                            <div class="fuel-value">
-                                <input type="number" id="fuel-final-block" class="fuel-input" oninput="calculateFuelSimple()" onfocus="this.value=''">
-                            </div>
-                            <div class="fuel-limit-col"></div>
-                        </div>
-
-                        <!-- Updated ZFW -->
-                        <div class="fuel-row" id="fuel-row-updated-zfw">
-                            <div class="fuel-label fuel-bold">Updated ZFW</div>
-                            <div class="fuel-value">
-                                <input type="number" id="fuel-updated-zfw" class="fuel-input" oninput="calculateFuelSimple()" onfocus="this.value=''">
-                            </div>
-                            <div class="fuel-limit-col"></div>
-                        </div>
-
-                        <!-- ZFW Difference -->
-                        <div class="fuel-row" id="fuel-row-zfw-diff">
-                            <div class="fuel-label">ZFW Difference</div>
-                            <div class="fuel-value fuel-calc" id="fuel-zfw-diff">---</div>
-                            <div class="fuel-limit-col fuel-limit-value">500</div>
-                        </div>
-
-                        <!-- Spacer -->
-                        <div class="fuel-spacer"></div>
-
-                        <!-- Final Take Off Weight -->
-                        <div class="fuel-row" id="fuel-row-final-tow">
-                            <div class="fuel-label fuel-bold">Final Take Off Weight</div>
-                            <div class="fuel-value fuel-calc fuel-bold" id="fuel-final-tow">---</div>
-                            <div class="fuel-limit-col fuel-limit-value" id="fuel-limit-tow-final">79,015</div>
-                        </div>
-
-                        <!-- Final Landing Weight -->
-                        <div class="fuel-row" id="fuel-row-final-ldw">
-                            <div class="fuel-label fuel-bold">Final Landing Weight</div>
-                            <div class="fuel-value fuel-calc fuel-bold" id="fuel-final-ldw">---</div>
-                            <div class="fuel-limit-col fuel-limit-value" id="fuel-limit-ldw-final">66,360</div>
-                        </div>
-
-                        <!-- Final Arrival Fuel -->
-                        <div class="fuel-row">
-                            <div class="fuel-label">Arrival Fuel</div>
-                            <div class="fuel-value fuel-calc" id="fuel-final-arrival">---</div>
-                            <div class="fuel-limit-col"></div>
-                        </div>
-                    </div>
-
-                    <!-- Clear Button -->
-                    <div style="text-align: center; margin-top: 12px;">
-                        <button class="clear-btn" onclick="clearFuelSimple()">Clear</button>
-                    </div>
                 </div>
 
                 <button class="clear-btn" id="fuel-clear" style="margin-top:15px">Clear All Fuel Data</button>
@@ -5705,8 +5642,9 @@
 
                     <!-- Aircraft Selection -->
                     <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 8px;">
-                        <button id="brake-ac-max" onclick="selectBrakeAircraft('max')" style="padding: 6px 16px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s; background: #FF8200; color: #000; border: 1px solid #FF8200;">737-8</button>
-                        <button id="brake-ac-ng" onclick="selectBrakeAircraft('ng')" style="padding: 6px 16px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s; background: transparent; color: #888; border: 1px solid #444;">737-800</button>
+                        <button id="brake-ac-max8" onclick="selectBrakeAircraft('max8')" style="padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s; background: #FF8200; color: #000; border: 1px solid #FF8200;">737-8</button>
+                        <button id="brake-ac-max9" onclick="selectBrakeAircraft('max9')" style="padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s; background: transparent; color: #888; border: 1px solid #444;">737-9</button>
+                        <button id="brake-ac-ng" onclick="selectBrakeAircraft('ng')" style="padding: 6px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s; background: transparent; color: #888; border: 1px solid #444;">737-800</button>
                     </div>
                     <!-- Brake Type Selection (NG only) -->
                     <div id="brake-type-selector" style="display: none; justify-content: center; gap: 8px; margin-bottom: 8px;">
@@ -9971,9 +9909,10 @@
             });
 
         // ============ BRAKE COOLING DATABASE ============
-        var brakeCoolingDatabaseMAX = null;
+        var brakeCoolingDatabaseMAX8 = null;
+        var brakeCoolingDatabaseMAX9 = null;
         var brakeCoolingDatabaseNG = null;
-        var selectedBrakeAircraft = 'max'; // 'max' or 'ng'
+        var selectedBrakeAircraft = 'max8'; // 'max8', 'max9' or 'ng'
         var selectedBrakeType = 'carbon'; // 'carbon' or 'steel' (NG only)
         var selectedBrakeEvent = 'MAX AUTO'; // RTO, MAX MAN, MAX AUTO, AB3, AB2, AB1
         var selectedBrakeReverse = 'two'; // 'none' or 'two'
@@ -9982,12 +9921,23 @@
         fetch('/dashboard/database/brake_cooling_schedule.json')
             .then(function(response) { return response.json(); })
             .then(function(data) {
-                brakeCoolingDatabaseMAX = data;
-                console.log('Brake Cooling database (MAX) loaded');
+                brakeCoolingDatabaseMAX8 = data;
+                console.log('Brake Cooling database (MAX8) loaded');
                 initBrakeAircraftButtons();
             })
             .catch(function(err) {
-                console.log('Brake Cooling database (MAX) not loaded:', err);
+                console.log('Brake Cooling database (MAX8) not loaded:', err);
+            });
+
+        fetch('/dashboard/database/brake_cooling_schedule_737-9.json')
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                brakeCoolingDatabaseMAX9 = data;
+                console.log('Brake Cooling database (MAX9) loaded');
+                initBrakeAircraftButtons();
+            })
+            .catch(function(err) {
+                console.log('Brake Cooling database (MAX9) not loaded:', err);
             });
 
         fetch('/dashboard/database/brake_cooling_schedule_737-800.json')
@@ -10005,10 +9955,12 @@
             // Default to schedule aircraft type if available
             if (scheduleData && scheduleData.length > 0) {
                 var acType = scheduleData[0].ac_type || '';
-                if (acType.includes('737-800') || acType.includes('NG')) {
+                if (acType.includes('737-800') || acType.includes('NG') || acType.includes('B738')) {
                     selectedBrakeAircraft = 'ng';
-                } else if (acType.includes('737-8') || acType.includes('MAX')) {
-                    selectedBrakeAircraft = 'max';
+                } else if (acType.includes('737-9') || acType.includes('B39M')) {
+                    selectedBrakeAircraft = 'max9';
+                } else if (acType.includes('737-8') || acType.includes('MAX') || acType.includes('B38M')) {
+                    selectedBrakeAircraft = 'max8';
                 }
             }
             selectBrakeAircraft(selectedBrakeAircraft);
@@ -10016,34 +9968,55 @@
 
         function selectBrakeAircraft(type) {
             selectedBrakeAircraft = type;
-            var maxBtn = document.getElementById('brake-ac-max');
+            var max8Btn = document.getElementById('brake-ac-max8');
+            var max9Btn = document.getElementById('brake-ac-max9');
             var ngBtn = document.getElementById('brake-ac-ng');
             var infoEl = document.getElementById('brake-aircraft-info');
             var weightInput = document.getElementById('brake-weight');
             var revInfo = document.getElementById('brake-revision-info');
             var brakeTypeSelector = document.getElementById('brake-type-selector');
 
-            if (type === 'max') {
-                maxBtn.style.background = '#FF8200';
-                maxBtn.style.color = '#000';
-                maxBtn.style.border = '1px solid #FF8200';
-                ngBtn.style.background = 'transparent';
-                ngBtn.style.color = '#888';
-                ngBtn.style.border = '1px solid #444';
+            // Reset all buttons
+            [max8Btn, max9Btn, ngBtn].forEach(function(btn) {
+                if (btn) {
+                    btn.style.background = 'transparent';
+                    btn.style.color = '#888';
+                    btn.style.border = '1px solid #444';
+                }
+            });
+
+            if (type === 'max8') {
+                if (max8Btn) {
+                    max8Btn.style.background = '#FF8200';
+                    max8Btn.style.color = '#000';
+                    max8Btn.style.border = '1px solid #FF8200';
+                }
                 infoEl.textContent = 'B737-8 / LEAP-1B28B1';
-                weightInput.min = '50';
+                weightInput.min = '40';
                 weightInput.max = '90';
                 brakeTypeSelector.style.display = 'none';
-                if (brakeCoolingDatabaseMAX) {
-                    revInfo.textContent = brakeCoolingDatabaseMAX.metadata.aircraft + ' - ' + brakeCoolingDatabaseMAX.metadata.documentReference;
+                if (brakeCoolingDatabaseMAX8) {
+                    revInfo.textContent = brakeCoolingDatabaseMAX8.metadata.aircraft + ' - ' + brakeCoolingDatabaseMAX8.metadata.documentReference;
+                }
+            } else if (type === 'max9') {
+                if (max9Btn) {
+                    max9Btn.style.background = '#FF8200';
+                    max9Btn.style.color = '#000';
+                    max9Btn.style.border = '1px solid #FF8200';
+                }
+                infoEl.textContent = 'B737-9 / LEAP-1B28';
+                weightInput.min = '40';
+                weightInput.max = '90';
+                brakeTypeSelector.style.display = 'none';
+                if (brakeCoolingDatabaseMAX9) {
+                    revInfo.textContent = brakeCoolingDatabaseMAX9.metadata.aircraft + ' - ' + brakeCoolingDatabaseMAX9.metadata.documentReference;
                 }
             } else {
-                ngBtn.style.background = '#FF8200';
-                ngBtn.style.color = '#000';
-                ngBtn.style.border = '1px solid #FF8200';
-                maxBtn.style.background = 'transparent';
-                maxBtn.style.color = '#888';
-                maxBtn.style.border = '1px solid #444';
+                if (ngBtn) {
+                    ngBtn.style.background = '#FF8200';
+                    ngBtn.style.color = '#000';
+                    ngBtn.style.border = '1px solid #FF8200';
+                }
                 infoEl.textContent = 'B737-800 / CFM56-7B26 / ' + (selectedBrakeType === 'carbon' ? 'Carbon' : 'Steel');
                 weightInput.min = '40';
                 weightInput.max = '80';
@@ -10137,14 +10110,26 @@
             return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
         }
 
+        // Helper function to get the correct brake cooling database
+        function getBrakeCoolingDb() {
+            if (selectedBrakeAircraft === 'max8') return brakeCoolingDatabaseMAX8;
+            if (selectedBrakeAircraft === 'max9') return brakeCoolingDatabaseMAX9;
+            return brakeCoolingDatabaseNG;
+        }
+
+        // Helper to check if MAX type (either 737-8 or 737-9)
+        function isMaxAircraft() {
+            return selectedBrakeAircraft === 'max8' || selectedBrakeAircraft === 'max9';
+        }
+
         // Get event-adjusted brake energy from table 2a/2b
         function getEventAdjustedEnergy(refEnergy) {
-            var db = selectedBrakeAircraft === 'max' ? brakeCoolingDatabaseMAX : brakeCoolingDatabaseNG;
+            var db = getBrakeCoolingDb();
             if (!db) return refEnergy;
 
             // Get the correct table based on reverse thrust selection
             var tableData;
-            if (selectedBrakeAircraft === 'max') {
+            if (isMaxAircraft()) {
                 tableData = selectedBrakeReverse === 'none'
                     ? db.eventAdjustedBrakeEnergy.table2a.data
                     : db.eventAdjustedBrakeEnergy.table2b.data;
@@ -10181,7 +10166,7 @@
             if (!energyLevels) return refEnergy;
 
             // Available reference energy levels in table
-            var refLevels = selectedBrakeAircraft === 'max'
+            var refLevels = isMaxAircraft()
                 ? [10, 20, 30, 40, 50, 60]
                 : [10, 20, 30, 40, 50, 60, 70, 80, 90];
 
@@ -10218,12 +10203,12 @@
 
         // Get brake energy from table with interpolation
         function getBrakeEnergy(weight, oat, speed, alt) {
-            var db = selectedBrakeAircraft === 'max' ? brakeCoolingDatabaseMAX : brakeCoolingDatabaseNG;
+            var db = getBrakeCoolingDb();
             if (!db) return null;
 
             // Get table data - different structure for MAX vs NG
             var tableData;
-            if (selectedBrakeAircraft === 'max') {
+            if (isMaxAircraft()) {
                 tableData = db.referenceBrakeEnergy.table1a.data;
             } else {
                 tableData = db.referenceBrakeEnergy.data;
@@ -10231,7 +10216,7 @@
 
             // Available values in table - different for each aircraft
             var weights, minWeight, maxWeight;
-            if (selectedBrakeAircraft === 'max') {
+            if (isMaxAircraft()) {
                 weights = [40, 50, 60, 70, 80, 90];
                 minWeight = 40;
                 maxWeight = 90;
@@ -10323,8 +10308,8 @@
         // Get cooling time with interpolation
         function getCoolingInfo(energy) {
             // Different thresholds for MAX vs NG (Category C Steel Brakes)
-            if (selectedBrakeAircraft === 'max') {
-                // 737-8 MAX thresholds
+            if (isMaxAircraft()) {
+                // 737-8/737-9 MAX thresholds
                 if (energy <= 16.4) {
                     return { status: 'NORMAL', color: '#00ff88', bg: 'rgba(0, 255, 136, 0.15)', gearTime: 'No procedure req', groundTime: 'Normal', warning: '' };
                 }
@@ -10440,7 +10425,7 @@
             var noDataEl = document.getElementById('brake-no-data');
             var correctionsEl = document.getElementById('brake-corrections');
 
-            var db = selectedBrakeAircraft === 'max' ? brakeCoolingDatabaseMAX : brakeCoolingDatabaseNG;
+            var db = getBrakeCoolingDb();
             if (!weightInput || !oatInput || !speedInput || !altInput || !db) {
                 resultsEl.style.display = 'none';
                 noDataEl.style.display = 'block';
@@ -10594,15 +10579,13 @@
 
             // Update display and limits
             var limits = fuelAircraftLimits[acType];
-            document.getElementById('fuel-ac-display').textContent = limits.name;
             document.getElementById('fuel-limit-ldw').textContent = formatFuelNumber(limits.maxLdw);
             document.getElementById('fuel-limit-zfw').textContent = formatFuelNumber(limits.maxZfw);
             document.getElementById('fuel-limit-tank').textContent = formatFuelNumber(limits.maxFuel);
             document.getElementById('fuel-limit-taxi').textContent = formatFuelNumber(limits.maxTaxi);
             document.getElementById('fuel-limit-tow').textContent = formatFuelNumber(limits.maxTow);
             document.getElementById('fuel-limit-ldw-calc').textContent = formatFuelNumber(limits.maxLdw);
-            document.getElementById('fuel-limit-tow-final').textContent = formatFuelNumber(limits.maxTow);
-            document.getElementById('fuel-limit-ldw-final').textContent = formatFuelNumber(limits.maxLdw);
+            document.getElementById('fuel-limit-zfw2').textContent = formatFuelNumber(limits.maxZfw);
 
             // Recalculate
             calculateFuelSimple();
@@ -10632,14 +10615,22 @@
             // Reset all row highlights
             resetFuelRowHighlights();
 
-            // Calculate initial planning values
+            // Calculate values based on available inputs
             var maxAllowedFuel = null;
             var taxiWeight = null;
             var tow = null;
             var ldw = null;
             var arrivalFuel = null;
 
-            if (!isNaN(reqLdw) && !isNaN(tripFuel) && !isNaN(taxiFuel) && !isNaN(decisionZfw)) {
+            // If we have final block fuel and updated ZFW, use those for the main calculations
+            if (!isNaN(finalBlockFuel) && !isNaN(updatedZfw) && !isNaN(taxiFuel) && !isNaN(tripFuel)) {
+                taxiWeight = updatedZfw + finalBlockFuel;
+                tow = taxiWeight - taxiFuel;
+                ldw = tow - tripFuel;
+                arrivalFuel = ldw - updatedZfw;
+            }
+            // Otherwise calculate based on initial planning inputs
+            else if (!isNaN(reqLdw) && !isNaN(tripFuel) && !isNaN(taxiFuel) && !isNaN(decisionZfw)) {
                 // Max Allowed Fuel = Req LDW - Decision ZFW + Trip Fuel + Taxi Fuel
                 // But limited by tank capacity
                 var calcMaxFuel = reqLdw - decisionZfw + tripFuel + taxiFuel;
@@ -10652,7 +10643,13 @@
                 arrivalFuel = ldw - decisionZfw;
             }
 
-            // Update initial planning displays
+            // Calculate max allowed fuel separately if we have the inputs
+            if (!isNaN(reqLdw) && !isNaN(tripFuel) && !isNaN(taxiFuel) && !isNaN(decisionZfw)) {
+                var calcMaxFuel = reqLdw - decisionZfw + tripFuel + taxiFuel;
+                maxAllowedFuel = Math.min(calcMaxFuel, limitTank);
+            }
+
+            // Update displays
             document.getElementById('fuel-max-allowed').textContent = formatFuelNumber(maxAllowedFuel);
             document.getElementById('fuel-taxi-weight').textContent = formatFuelNumber(taxiWeight);
             document.getElementById('fuel-tow').textContent = formatFuelNumber(tow);
@@ -10664,48 +10661,8 @@
             checkFuelLimit('fuel-tow', 'fuel-row-tow', tow, limitTow, 'Take Off Weight');
             checkFuelLimit('fuel-ldw', 'fuel-row-ldw', ldw, limitLdw, 'Landing Weight');
             checkFuelLimit('fuel-max-allowed', 'fuel-row-max-allowed', maxAllowedFuel, limitTank, 'Max Fuel');
-            checkFuelLimit('fuel-decision-zfw', 'fuel-row-decision-zfw', decisionZfw, limitZfw, 'Decision ZFW', true);
-
-            // Calculate final values
-            var zfwDiff = null;
-            var finalTow = null;
-            var finalLdw = null;
-            var finalArrivalFuel = null;
-
-            if (!isNaN(finalBlockFuel) && !isNaN(updatedZfw) && !isNaN(taxiFuel) && !isNaN(tripFuel)) {
-                // ZFW Difference
-                if (!isNaN(decisionZfw)) {
-                    zfwDiff = Math.abs(updatedZfw - decisionZfw);
-                }
-
-                // Final calculations
-                var finalTaxiWeight = updatedZfw + finalBlockFuel;
-                finalTow = finalTaxiWeight - taxiFuel;
-                finalLdw = finalTow - tripFuel;
-                finalArrivalFuel = finalLdw - updatedZfw;
-            }
-
-            // Update final displays
-            document.getElementById('fuel-zfw-diff').textContent = formatFuelNumber(zfwDiff);
-            document.getElementById('fuel-final-tow').textContent = formatFuelNumber(finalTow);
-            document.getElementById('fuel-final-ldw').textContent = formatFuelNumber(finalLdw);
-            document.getElementById('fuel-final-arrival').textContent = formatFuelNumber(finalArrivalFuel);
-
-            // Check final limits
-            checkFuelLimit('fuel-final-tow', 'fuel-row-final-tow', finalTow, limitTow, 'Final TOW');
-            checkFuelLimit('fuel-final-ldw', 'fuel-row-final-ldw', finalLdw, limitLdw, 'Final LDW');
-            checkFuelLimit('fuel-updated-zfw', 'fuel-row-updated-zfw', updatedZfw, limitZfw, 'Updated ZFW', true);
-
-            // ZFW difference warning
-            var zfwDiffEl = document.getElementById('fuel-zfw-diff');
-            var zfwDiffRow = document.getElementById('fuel-row-zfw-diff');
-            if (zfwDiff !== null && zfwDiff > 500) {
-                zfwDiffEl.className = 'fuel-value fuel-calc fuel-exceed';
-                zfwDiffRow.classList.add('fuel-row-exceed');
-                fuelWarnings.push('ZFW Difference exceeds 500 kg (' + formatFuelNumber(zfwDiff) + ' kg)');
-            } else {
-                zfwDiffEl.className = 'fuel-value fuel-calc';
-            }
+            checkFuelLimit('fuel-decision-zfw-btn', 'fuel-row-decision-zfw', decisionZfw, limitZfw, 'Decision ZFW', true);
+            checkFuelLimit('fuel-updated-zfw-btn', 'fuel-row-updated-zfw', updatedZfw, limitZfw, 'Updated ZFW', true);
 
             // Update warnings display
             updateFuelWarnings();
@@ -10716,27 +10673,38 @@
             var row = document.getElementById(rowId);
 
             if (value === null || isNaN(value)) {
-                el.className = isInput ? 'fuel-input' : 'fuel-value fuel-calc';
+                if (el) el.className = isInput ? 'input-btn fuel-input' : 'fuel-value fuel-calc';
                 return;
             }
 
             if (value > limit) {
-                el.className = isInput ? 'fuel-input fuel-exceed' : 'fuel-value fuel-calc fuel-exceed';
+                if (el) el.className = isInput ? 'input-btn fuel-input fuel-exceed' : 'fuel-value fuel-calc fuel-exceed';
                 if (row) row.classList.add('fuel-row-exceed');
                 fuelWarnings.push(label + ' exceeds limit (' + formatFuelNumber(value) + ' > ' + formatFuelNumber(limit) + ')');
             } else if (value > limit * 0.98) {
-                el.className = isInput ? 'fuel-input fuel-warn' : 'fuel-value fuel-calc fuel-warn';
+                if (el) el.className = isInput ? 'input-btn fuel-input fuel-warn' : 'fuel-value fuel-calc fuel-warn';
                 if (row) row.classList.add('fuel-row-warn');
             } else {
-                el.className = isInput ? 'fuel-input' : 'fuel-value fuel-calc';
+                if (el) el.className = isInput ? 'input-btn fuel-input' : 'fuel-value fuel-calc';
             }
+        }
+
+        function openFuelSimplePicker(fieldId, title) {
+            var currentVal = document.getElementById(fieldId).value || '';
+            openPicker(title, 'kg', currentVal, 6, true, function(val) {
+                document.getElementById(fieldId).value = val;
+                var btn = document.getElementById(fieldId + '-btn');
+                if (btn) {
+                    btn.textContent = val ? parseInt(val, 10).toLocaleString() : '0';
+                }
+                calculateFuelSimple();
+            });
         }
 
         function resetFuelRowHighlights() {
             var rows = ['fuel-row-req-ldw', 'fuel-row-decision-zfw', 'fuel-row-max-allowed',
                         'fuel-row-taxi-weight', 'fuel-row-tow', 'fuel-row-ldw',
-                        'fuel-row-updated-zfw', 'fuel-row-zfw-diff',
-                        'fuel-row-final-tow', 'fuel-row-final-ldw'];
+                        'fuel-row-updated-zfw', 'fuel-row-arrival'];
             rows.forEach(function(id) {
                 var row = document.getElementById(id);
                 if (row) {
@@ -10763,27 +10731,31 @@
             document.getElementById('fuel-final-block').value = '';
             document.getElementById('fuel-updated-zfw').value = '';
 
+            // Reset buttons
+            document.getElementById('fuel-req-ldw-btn').textContent = '0';
+            document.getElementById('fuel-taxi-btn').textContent = '0';
+            document.getElementById('fuel-trip-btn').textContent = '0';
+            document.getElementById('fuel-decision-zfw-btn').textContent = '0';
+            document.getElementById('fuel-final-block-btn').textContent = '0';
+            document.getElementById('fuel-updated-zfw-btn').textContent = '0';
+
             // Reset displays
             document.getElementById('fuel-max-allowed').textContent = '---';
             document.getElementById('fuel-taxi-weight').textContent = '---';
             document.getElementById('fuel-tow').textContent = '---';
             document.getElementById('fuel-ldw').textContent = '---';
             document.getElementById('fuel-arrival').textContent = '---';
-            document.getElementById('fuel-zfw-diff').textContent = '---';
-            document.getElementById('fuel-final-tow').textContent = '---';
-            document.getElementById('fuel-final-ldw').textContent = '---';
-            document.getElementById('fuel-final-arrival').textContent = '---';
 
             // Reset classes
             document.getElementById('fuel-max-allowed').className = 'fuel-value fuel-calc';
             document.getElementById('fuel-taxi-weight').className = 'fuel-value fuel-calc';
             document.getElementById('fuel-tow').className = 'fuel-value fuel-calc';
             document.getElementById('fuel-ldw').className = 'fuel-value fuel-calc';
-            document.getElementById('fuel-zfw-diff').className = 'fuel-value fuel-calc';
-            document.getElementById('fuel-final-tow').className = 'fuel-value fuel-calc fuel-bold';
-            document.getElementById('fuel-final-ldw').className = 'fuel-value fuel-calc fuel-bold';
-            document.getElementById('fuel-decision-zfw').className = 'fuel-input';
-            document.getElementById('fuel-updated-zfw').className = 'fuel-input';
+            document.getElementById('fuel-arrival').className = 'fuel-value fuel-calc';
+
+            // Reset button classes
+            document.getElementById('fuel-decision-zfw-btn').className = 'input-btn fuel-input';
+            document.getElementById('fuel-updated-zfw-btn').className = 'input-btn fuel-input';
 
             // Reset row highlights and warnings
             resetFuelRowHighlights();
