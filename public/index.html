@@ -2511,6 +2511,104 @@
             font-weight: bold;
         }
 
+        /* W&B Calculator Styles */
+        .wb-readonly-value {
+            background: rgba(0, 40, 80, 0.5);
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #00d4ff;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+
+        .wb-zone-label {
+            background: rgba(255, 130, 0, 0.2);
+            padding: 6px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #FF8200;
+            text-align: center;
+        }
+
+        .wb-zone-total {
+            background: rgba(0, 40, 80, 0.5);
+            padding: 6px 8px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #00d4ff;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+
+        .wb-pax-btn, .wb-cargo-btn {
+            max-width: 100%;
+            font-size: 0.95rem;
+            padding: 6px;
+        }
+
+        .wb-cargo-max {
+            background: rgba(100, 100, 100, 0.2);
+            padding: 6px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #888;
+            text-align: center;
+        }
+
+        .wb-cargo-max.exceeded {
+            background: rgba(255, 82, 82, 0.2);
+            color: #ff5252;
+            border: 1px solid rgba(255, 82, 82, 0.5);
+        }
+
+        .wb-status-ok {
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            background: rgba(0, 255, 136, 0.15);
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .wb-status-exceeded {
+            background: rgba(255, 82, 82, 0.2);
+            color: #ff5252;
+            border: 1px solid rgba(255, 82, 82, 0.5);
+            animation: wbFlashRed 0.6s ease-in-out infinite;
+        }
+
+        @keyframes wbFlashRed {
+            0%, 100% { background: rgba(255, 82, 82, 0.2); }
+            50% { background: rgba(255, 82, 82, 0.4); }
+        }
+
+        .wb-summary {
+            background: rgba(0, 40, 80, 0.5);
+            border: 1px solid rgba(255, 130, 0, 0.3);
+        }
+
+        .wb-summary.pending {
+            border-color: rgba(136, 136, 136, 0.3);
+            color: #888;
+        }
+
+        .wb-summary.pass {
+            border-color: rgba(0, 255, 136, 0.5);
+            background: rgba(0, 255, 136, 0.1);
+            color: #00ff88;
+        }
+
+        .wb-summary.fail {
+            border-color: rgba(255, 82, 82, 0.5);
+            background: rgba(255, 82, 82, 0.1);
+            color: #ff5252;
+        }
+
         /* Qibla Display Styles */
         .strip-qibla {
             display: flex;
@@ -2687,6 +2785,7 @@
             <button class="tab-btn" onclick="switchTab('nav')">NAV</button>
             <button class="tab-btn" onclick="switchTab('wx')">WX</button>
             <button class="tab-btn" onclick="switchTab('lmc')">LMC</button>
+            <button class="tab-btn" onclick="switchTab('wb')">W&B</button>
             <button class="tab-btn" onclick="switchTab('sun')">SUN</button>
             <button class="tab-btn" onclick="switchTab('set')">SET</button>
             <button class="tab-btn" onclick="switchTab('ref')">REF</button>
@@ -5756,6 +5855,462 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- W&B Tab (Manual Weight and Balance Calculator) -->
+    <div class="tab-content" id="tab-wb">
+        <div class="fdp-container">
+            <!-- Header -->
+            <div class="section" style="text-align: center; padding: 12px; margin-bottom: 15px;">
+                <h2 style="color: #FF8200; margin-bottom: 5px; font-size: 1.3rem;">MANUAL LOADSHEET</h2>
+                <div style="color: #888; font-size: 0.8rem;">flydubai B737 Weight & Balance Calculator</div>
+            </div>
+
+            <!-- Aircraft & Flight Info Row -->
+            <div class="top-sections" style="grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <!-- Aircraft Selection -->
+                <div class="section">
+                    <div class="section-title">Aircraft</div>
+                    <div class="input-grid-2">
+                        <div class="input-group">
+                            <label class="input-label">Tail Number</label>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="input-btn" id="wb-tail-btn" onclick="openWbTailPicker()" style="flex: 1;">---</button>
+                                <button class="preset-btn" onclick="autofillWbFromSchedule()" style="font-size: 0.7rem; padding: 5px 8px;">Sched</button>
+                            </div>
+                            <input type="hidden" id="wb-tail" value="">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Type / Config</label>
+                            <div id="wb-aircraft-info" style="background: rgba(0,40,80,0.5); padding: 8px; border-radius: 6px; font-size: 0.85rem; color: #00d4ff; text-align: center;">---</div>
+                            <div id="wb-config-selector" style="display:none; gap:5px; margin-top:5px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flight Info -->
+                <div class="section">
+                    <div class="section-title">Flight Info</div>
+                    <div class="input-grid-3">
+                        <div class="input-group">
+                            <label class="input-label">Flight</label>
+                            <input type="text" class="fdp-input" id="wb-flight" placeholder="FZ---" style="text-align: center; text-transform: uppercase;">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">From</label>
+                            <input type="text" class="fdp-input" id="wb-origin" placeholder="DXB" maxlength="4" style="text-align: center; text-transform: uppercase;">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">To</label>
+                            <input type="text" class="fdp-input" id="wb-dest" placeholder="TBS" maxlength="4" style="text-align: center; text-transform: uppercase;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DOW Section -->
+            <div class="section" style="margin-bottom: 15px;">
+                <div class="section-title">Dry Operating Weight (DOW)</div>
+                <div class="top-sections" style="grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 0;">
+                    <div class="input-group">
+                        <label class="input-label">BOW (kg)</label>
+                        <div id="wb-bow" class="wb-readonly-value">---</div>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">BOI</label>
+                        <div id="wb-boi" class="wb-readonly-value">---</div>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Crew Adj (kg)</label>
+                        <button class="input-btn" id="wb-crew-btn" onclick="openWeightPicker('wb-crew', 'Crew Adj', 'kg')" style="max-width: 100%;">0</button>
+                        <input type="hidden" id="wb-crew" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Crew Idx</label>
+                        <div id="wb-crew-idx" class="wb-readonly-value">0.0</div>
+                    </div>
+                </div>
+                <div class="top-sections" style="grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; margin-bottom: 0;">
+                    <div class="input-group">
+                        <label class="input-label">Pantry Code</label>
+                        <select class="fdp-select" id="wb-pantry" onchange="wbCalculate()" style="height: 40px;">
+                            <option value="">---</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Pantry (kg)</label>
+                        <div id="wb-pantry-wt" class="wb-readonly-value">---</div>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Pantry Idx</label>
+                        <div id="wb-pantry-idx" class="wb-readonly-value">---</div>
+                    </div>
+                    <div class="input-group" style="background: rgba(255,130,0,0.15); padding: 8px; border-radius: 6px; border: 1px solid rgba(255,130,0,0.3);">
+                        <label class="input-label" style="color: #FF8200;">DOW / DOI</label>
+                        <div style="display: flex; gap: 8px; justify-content: center;">
+                            <span id="wb-dow" style="font-size: 1rem; font-weight: bold; color: #FF8200;">---</span>
+                            <span style="color: #666;">/</span>
+                            <span id="wb-doi" style="font-size: 1rem; font-weight: bold; color: #FF8200;">---</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Traffic Load Section -->
+            <div class="top-sections" style="grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <!-- Passengers -->
+                <div class="section">
+                    <div class="section-title">Passengers</div>
+                    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 10px;">
+                        <div class="input-group">
+                            <label class="input-label">Zone</label>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">M (88)</label>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">F (70)</label>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">C (35)</label>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Total</label>
+                        </div>
+                    </div>
+                    <!-- Zone 0A -->
+                    <div class="wb-pax-row" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 6px;">
+                        <div class="input-group">
+                            <div id="wb-zone-0a-label" class="wb-zone-label">0A</div>
+                        </div>
+                        <div class="input-group">
+                            <button class="input-btn wb-pax-btn" id="wb-0a-m-btn" onclick="openPaxPicker('wb-0a-m')">0</button>
+                            <input type="hidden" id="wb-0a-m" value="0">
+                        </div>
+                        <div class="input-group">
+                            <button class="input-btn wb-pax-btn" id="wb-0a-f-btn" onclick="openPaxPicker('wb-0a-f')">0</button>
+                            <input type="hidden" id="wb-0a-f" value="0">
+                        </div>
+                        <div class="input-group">
+                            <button class="input-btn wb-pax-btn" id="wb-0a-c-btn" onclick="openPaxPicker('wb-0a-c')">0</button>
+                            <input type="hidden" id="wb-0a-c" value="0">
+                        </div>
+                        <div class="input-group">
+                            <div id="wb-0a-total" class="wb-zone-total">0</div>
+                        </div>
+                    </div>
+                    <!-- Zone 0B -->
+                    <div class="wb-pax-row" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 6px;">
+                        <div class="input-group">
+                            <div id="wb-zone-0b-label" class="wb-zone-label">0B</div>
+                        </div>
+                        <div class="input-group">
+                            <button class="input-btn wb-pax-btn" id="wb-0b-m-btn" onclick="openPaxPicker('wb-0b-m')">0</button>
+                            <input type="hidden" id="wb-0b-m" value="0">
+                        </div>
+                        <div class="input-group">
+                            <button class="input-btn wb-pax-btn" id="wb-0b-f-btn" onclick="openPaxPicker('wb-0b-f')">0</button>
+                            <input type="hidden" id="wb-0b-f" value="0">
+                        </div>
+                        <div class="input-group">
+                            <button class="input-btn wb-pax-btn" id="wb-0b-c-btn" onclick="openPaxPicker('wb-0b-c')">0</button>
+                            <input type="hidden" id="wb-0b-c" value="0">
+                        </div>
+                        <div class="input-group">
+                            <div id="wb-0b-total" class="wb-zone-total">0</div>
+                        </div>
+                    </div>
+                    <!-- Zone 0C -->
+                    <div class="wb-pax-row" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 6px;">
+                        <div class="input-group">
+                            <div id="wb-zone-0c-label" class="wb-zone-label">0C</div>
+                        </div>
+                        <div class="input-group">
+                            <button class="input-btn wb-pax-btn" id="wb-0c-m-btn" onclick="openPaxPicker('wb-0c-m')">0</button>
+                            <input type="hidden" id="wb-0c-m" value="0">
+                        </div>
+                        <div class="input-group">
+                            <button class="input-btn wb-pax-btn" id="wb-0c-f-btn" onclick="openPaxPicker('wb-0c-f')">0</button>
+                            <input type="hidden" id="wb-0c-f" value="0">
+                        </div>
+                        <div class="input-group">
+                            <button class="input-btn wb-pax-btn" id="wb-0c-c-btn" onclick="openPaxPicker('wb-0c-c')">0</button>
+                            <input type="hidden" id="wb-0c-c" value="0">
+                        </div>
+                        <div class="input-group">
+                            <div id="wb-0c-total" class="wb-zone-total">0</div>
+                        </div>
+                    </div>
+                    <!-- Zone 0D -->
+                    <div class="wb-pax-row" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 6px;">
+                        <div class="input-group">
+                            <div id="wb-zone-0d-label" class="wb-zone-label">0D</div>
+                        </div>
+                        <div class="input-group">
+                            <button class="input-btn wb-pax-btn" id="wb-0d-m-btn" onclick="openPaxPicker('wb-0d-m')">0</button>
+                            <input type="hidden" id="wb-0d-m" value="0">
+                        </div>
+                        <div class="input-group">
+                            <button class="input-btn wb-pax-btn" id="wb-0d-f-btn" onclick="openPaxPicker('wb-0d-f')">0</button>
+                            <input type="hidden" id="wb-0d-f" value="0">
+                        </div>
+                        <div class="input-group">
+                            <button class="input-btn wb-pax-btn" id="wb-0d-c-btn" onclick="openPaxPicker('wb-0d-c')">0</button>
+                            <input type="hidden" id="wb-0d-c" value="0">
+                        </div>
+                        <div class="input-group">
+                            <div id="wb-0d-total" class="wb-zone-total">0</div>
+                        </div>
+                    </div>
+                    <!-- Totals -->
+                    <div style="border-top: 1px solid rgba(255,130,0,0.3); padding-top: 8px; margin-top: 8px;">
+                        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+                            <div class="input-group"><div class="wb-zone-label" style="color: #FF8200;">Total</div></div>
+                            <div class="input-group"><div id="wb-pax-m-total" class="wb-zone-total" style="color: #00d4ff;">0</div></div>
+                            <div class="input-group"><div id="wb-pax-f-total" class="wb-zone-total" style="color: #00d4ff;">0</div></div>
+                            <div class="input-group"><div id="wb-pax-c-total" class="wb-zone-total" style="color: #00d4ff;">0</div></div>
+                            <div class="input-group"><div id="wb-pax-total" class="wb-zone-total" style="color: #FF8200; font-weight: bold;">0</div></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 8px; padding: 6px; background: rgba(0,40,80,0.5); border-radius: 6px;">
+                            <span style="color: #888; font-size: 0.85rem;">Pax Weight:</span>
+                            <span id="wb-pax-weight" style="color: #00ff88; font-weight: bold;">0 kg</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 4px; padding: 6px; background: rgba(0,40,80,0.5); border-radius: 6px;">
+                            <span style="color: #888; font-size: 0.85rem;">Pax Index:</span>
+                            <span id="wb-pax-idx" style="color: #00d4ff; font-weight: bold;">0.0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cargo -->
+                <div class="section">
+                    <div class="section-title">Cargo & Baggage</div>
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; margin-bottom: 6px;">
+                        <div class="input-group"><label class="input-label">Compartment</label></div>
+                        <div class="input-group"><label class="input-label">Weight</label></div>
+                        <div class="input-group"><label class="input-label">Max</label></div>
+                    </div>
+                    <!-- CPT1 -->
+                    <div class="wb-cargo-row" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; margin-bottom: 6px;">
+                        <div class="input-group"><div class="wb-zone-label">CPT1 (Fwd)</div></div>
+                        <div class="input-group">
+                            <button class="input-btn wb-cargo-btn" id="wb-cpt1-btn" onclick="openWeightPicker('wb-cpt1', 'CPT1', 'kg')">0</button>
+                            <input type="hidden" id="wb-cpt1" value="0">
+                        </div>
+                        <div class="input-group"><div id="wb-cpt1-max" class="wb-cargo-max">---</div></div>
+                    </div>
+                    <!-- CPT2 -->
+                    <div class="wb-cargo-row" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; margin-bottom: 6px;">
+                        <div class="input-group"><div class="wb-zone-label">CPT2 (Fwd)</div></div>
+                        <div class="input-group">
+                            <button class="input-btn wb-cargo-btn" id="wb-cpt2-btn" onclick="openWeightPicker('wb-cpt2', 'CPT2', 'kg')">0</button>
+                            <input type="hidden" id="wb-cpt2" value="0">
+                        </div>
+                        <div class="input-group"><div id="wb-cpt2-max" class="wb-cargo-max">---</div></div>
+                    </div>
+                    <!-- CPT3 -->
+                    <div class="wb-cargo-row" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; margin-bottom: 6px;">
+                        <div class="input-group"><div class="wb-zone-label">CPT3 (Aft)</div></div>
+                        <div class="input-group">
+                            <button class="input-btn wb-cargo-btn" id="wb-cpt3-btn" onclick="openWeightPicker('wb-cpt3', 'CPT3', 'kg')">0</button>
+                            <input type="hidden" id="wb-cpt3" value="0">
+                        </div>
+                        <div class="input-group"><div id="wb-cpt3-max" class="wb-cargo-max">---</div></div>
+                    </div>
+                    <!-- CPT4 -->
+                    <div class="wb-cargo-row" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; margin-bottom: 6px;">
+                        <div class="input-group"><div class="wb-zone-label">CPT4 (Bulk)</div></div>
+                        <div class="input-group">
+                            <button class="input-btn wb-cargo-btn" id="wb-cpt4-btn" onclick="openWeightPicker('wb-cpt4', 'CPT4', 'kg')">0</button>
+                            <input type="hidden" id="wb-cpt4" value="0">
+                        </div>
+                        <div class="input-group"><div id="wb-cpt4-max" class="wb-cargo-max">---</div></div>
+                    </div>
+                    <!-- Cargo totals -->
+                    <div style="border-top: 1px solid rgba(255,130,0,0.3); padding-top: 8px; margin-top: 8px;">
+                        <div style="display: flex; justify-content: space-between; padding: 6px; background: rgba(0,40,80,0.5); border-radius: 6px;">
+                            <span style="color: #888; font-size: 0.85rem;">Total Cargo:</span>
+                            <span id="wb-cargo-total" style="color: #00ff88; font-weight: bold;">0 kg</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 4px; padding: 6px; background: rgba(0,40,80,0.5); border-radius: 6px;">
+                            <span style="color: #888; font-size: 0.85rem;">Cargo Index:</span>
+                            <span id="wb-cargo-idx" style="color: #00d4ff; font-weight: bold;">0.0</span>
+                        </div>
+                    </div>
+                    <!-- Traffic Load -->
+                    <div style="margin-top: 12px; padding: 10px; background: rgba(255,130,0,0.1); border: 1px solid rgba(255,130,0,0.3); border-radius: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #FF8200; font-weight: bold;">TRAFFIC LOAD</span>
+                            <span id="wb-traffic-load" style="color: #FF8200; font-size: 1.2rem; font-weight: bold;">0 kg</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 4px;">
+                            <span style="color: #888; font-size: 0.85rem;">Traffic Index:</span>
+                            <span id="wb-traffic-idx" style="color: #FF8200; font-weight: bold;">0.0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ZFW Section -->
+            <div class="section" style="margin-bottom: 15px; background: rgba(0, 100, 150, 0.2); border-color: rgba(0, 212, 255, 0.4);">
+                <div class="section-title" style="color: #00d4ff;">Zero Fuel Weight</div>
+                <div class="top-sections" style="grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 0;">
+                    <div class="input-group" style="text-align: center;">
+                        <label class="input-label">ZFW</label>
+                        <div id="wb-zfw" style="font-size: 1.5rem; font-weight: bold; color: #00d4ff;">--- kg</div>
+                    </div>
+                    <div class="input-group" style="text-align: center;">
+                        <label class="input-label">MZFW Limit</label>
+                        <div id="wb-mzfw" style="font-size: 1.2rem; color: #888;">---</div>
+                    </div>
+                    <div class="input-group" style="text-align: center;">
+                        <label class="input-label">ZFW Index</label>
+                        <div id="wb-zfwi" style="font-size: 1.3rem; font-weight: bold; color: #00d4ff;">---</div>
+                    </div>
+                    <div class="input-group" style="text-align: center;">
+                        <label class="input-label">Status</label>
+                        <div id="wb-zfw-status" class="wb-status-ok">---</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fuel Section -->
+            <div class="section" style="margin-bottom: 15px;">
+                <div class="section-title">Fuel</div>
+                <div class="top-sections" style="grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 0;">
+                    <div class="input-group">
+                        <label class="input-label">Takeoff Fuel (kg)</label>
+                        <button class="input-btn" id="wb-tof-btn" onclick="openWeightPicker('wb-tof', 'T/O Fuel', 'kg')" style="max-width: 100%;">0</button>
+                        <input type="hidden" id="wb-tof" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">T/O Fuel Index</label>
+                        <div id="wb-tof-idx" class="wb-readonly-value">0.0</div>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Trip Fuel (kg)</label>
+                        <button class="input-btn" id="wb-trip-btn" onclick="openWeightPicker('wb-trip', 'Trip Fuel', 'kg')" style="max-width: 100%;">0</button>
+                        <input type="hidden" id="wb-trip" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Landing Fuel</label>
+                        <div id="wb-lf" class="wb-readonly-value">--- kg</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOW Section -->
+            <div class="section" style="margin-bottom: 15px; background: rgba(0, 150, 100, 0.2); border-color: rgba(0, 255, 136, 0.4);">
+                <div class="section-title" style="color: #00ff88;">Takeoff Weight</div>
+                <div class="top-sections" style="grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 0;">
+                    <div class="input-group" style="text-align: center;">
+                        <label class="input-label">TOW</label>
+                        <div id="wb-tow" style="font-size: 1.5rem; font-weight: bold; color: #00ff88;">--- kg</div>
+                    </div>
+                    <div class="input-group" style="text-align: center;">
+                        <label class="input-label">MTOW Limit</label>
+                        <div id="wb-mtow" style="font-size: 1.2rem; color: #888;">---</div>
+                    </div>
+                    <div class="input-group" style="text-align: center;">
+                        <label class="input-label">TOW Index</label>
+                        <div id="wb-towi" style="font-size: 1.3rem; font-weight: bold; color: #00ff88;">---</div>
+                    </div>
+                    <div class="input-group" style="text-align: center;">
+                        <label class="input-label">Status</label>
+                        <div id="wb-tow-status" class="wb-status-ok">---</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LAW Section -->
+            <div class="section" style="margin-bottom: 15px; background: rgba(150, 100, 0, 0.2); border-color: rgba(255, 200, 0, 0.4);">
+                <div class="section-title" style="color: #ffd700;">Landing Weight</div>
+                <div class="top-sections" style="grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 0;">
+                    <div class="input-group" style="text-align: center;">
+                        <label class="input-label">LAW</label>
+                        <div id="wb-law" style="font-size: 1.5rem; font-weight: bold; color: #ffd700;">--- kg</div>
+                    </div>
+                    <div class="input-group" style="text-align: center;">
+                        <label class="input-label">MLW Limit</label>
+                        <div id="wb-mlw" style="font-size: 1.2rem; color: #888;">---</div>
+                    </div>
+                    <div class="input-group" style="text-align: center;">
+                        <label class="input-label">LAW Index</label>
+                        <div id="wb-lawi" style="font-size: 1.3rem; font-weight: bold; color: #ffd700;">---</div>
+                    </div>
+                    <div class="input-group" style="text-align: center;">
+                        <label class="input-label">Status</label>
+                        <div id="wb-law-status" class="wb-status-ok">---</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Underload & CG Section -->
+            <div class="top-sections" style="grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div class="section">
+                    <div class="section-title">Underload Available</div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center;">
+                        <div>
+                            <div style="color: #888; font-size: 0.75rem;">By ZFW</div>
+                            <div id="wb-ul-zfw" style="font-size: 1.1rem; font-weight: bold; color: #00d4ff;">---</div>
+                        </div>
+                        <div>
+                            <div style="color: #888; font-size: 0.75rem;">By TOW</div>
+                            <div id="wb-ul-tow" style="font-size: 1.1rem; font-weight: bold; color: #00ff88;">---</div>
+                        </div>
+                        <div>
+                            <div style="color: #888; font-size: 0.75rem;">By LAW</div>
+                            <div id="wb-ul-law" style="font-size: 1.1rem; font-weight: bold; color: #ffd700;">---</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 6px; text-align: center;">
+                        <div style="color: #888; font-size: 0.8rem;">Limiting Underload</div>
+                        <div id="wb-underload" style="font-size: 1.5rem; font-weight: bold; color: #FF8200;">--- kg</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">CG Limits</div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; text-align: center;">
+                        <div>
+                            <div style="color: #888; font-size: 0.75rem;">T/O CG</div>
+                            <div id="wb-cg-to" style="font-size: 1.2rem; font-weight: bold; color: #00ff88;">--% MAC</div>
+                        </div>
+                        <div>
+                            <div style="color: #888; font-size: 0.75rem;">LDG CG</div>
+                            <div id="wb-cg-ldg" style="font-size: 1.2rem; font-weight: bold; color: #ffd700;">--% MAC</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; padding: 8px; background: rgba(0,0,0,0.3); border-radius: 6px;">
+                        <div style="color: #888; font-size: 0.75rem; text-align: center;">CG Envelope</div>
+                        <div id="wb-cg-status" style="font-size: 1rem; font-weight: bold; color: #00ff88; text-align: center;">---</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trim Sheet Canvas -->
+            <div class="section" style="margin-bottom: 15px;">
+                <div class="section-title">Trim Sheet (CG Envelope)</div>
+                <div style="display: flex; justify-content: center; padding: 10px;">
+                    <canvas id="wb-trim-canvas" width="400" height="300" style="background: rgba(0,0,0,0.3); border-radius: 8px; max-width: 100%;"></canvas>
+                </div>
+                <div style="display: flex; justify-content: center; gap: 20px; margin-top: 10px; font-size: 0.75rem;">
+                    <div><span style="display: inline-block; width: 12px; height: 12px; background: #00d4ff; border-radius: 2px; margin-right: 5px;"></span>ZFW</div>
+                    <div><span style="display: inline-block; width: 12px; height: 12px; background: #00ff88; border-radius: 2px; margin-right: 5px;"></span>TOW</div>
+                    <div><span style="display: inline-block; width: 12px; height: 12px; background: #ffd700; border-radius: 2px; margin-right: 5px;"></span>LAW</div>
+                </div>
+            </div>
+
+            <!-- Summary Banner -->
+            <div class="section" id="wb-summary-section" style="margin-bottom: 15px;">
+                <div class="section-title">Summary</div>
+                <div id="wb-summary-banner" class="wb-summary pending" style="padding: 15px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 1.1rem; font-weight: bold;">Select aircraft to begin</div>
+                </div>
+            </div>
+
+            <button class="clear-btn" onclick="clearWb()" style="margin-top: 10px;">Clear All</button>
         </div>
     </div>
 
@@ -9303,6 +9858,8 @@
             var currentValue = '';
             if (tailPickerContext === 'lmc') {
                 currentValue = document.getElementById('lmc-tail').value || '';
+            } else if (tailPickerContext === 'wb') {
+                currentValue = document.getElementById('wb-tail').value || '';
             } else {
                 currentValue = document.getElementById('sched-tail').value || '';
             }
@@ -9383,6 +9940,9 @@
         function confirmTailPicker() {
             if (tailPickerContext === 'lmc') {
                 setLmcTail(tailPickerValue);
+                closeTailPicker();
+            } else if (tailPickerContext === 'wb') {
+                setWbTail(tailPickerValue);
                 closeTailPicker();
             } else {
                 var fullValue = tailPickerValue ? 'A6-' + tailPickerValue : '';
@@ -15869,6 +16429,812 @@
             renderLmcChanges();
             lmcCalculate();
         }
+
+        // ============ W&B MANUAL LOADSHEET CALCULATOR ============
+        // Constants from OM-B Weight and Balance Manual
+        var WB_CONSTANTS = {
+            LEMAC: 627.1,       // Leading Edge MAC (inches)
+            MAC: 155.8,         // Mean Aerodynamic Chord (inches)
+            DATUM_BA: 658.3,    // Datum Balance Arm (inches)
+            MOMENT_CONST: 35000, // Moment constant (KG-IN)
+            DATUM_CONST: 45      // Datum constant
+        };
+
+        // Passenger standard weights (kg)
+        var WB_PAX_WEIGHTS = { male: 88, female: 70, child: 35, infant: 10 };
+
+        // Aircraft structural limits (kg) from WBM Section 1.2
+        var WB_LIMITS = {
+            'B738': { MZFW: 62731, MTW: 79242, MTOW: 79015, MLW: 66360 },
+            'B38M': { MZFW: 65952, MTW: 82417, MTOW: 82190, MLW: 69308 },
+            'B39M': { MZFW: 70987, MTW: 88541, MTOW: 88314, MLW: 74343 }
+        };
+
+        // BOW (Basic Operating Weight) and BOI (Basic Operating Index) by type/config
+        // These are base values before crew adjustment and pantry
+        var WB_BOW_DATA = {
+            'B738': {
+                '189Y':    { bow: 42055, boi: 48.5 },
+                '12J162Y': { bow: 42350, boi: 47.8 }
+            },
+            'B38M': {
+                '10J156Y': { bow: 45200, boi: 49.2 },
+                '166Y':    { bow: 44950, boi: 48.8 },
+                '186Y':    { bow: 44800, boi: 49.0 }
+            },
+            'B39M': {
+                '16J156Y': { bow: 47800, boi: 50.5 },
+                '174Y':    { bow: 47500, boi: 50.2 }
+            }
+        };
+
+        // Cargo compartment limits by type/config (kg)
+        var WB_CARGO_LIMITS = {
+            'B738': {
+                '189Y':    { CPT1: 742, CPT2: 2440, CPT3: 3157, CPT4: 474 },
+                '12J162Y': { CPT1: 809, CPT2: 2670, CPT3: 3157, CPT4: 474 }
+            },
+            'B38M': {
+                '10J156Y': { CPT1: 852, CPT2: 2659, CPT3: 3157, CPT4: 474 },
+                '166Y':    { CPT1: 850, CPT2: 2650, CPT3: 3157, CPT4: 474 },
+                '186Y':    { CPT1: 850, CPT2: 2650, CPT3: 3157, CPT4: 474 }
+            },
+            'B39M': {
+                '16J156Y': { CPT1: 932, CPT2: 3068, CPT3: 3583, CPT4: 543 },
+                '174Y':    { CPT1: 930, CPT2: 3060, CPT3: 3583, CPT4: 543 }
+            }
+        };
+
+        // Zone descriptions by config
+        var WB_ZONE_DESC = {
+            'B738': {
+                '189Y':    { OA: 'Rows 1-5', OB: 'Rows 6-16', OC: 'Rows 17-27', OD: 'Rows 28-32' },
+                '12J162Y': { OA: 'Rows 1-3', OB: 'Rows 6-16', OC: 'Rows 17-27', OD: 'Rows 28-32' }
+            },
+            'B38M': {
+                '10J156Y': { OA: 'Rows 1-2', OB: 'Rows 5-15', OC: 'Rows 16-26', OD: 'Rows 27-31' },
+                '166Y':    { OA: 'Rows 1-5', OB: 'Rows 6-16', OC: 'Rows 17-27', OD: 'Rows 28-31' },
+                '186Y':    { OA: 'Rows 1-5', OB: 'Rows 6-16', OC: 'Rows 17-27', OD: 'Rows 28-31' }
+            },
+            'B39M': {
+                '16J156Y': { OA: 'Rows 1-4', OB: 'Rows 7-17', OC: 'Rows 18-28', OD: 'Rows 29-34' },
+                '174Y':    { OA: 'Rows 1-5', OB: 'Rows 6-17', OC: 'Rows 18-28', OD: 'Rows 29-34' }
+            }
+        };
+
+        // Index correction values per unit (from WBM Section 6.4)
+        var WB_INDEX_CORRECTIONS = {
+            'B738': {
+                '189Y': {
+                    OA: { perPax: -1.0 },
+                    OB: { perPax: -0.4 },
+                    OC: { perPax: 0.4 },
+                    OD: { perPax: 0.9 },
+                    CPT1: { per100kg: -1.2 },
+                    CPT2: { per100kg: -0.7 },
+                    CPT3: { per100kg: 0.6 },
+                    CPT4: { per100kg: 1.2 },
+                    FUEL_WING: { per300kg: 1.0 },
+                    FUEL_WING_CTR: { per350kg: -0.5 }
+                },
+                '12J162Y': {
+                    OA: { perPax: -1.0 },
+                    OB: { perPax: -0.4 },
+                    OC: { perPax: 0.4 },
+                    OD: { perPax: 0.9 },
+                    CPT1: { per100kg: -1.2 },
+                    CPT2: { per100kg: -0.7 },
+                    CPT3: { per100kg: 0.6 },
+                    CPT4: { per100kg: 1.2 },
+                    FUEL_WING: { per300kg: 1.0 },
+                    FUEL_WING_CTR: { per350kg: -0.5 }
+                }
+            },
+            'B38M': {
+                '10J156Y': {
+                    OA: { perPax: -0.9 },
+                    OB: { perPax: -0.3 },
+                    OC: { perPax: 0.3 },
+                    OD: { perPax: 0.8 },
+                    CPT1: { per100kg: -1.2 },
+                    CPT2: { per100kg: -0.7 },
+                    CPT3: { per100kg: 0.6 },
+                    CPT4: { per100kg: 1.2 },
+                    FUEL_WING: { per300kg: 1.0 },
+                    FUEL_WING_CTR: { per350kg: -0.5 }
+                },
+                '166Y': {
+                    OA: { perPax: -0.9 },
+                    OB: { perPax: -0.3 },
+                    OC: { perPax: 0.3 },
+                    OD: { perPax: 0.8 },
+                    CPT1: { per100kg: -1.2 },
+                    CPT2: { per100kg: -0.7 },
+                    CPT3: { per100kg: 0.6 },
+                    CPT4: { per100kg: 1.2 },
+                    FUEL_WING: { per300kg: 1.0 },
+                    FUEL_WING_CTR: { per350kg: -0.5 }
+                },
+                '186Y': {
+                    OA: { perPax: -0.9 },
+                    OB: { perPax: -0.3 },
+                    OC: { perPax: 0.3 },
+                    OD: { perPax: 0.8 },
+                    CPT1: { per100kg: -1.2 },
+                    CPT2: { per100kg: -0.7 },
+                    CPT3: { per100kg: 0.6 },
+                    CPT4: { per100kg: 1.2 },
+                    FUEL_WING: { per300kg: 1.0 },
+                    FUEL_WING_CTR: { per350kg: -0.5 }
+                }
+            },
+            'B39M': {
+                '16J156Y': {
+                    OA: { perPax: -0.9 },
+                    OB: { perPax: -0.3 },
+                    OC: { perPax: 0.3 },
+                    OD: { perPax: 0.8 },
+                    CPT1: { per100kg: -1.2 },
+                    CPT2: { per100kg: -0.7 },
+                    CPT3: { per100kg: 0.6 },
+                    CPT4: { per100kg: 1.2 },
+                    FUEL_WING: { per300kg: 1.0 },
+                    FUEL_WING_CTR: { per350kg: -0.5 }
+                },
+                '174Y': {
+                    OA: { perPax: -0.9 },
+                    OB: { perPax: -0.3 },
+                    OC: { perPax: 0.3 },
+                    OD: { perPax: 0.8 },
+                    CPT1: { per100kg: -1.2 },
+                    CPT2: { per100kg: -0.7 },
+                    CPT3: { per100kg: 0.6 },
+                    CPT4: { per100kg: 1.2 },
+                    FUEL_WING: { per300kg: 1.0 },
+                    FUEL_WING_CTR: { per350kg: -0.5 }
+                }
+            }
+        };
+
+        // Pantry data (weight in kg, index correction)
+        var WB_PANTRY_DATA = {
+            'B738': {
+                'A': { weight: 156, index: -0.8 },
+                'B': { weight: 245, index: -1.3 },
+                'C': { weight: 334, index: -1.8 },
+                'D': { weight: 423, index: -2.2 },
+                'E': { weight: 512, index: -2.7 },
+                'F': { weight: 601, index: -3.2 },
+                'X': { weight: 0, index: 0 }
+            },
+            'B38M': {
+                'A': { weight: 160, index: -0.8 },
+                'B': { weight: 250, index: -1.3 },
+                'C': { weight: 340, index: -1.8 },
+                'D': { weight: 430, index: -2.2 },
+                'E': { weight: 520, index: -2.7 },
+                'F': { weight: 610, index: -3.2 },
+                'X': { weight: 0, index: 0 }
+            },
+            'B39M': {
+                'A': { weight: 165, index: -0.8 },
+                'B': { weight: 260, index: -1.4 },
+                'C': { weight: 355, index: -1.9 },
+                'D': { weight: 450, index: -2.4 },
+                'E': { weight: 545, index: -2.9 },
+                'F': { weight: 640, index: -3.4 },
+                'X': { weight: 0, index: 0 }
+            }
+        };
+
+        // CG Envelope limits (simplified - %MAC at weight)
+        var WB_CG_ENVELOPE = {
+            // Forward and aft limits at various weights
+            'B738': {
+                fwd: [ { weight: 40000, mac: 13 }, { weight: 62731, mac: 17 }, { weight: 79015, mac: 17 } ],
+                aft: [ { weight: 40000, mac: 38 }, { weight: 62731, mac: 38 }, { weight: 79015, mac: 33 } ]
+            },
+            'B38M': {
+                fwd: [ { weight: 42000, mac: 13 }, { weight: 65952, mac: 17 }, { weight: 82190, mac: 17 } ],
+                aft: [ { weight: 42000, mac: 38 }, { weight: 65952, mac: 38 }, { weight: 82190, mac: 33 } ]
+            },
+            'B39M': {
+                fwd: [ { weight: 44000, mac: 13 }, { weight: 70987, mac: 17 }, { weight: 88314, mac: 17 } ],
+                aft: [ { weight: 44000, mac: 38 }, { weight: 70987, mac: 38 }, { weight: 88314, mac: 33 } ]
+            }
+        };
+
+        // State variables
+        var wbSelectedTail = '';
+        var wbAircraftType = '';
+        var wbAircraftConfig = '';
+
+        // Open W&B tail picker
+        function openWbTailPicker() {
+            openTailPicker('wb');
+        }
+
+        // Set W&B tail from picker
+        function setWbTail(tail) {
+            wbSelectedTail = tail;
+            document.getElementById('wb-tail').value = tail;
+            document.getElementById('wb-tail-btn').textContent = tail || '---';
+
+            // Look up aircraft info from fleet
+            var configSelector = document.getElementById('wb-config-selector');
+            if (fleetData && fleetData.aircraft && fleetData.aircraft['A6-' + tail]) {
+                var ac = fleetData.aircraft['A6-' + tail];
+                wbAircraftType = ac.type;
+
+                // Parse available configs
+                var configs = parseFleetConfig(ac.config);
+                var normalizedConfig = normalizeConfig(configs[0]);
+                wbAircraftConfig = normalizedConfig;
+
+                // Display type/config
+                var typeDisplay = wbAircraftType === 'B738' ? '737-800' :
+                                  wbAircraftType === 'B38M' ? '737-8' :
+                                  wbAircraftType === 'B39M' ? '737-9' : wbAircraftType;
+                document.getElementById('wb-aircraft-info').innerHTML = typeDisplay + '<br>' + normalizedConfig;
+
+                // Show config selector if multiple configs
+                if (configs.length > 1) {
+                    configSelector.style.display = 'flex';
+                    configSelector.innerHTML = configs.map(function(cfg) {
+                        var norm = normalizeConfig(cfg);
+                        return '<button class="preset-btn' + (norm === normalizedConfig ? ' active' : '') +
+                               '" onclick="setWbConfig(\'' + norm + '\')" style="flex:1;padding:5px;">' + norm + '</button>';
+                    }).join('');
+                } else {
+                    configSelector.style.display = 'none';
+                }
+
+                // Update all displays
+                updateWbAircraftData();
+            } else {
+                document.getElementById('wb-aircraft-info').textContent = '---';
+                configSelector.style.display = 'none';
+                wbAircraftType = '';
+                wbAircraftConfig = '';
+            }
+            wbCalculate();
+        }
+
+        // Set W&B config
+        function setWbConfig(config) {
+            wbAircraftConfig = config;
+            // Update config selector buttons
+            var selector = document.getElementById('wb-config-selector');
+            selector.querySelectorAll('button').forEach(function(btn) {
+                btn.classList.toggle('active', btn.textContent === config);
+            });
+            // Update display
+            var typeDisplay = wbAircraftType === 'B738' ? '737-800' :
+                              wbAircraftType === 'B38M' ? '737-8' :
+                              wbAircraftType === 'B39M' ? '737-9' : wbAircraftType;
+            document.getElementById('wb-aircraft-info').innerHTML = typeDisplay + '<br>' + config;
+            updateWbAircraftData();
+            wbCalculate();
+        }
+
+        // Autofill from schedule
+        function autofillWbFromSchedule() {
+            var savedSchedule = localStorage.getItem('flightSchedule');
+            if (!savedSchedule) return;
+
+            try {
+                var schedule = JSON.parse(savedSchedule);
+                if (schedule.sectors && schedule.sectors.length > 0) {
+                    var sector = schedule.sectors[0];
+
+                    // Set tail
+                    if (sector.tail) {
+                        setWbTail(sector.tail.replace('A6-', ''));
+                    }
+
+                    // Set flight number
+                    if (sector.flight) {
+                        document.getElementById('wb-flight').value = 'FZ' + sector.flight;
+                    }
+
+                    // Set origin/dest
+                    if (sector.from) document.getElementById('wb-origin').value = sector.from;
+                    if (sector.to) document.getElementById('wb-dest').value = sector.to;
+                }
+            } catch (e) {
+                console.error('Error autofilling W&B from schedule:', e);
+            }
+        }
+
+        // Update aircraft-specific data displays
+        function updateWbAircraftData() {
+            if (!wbAircraftType || !wbAircraftConfig) return;
+
+            // Update BOW/BOI
+            var bowData = WB_BOW_DATA[wbAircraftType] && WB_BOW_DATA[wbAircraftType][wbAircraftConfig];
+            if (bowData) {
+                document.getElementById('wb-bow').textContent = bowData.bow.toLocaleString();
+                document.getElementById('wb-boi').textContent = bowData.boi.toFixed(1);
+            } else {
+                document.getElementById('wb-bow').textContent = '---';
+                document.getElementById('wb-boi').textContent = '---';
+            }
+
+            // Update cargo limits
+            var cargoLimits = WB_CARGO_LIMITS[wbAircraftType] && WB_CARGO_LIMITS[wbAircraftType][wbAircraftConfig];
+            if (cargoLimits) {
+                document.getElementById('wb-cpt1-max').textContent = cargoLimits.CPT1;
+                document.getElementById('wb-cpt2-max').textContent = cargoLimits.CPT2;
+                document.getElementById('wb-cpt3-max').textContent = cargoLimits.CPT3;
+                document.getElementById('wb-cpt4-max').textContent = cargoLimits.CPT4;
+            }
+
+            // Update zone labels
+            var zoneDesc = WB_ZONE_DESC[wbAircraftType] && WB_ZONE_DESC[wbAircraftType][wbAircraftConfig];
+            if (zoneDesc) {
+                document.getElementById('wb-zone-0a-label').innerHTML = '0A<br><span style="font-size:0.65rem;color:#888;">' + zoneDesc.OA + '</span>';
+                document.getElementById('wb-zone-0b-label').innerHTML = '0B<br><span style="font-size:0.65rem;color:#888;">' + zoneDesc.OB + '</span>';
+                document.getElementById('wb-zone-0c-label').innerHTML = '0C<br><span style="font-size:0.65rem;color:#888;">' + zoneDesc.OC + '</span>';
+                document.getElementById('wb-zone-0d-label').innerHTML = '0D<br><span style="font-size:0.65rem;color:#888;">' + zoneDesc.OD + '</span>';
+            }
+
+            // Update structural limits display
+            var limits = WB_LIMITS[wbAircraftType];
+            if (limits) {
+                document.getElementById('wb-mzfw').textContent = limits.MZFW.toLocaleString() + ' kg';
+                document.getElementById('wb-mtow').textContent = limits.MTOW.toLocaleString() + ' kg';
+                document.getElementById('wb-mlw').textContent = limits.MLW.toLocaleString() + ' kg';
+            }
+
+            // Populate pantry dropdown
+            var pantrySelect = document.getElementById('wb-pantry');
+            var pantryData = WB_PANTRY_DATA[wbAircraftType];
+            pantrySelect.innerHTML = '<option value="">---</option>';
+            if (pantryData) {
+                Object.keys(pantryData).forEach(function(code) {
+                    var p = pantryData[code];
+                    pantrySelect.innerHTML += '<option value="' + code + '">' + code + ' (' + p.weight + 'kg)</option>';
+                });
+            }
+        }
+
+        // Open pax picker
+        function openPaxPicker(fieldId) {
+            // Use existing number picker with appropriate settings
+            var currentValue = document.getElementById(fieldId).value || '0';
+            openWeightPicker(fieldId, 'Passengers', 'pax');
+        }
+
+        // Main W&B calculation function
+        function wbCalculate() {
+            if (!wbAircraftType || !wbAircraftConfig) {
+                updateWbSummary('pending', 'Select aircraft to begin');
+                return;
+            }
+
+            var corrections = WB_INDEX_CORRECTIONS[wbAircraftType] && WB_INDEX_CORRECTIONS[wbAircraftType][wbAircraftConfig];
+            var bowData = WB_BOW_DATA[wbAircraftType] && WB_BOW_DATA[wbAircraftType][wbAircraftConfig];
+            var limits = WB_LIMITS[wbAircraftType];
+            var cargoLimits = WB_CARGO_LIMITS[wbAircraftType] && WB_CARGO_LIMITS[wbAircraftType][wbAircraftConfig];
+
+            if (!corrections || !bowData || !limits) {
+                updateWbSummary('fail', 'Configuration data not available');
+                return;
+            }
+
+            // Get BOW/BOI
+            var bow = bowData.bow;
+            var boi = bowData.boi;
+
+            // Get crew adjustment
+            var crewAdj = parseInt(document.getElementById('wb-crew').value) || 0;
+            var crewIdx = calculateCrewIndex(crewAdj);
+            document.getElementById('wb-crew-idx').textContent = crewIdx.toFixed(1);
+
+            // Get pantry
+            var pantryCode = document.getElementById('wb-pantry').value;
+            var pantryData = WB_PANTRY_DATA[wbAircraftType] && WB_PANTRY_DATA[wbAircraftType][pantryCode];
+            var pantryWt = pantryData ? pantryData.weight : 0;
+            var pantryIdx = pantryData ? pantryData.index : 0;
+            document.getElementById('wb-pantry-wt').textContent = pantryWt ? pantryWt + ' kg' : '---';
+            document.getElementById('wb-pantry-idx').textContent = pantryWt ? pantryIdx.toFixed(1) : '---';
+
+            // Calculate DOW/DOI
+            var dow = bow + crewAdj + pantryWt;
+            var doi = boi + crewIdx + pantryIdx;
+            document.getElementById('wb-dow').textContent = dow.toLocaleString();
+            document.getElementById('wb-doi').textContent = doi.toFixed(1);
+
+            // Calculate passenger weights and indices per zone
+            var totalPax = 0;
+            var totalPaxWt = 0;
+            var totalPaxIdx = 0;
+            var totalM = 0, totalF = 0, totalC = 0;
+
+            ['0a', '0b', '0c', '0d'].forEach(function(zone) {
+                var m = parseInt(document.getElementById('wb-' + zone + '-m').value) || 0;
+                var f = parseInt(document.getElementById('wb-' + zone + '-f').value) || 0;
+                var c = parseInt(document.getElementById('wb-' + zone + '-c').value) || 0;
+                var zoneTotal = m + f + c;
+                var zoneWt = m * WB_PAX_WEIGHTS.male + f * WB_PAX_WEIGHTS.female + c * WB_PAX_WEIGHTS.child;
+                var zoneKey = 'O' + zone.toUpperCase().replace('0', '');
+                var zoneIdx = corrections[zoneKey] ? zoneTotal * corrections[zoneKey].perPax : 0;
+
+                document.getElementById('wb-' + zone + '-total').textContent = zoneTotal;
+                totalPax += zoneTotal;
+                totalPaxWt += zoneWt;
+                totalPaxIdx += zoneIdx;
+                totalM += m;
+                totalF += f;
+                totalC += c;
+            });
+
+            document.getElementById('wb-pax-m-total').textContent = totalM;
+            document.getElementById('wb-pax-f-total').textContent = totalF;
+            document.getElementById('wb-pax-c-total').textContent = totalC;
+            document.getElementById('wb-pax-total').textContent = totalPax;
+            document.getElementById('wb-pax-weight').textContent = totalPaxWt.toLocaleString() + ' kg';
+            document.getElementById('wb-pax-idx').textContent = totalPaxIdx.toFixed(1);
+
+            // Calculate cargo weights and indices
+            var totalCargoWt = 0;
+            var totalCargoIdx = 0;
+            var cargoExceeded = false;
+
+            ['cpt1', 'cpt2', 'cpt3', 'cpt4'].forEach(function(cpt) {
+                var wt = parseInt(document.getElementById('wb-' + cpt).value) || 0;
+                var cptKey = cpt.toUpperCase();
+                var cptIdx = corrections[cptKey] ? (wt / 100) * corrections[cptKey].per100kg : 0;
+                totalCargoWt += wt;
+                totalCargoIdx += cptIdx;
+
+                // Check limit
+                var maxEl = document.getElementById('wb-' + cpt + '-max');
+                var limit = cargoLimits ? cargoLimits[cptKey] : 0;
+                if (wt > limit && limit > 0) {
+                    maxEl.classList.add('exceeded');
+                    cargoExceeded = true;
+                } else {
+                    maxEl.classList.remove('exceeded');
+                }
+            });
+
+            document.getElementById('wb-cargo-total').textContent = totalCargoWt.toLocaleString() + ' kg';
+            document.getElementById('wb-cargo-idx').textContent = totalCargoIdx.toFixed(1);
+
+            // Traffic load
+            var trafficLoad = totalPaxWt + totalCargoWt;
+            var trafficIdx = totalPaxIdx + totalCargoIdx;
+            document.getElementById('wb-traffic-load').textContent = trafficLoad.toLocaleString() + ' kg';
+            document.getElementById('wb-traffic-idx').textContent = trafficIdx.toFixed(1);
+
+            // ZFW
+            var zfw = dow + trafficLoad;
+            var zfwi = doi + trafficIdx;
+            document.getElementById('wb-zfw').textContent = zfw.toLocaleString() + ' kg';
+            document.getElementById('wb-zfwi').textContent = zfwi.toFixed(1);
+
+            var zfwOk = zfw <= limits.MZFW;
+            var zfwStatus = document.getElementById('wb-zfw-status');
+            zfwStatus.textContent = zfwOk ? 'OK' : 'EXCEEDED';
+            zfwStatus.className = zfwOk ? 'wb-status-ok' : 'wb-status-exceeded';
+
+            // Fuel
+            var tof = parseInt(document.getElementById('wb-tof').value) || 0;
+            var tripFuel = parseInt(document.getElementById('wb-trip').value) || 0;
+            var landingFuel = tof - tripFuel;
+            document.getElementById('wb-lf').textContent = landingFuel > 0 ? landingFuel.toLocaleString() + ' kg' : '--- kg';
+
+            // Calculate fuel index (simplified - using wing tank formula)
+            var tofIdx = calculateFuelIndex(tof, corrections);
+            var lfIdx = calculateFuelIndex(landingFuel, corrections);
+            document.getElementById('wb-tof-idx').textContent = tofIdx.toFixed(1);
+
+            // TOW
+            var tow = zfw + tof;
+            var towi = zfwi + tofIdx;
+            document.getElementById('wb-tow').textContent = tow.toLocaleString() + ' kg';
+            document.getElementById('wb-towi').textContent = towi.toFixed(1);
+
+            var towOk = tow <= limits.MTOW;
+            var towStatus = document.getElementById('wb-tow-status');
+            towStatus.textContent = towOk ? 'OK' : 'EXCEEDED';
+            towStatus.className = towOk ? 'wb-status-ok' : 'wb-status-exceeded';
+
+            // LAW
+            var law = zfw + landingFuel;
+            var lawi = zfwi + lfIdx;
+            document.getElementById('wb-law').textContent = law > 0 ? law.toLocaleString() + ' kg' : '--- kg';
+            document.getElementById('wb-lawi').textContent = law > 0 ? lawi.toFixed(1) : '---';
+
+            var lawOk = law <= limits.MLW || law <= 0;
+            var lawStatus = document.getElementById('wb-law-status');
+            lawStatus.textContent = law > 0 ? (lawOk ? 'OK' : 'EXCEEDED') : '---';
+            lawStatus.className = law > 0 ? (lawOk ? 'wb-status-ok' : 'wb-status-exceeded') : 'wb-status-ok';
+
+            // Underloads
+            var ulZfw = limits.MZFW - zfw;
+            var ulTow = limits.MTOW - tow;
+            var ulLaw = limits.MLW - law;
+            document.getElementById('wb-ul-zfw').textContent = ulZfw >= 0 ? ulZfw.toLocaleString() : '-' + Math.abs(ulZfw).toLocaleString();
+            document.getElementById('wb-ul-tow').textContent = ulTow >= 0 ? ulTow.toLocaleString() : '-' + Math.abs(ulTow).toLocaleString();
+            document.getElementById('wb-ul-law').textContent = law > 0 ? (ulLaw >= 0 ? ulLaw.toLocaleString() : '-' + Math.abs(ulLaw).toLocaleString()) : '---';
+
+            var minUnderload = Math.min(ulZfw, ulTow, law > 0 ? ulLaw : Infinity);
+            document.getElementById('wb-underload').textContent = minUnderload >= 0 ? minUnderload.toLocaleString() + ' kg' : '-' + Math.abs(minUnderload).toLocaleString() + ' kg';
+            document.getElementById('wb-underload').style.color = minUnderload >= 0 ? '#FF8200' : '#ff5252';
+
+            // CG calculations
+            var cgTo = indexToMac(towi, tow);
+            var cgLdg = indexToMac(lawi, law);
+            document.getElementById('wb-cg-to').textContent = cgTo.toFixed(1) + '% MAC';
+            document.getElementById('wb-cg-ldg').textContent = law > 0 ? cgLdg.toFixed(1) + '% MAC' : '--% MAC';
+
+            // Check CG envelope
+            var cgToOk = checkCgEnvelope(wbAircraftType, tow, cgTo);
+            var cgLdgOk = law > 0 ? checkCgEnvelope(wbAircraftType, law, cgLdg) : true;
+            var cgOk = cgToOk && cgLdgOk;
+            document.getElementById('wb-cg-status').textContent = cgOk ? 'WITHIN LIMITS' : 'OUT OF LIMITS';
+            document.getElementById('wb-cg-status').style.color = cgOk ? '#00ff88' : '#ff5252';
+
+            // Draw trim sheet
+            drawTrimSheet(wbAircraftType, zfw, zfwi, tow, towi, law > 0 ? law : null, law > 0 ? lawi : null);
+
+            // Overall status
+            var allOk = zfwOk && towOk && lawOk && cgOk && !cargoExceeded;
+            if (allOk) {
+                updateWbSummary('pass', 'All weights and CG within limits');
+            } else {
+                var issues = [];
+                if (!zfwOk) issues.push('ZFW exceeds MZFW');
+                if (!towOk) issues.push('TOW exceeds MTOW');
+                if (!lawOk && law > 0) issues.push('LAW exceeds MLW');
+                if (!cgOk) issues.push('CG out of envelope');
+                if (cargoExceeded) issues.push('Cargo compartment limit exceeded');
+                updateWbSummary('fail', issues.join(', '));
+            }
+        }
+
+        // Calculate crew index adjustment (simplified)
+        function calculateCrewIndex(crewWt) {
+            // Crew seated in cockpit - forward of datum
+            return (crewWt / 100) * -0.5;
+        }
+
+        // Calculate fuel index (simplified model)
+        function calculateFuelIndex(fuelWt, corrections) {
+            if (!fuelWt || fuelWt <= 0) return 0;
+            // Simplified: use wing tank formula for fuel up to certain amount
+            // then use wing+center for higher amounts
+            if (fuelWt <= 10000) {
+                return (fuelWt / 300) * (corrections.FUEL_WING ? corrections.FUEL_WING.per300kg : 1.0);
+            } else {
+                return (fuelWt / 350) * (corrections.FUEL_WING_CTR ? corrections.FUEL_WING_CTR.per350kg : -0.5);
+            }
+        }
+
+        // Convert index to %MAC
+        function indexToMac(index, weight) {
+            // Index = Weight × (BA - 658.3) / 35000 + 45
+            // Solving for BA: BA = (Index - 45) × 35000 / Weight + 658.3
+            // %MAC = (BA - LEMAC) / MAC × 100
+            if (!weight || weight <= 0) return 0;
+            var ba = (index - WB_CONSTANTS.DATUM_CONST) * WB_CONSTANTS.MOMENT_CONST / weight + WB_CONSTANTS.DATUM_BA;
+            var mac = ((ba - WB_CONSTANTS.LEMAC) / WB_CONSTANTS.MAC) * 100;
+            return mac;
+        }
+
+        // Check if CG is within envelope
+        function checkCgEnvelope(acType, weight, mac) {
+            var envelope = WB_CG_ENVELOPE[acType];
+            if (!envelope) return true;
+
+            // Interpolate forward limit
+            var fwdLimit = interpolateLimit(envelope.fwd, weight);
+            var aftLimit = interpolateLimit(envelope.aft, weight);
+
+            return mac >= fwdLimit && mac <= aftLimit;
+        }
+
+        // Interpolate CG limit at given weight
+        function interpolateLimit(points, weight) {
+            if (points.length === 0) return 0;
+            if (weight <= points[0].weight) return points[0].mac;
+            if (weight >= points[points.length - 1].weight) return points[points.length - 1].mac;
+
+            for (var i = 1; i < points.length; i++) {
+                if (weight <= points[i].weight) {
+                    var ratio = (weight - points[i-1].weight) / (points[i].weight - points[i-1].weight);
+                    return points[i-1].mac + ratio * (points[i].mac - points[i-1].mac);
+                }
+            }
+            return points[points.length - 1].mac;
+        }
+
+        // Draw trim sheet canvas
+        function drawTrimSheet(acType, zfw, zfwi, tow, towi, law, lawi) {
+            var canvas = document.getElementById('wb-trim-canvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            var w = canvas.width;
+            var h = canvas.height;
+
+            // Clear canvas
+            ctx.clearRect(0, 0, w, h);
+            ctx.fillStyle = 'rgba(0, 20, 40, 0.8)';
+            ctx.fillRect(0, 0, w, h);
+
+            var envelope = WB_CG_ENVELOPE[acType];
+            var limits = WB_LIMITS[acType];
+            if (!envelope || !limits) return;
+
+            // Define plot area
+            var padding = { top: 20, right: 20, bottom: 30, left: 50 };
+            var plotW = w - padding.left - padding.right;
+            var plotH = h - padding.top - padding.bottom;
+
+            // Weight range
+            var minWt = envelope.fwd[0].weight * 0.95;
+            var maxWt = limits.MTOW * 1.02;
+
+            // MAC range
+            var minMac = 10;
+            var maxMac = 42;
+
+            // Scale functions
+            function scaleX(mac) { return padding.left + (mac - minMac) / (maxMac - minMac) * plotW; }
+            function scaleY(wt) { return padding.top + plotH - (wt - minWt) / (maxWt - minWt) * plotH; }
+
+            // Draw grid
+            ctx.strokeStyle = 'rgba(100, 100, 100, 0.3)';
+            ctx.lineWidth = 1;
+            for (var mac = 15; mac <= 40; mac += 5) {
+                ctx.beginPath();
+                ctx.moveTo(scaleX(mac), padding.top);
+                ctx.lineTo(scaleX(mac), h - padding.bottom);
+                ctx.stroke();
+                ctx.fillStyle = '#666';
+                ctx.font = '10px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(mac + '%', scaleX(mac), h - 10);
+            }
+            for (var wt = 40000; wt <= maxWt; wt += 10000) {
+                ctx.beginPath();
+                ctx.moveTo(padding.left, scaleY(wt));
+                ctx.lineTo(w - padding.right, scaleY(wt));
+                ctx.stroke();
+                ctx.fillStyle = '#666';
+                ctx.font = '10px sans-serif';
+                ctx.textAlign = 'right';
+                ctx.fillText((wt/1000).toFixed(0) + 'k', padding.left - 5, scaleY(wt) + 4);
+            }
+
+            // Draw envelope
+            ctx.strokeStyle = '#FF8200';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // Forward limit
+            envelope.fwd.forEach(function(pt, i) {
+                var x = scaleX(pt.mac);
+                var y = scaleY(pt.weight);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            // Connect to aft limit (top to bottom)
+            for (var j = envelope.aft.length - 1; j >= 0; j--) {
+                ctx.lineTo(scaleX(envelope.aft[j].mac), scaleY(envelope.aft[j].weight));
+            }
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fillStyle = 'rgba(255, 130, 0, 0.1)';
+            ctx.fill();
+
+            // Plot points
+            function plotPoint(wt, idx, color, label) {
+                if (!wt || wt <= 0) return;
+                var mac = indexToMac(idx, wt);
+                var x = scaleX(mac);
+                var y = scaleY(wt);
+
+                ctx.beginPath();
+                ctx.arc(x, y, 6, 0, Math.PI * 2);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                ctx.fillStyle = color;
+                ctx.font = 'bold 10px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(label, x, y - 10);
+            }
+
+            plotPoint(zfw, zfwi, '#00d4ff', 'ZFW');
+            plotPoint(tow, towi, '#00ff88', 'TOW');
+            if (law && lawi) plotPoint(law, lawi, '#ffd700', 'LAW');
+
+            // Draw lines connecting points
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            var zfwMac = indexToMac(zfwi, zfw);
+            var towMac = indexToMac(towi, tow);
+            ctx.moveTo(scaleX(zfwMac), scaleY(zfw));
+            ctx.lineTo(scaleX(towMac), scaleY(tow));
+            if (law && lawi) {
+                var lawMac = indexToMac(lawi, law);
+                ctx.lineTo(scaleX(lawMac), scaleY(law));
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        // Update summary banner
+        function updateWbSummary(status, message) {
+            var banner = document.getElementById('wb-summary-banner');
+            banner.className = 'wb-summary ' + status;
+            var icon = status === 'pass' ? '✓' : status === 'fail' ? '✗' : '?';
+            banner.innerHTML = '<div style="font-size: 1.5rem; margin-bottom: 5px;">' + icon + '</div>' +
+                              '<div style="font-size: 1.1rem; font-weight: bold;">' + message + '</div>';
+        }
+
+        // Clear W&B calculator
+        function clearWb() {
+            wbSelectedTail = '';
+            wbAircraftType = '';
+            wbAircraftConfig = '';
+
+            document.getElementById('wb-tail').value = '';
+            document.getElementById('wb-tail-btn').textContent = '---';
+            document.getElementById('wb-aircraft-info').textContent = '---';
+            document.getElementById('wb-config-selector').style.display = 'none';
+
+            document.getElementById('wb-flight').value = '';
+            document.getElementById('wb-origin').value = '';
+            document.getElementById('wb-dest').value = '';
+
+            document.getElementById('wb-crew').value = '0';
+            document.getElementById('wb-crew-btn').textContent = '0';
+            document.getElementById('wb-pantry').value = '';
+
+            ['0a', '0b', '0c', '0d'].forEach(function(zone) {
+                ['m', 'f', 'c'].forEach(function(type) {
+                    document.getElementById('wb-' + zone + '-' + type).value = '0';
+                    document.getElementById('wb-' + zone + '-' + type + '-btn').textContent = '0';
+                });
+            });
+
+            ['cpt1', 'cpt2', 'cpt3', 'cpt4'].forEach(function(cpt) {
+                document.getElementById('wb-' + cpt).value = '0';
+                document.getElementById('wb-' + cpt + '-btn').textContent = '0';
+            });
+
+            document.getElementById('wb-tof').value = '0';
+            document.getElementById('wb-tof-btn').textContent = '0';
+            document.getElementById('wb-trip').value = '0';
+            document.getElementById('wb-trip-btn').textContent = '0';
+
+            // Reset displays
+            ['wb-bow', 'wb-boi', 'wb-dow', 'wb-doi', 'wb-pantry-wt', 'wb-pantry-idx'].forEach(function(id) {
+                document.getElementById(id).textContent = '---';
+            });
+
+            wbCalculate();
+        }
+
+        // Add event listeners for W&B inputs
+        ['wb-crew', 'wb-tof', 'wb-trip', 'wb-cpt1', 'wb-cpt2', 'wb-cpt3', 'wb-cpt4'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('change', wbCalculate);
+        });
+
+        ['wb-0a-m', 'wb-0a-f', 'wb-0a-c', 'wb-0b-m', 'wb-0b-f', 'wb-0b-c',
+         'wb-0c-m', 'wb-0c-f', 'wb-0c-c', 'wb-0d-m', 'wb-0d-f', 'wb-0d-c'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('change', wbCalculate);
+        });
 
         // ============ EVENT LISTENERS FOR NEW CALCULATORS ============
         ['xwind-rwy', 'xwind-dir', 'xwind-spd', 'xwind-gust'].forEach(id => {
