@@ -16668,22 +16668,20 @@
 
                 // Parse available configs
                 var configs = parseFleetConfig(ac.config);
-                var normalizedConfig = normalizeConfig(configs[0]);
-                wbAircraftConfig = normalizedConfig;
+                wbAircraftConfig = configs[0] || '';
 
                 // Display type/config
                 var typeDisplay = wbAircraftType === 'B738' ? '737-800' :
                                   wbAircraftType === 'B38M' ? '737-8' :
                                   wbAircraftType === 'B39M' ? '737-9' : wbAircraftType;
-                document.getElementById('wb-aircraft-info').innerHTML = typeDisplay + '<br>' + normalizedConfig;
+                document.getElementById('wb-aircraft-info').innerHTML = typeDisplay + '<br>' + wbAircraftConfig;
 
                 // Show config selector if multiple configs
                 if (configs.length > 1) {
                     configSelector.style.display = 'flex';
                     configSelector.innerHTML = configs.map(function(cfg) {
-                        var norm = normalizeConfig(cfg);
-                        return '<button class="preset-btn' + (norm === normalizedConfig ? ' active' : '') +
-                               '" onclick="setWbConfig(\'' + norm + '\')" style="flex:1;padding:5px;">' + norm + '</button>';
+                        return '<button class="preset-btn' + (cfg === wbAircraftConfig ? ' active' : '') +
+                               '" onclick="setWbConfig(\'' + cfg + '\')" style="flex:1;padding:5px;">' + cfg + '</button>';
                     }).join('');
                 } else {
                     configSelector.style.display = 'none';
